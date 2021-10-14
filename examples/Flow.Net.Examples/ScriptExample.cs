@@ -33,11 +33,12 @@ namespace Flow.Net.Examples
             var script = "pub fun main(num: Int32): Int32 { return 54534 + num }".FromStringToByteString();
             var arguments = new List<ICadence>
             {
-                new CadenceNumber(FlowNumberType.Int32, "834534")
+                new CadenceNumber(CadenceNumberType.Int32, "834534")
             };
 
             var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script, arguments);
 
+            Console.WriteLine(response.Decode());
             Console.WriteLine(JsonConvert.SerializeObject(response));
         }
 
@@ -47,6 +48,7 @@ namespace Flow.Net.Examples
 
             var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script);
 
+            Console.WriteLine(response.Decode());
             Console.WriteLine(JsonConvert.SerializeObject(response));
         }
 
@@ -57,6 +59,7 @@ namespace Flow.Net.Examples
             var latestBlock = await _flowClient.GetLatestBlockAsync(); // getting a height for example purpose
             var response = await _flowClient.ExecuteScriptAtBlockHeightAsync(script, latestBlock.Height);
 
+            Console.WriteLine(response.Decode());
             Console.WriteLine(JsonConvert.SerializeObject(response));
         }
 
@@ -67,6 +70,7 @@ namespace Flow.Net.Examples
             var latestBlock = await _flowClient.GetLatestBlockAsync(); // getting a height for example purpose
             var response = await _flowClient.ExecuteScriptAtBlockIdAsync(script, latestBlock.Id);
 
+            Console.WriteLine(response.Decode());
             Console.WriteLine(JsonConvert.SerializeObject(response));
         }
     }

@@ -15,5 +15,10 @@ namespace Flow.Net.Sdk.Cadence
 
         [JsonProperty("value")]
         public string Value { get; set; }
+
+        public object Decode()
+        {
+            return Value;
+        }
     }
 }

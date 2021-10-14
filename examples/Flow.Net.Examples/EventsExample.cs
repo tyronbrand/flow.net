@@ -13,8 +13,8 @@ namespace Flow.Net.Examples
 
         public static async Task RunAsync()
         {
-            //var networkUrl = "127.0.0.1:3569"; // emulator
-            var networkUrl = "access.devnet.nodes.onflow.org:9000"; // testnet
+            var networkUrl = "127.0.0.1:3569"; // emulator
+            //var networkUrl = "access.devnet.nodes.onflow.org:9000"; // testnet
 
             _flowClient = FlowClientAsync.Create(networkUrl);
 

@@ -19,6 +19,15 @@ namespace Flow.Net.Sdk.Cadence
 
         [JsonProperty("value")]
         public IEnumerable<FlowDictionaryItem> Value { get; set; }
+
+        public object Decode()
+        {
+            var arrayItems = new Dictionary<object, object>();
+            foreach (var item in Value)
+                arrayItems.Add(item.Key.Decode(), item.Value.Decode());
+
+            return arrayItems;
+        }
     }
 
     public class FlowDictionaryItem
@@ -28,5 +37,5 @@ namespace Flow.Net.Sdk.Cadence
 
         [JsonProperty("value")]
         public ICadence Value { get; set; }
-    }
+    }    
 }
