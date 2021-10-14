@@ -15,6 +15,11 @@ namespace Flow.Net.Sdk.Cadence
 
         [JsonProperty("value")]
         public FlowCapabilityValue Value { get; set; }
+
+        public object Decode()
+        {
+            return Value;
+        }
     }
 
     public class FlowCapabilityValue
@@ -27,5 +32,5 @@ namespace Flow.Net.Sdk.Cadence
 
         [JsonProperty("borrowType")]
         public string BorrowType { get; set; }
-    }
+    }    
 }

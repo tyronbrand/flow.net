@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Numerics;
 
 namespace Flow.Net.Sdk.Cadence
 {
@@ -11,11 +12,16 @@ namespace Flow.Net.Sdk.Cadence
         {
             var jObject = JObject.Load(reader);
             var target = Create(jObject);
-            if (target.Type == "Optional")
+
+            switch (target.Type)
             {
-                var value = jObject.Property("value");
-                if (value.Value.Type == JTokenType.Null)
-                    return new CadenceOptional();
+                case "Optional":
+                    {
+                        var value = jObject.Property("value");
+                        if (value.Value.Type == JTokenType.Null)
+                            return new CadenceOptional();
+                    }
+                    break;
             }
 
             serializer.Populate(jObject.CreateReader(), target);
@@ -48,9 +54,13 @@ namespace Flow.Net.Sdk.Cadence
                 case "Optional":
                     return new CadenceOptional();
                 case "Path":
-                    return new CadencePath();                
-                case "Struct": case "Resource": case "Event": case "Contract": case "Enum":
-                    return new CadenceComposite(type);
+                    return new CadencePath();
+                case "Struct":
+                case "Resource":
+                case "Event":
+                case "Contract":
+                case "Enum":
+                    return new CadenceComposite((CadenceCompositeType)Enum.Parse(typeof(CadenceCompositeType), type));
                 case "Int":
                 case "UInt":
                 case "Int8":
@@ -71,7 +81,7 @@ namespace Flow.Net.Sdk.Cadence
                 case "Word64":
                 case "Fix64":
                 case "UFix64":
-                    return new CadenceNumber((FlowNumberType)Enum.Parse(typeof(FlowNumberType), type));
+                    return new CadenceNumber((CadenceNumberType)Enum.Parse(typeof(CadenceNumberType), type));
             }
 
             throw new Exception(string.Format("The type {0} is not supported!", type));

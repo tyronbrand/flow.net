@@ -1,18 +1,20 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Text;
 
 namespace Flow.Net.Sdk.Cadence
 {
     public class CadenceComposite : ICadence
     {
-        public CadenceComposite(string type)
+        public CadenceComposite(CadenceCompositeType type)
         {
-            Type = type;
+            Type = type.ToString();
         }
 
-        public CadenceComposite(string type, CadenceCompositeItem value)
+        public CadenceComposite(CadenceCompositeType type, CadenceCompositeItem value)
         {
-            Type = type;
+            Type = type.ToString();
             Value = value;
         }
 
@@ -21,6 +23,11 @@ namespace Flow.Net.Sdk.Cadence
 
         [JsonProperty("value")]
         public CadenceCompositeItem Value { get; set; }
+
+        public object Decode()
+        {            
+            return Value;
+        }
     }
 
     public class CadenceCompositeItem
@@ -29,7 +36,7 @@ namespace Flow.Net.Sdk.Cadence
         public string Id { get; set; }
 
         [JsonProperty("fields")]
-        public IEnumerable<CadenceCompositeItemField> Fields { get; set; }
+        public IEnumerable<CadenceCompositeItemField> Fields { get; set; }        
     }
 
     public class CadenceCompositeItemField
@@ -39,5 +46,14 @@ namespace Flow.Net.Sdk.Cadence
 
         [JsonProperty("value")]
         public ICadence Value { get; set; }
+    }
+
+    public enum CadenceCompositeType
+    {
+        Struct,
+        Resource,
+        Event,
+        Contract,
+        Enum
     }
 }

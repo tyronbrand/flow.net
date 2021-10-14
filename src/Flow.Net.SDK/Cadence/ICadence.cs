@@ -3,5 +3,7 @@
     public interface ICadence
     {
         string Type { get; }
+
+        object Decode();
     }
 }

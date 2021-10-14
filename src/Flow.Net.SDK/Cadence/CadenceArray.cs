@@ -5,7 +5,7 @@ namespace Flow.Net.Sdk.Cadence
 {
     public class CadenceArray : ICadence
     {
-        public CadenceArray() 
+        public CadenceArray()
         {
             Value = new List<ICadence>();
         }
@@ -21,5 +21,13 @@ namespace Flow.Net.Sdk.Cadence
         [JsonProperty("value")]
         public IEnumerable<ICadence> Value { get; set; }
 
+        public object Decode()
+        {
+            var arrayItems = new List<object>();
+            foreach(var item in Value)
+                arrayItems.Add(item.Decode());
+
+            return arrayItems.ToArray();
+        }
     }
 }
