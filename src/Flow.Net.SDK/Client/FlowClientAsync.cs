@@ -33,13 +33,20 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowClientAsync.</returns>
         public static FlowClientAsync Create(string flowNetworkUrl, bool channelCredentialsSecureSsl = false)
         {
-            var client = new AccessAPIClient(
+            try
+            {
+                var client = new AccessAPIClient(
                 new Channel(
                     flowNetworkUrl,
                     channelCredentialsSecureSsl ? ChannelCredentials.SecureSsl : ChannelCredentials.Insecure
                 ));
 
-            return new FlowClientAsync(client);
+                return new FlowClientAsync(client);
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException($"Failed to connect to {flowNetworkUrl}", exception);
+            }
         }
 
         /// <summary>
@@ -47,7 +54,14 @@ namespace Flow.Net.Sdk.Client
         /// </summary>
         public async Task PingAsync(CallOptions options = new CallOptions())
         {
-            await _client.PingAsync(new PingRequest(), options);
+            try
+            {
+                await _client.PingAsync(new PingRequest(), options);
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("Ping request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -58,13 +72,20 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowBlock.</returns>
         public async Task<FlowBlock> GetLatestBlockAsync(bool isSealed = true, CallOptions options = new CallOptions())
         {
-            var response = await _client.GetLatestBlockAsync(
+            try
+            {
+                var response = await _client.GetLatestBlockAsync(
                 new GetLatestBlockRequest()
                 {
                     IsSealed = isSealed
                 }, options);
 
-            return response.ToFlowBlock();
+                return response.ToFlowBlock();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetLatestBlock request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -75,13 +96,20 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowBlock.</returns>
         public async Task<FlowBlock> GetBlockByHeightAsync(ulong blockHeight, CallOptions options = new CallOptions())
         {
-            var response = await _client.GetBlockByHeightAsync(
+            try
+            {
+                var response = await _client.GetBlockByHeightAsync(
                 new GetBlockByHeightRequest()
                 {
                     Height = blockHeight
                 }, options);
 
-            return response.ToFlowBlock();
+                return response.ToFlowBlock();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetBlockByHeight request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -92,13 +120,20 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowBlock.</returns>
         public async Task<FlowBlock> GetBlockByIdAsync(ByteString blockId, CallOptions options = new CallOptions())
         {
-            var response = await _client.GetBlockByIDAsync(
+            try
+            {
+                var response = await _client.GetBlockByIDAsync(
                 new GetBlockByIDRequest()
                 {
                     Id = blockId
                 }, options);
 
-            return response.ToFlowBlock();
+                return response.ToFlowBlock();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetBlockById request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -109,13 +144,20 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowBlockHeader.</returns>
         public async Task<FlowBlockHeader> GetLatestBlockHeaderAsync(bool isSealed = true, CallOptions options = new CallOptions())
         {
-            var response = await _client.GetLatestBlockHeaderAsync(
-                new GetLatestBlockHeaderRequest
-                {
-                    IsSealed = isSealed
-                }, options);
+            try
+            {
+                var response = await _client.GetLatestBlockHeaderAsync(
+               new GetLatestBlockHeaderRequest
+               {
+                   IsSealed = isSealed
+               }, options);
 
-            return response.ToFlowBlockHeader();
+                return response.ToFlowBlockHeader();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetLatestBlockHeader request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -126,13 +168,20 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowBlockHeader.</returns>
         public async Task<FlowBlockHeader> GetBlockHeaderByHeightAsync(ulong blockHeaderHeight, CallOptions options = new CallOptions())
         {
-            var response = await _client.GetBlockHeaderByHeightAsync(
+            try
+            {
+                var response = await _client.GetBlockHeaderByHeightAsync(
                 new GetBlockHeaderByHeightRequest
                 {
                     Height = blockHeaderHeight
                 }, options);
 
-            return response.ToFlowBlockHeader();
+                return response.ToFlowBlockHeader();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetBlockHeaderByHeight request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -143,13 +192,20 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowBlockHeader.</returns>
         public async Task<FlowBlockHeader> GetBlockHeaderByIdAsync(ByteString blockHeaderId, CallOptions options = new CallOptions())
         {
-            var response = await _client.GetBlockHeaderByIDAsync(
+            try
+            {
+                var response = await _client.GetBlockHeaderByIDAsync(
                 new GetBlockHeaderByIDRequest
                 {
                     Id = blockHeaderId
                 }, options);
 
-            return response.ToFlowBlockHeader();
+                return response.ToFlowBlockHeader();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetBlockHeaderById request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -161,15 +217,22 @@ namespace Flow.Net.Sdk.Client
         /// <returns>ICadence.</returns>
         public async Task<ICadence> ExecuteScriptAtLatestBlockAsync(ByteString script, IEnumerable<ICadence> arguments = null, CallOptions options = new CallOptions())
         {
-            var request = new ExecuteScriptAtLatestBlockRequest()
+            try
             {
-                Script = script
-            };
+                var request = new ExecuteScriptAtLatestBlockRequest()
+                {
+                    Script = script
+                };
 
-            AddArgumentsToRequest(arguments, request.Arguments);
+                AddArgumentsToRequest(arguments, request.Arguments);
 
-            var response = await _client.ExecuteScriptAtLatestBlockAsync(request, options);
-            return JsonConvert.DeserializeObject<ICadence>(response.Value.FromByteStringToString(), _cadenceConverter);
+                var response = await _client.ExecuteScriptAtLatestBlockAsync(request, options);
+                return JsonConvert.DeserializeObject<ICadence>(response.Value.FromByteStringToString(), _cadenceConverter);
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("ExecuteScriptAtLatestBlock request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -182,16 +245,23 @@ namespace Flow.Net.Sdk.Client
         /// <returns>ICadence.</returns>
         public async Task<ICadence> ExecuteScriptAtBlockHeightAsync(ByteString script, ulong blockHeight, IEnumerable<ICadence> arguments = null, CallOptions options = new CallOptions())
         {
-            var request = new ExecuteScriptAtBlockHeightRequest()
+            try
             {
-                Script = script,
-                BlockHeight = blockHeight
-            };
+                var request = new ExecuteScriptAtBlockHeightRequest()
+                {
+                    Script = script,
+                    BlockHeight = blockHeight
+                };
 
-            AddArgumentsToRequest(arguments, request.Arguments);
+                AddArgumentsToRequest(arguments, request.Arguments);
 
-            var response = await _client.ExecuteScriptAtBlockHeightAsync(request, options);
-            return JsonConvert.DeserializeObject<ICadence>(response.Value.FromByteStringToString(), _cadenceConverter);
+                var response = await _client.ExecuteScriptAtBlockHeightAsync(request, options);
+                return JsonConvert.DeserializeObject<ICadence>(response.Value.FromByteStringToString(), _cadenceConverter);
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("ExecuteScriptAtBlockHeight request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -204,17 +274,24 @@ namespace Flow.Net.Sdk.Client
         /// <returns>ICadence.</returns>
         public async Task<ICadence> ExecuteScriptAtBlockIdAsync(ByteString script, ByteString blockId, IEnumerable<ICadence> arguments = null, CallOptions options = new CallOptions())
         {
-            var request = new ExecuteScriptAtBlockIDRequest()
+            try
             {
-                Script = script,
-                BlockId = blockId
-            };
+                var request = new ExecuteScriptAtBlockIDRequest()
+                {
+                    Script = script,
+                    BlockId = blockId
+                };
 
-            AddArgumentsToRequest(arguments, request.Arguments);
+                AddArgumentsToRequest(arguments, request.Arguments);
 
-            var response = await _client.ExecuteScriptAtBlockIDAsync(request, options);
+                var response = await _client.ExecuteScriptAtBlockIDAsync(request, options);
 
-            return JsonConvert.DeserializeObject<ICadence>(response.Value.FromByteStringToString(), _cadenceConverter);
+                return JsonConvert.DeserializeObject<ICadence>(response.Value.FromByteStringToString(), _cadenceConverter);
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("ExecuteScriptAtBlockId request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -227,17 +304,24 @@ namespace Flow.Net.Sdk.Client
         /// <returns>IEnumerable<FlowBlockEvent>.</returns>
         public async Task<IEnumerable<FlowBlockEvent>> GetEventsForHeightRangeAsync(string eventType, ulong startHeight, ulong endHeight, CallOptions options = new CallOptions())
         {
-            startHeight = startHeight >= 0 ? startHeight : 0;
+            try
+            {
+                startHeight = startHeight >= 0 ? startHeight : 0;
 
-            var response = await _client.GetEventsForHeightRangeAsync(
-                new GetEventsForHeightRangeRequest
-                {
-                    Type = eventType,
-                    StartHeight = startHeight,
-                    EndHeight = endHeight
-                }, options);
+                var response = await _client.GetEventsForHeightRangeAsync(
+                    new GetEventsForHeightRangeRequest
+                    {
+                        Type = eventType,
+                        StartHeight = startHeight,
+                        EndHeight = endHeight
+                    }, options);
 
-            return response.ToFlowBlockEvents();
+                return response.ToFlowBlockEvents();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetEventsForHeightRange request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -249,19 +333,26 @@ namespace Flow.Net.Sdk.Client
         /// <returns>IEnumerable<FlowBlockEvent>.</returns>
         public async Task<IEnumerable<FlowBlockEvent>> GetEventsForBlockIdsAsync(string eventType, IEnumerable<ByteString> blockIds, CallOptions options = new CallOptions())
         {
-            var request = new GetEventsForBlockIDsRequest
+            try
             {
-                Type = eventType
-            };
+                var request = new GetEventsForBlockIDsRequest
+                {
+                    Type = eventType
+                };
 
-            if (blockIds != null && blockIds.Count() > 0)
-            {
-                foreach (var block in blockIds)
-                    request.BlockIds.Add(block);
+                if (blockIds != null && blockIds.Count() > 0)
+                {
+                    foreach (var block in blockIds)
+                        request.BlockIds.Add(block);
+                }
+
+                var response = await _client.GetEventsForBlockIDsAsync(request, options);
+                return response.ToFlowBlockEvents();
             }
-
-            var response = await _client.GetEventsForBlockIDsAsync(request, options);
-            return response.ToFlowBlockEvents();
+            catch (Exception exception)
+            {
+                throw new FlowException("GetEventsForBlockIds request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -272,15 +363,22 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowSendTransactionResponse.</returns>
         public async Task<FlowSendTransactionResponse> SendTransactionAsync(FlowTransaction transaction, CallOptions options = new CallOptions())
         {
-            var tx = transaction.FromFlowTransaction();
+            try
+            {
+                var tx = transaction.FromFlowTransaction();
 
-            var response = await _client.SendTransactionAsync(
-                new SendTransactionRequest
-                {
-                    Transaction = tx
-                }, options);
+                var response = await _client.SendTransactionAsync(
+                    new SendTransactionRequest
+                    {
+                        Transaction = tx
+                    }, options);
 
-            return response.ToFlowSendTransactionResponse();
+                return response.ToFlowSendTransactionResponse();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("SendTransaction request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -291,13 +389,20 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowTransactionResponse.</returns>
         public async Task<FlowTransactionResponse> GetTransactionAsync(ByteString transactionId, CallOptions options = new CallOptions())
         {
-            var response =  await _client.GetTransactionAsync(
+            try
+            {
+                var response = await _client.GetTransactionAsync(
                 new GetTransactionRequest()
                 {
                     Id = transactionId
                 }, options);
 
-            return response.ToFlowTransactionResponse();
+                return response.ToFlowTransactionResponse();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetTransaction request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -308,13 +413,20 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowTransactionResult.</returns>
         public async Task<FlowTransactionResult> GetTransactionResultAsync(ByteString transactionId, CallOptions options = new CallOptions())
         {
-            var response = await _client.GetTransactionResultAsync(
+            try
+            {
+                var response = await _client.GetTransactionResultAsync(
                 new GetTransactionRequest
                 {
                     Id = transactionId
                 }, options);
 
-            return response.ToFlowTransactionResult();
+                return response.ToFlowTransactionResult();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetTransactionResult request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -325,13 +437,20 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowCollectionResponse.</returns>
         public async Task<FlowCollectionResponse> GetCollectionByIdAsync(ByteString collectionId, CallOptions options = new CallOptions())
         {
-            var response =  await _client.GetCollectionByIDAsync(
+            try
+            {
+                var response = await _client.GetCollectionByIDAsync(
                 new GetCollectionByIDRequest
                 {
                     Id = collectionId
                 }, options);
 
-            return response.ToFlowCollectionResponse();
+                return response.ToFlowCollectionResponse();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetCollectionById request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -341,13 +460,20 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowExecutionResultForBlockIDResponse.</returns>
         public async Task<FlowExecutionResultForBlockIDResponse> GetExecutionResultForBlockIdAsync(ByteString blockId, CallOptions options = new CallOptions())
         {
-            var response = await _client.GetExecutionResultForBlockIDAsync(
+            try
+            {
+                var response = await _client.GetExecutionResultForBlockIDAsync(
                 new GetExecutionResultForBlockIDRequest
                 {
                     BlockId = blockId
                 }, options);
 
-            return response.ToFlowExecutionResultForBlockIDResponse();
+                return response.ToFlowExecutionResultForBlockIDResponse();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetExecutionResultForBlockId request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -358,9 +484,16 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowProtocolStateSnapshotResponse.</returns>
         public async Task<FlowProtocolStateSnapshotResponse> GetLatestProtocolStateSnapshotAsync(CallOptions options = new CallOptions())
         {
-            var response =  await _client.GetLatestProtocolStateSnapshotAsync(new GetLatestProtocolStateSnapshotRequest(), options);
+            try
+            {
+                var response = await _client.GetLatestProtocolStateSnapshotAsync(new GetLatestProtocolStateSnapshotRequest(), options);
 
-            return response.ToFlowProtocolStateSnapshotResponse();
+                return response.ToFlowProtocolStateSnapshotResponse();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetLatestProtocolStateSnapshot request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -370,9 +503,16 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowGetNetworkParametersResponse.</returns>
         public async Task<FlowGetNetworkParametersResponse> GetNetworkParametersAsync(CallOptions options = new CallOptions())
         {
-            var response = await _client.GetNetworkParametersAsync(new GetNetworkParametersRequest(), options);
+            try
+            {
+                var response = await _client.GetNetworkParametersAsync(new GetNetworkParametersRequest(), options);
 
-            return response.ToFlowGetNetworkParametersResponse();
+                return response.ToFlowGetNetworkParametersResponse();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetLatestProtocolStateSnapshot request failed.", exception);
+            }
         }
 
         /// <summary>
@@ -383,13 +523,20 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowAccount.</returns>
         public async Task<FlowAccount> GetAccountAtLatestBlockAsync(ByteString address, CallOptions options = new CallOptions())
         {
-            var response = await _client.GetAccountAtLatestBlockAsync(
+            try
+            {
+                var response = await _client.GetAccountAtLatestBlockAsync(
                 new GetAccountAtLatestBlockRequest
-                { 
+                {
                     Address = address
                 }, options);
 
-            return response.ToFlowAccount();
+                return response.ToFlowAccount();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetAccountAtLatestBlock request failed.", exception);
+            }            
         }
 
         /// <summary>
@@ -401,14 +548,21 @@ namespace Flow.Net.Sdk.Client
         /// <returns>FlowAccount.</returns>
         public async Task<FlowAccount> GetAccountAtBlockHeightAsync(ByteString address, ulong blockHeight, CallOptions options = new CallOptions())
         {
-            var response = await _client.GetAccountAtBlockHeightAsync(
+            try
+            {
+                var response = await _client.GetAccountAtBlockHeightAsync(
                 new GetAccountAtBlockHeightRequest
                 {
                     Address = address,
                     BlockHeight = blockHeight
                 }, options);
 
-            return response.ToFlowAccount();
+                return response.ToFlowAccount();
+            }
+            catch(Exception exception)
+            {
+                throw new FlowException("GetAccountAtBlockHeight request failed.", exception);
+            }            
         }
 
         /// <summary>
@@ -427,7 +581,7 @@ namespace Flow.Net.Sdk.Client
                     return result;
 
                 if (DateTime.UtcNow.Subtract(startTime).TotalMilliseconds > timeoutMS)
-                    throw new TimeoutException("Timed out waiting for seal");
+                    throw new FlowException("Timed out waiting for seal.");
 
                 await Task.Delay(delayMs);
             }
@@ -444,7 +598,7 @@ namespace Flow.Net.Sdk.Client
             config.Accounts.TryGetValue(accountName, out FlowConfigAccount configAccount);
 
             if (configAccount == null)
-                throw new Exception($"Failed to find account \"{accountName}\"");
+                throw new FlowException($"Failed to find account \"{accountName}\"");
 
             var flowAccount = await GetAccountAtLatestBlockAsync(configAccount.Address.FromHexToByteString());
 
