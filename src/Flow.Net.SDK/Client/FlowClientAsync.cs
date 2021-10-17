@@ -227,7 +227,7 @@ namespace Flow.Net.Sdk.Client
                 AddArgumentsToRequest(arguments, request.Arguments);
 
                 var response = await _client.ExecuteScriptAtLatestBlockAsync(request, options);
-                return JsonConvert.DeserializeObject<ICadence>(response.Value.FromByteStringToString(), _cadenceConverter);
+                return response.Value.FromByteStringToString().Decode(_cadenceConverter);
             }
             catch (Exception exception)
             {
@@ -256,7 +256,7 @@ namespace Flow.Net.Sdk.Client
                 AddArgumentsToRequest(arguments, request.Arguments);
 
                 var response = await _client.ExecuteScriptAtBlockHeightAsync(request, options);
-                return JsonConvert.DeserializeObject<ICadence>(response.Value.FromByteStringToString(), _cadenceConverter);
+                return response.Value.FromByteStringToString().Decode(_cadenceConverter);
             }
             catch (Exception exception)
             {
@@ -286,7 +286,7 @@ namespace Flow.Net.Sdk.Client
 
                 var response = await _client.ExecuteScriptAtBlockIDAsync(request, options);
 
-                return JsonConvert.DeserializeObject<ICadence>(response.Value.FromByteStringToString(), _cadenceConverter);
+                return response.Value.FromByteStringToString().Decode(_cadenceConverter);
             }
             catch (Exception exception)
             {
@@ -631,7 +631,7 @@ namespace Flow.Net.Sdk.Client
             if (arguments != null && arguments.Count() > 0)
             {
                 foreach (var argument in arguments)
-                    requestArguments.Add(JsonConvert.SerializeObject(argument).FromStringToByteString());
+                    requestArguments.Add(argument.Encode().FromStringToByteString());
             }
         }
     }

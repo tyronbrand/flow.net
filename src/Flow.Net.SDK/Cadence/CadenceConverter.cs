@@ -55,6 +55,8 @@ namespace Flow.Net.Sdk.Cadence
                     return new CadenceOptional();
                 case "Path":
                     return new CadencePath();
+                case "Link":
+                    return new CadenceLink();
                 case "Struct":
                 case "Resource":
                 case "Event":

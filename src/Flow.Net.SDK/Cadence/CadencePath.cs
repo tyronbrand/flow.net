@@ -5,7 +5,7 @@ namespace Flow.Net.Sdk.Cadence
     public class CadencePath : ICadence
     {
         public CadencePath() {}
-        public CadencePath(FlowPathValue value)
+        public CadencePath(CadencePathValue value)
         {
             Value = value;
         }
@@ -14,15 +14,10 @@ namespace Flow.Net.Sdk.Cadence
         public string Type => "Path";
 
         [JsonProperty("value")]
-        public FlowPathValue Value { get; set; }
-
-        public object Decode()
-        {
-            return Value;
-        }
+        public CadencePathValue Value { get; set; }
     }
 
-    public class FlowPathValue
+    public class CadencePathValue
     {
         [JsonProperty("domain")]
         public string Domain { get; set; }

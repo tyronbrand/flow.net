@@ -23,11 +23,6 @@ namespace Flow.Net.Sdk.Cadence
 
         [JsonProperty("value")]
         public CadenceCompositeItem Value { get; set; }
-
-        public object Decode()
-        {            
-            return Value;
-        }
     }
 
     public class CadenceCompositeItem
@@ -36,10 +31,10 @@ namespace Flow.Net.Sdk.Cadence
         public string Id { get; set; }
 
         [JsonProperty("fields")]
-        public IEnumerable<CadenceCompositeItemField> Fields { get; set; }        
+        public IEnumerable<CadenceCompositeItemValue> Fields { get; set; }        
     }
 
-    public class CadenceCompositeItemField
+    public class CadenceCompositeItemValue
     {
         [JsonProperty("name")]
         public string Name { get; set; }

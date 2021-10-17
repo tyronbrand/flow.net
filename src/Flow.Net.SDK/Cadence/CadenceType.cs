@@ -5,7 +5,7 @@ namespace Flow.Net.Sdk.Cadence
     public class CadenceType : ICadence
     {
         public CadenceType() {}
-        public CadenceType(FlowTypeValue value)
+        public CadenceType(CadenceTypeValue value)
         {
             Value = value;
         }
@@ -14,15 +14,10 @@ namespace Flow.Net.Sdk.Cadence
         public string Type => "Type";
 
         [JsonProperty("value")]
-        public FlowTypeValue Value { get; set; }
-
-        public object Decode()
-        {
-            return Value;
-        }
+        public CadenceTypeValue Value { get; set; }
     }
 
-    public class FlowTypeValue
+    public class CadenceTypeValue
     {
         [JsonProperty("staticType")]
         public string StaticType { get; set; }

@@ -7,9 +7,9 @@ namespace Flow.Net.Sdk.Cadence
     {
         public CadenceDictionary() 
         {
-            Value = new List<FlowDictionaryItem>();
+            Value = new List<CadenceDictionaryKeyValue>();
         }
-        public CadenceDictionary(IEnumerable<FlowDictionaryItem> value)
+        public CadenceDictionary(IEnumerable<CadenceDictionaryKeyValue> value)
         {
             Value = value;
         }
@@ -18,19 +18,10 @@ namespace Flow.Net.Sdk.Cadence
         public string Type => "Dictionary";
 
         [JsonProperty("value")]
-        public IEnumerable<FlowDictionaryItem> Value { get; set; }
-
-        public object Decode()
-        {
-            var arrayItems = new Dictionary<object, object>();
-            foreach (var item in Value)
-                arrayItems.Add(item.Key.Decode(), item.Value.Decode());
-
-            return arrayItems;
-        }
+        public IEnumerable<CadenceDictionaryKeyValue> Value { get; set; }
     }
 
-    public class FlowDictionaryItem
+    public class CadenceDictionaryKeyValue
     {
         [JsonProperty("key")]
         public ICadence Key { get; set; }

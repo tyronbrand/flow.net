@@ -15,22 +15,17 @@ namespace Flow.Net.Sdk.Cadence
 
         [JsonProperty("value")]
         public FlowCapabilityValue Value { get; set; }
-
-        public object Decode()
-        {
-            return Value;
-        }
     }
 
     public class FlowCapabilityValue
     {
         [JsonProperty("path")]
-        public string Path { get; set; }
-
-        [JsonProperty("address")]
-        public string Address { get; set; }
+        public CadencePath Path { get; set; }
 
         [JsonProperty("borrowType")]
         public string BorrowType { get; set; }
+
+        [JsonProperty("address")]
+        public string Address { get; set; }        
     }    
 }
