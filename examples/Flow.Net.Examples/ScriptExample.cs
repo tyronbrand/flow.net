@@ -38,8 +38,10 @@ namespace Flow.Net.Examples
 
             var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script, arguments);
 
-            Console.WriteLine(response.Decode());
-            Console.WriteLine(JsonConvert.SerializeObject(response));
+            var cadenceNumber = response.AsCadenceType<CadenceNumber>();
+            cadenceNumber.Value = "123";
+
+            Console.WriteLine(JsonConvert.SerializeObject(cadenceNumber));
         }
 
         public static async Task ExecuteScriptAtLatestBlockExample()
@@ -48,7 +50,6 @@ namespace Flow.Net.Examples
 
             var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script);
 
-            Console.WriteLine(response.Decode());
             Console.WriteLine(JsonConvert.SerializeObject(response));
         }
 
@@ -59,7 +60,6 @@ namespace Flow.Net.Examples
             var latestBlock = await _flowClient.GetLatestBlockAsync(); // getting a height for example purpose
             var response = await _flowClient.ExecuteScriptAtBlockHeightAsync(script, latestBlock.Height);
 
-            Console.WriteLine(response.Decode());
             Console.WriteLine(JsonConvert.SerializeObject(response));
         }
 
@@ -70,7 +70,6 @@ namespace Flow.Net.Examples
             var latestBlock = await _flowClient.GetLatestBlockAsync(); // getting a height for example purpose
             var response = await _flowClient.ExecuteScriptAtBlockIdAsync(script, latestBlock.Id);
 
-            Console.WriteLine(response.Decode());
             Console.WriteLine(JsonConvert.SerializeObject(response));
         }
     }

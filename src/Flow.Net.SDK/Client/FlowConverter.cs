@@ -157,7 +157,7 @@ namespace Flow.Net.Sdk.Client
             {
                 foreach(var value in cadenceValues)
                 {
-                    var serialized = JsonConvert.SerializeObject(value);
+                    var serialized = value.Encode();
                     arguments.Add(serialized.FromStringToByteString());
                 }                                                       
             }
@@ -240,7 +240,7 @@ namespace Flow.Net.Sdk.Client
             {
                 Type = @event.Type,
                 EventIndex = @event.EventIndex,
-                Payload = JsonConvert.DeserializeObject<ICadence>(@event.Payload.FromByteStringToString(), _cadenceConverter),
+                Payload = @event.Payload.FromByteStringToString().Decode(_cadenceConverter),
                 TransactionId = @event.TransactionId,
                 TransactionIndex = @event.TransactionIndex
             };
