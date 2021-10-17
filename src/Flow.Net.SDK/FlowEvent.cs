@@ -1,7 +1,7 @@
 ﻿using Flow.Net.Sdk.Cadence;
 using Google.Protobuf;
 
-namespace Flow.Net.Sdk.Models
+namespace Flow.Net.Sdk
 {
     public class FlowEvent
     {        

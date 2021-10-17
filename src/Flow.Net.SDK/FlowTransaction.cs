@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Flow.Net.Sdk.Models
+namespace Flow.Net.Sdk
 {
     public class FlowTransaction
     {

@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Flow.Net.Sdk.Models.EventType
+namespace Flow.Net.Sdk.EventType
 {
     public class AccountCreated
     {

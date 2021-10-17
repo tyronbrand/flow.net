@@ -2,7 +2,7 @@
 using Google.Protobuf;
 using System.Collections.Generic;
 
-namespace Flow.Net.Sdk.Models
+namespace Flow.Net.Sdk
 {
     public class FlowTransactionResult
     {

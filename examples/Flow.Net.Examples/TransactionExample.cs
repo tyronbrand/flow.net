@@ -1,7 +1,6 @@
 ﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Client;
-using Flow.Net.Sdk.Models;
-using Flow.Net.Sdk.Models.EventType;
+using Flow.Net.Sdk.EventType;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
