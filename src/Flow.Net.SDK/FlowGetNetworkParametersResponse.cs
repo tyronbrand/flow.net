@@ -1,4 +1,4 @@
-﻿namespace Flow.Net.Sdk.Models
+﻿namespace Flow.Net.Sdk
 {
     public class FlowGetNetworkParametersResponse
     {

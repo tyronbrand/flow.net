@@ -1,10 +1,8 @@
 ﻿using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Protos.access;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
 using Grpc.Core;
-using Newtonsoft.Json;
 using Org.BouncyCastle.Crypto.Parameters;
 using System;
 using System.Collections.Generic;

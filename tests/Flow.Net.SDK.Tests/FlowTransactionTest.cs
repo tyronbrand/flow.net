@@ -1,6 +1,6 @@
 ﻿using Flow.Net.Sdk.Client;
 using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Models;
+using Flow.Net.Sdk;
 using Nethereum.RLP;
 using System;
 using System.Collections.Generic;

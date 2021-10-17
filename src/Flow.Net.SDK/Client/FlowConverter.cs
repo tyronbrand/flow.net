@@ -1,8 +1,6 @@
 ﻿using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Protos.access;
 using Google.Protobuf;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
