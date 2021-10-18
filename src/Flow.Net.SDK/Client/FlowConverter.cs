@@ -145,23 +145,7 @@ namespace Flow.Net.Sdk.Client
             {
                 Id = sendTransactionResponse.Id
             };
-        }
-
-        public static IList<ByteString> ToTransactionArguments(this IEnumerable<ICadence> cadenceValues)
-        {
-            var arguments = new List<ByteString>();
-
-            if(cadenceValues != null && cadenceValues.Count() > 0)
-            {
-                foreach(var value in cadenceValues)
-                {
-                    var serialized = value.Encode();
-                    arguments.Add(serialized.FromStringToByteString());
-                }                                                       
-            }
-
-            return arguments;
-        }
+        }        
 
         public static FlowBlockHeader ToFlowBlockHeader(this BlockHeaderResponse blockHeaderResponse)
         {

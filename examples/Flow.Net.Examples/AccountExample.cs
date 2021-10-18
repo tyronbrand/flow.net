@@ -102,7 +102,7 @@ namespace Flow.Net.Examples
             tx.Authorizers.Add(serviceAccount.Address);
 
             // sign
-            tx = FlowTransaction.AddEnvelopeSignature(tx, serviceAccount.Address, serviceAccountKey.Index, serviceAccountKey.Signer);
+            tx.AddEnvelopeSignature(serviceAccount.Address, serviceAccountKey.Index, serviceAccountKey.Signer);
 
             // send transaction
             var txResponse = await _flowClient.SendTransactionAsync(tx);
@@ -154,7 +154,7 @@ namespace Flow.Net.Examples
             tx.Authorizers.Add(newAccount.Address);
 
             // sign
-            tx = FlowTransaction.AddEnvelopeSignature(tx, newAccount.Address, newAccountKey.Index, newAccountKey.Signer);
+            tx.AddEnvelopeSignature(newAccount.Address, newAccountKey.Index, newAccountKey.Signer);
 
             // send transaction
             var txResponse = await _flowClient.SendTransactionAsync(tx);
@@ -205,7 +205,7 @@ namespace Flow.Net.Examples
             tx.Authorizers.Add(newAccount.Address);
 
             // sign
-            tx = FlowTransaction.AddEnvelopeSignature(tx, newAccount.Address, newAccountKey.Index, newAccountKey.Signer);
+            tx.AddEnvelopeSignature(newAccount.Address, newAccountKey.Index, newAccountKey.Signer);
 
             // send transaction
             var txResponse = await _flowClient.SendTransactionAsync(tx);
@@ -254,7 +254,7 @@ namespace Flow.Net.Examples
             tx.Authorizers.Add(newAccount.Address);
 
             // sign
-            tx = FlowTransaction.AddEnvelopeSignature(tx, newAccount.Address, newAccountKey.Index, newAccountKey.Signer);
+            tx.AddEnvelopeSignature(newAccount.Address, newAccountKey.Index, newAccountKey.Signer);
 
             // send transaction
             var txResponse = await _flowClient.SendTransactionAsync(tx);
