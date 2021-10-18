@@ -245,7 +245,7 @@ namespace Flow.Net.Sdk.Client
                 flowAccount.Keys.Add(
                     new FlowAccountKey
                     {
-                        HasAlgorithm = (HashAlgo)key.HashAlgo,
+                        HashAlgorithm = (HashAlgo)key.HashAlgo,
                         SignatureAlgorithm = (SignatureAlgo)key.SignAlgo,
                         Index = key.Index,
                         PublicKey = key.PublicKey.FromByteStringToHex(),

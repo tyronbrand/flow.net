@@ -616,7 +616,7 @@ namespace Flow.Net.Sdk.Client
                         flowAccountKey.PrivateKey = configAccount.Key;
 
                         var privateKey = keyPair.Private as ECPrivateKeyParameters;
-                        flowAccountKey.Signer = new Crypto.Ecdsa.Signer(privateKey, flowAccountKey.HasAlgorithm, flowAccountKey.SignatureAlgorithm);
+                        flowAccountKey.Signer = new Crypto.Ecdsa.Signer(privateKey, flowAccountKey.HashAlgorithm, flowAccountKey.SignatureAlgorithm);
                     }
                 }
             }
