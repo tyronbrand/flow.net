@@ -6,11 +6,11 @@ namespace Flow.Net.Examples
     {
         static async Task Main(string[] args)
         {
-            await BlockExample.RunAsync();
-            await ScriptExample.RunAsync();
-            await EventsExample.RunAsync();
+            //await BlockExample.RunAsync();
+            //await ScriptExample.RunAsync();
+            //await EventsExample.RunAsync();
             await AccountExample.RunAsync();
-            await TransactionExample.RunAsync();
+            //await TransactionExample.RunAsync();
         }
     }
 }

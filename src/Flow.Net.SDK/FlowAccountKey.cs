@@ -12,7 +12,7 @@ namespace Flow.Net.Sdk
         public string PublicKey { get; set; }
         public string PrivateKey { get; set; }
         public SignatureAlgo SignatureAlgorithm { get; set; }
-        public HashAlgo HasAlgorithm { get; set; }
+        public HashAlgo HashAlgorithm { get; set; }
         public uint Weight { get; set; }
         public ulong SequenceNumber { get; set; }
         public bool Revoked { get; set; }
@@ -29,7 +29,7 @@ namespace Flow.Net.Sdk
                 PrivateKey = privateKey,
                 PublicKey = publicKey,
                 SignatureAlgorithm = signatureAlgo,
-                HasAlgorithm = hashAlgo,                
+                HashAlgorithm = hashAlgo,                
                 Weight = weight
             };
         }
@@ -40,7 +40,7 @@ namespace Flow.Net.Sdk
             {
                 RLP.EncodeElement(flowAccountKey.PublicKey.FromHexToBytes()),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes((uint)flowAccountKey.SignatureAlgorithm))),
-                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes((uint)flowAccountKey.HasAlgorithm))),
+                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes((uint)flowAccountKey.HashAlgorithm))),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowAccountKey.Weight)))
             };
 
@@ -55,7 +55,7 @@ namespace Flow.Net.Sdk
                 if(currentKey != null && !string.IsNullOrEmpty(currentKey.PrivateKey))
                 {
                     key.PrivateKey = currentKey.PrivateKey;
-                    key.Signer = Crypto.Ecdsa.Utilities.CreateSigner(key.PrivateKey, key.SignatureAlgorithm, key.HasAlgorithm);
+                    key.Signer = Crypto.Ecdsa.Utilities.CreateSigner(key.PrivateKey, key.SignatureAlgorithm, key.HashAlgorithm);
                 }
             }
 
