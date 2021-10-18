@@ -55,7 +55,7 @@ namespace Flow.Net.Examples
             tx.Authorizers.Add(account1.Address);
 
             // account 1 signs the envelope with key 1
-            tx = FlowTransaction.AddEnvelopeSignature(tx, account1.Address, account1Key.Index, account1Key.Signer);
+            tx.AddEnvelopeSignature(account1.Address, account1Key.Index, account1Key.Signer);
 
             // send transaction
             var txResponse = await _flowClient.SendTransactionAsync(tx);
@@ -91,10 +91,10 @@ namespace Flow.Net.Examples
             tx.Authorizers.Add(account1.Address);
 
             // account 1 signs the envelope with key 1
-            tx = FlowTransaction.AddEnvelopeSignature(tx, account1.Address, account1Key1.Index, account1Key1.Signer);
+            tx.AddEnvelopeSignature(account1.Address, account1Key1.Index, account1Key1.Signer);
 
             // account 1 signs the envelope with key 2
-            tx = FlowTransaction.AddEnvelopeSignature(tx, account1.Address, account1Key2.Index, account1Key2.Signer);
+            tx.AddEnvelopeSignature(account1.Address, account1Key2.Index, account1Key2.Signer);
                         
             // send transaction
             var txResponse = await _flowClient.SendTransactionAsync(tx);
@@ -132,10 +132,10 @@ namespace Flow.Net.Examples
             tx.Authorizers.Add(account1.Address);
 
             // account 1 signs the payload with key 1
-            tx = FlowTransaction.AddPayloadSignature(tx, account1.Address, account1Key.Index, account1Key.Signer);
+            tx.AddPayloadSignature(account1.Address, account1Key.Index, account1Key.Signer);
 
             // account 2 signs the envelope
-            tx = FlowTransaction.AddEnvelopeSignature(tx, account2.Address, account2Key.Index, account2Key.Signer);
+            tx.AddEnvelopeSignature(account2.Address, account2Key.Index, account2Key.Signer);
 
             // send transaction
             var txResponse = await _flowClient.SendTransactionAsync(tx);
@@ -180,10 +180,10 @@ transaction {
             tx.Authorizers.Add(account2.Address);
 
             // account 1 signs the payload with key 1
-            tx = FlowTransaction.AddPayloadSignature(tx, account1.Address, account1Key.Index, account1Key.Signer);
+            tx.AddPayloadSignature(account1.Address, account1Key.Index, account1Key.Signer);
 
             // account 2 signs the envelope
-            tx = FlowTransaction.AddEnvelopeSignature(tx, account2.Address, account2Key.Index, account2Key.Signer);
+            tx.AddEnvelopeSignature(account2.Address, account2Key.Index, account2Key.Signer);
 
             // send transaction
             var txResponse = await _flowClient.SendTransactionAsync(tx);
@@ -221,16 +221,16 @@ transaction {
             tx.Authorizers.Add(account1.Address);
 
             // account 1 signs the payload with key 1
-            tx = FlowTransaction.AddPayloadSignature(tx, account1.Address, account1.Keys[0].Index, account1.Keys[0].Signer);
+            tx.AddPayloadSignature(account1.Address, account1.Keys[0].Index, account1.Keys[0].Signer);
 
             // account 1 signs the payload with key 2
-            tx = FlowTransaction.AddPayloadSignature(tx, account1.Address, account1.Keys[1].Index, account1.Keys[1].Signer);
+            tx.AddPayloadSignature(account1.Address, account1.Keys[1].Index, account1.Keys[1].Signer);
 
             // account 2 signs the envelope with key 3
-            tx = FlowTransaction.AddEnvelopeSignature(tx, account2.Address, account2.Keys[0].Index, account2.Keys[0].Signer);
+            tx.AddEnvelopeSignature(account2.Address, account2.Keys[0].Index, account2.Keys[0].Signer);
 
             // account 2 signs the envelope with key 3
-            tx = FlowTransaction.AddEnvelopeSignature(tx, account2.Address, account2.Keys[1].Index, account2.Keys[1].Signer);
+            tx.AddEnvelopeSignature(account2.Address, account2.Keys[1].Index, account2.Keys[1].Signer);
 
             // send transaction
             var txResponse = await _flowClient.SendTransactionAsync(tx);

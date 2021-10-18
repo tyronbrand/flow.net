@@ -7,62 +7,14 @@ using System.Linq;
 
 namespace Flow.Net.Sdk
 {
-    public class FlowTransaction
+    public class FlowTransaction : FlowTransactionBase
     {
         public FlowTransaction()
         {
-            Arguments = new List<ByteString>();
-            Authorizers = new List<ByteString>();
-            PayloadSignatures = new List<FlowSignature>();
-            EnvelopeSignatures = new List<FlowSignature>();
-            GasLimit = 9999;
             SignerList = new Dictionary<ByteString, int>();
         }
 
-        public string Script { get; set; }
-        public IList<ByteString> Arguments { get; set; }
-        public ByteString ReferenceBlockId { get; set; }
-        public ulong GasLimit { get; set; }
-        public ByteString Payer { get; set; }
-        public FlowProposalKey ProposalKey { get; set; }
-        public IList<ByteString> Authorizers { get; set; }
-        public IList<FlowSignature> PayloadSignatures { get; set; }
-        public IList<FlowSignature> EnvelopeSignatures { get; set; }
-        private static IDictionary<ByteString, int> SignerList { get; set; }
-
-        public static FlowTransaction AddPayloadSignature(FlowTransaction flowTransaction, ByteString address, uint keyId, ISigner signer)
-        {
-            var canonicalPayload = CanonicalPayload(flowTransaction);
-            var message = DomainTag.AddTransactionDomainTag(canonicalPayload);
-            var signature = signer.Sign(message);
-
-            flowTransaction.PayloadSignatures.Add(
-                new FlowSignature
-                {
-                    Address = address,
-                    KeyId = keyId,
-                    Signature = signature
-                });
-
-            return flowTransaction;
-        }
-
-        public static FlowTransaction AddEnvelopeSignature(FlowTransaction flowTransaction, ByteString address, uint keyId, ISigner signer)
-        {
-            var canonicalAuthorizationEnvelope = CanonicalAuthorizationEnvelope(flowTransaction);
-            var message = DomainTag.AddTransactionDomainTag(canonicalAuthorizationEnvelope);
-            var signature = signer.Sign(message);
-
-            flowTransaction.EnvelopeSignatures.Add(
-                new FlowSignature
-                {
-                    Address = address,
-                    KeyId = keyId,
-                    Signature = signature
-                });
-
-            return flowTransaction;
-        }
+        private static IDictionary<ByteString, int> SignerList { get; set; }        
 
         public static byte[] CanonicalPayload(FlowTransaction flowTransaction)
         {
@@ -149,6 +101,43 @@ namespace Flow.Net.Sdk
             };
 
             return RLP.EncodeList(authEnvelopeElements.ToArray());
+        }
+    }
+
+    public static class FlowTransactionExtensions
+    {
+        public static FlowTransaction AddPayloadSignature(this FlowTransaction flowTransaction, ByteString address, uint keyId, ISigner signer)
+        {
+            var canonicalPayload = FlowTransaction.CanonicalPayload(flowTransaction);
+            var message = DomainTag.AddTransactionDomainTag(canonicalPayload);
+            var signature = signer.Sign(message);
+
+            flowTransaction.PayloadSignatures.Add(
+                new FlowSignature
+                {
+                    Address = address,
+                    KeyId = keyId,
+                    Signature = signature
+                });
+
+            return flowTransaction;
+        }
+
+        public static FlowTransaction AddEnvelopeSignature(this FlowTransaction flowTransaction, ByteString address, uint keyId, ISigner signer)
+        {
+            var canonicalAuthorizationEnvelope = FlowTransaction.CanonicalAuthorizationEnvelope(flowTransaction);
+            var message = DomainTag.AddTransactionDomainTag(canonicalAuthorizationEnvelope);
+            var signature = signer.Sign(message);
+
+            flowTransaction.EnvelopeSignatures.Add(
+                new FlowSignature
+                {
+                    Address = address,
+                    KeyId = keyId,
+                    Signature = signature
+                });
+
+            return flowTransaction;
         }
     }
 }
