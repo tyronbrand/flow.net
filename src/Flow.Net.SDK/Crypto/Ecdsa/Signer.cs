@@ -20,6 +20,13 @@ namespace Flow.Net.Sdk.Crypto.Ecdsa
             SignatureCurveName = Utilities.SignatureAlgorithmCurveName(signatureAlgo);
         }
 
+        public Signer(string privateKey, HashAlgo hashAlgorithm, SignatureAlgo signatureAlgo)
+        {
+            PrivateKey = Utilities.GeneratePrivateKeyFromHex(privateKey, signatureAlgo);
+            HashAlgo = hashAlgorithm;
+            SignatureCurveName = Utilities.SignatureAlgorithmCurveName(signatureAlgo);
+        }
+
         public byte[] Sign(byte[] bytes)
         {
             var curve = ECNamedCurveTable.GetByName(SignatureCurveName);
