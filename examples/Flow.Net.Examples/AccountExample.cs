@@ -120,11 +120,10 @@ namespace Flow.Net.Examples
             // get new account deatils
             var newAccount = await _flowClient.GetAccountAtLatestBlockAsync(accountAddress.FromHexToByteString());
 
-            // update keys and generate signer (you could skip this and create your own signer if you wanted)
-            newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(new List<FlowAccountKey> { flowAccountKey }, newAccount.Keys);
-
             // selecting a key to use for the transaction
             var newAccountKey = newAccount.Keys.FirstOrDefault();
+            // create ecdsa signer
+            var newAccountSigner = new Sdk.Crypto.Ecdsa.Signer(flowAccountKey.PrivateKey, flowAccountKey.HashAlgorithm, flowAccountKey.SignatureAlgorithm);            
 
             var helloWorldContract = Utilities.ReadCadenceScript("hello-world-contract");
             var script = Utilities.ReadCadenceScript("add-contract");
@@ -154,7 +153,7 @@ namespace Flow.Net.Examples
             tx.Authorizers.Add(newAccount.Address);
 
             // sign
-            tx.AddEnvelopeSignature(newAccount.Address, newAccountKey.Index, newAccountKey.Signer);
+            tx.AddEnvelopeSignature(newAccount.Address, newAccountKey.Index, newAccountSigner);
 
             // send transaction
             var txResponse = await _flowClient.SendTransactionAsync(tx);
