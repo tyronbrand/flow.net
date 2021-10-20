@@ -2,6 +2,15 @@
 	
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
+		<Authors>Tyron Brand</Authors>
+		<Version>0.0.1</Version>
+		<Company>Tyron Brand</Company>
+		<Description>.Net SDK for Flow</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/tyronbrand/flow.net</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/tyronbrand/flow.net</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags></PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
