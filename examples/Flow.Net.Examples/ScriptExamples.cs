@@ -8,14 +8,13 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples
 {
-    public class ScriptExample
+    public class ScriptExamples
     {
         public static FlowClientAsync _flowClient;
 
         public static async Task RunAsync()
         {
             var networkUrl = "127.0.0.1:3569"; // emulator
-            //var networkUrl = "access.devnet.nodes.onflow.org:9000"; // testnet
 
             _flowClient = FlowClientAsync.Create(networkUrl);
 

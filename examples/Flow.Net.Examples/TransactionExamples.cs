@@ -1,25 +1,22 @@
 ﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Client;
-using Flow.Net.Sdk.EventType;
-using Newtonsoft.Json;
+using Flow.Net.Sdk.Cadence;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Flow.Net.Sdk.Templates;
 
 namespace Flow.Net.Examples
 {
-    public class TransactionExample
+    public class TransactionExamples
     {
         public static FlowClientAsync _flowClient;
-        public static FlowConfig _flowConfig;
 
         public static async Task RunAsync()
         {
             var networkUrl = "127.0.0.1:3569"; // emulator
-            //var networkUrl = "access.devnet.nodes.onflow.org:9000"; // testnet
 
             _flowClient = FlowClientAsync.Create(networkUrl);
-            _flowConfig = Utilities.ReadConfig();
 
             await _flowClient.PingAsync();
             
@@ -33,7 +30,7 @@ namespace Flow.Net.Examples
         public static async Task SinglePartySingleSignatureDemo()
         {
             var flowAccountKey = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);
-            var account1 = await CreateFlowAccount(new List<FlowAccountKey> { flowAccountKey });
+            var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey });
             var account1Key = account1.Keys.FirstOrDefault();
 
             var lastestBlock = await _flowClient.GetLatestBlockAsync();
@@ -68,7 +65,7 @@ namespace Flow.Net.Examples
         {
             var flowAccountKey1 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
             var flowAccountKey2 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
-            var account1 = await CreateFlowAccount(new List<FlowAccountKey> { flowAccountKey1, flowAccountKey2 });
+            var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey1, flowAccountKey2 });
             var account1Key1 = account1.Keys[0];
             var account1Key2 = account1.Keys[1];
 
@@ -106,9 +103,9 @@ namespace Flow.Net.Examples
         public static async Task MultiPartySingleSignature()
         {
             var flowAccountKey1 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256,HashAlgo.SHA3_256, 1000);
-            var account1 = await CreateFlowAccount(new List<FlowAccountKey> { flowAccountKey1 });
+            var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey1 });
             var flowAccountKey2 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);
-            var account2 = await CreateFlowAccount(new List<FlowAccountKey> { flowAccountKey2 });
+            var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey2 });
 
             var account1Key = account1.Keys.FirstOrDefault();
             var account2Key = account2.Keys.FirstOrDefault();
@@ -147,9 +144,9 @@ namespace Flow.Net.Examples
         public static async Task MultiPartyTwoAuthorizers()
         {
             var flowAccountKey1 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);
-            var account1 = await CreateFlowAccount(new List<FlowAccountKey> { flowAccountKey1 });
+            var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey1 });
             var flowAccountKey2 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);
-            var account2 = await CreateFlowAccount(new List<FlowAccountKey> { flowAccountKey2 });
+            var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey2 });
 
             var account1Key = account1.Keys.FirstOrDefault();
             var account2Key = account2.Keys.FirstOrDefault();
@@ -196,11 +193,11 @@ transaction {
         {
             var flowAccount1Key1 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA2_256, 500);
             var flowAccount1Key2 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA2_256, 500);
-            var account1 = await CreateFlowAccount(new List<FlowAccountKey> { flowAccount1Key1, flowAccount1Key2 });
+            var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccount1Key1, flowAccount1Key2 });
 
             var flowAccount2Key3 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
             var flowAccount2Key4 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
-            var account2 = await CreateFlowAccount(new List<FlowAccountKey> { flowAccount2Key3, flowAccount2Key4 });
+            var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccount2Key3, flowAccount2Key4 });
 
             var lastestBlock = await _flowClient.GetLatestBlockAsync();
             var tx = new FlowTransaction
@@ -239,27 +236,47 @@ transaction {
             var sealedResponse = await _flowClient.WaitForSealAsync(txResponse);                     
         }
 
-        private static async Task<FlowAccount> CreateFlowAccount(List<FlowAccountKey> flowAccountKeys)
+        private static async Task<FlowAccount> CreateAccountAsync(List<FlowAccountKey> newFlowAccountKeys)
         {
-            // create account            
-            var createAccountResult = await AccountExample.CreateAccount(flowAccountKeys);
+            // creator (typically a service account)
+            var creatorAccount = await _flowClient.ReadAccountFromConfigAsync("emulator-account");
 
-            if (createAccountResult.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
+            // use template to create a transaction
+            var tx = Account.CreateAccount(newFlowAccountKeys, creatorAccount.Address);
+
+            // creator key to use
+            var creatorAccountKey = creatorAccount.Keys.FirstOrDefault();
+
+            // set the transaction payer and proposal key
+            tx.Payer = creatorAccount.Address;
+            tx.ProposalKey = new FlowProposalKey
             {
-                // get out new address
-                var accountCreatedEventPayload = JsonConvert.SerializeObject(
-                    createAccountResult.Events
-                    .Where(w => w.Type == "flow.AccountCreated")
-                    .FirstOrDefault()
-                    .Payload);
+                Address = creatorAccount.Address,
+                KeyId = creatorAccountKey.Index,
+                SequenceNumber = creatorAccountKey.SequenceNumber
+            };
 
-                var accountAddress = JsonConvert.DeserializeObject<AccountCreated>(accountCreatedEventPayload).Value.Fields.FirstOrDefault().Value.Value.Remove0x();
+            // get the latest sealed block to use as a reference block
+            var latestBlock = await _flowClient.GetLatestBlockAsync();
+            tx.ReferenceBlockId = latestBlock.Id;
+
+            // sign and submit the transaction
+            tx.AddEnvelopeSignature(creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
+
+            var response = await _flowClient.SendTransactionAsync(tx);
+
+            // wait for seal
+            var sealedResponse = await _flowClient.WaitForSealAsync(response);
+
+            if (sealedResponse.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
+            {
+                var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
 
                 // get new account deatils
-                var newAccount = await _flowClient.GetAccountAtLatestBlockAsync(accountAddress.FromHexToByteString());
-                newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(flowAccountKeys, newAccount.Keys);
+                var newAccount = await _flowClient.GetAccountAtLatestBlockAsync(newAccountAddress.FromHexToByteString());
+                newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(newFlowAccountKeys, newAccount.Keys);
                 return newAccount;
-            } 
+            }
 
             return null;
         }
