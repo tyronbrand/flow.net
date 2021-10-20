@@ -238,7 +238,7 @@ namespace Flow.Net.Sdk.Client
             };
 
             foreach(var contract in accountResponse.Account.Contracts)
-                flowAccount.Contracts.Add(contract.Key, contract.Value.FromByteStringToString());
+                flowAccount.Contracts.Add(new FlowContract { Name = contract.Key, Source = contract.Value.FromByteStringToString() });
             
             foreach(var key in accountResponse.Account.Keys)
             {

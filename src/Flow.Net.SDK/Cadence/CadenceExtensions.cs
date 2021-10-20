@@ -37,5 +37,13 @@ namespace Flow.Net.Sdk.Cadence
 
             return arguments;
         }
+
+        public static string AccountCreatedAddress(this IList<FlowEvent> flowEvents)
+        {
+            return flowEvents.Where(w => w.Type == "flow.AccountCreated")
+                    .FirstOrDefault().Payload.AsCadenceType<CadenceComposite>()
+                    .Value.Fields.FirstOrDefault().Value.AsCadenceType<CadenceAddress>()
+                    .Value.Remove0x();
+        }
     }
 }
