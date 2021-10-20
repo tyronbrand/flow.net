@@ -1,0 +1,120 @@
+﻿using Flow.Net.Sdk.Extensions;
+using Flow.Net.Sdk.Models;
+using Google.Protobuf;
+using Nethereum.RLP;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Flow.Net.Sdk.RecursiveLengthPrefix
+{
+    public class Rlp
+    {
+        public static byte[] EncodedAccountKey(FlowAccountKey flowAccountKey)
+        {
+            var accountElements = new List<byte[]>
+            {
+                RLP.EncodeElement(flowAccountKey.PublicKey.FromHexToBytes()),
+                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes((uint)flowAccountKey.SignatureAlgorithm))),
+                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes((uint)flowAccountKey.HashAlgorithm))),
+                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowAccountKey.Weight)))
+            };
+
+            return RLP.EncodeList(accountElements.ToArray());
+        }
+
+        public static byte[] EncodedCanonicalPayload(FlowTransaction flowTransaction)
+        {
+            var argArray = new List<byte[]>();
+            foreach (var argument in flowTransaction.Arguments)
+                argArray.Add(RLP.EncodeElement(argument.ToByteArray()));
+
+            var authArray = new List<byte[]>();
+            foreach (var authorizer in flowTransaction.Authorizers)
+                authArray.Add(RLP.EncodeElement(Utilities.Pad(authorizer.ToByteArray(), 8)));
+
+            var payloadElements = new List<byte[]>
+            {
+                RLP.EncodeElement(flowTransaction.Script.ToBytesForRLPEncoding()),
+                RLP.EncodeList(argArray.ToArray()),
+                RLP.EncodeElement(Utilities.Pad(flowTransaction.ReferenceBlockId.ToByteArray(), 32)),
+                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.GasLimit))),
+                RLP.EncodeElement(Utilities.Pad(flowTransaction.ProposalKey.Address.ToByteArray(), 8)),
+                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.ProposalKey.KeyId))),
+                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.ProposalKey.SequenceNumber))),
+                RLP.EncodeElement(Utilities.Pad(flowTransaction.Payer.ToByteArray(), 8)),
+                RLP.EncodeList(authArray.ToArray())
+            };
+
+            return RLP.EncodeList(payloadElements.ToArray());
+        }
+
+        public static byte[] EncodedSignaturesWithSignerList(FlowSignature[] signatures, Dictionary<ByteString, int> signerList)
+        {
+            var signatureElements = new List<byte[]>();
+            for (var i = 0; i < signatures.Length; i++)
+            {
+                var index = i;
+                if (signerList.ContainsKey(signatures[i].Address))
+                {
+                    index = signerList[signatures[i].Address];
+                }
+                else
+                {
+                    signerList.Add(signatures[i].Address, i);
+                }
+
+                var signatureEncoded = EncodedSignature(signatures[i], index);
+                signatureElements.Add(signatureEncoded);
+            }
+
+            return RLP.EncodeList(signatureElements.ToArray());
+        }        
+
+        public static byte[] EncodedSignature(FlowSignature signature, int index)
+        {
+            var signatureArray = new List<byte[]>
+            {
+                RLP.EncodeElement(index.ToBytesForRLPEncoding()),
+                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(signature.KeyId))),
+                RLP.EncodeElement(signature.Signature)
+            };
+
+            return RLP.EncodeList(signatureArray.ToArray());
+        }
+
+        public static byte[] EncodedCanonicalAuthorizationEnvelope(FlowTransaction flowTransaction, Dictionary<ByteString, int> signerList)
+        {
+            var authEnvelopeElements = new List<byte[]>
+            {
+                EncodedCanonicalPayload(flowTransaction),
+                EncodedSignaturesWithSignerList(flowTransaction.PayloadSignatures.ToArray(), signerList)
+            };
+
+            return RLP.EncodeList(authEnvelopeElements.ToArray());
+        }
+
+        public static byte[] EncodedCanonicalPaymentEnvelope(FlowTransaction flowTransaction, Dictionary<ByteString, int> signerList)
+        {
+            var authEnvelopeElements = new List<byte[]>
+            {
+                EncodedCanonicalAuthorizationEnvelope(flowTransaction, signerList),
+                EncodedSignaturesWithSignerList(flowTransaction.EnvelopeSignatures.ToArray(), signerList)
+            };
+
+            return RLP.EncodeList(authEnvelopeElements.ToArray());
+        }
+
+        public static byte[] EncodedCanonicalTransaction(FlowTransaction flowTransaction, Dictionary<ByteString, int> signerList)
+        {
+            var authEnvelopeElements = new List<byte[]>
+            {
+                EncodedCanonicalPayload(flowTransaction),
+                EncodedSignaturesWithSignerList(flowTransaction.PayloadSignatures.ToArray(), signerList),
+                EncodedSignaturesWithSignerList(flowTransaction.EnvelopeSignatures.ToArray(), signerList)
+            };
+
+            return RLP.EncodeList(authEnvelopeElements.ToArray());
+        }
+    }
+}

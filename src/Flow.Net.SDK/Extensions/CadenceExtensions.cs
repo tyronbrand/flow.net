@@ -1,9 +1,11 @@
-﻿using Google.Protobuf;
+﻿using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Models;
+using Google.Protobuf;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Flow.Net.Sdk.Cadence
+namespace Flow.Net.Sdk.Extensions
 {
     public static class CadenceExtensions
     {

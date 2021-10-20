@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Numerics;
 
 namespace Flow.Net.Sdk.Cadence
 {

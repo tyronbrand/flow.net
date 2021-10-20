@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Flow.Net.Sdk
+namespace Flow.Net.Sdk.Exceptions
 {
     public class FlowException : Exception
     {

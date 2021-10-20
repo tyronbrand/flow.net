@@ -1,4 +1,7 @@
 ﻿using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Exceptions;
+using Flow.Net.Sdk.Extensions;
+using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Protos.access;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
@@ -456,7 +459,7 @@ namespace Flow.Net.Sdk.Client
         /// </summary>
         /// <param name="options"></param>
         /// <returns>FlowExecutionResultForBlockIDResponse.</returns>
-        public async Task<FlowExecutionResultForBlockIDResponse> GetExecutionResultForBlockIdAsync(ByteString blockId, CallOptions options = new CallOptions())
+        public async Task<FlowExecutionResultForBlockIdResponse> GetExecutionResultForBlockIdAsync(ByteString blockId, CallOptions options = new CallOptions())
         {
             try
             {
@@ -466,7 +469,7 @@ namespace Flow.Net.Sdk.Client
                     BlockId = blockId
                 }, options);
 
-                return response.ToFlowExecutionResultForBlockIDResponse();
+                return response.ToFlowExecutionResultForBlockIdResponse();
             }
             catch (Exception exception)
             {

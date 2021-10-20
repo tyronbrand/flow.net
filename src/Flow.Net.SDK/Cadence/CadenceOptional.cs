@@ -4,7 +4,7 @@ namespace Flow.Net.Sdk.Cadence
 {
     public class CadenceOptional : ICadence
     {
-        public CadenceOptional() {}
+        public CadenceOptional() { }
 
         public CadenceOptional(ICadence value)
         {

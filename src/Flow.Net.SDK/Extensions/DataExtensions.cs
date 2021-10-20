@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Flow.Net.Sdk
+namespace Flow.Net.Sdk.Extensions
 {
-    public static class Extensions
+    public static class DataExtensions
     {
         public static ByteString FromHexToByteString(this string hex)
         {

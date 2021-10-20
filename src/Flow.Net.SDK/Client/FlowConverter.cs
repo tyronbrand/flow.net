@@ -1,6 +1,7 @@
 ﻿using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Extensions;
+using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Protos.access;
-using Google.Protobuf;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,7 +31,7 @@ namespace Flow.Net.Sdk.Client
             };
         }
 
-        public static FlowExecutionResultForBlockIDResponse ToFlowExecutionResultForBlockIDResponse(this ExecutionResultForBlockIDResponse executionResultForBlockIDResponse)
+        public static FlowExecutionResultForBlockIdResponse ToFlowExecutionResultForBlockIdResponse(this ExecutionResultForBlockIDResponse executionResultForBlockIDResponse)
         {
             var flowChunks = new List<FlowChunk>();
             foreach(var chunk in executionResultForBlockIDResponse.ExecutionResult.Chunks)
@@ -58,7 +59,7 @@ namespace Flow.Net.Sdk.Client
                 });
             }
 
-            return new FlowExecutionResultForBlockIDResponse
+            return new FlowExecutionResultForBlockIdResponse
             {
                 BlockId = executionResultForBlockIDResponse.ExecutionResult.BlockId,
                 PreviousResultId = executionResultForBlockIDResponse.ExecutionResult.PreviousResultId,

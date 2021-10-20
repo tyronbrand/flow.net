@@ -1,5 +1,7 @@
 ﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Client;
+using Flow.Net.Sdk.Extensions;
+using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Templates;
 using System.Collections.Generic;
 using System.Linq;

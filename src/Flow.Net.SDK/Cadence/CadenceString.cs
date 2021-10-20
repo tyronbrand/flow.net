@@ -4,7 +4,8 @@ namespace Flow.Net.Sdk.Cadence
 {
     public class CadenceString : ICadence
     {
-        public CadenceString() {}
+        public CadenceString() { }
+
         public CadenceString(string value)
         {
             Value = value;

@@ -9,6 +9,7 @@ namespace Flow.Net.Sdk.Cadence
         {
             Value = new List<CadenceDictionaryKeyValue>();
         }
+
         public CadenceDictionary(IList<CadenceDictionaryKeyValue> value)
         {
             Value = value;

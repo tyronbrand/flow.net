@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Flow.Net.Sdk.Models;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Text;
