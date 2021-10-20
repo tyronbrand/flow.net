@@ -5,12 +5,14 @@
 		<Authors>Tyron Brand</Authors>
 		<Version>0.0.1</Version>
 		<Company>Tyron Brand</Company>
-		<Description>.Net SDK for Flow</Description>
+		<Description>.Net SDK for Flow(https://www.onflow.org)</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/tyronbrand/flow.net</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/tyronbrand/flow.net</PackageProjectUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags></PackageTags>
+		<PackageIcon>flow.png</PackageIcon>
+		<PackageIconUrl />
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -27,6 +29,13 @@
 		</PackageReference>
 		<PackageReference Include="Nethereum.RLP" Version="4.0.5" />
 		<PackageReference Include="Portable.BouncyCastle" Version="1.8.10" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\..\..\..\Downloads\flow.png">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>
