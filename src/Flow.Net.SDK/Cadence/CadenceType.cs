@@ -4,7 +4,8 @@ namespace Flow.Net.Sdk.Cadence
 {
     public class CadenceType : ICadence
     {
-        public CadenceType() {}
+        public CadenceType() { }
+
         public CadenceType(CadenceTypeValue value)
         {
             Value = value;

@@ -1,10 +1,12 @@
 ﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Client;
 using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Client;
+using Flow.Net.Sdk.Extensions;
+using Flow.Net.Sdk.Models;
+using Flow.Net.Sdk.Templates;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Flow.Net.Sdk.Templates;
 
 namespace Flow.Net.Examples
 {

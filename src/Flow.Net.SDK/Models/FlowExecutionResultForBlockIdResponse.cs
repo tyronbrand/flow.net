@@ -1,9 +1,9 @@
 ﻿using Google.Protobuf;
 using System.Collections.Generic;
 
-namespace Flow.Net.Sdk
+namespace Flow.Net.Sdk.Models
 {
-    public class FlowExecutionResultForBlockIDResponse
+    public class FlowExecutionResultForBlockIdResponse
     {
         public ByteString BlockId { get; set; }        
         public IEnumerable<FlowChunk> Chunks { get; set; }

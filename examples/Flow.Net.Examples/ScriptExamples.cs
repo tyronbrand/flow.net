@@ -1,4 +1,4 @@
-﻿using Flow.Net.Sdk;
+﻿using Flow.Net.Sdk.Extensions;
 using Flow.Net.Sdk.Client;
 using Flow.Net.Sdk.Cadence;
 using Newtonsoft.Json;

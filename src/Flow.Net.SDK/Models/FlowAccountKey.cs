@@ -1,10 +1,8 @@
 ﻿using Flow.Net.Sdk.Crypto;
-using Nethereum.RLP;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Flow.Net.Sdk
+namespace Flow.Net.Sdk.Models
 {
     public class FlowAccountKey
     {
@@ -32,19 +30,6 @@ namespace Flow.Net.Sdk
                 HashAlgorithm = hashAlgo,                
                 Weight = weight
             };
-        }
-
-        public static byte[] RlpEncode(FlowAccountKey flowAccountKey)
-        {
-            var accountElements = new List<byte[]>
-            {
-                RLP.EncodeElement(flowAccountKey.PublicKey.FromHexToBytes()),
-                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes((uint)flowAccountKey.SignatureAlgorithm))),
-                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes((uint)flowAccountKey.HashAlgorithm))),
-                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowAccountKey.Weight)))
-            };
-
-            return RLP.EncodeList(accountElements.ToArray());
         }
 
         public static IList<FlowAccountKey> UpdateFlowAccountKeys(IList<FlowAccountKey> currentFlowAccountKeys, IList<FlowAccountKey> updatedFlowAccountKeys)

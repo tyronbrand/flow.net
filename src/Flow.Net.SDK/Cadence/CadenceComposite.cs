@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Text;
 
 namespace Flow.Net.Sdk.Cadence
 {

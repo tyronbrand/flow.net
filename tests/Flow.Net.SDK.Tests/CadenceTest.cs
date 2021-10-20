@@ -1,5 +1,6 @@
 ﻿using ExpectedObjects;
 using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Extensions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using Xunit;

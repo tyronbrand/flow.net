@@ -1,5 +1,5 @@
-﻿using Xunit;
-using Flow.Net.Sdk;
+﻿using Flow.Net.Sdk.Extensions;
+using Xunit;
 
 namespace Flow.Net.Sdk.Tests
 {

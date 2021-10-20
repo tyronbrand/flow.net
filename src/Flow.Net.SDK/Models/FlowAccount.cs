@@ -1,4 +1,5 @@
-﻿using Google.Protobuf;
+﻿using Flow.Net.Sdk.Models;
+using Google.Protobuf;
 using System.Collections.Generic;
 
 namespace Flow.Net.Sdk

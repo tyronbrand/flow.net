@@ -1,12 +1,5 @@
-﻿using Flow.Net.Sdk.Client;
-using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk;
-using Nethereum.RLP;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Flow.Net.Sdk.Extensions;
+using Flow.Net.Sdk.Models;
 using Xunit;
 using Xunit.Abstractions;
 

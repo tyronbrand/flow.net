@@ -5,6 +5,7 @@ namespace Flow.Net.Sdk.Cadence
     public class CadenceLink : ICadence
     {
         public CadenceLink() { }
+
         public CadenceLink(CadenceLinkValue value)
         {
             Value = value;
