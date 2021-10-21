@@ -49,19 +49,19 @@ namespace Flow.Net.Sdk.RecursiveLengthPrefix
             return RLP.EncodeList(payloadElements.ToArray());
         }
 
-        public static byte[] EncodedSignaturesWithSignerList(FlowSignature[] signatures, Dictionary<ByteString, int> signerList)
+        public static byte[] EncodedSignatures(FlowSignature[] signatures, FlowTransaction flowTransaction)
         {
             var signatureElements = new List<byte[]>();
             for (var i = 0; i < signatures.Length; i++)
             {
                 var index = i;
-                if (signerList.ContainsKey(signatures[i].Address))
+                if (flowTransaction.SignerList.ContainsKey(signatures[i].Address))
                 {
-                    index = signerList[signatures[i].Address];
+                    index = flowTransaction.SignerList[signatures[i].Address];
                 }
                 else
                 {
-                    signerList.Add(signatures[i].Address, i);
+                    flowTransaction.SignerList.Add(signatures[i].Address, i);
                 }
 
                 var signatureEncoded = EncodedSignature(signatures[i], index);
@@ -83,35 +83,35 @@ namespace Flow.Net.Sdk.RecursiveLengthPrefix
             return RLP.EncodeList(signatureArray.ToArray());
         }
 
-        public static byte[] EncodedCanonicalAuthorizationEnvelope(FlowTransaction flowTransaction, Dictionary<ByteString, int> signerList)
+        public static byte[] EncodedCanonicalAuthorizationEnvelope(FlowTransaction flowTransaction)
         {
             var authEnvelopeElements = new List<byte[]>
             {
                 EncodedCanonicalPayload(flowTransaction),
-                EncodedSignaturesWithSignerList(flowTransaction.PayloadSignatures.ToArray(), signerList)
+                EncodedSignatures(flowTransaction.PayloadSignatures.ToArray(), flowTransaction)
             };
 
             return RLP.EncodeList(authEnvelopeElements.ToArray());
         }
 
-        public static byte[] EncodedCanonicalPaymentEnvelope(FlowTransaction flowTransaction, Dictionary<ByteString, int> signerList)
+        public static byte[] EncodedCanonicalPaymentEnvelope(FlowTransaction flowTransaction)
         {
             var authEnvelopeElements = new List<byte[]>
             {
-                EncodedCanonicalAuthorizationEnvelope(flowTransaction, signerList),
-                EncodedSignaturesWithSignerList(flowTransaction.EnvelopeSignatures.ToArray(), signerList)
+                EncodedCanonicalAuthorizationEnvelope(flowTransaction),
+                EncodedSignatures(flowTransaction.EnvelopeSignatures.ToArray(), flowTransaction)
             };
 
             return RLP.EncodeList(authEnvelopeElements.ToArray());
         }
 
-        public static byte[] EncodedCanonicalTransaction(FlowTransaction flowTransaction, Dictionary<ByteString, int> signerList)
+        public static byte[] EncodedCanonicalTransaction(FlowTransaction flowTransaction)
         {
             var authEnvelopeElements = new List<byte[]>
             {
                 EncodedCanonicalPayload(flowTransaction),
-                EncodedSignaturesWithSignerList(flowTransaction.PayloadSignatures.ToArray(), signerList),
-                EncodedSignaturesWithSignerList(flowTransaction.EnvelopeSignatures.ToArray(), signerList)
+                EncodedSignatures(flowTransaction.PayloadSignatures.ToArray(), flowTransaction),
+                EncodedSignatures(flowTransaction.EnvelopeSignatures.ToArray(), flowTransaction)
             };
 
             return RLP.EncodeList(authEnvelopeElements.ToArray());

@@ -1,5 +1,6 @@
 ﻿using Flow.Net.Sdk.Extensions;
 using Flow.Net.Sdk.Models;
+using Flow.Net.Sdk.RecursiveLengthPrefix;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -51,10 +52,10 @@ namespace Flow.Net.Sdk.Tests
 
             var transaction = Transaction();
 
-            var payloadTest = FlowTransaction.CanonicalPayload(transaction);
+            var payloadTest = Rlp.EncodedCanonicalPayload(transaction);
             Assert.Equal(payload, payloadTest.FromByteArrayToHex());
 
-            var envelopeTest = FlowTransaction.CanonicalAuthorizationEnvelope(transaction);
+            var envelopeTest = Rlp.EncodedCanonicalAuthorizationEnvelope(transaction);
             Assert.Equal(envelope, envelopeTest.FromByteArrayToHex());
         }
 
@@ -73,10 +74,10 @@ namespace Flow.Net.Sdk.Tests
                     Signature = "f7225388c1d69d57e6251c9fda50cbbf9e05131e5adb81e5aa0422402f048162".FromHexToBytes()
                 });
 
-            var payloadTest = FlowTransaction.CanonicalPayload(transaction);
+            var payloadTest = Rlp.EncodedCanonicalPayload(transaction);
             Assert.Equal(payload, payloadTest.FromByteArrayToHex());
 
-            var envelopeTest = FlowTransaction.CanonicalAuthorizationEnvelope(transaction);
+            var envelopeTest = Rlp.EncodedCanonicalAuthorizationEnvelope(transaction);
             Assert.Equal(envelope, envelopeTest.FromByteArrayToHex());
         }
 
@@ -89,10 +90,10 @@ namespace Flow.Net.Sdk.Tests
             var transaction = Transaction();
             transaction.Authorizers.Add("02".FromHexToByteString());
 
-            var payloadTest = FlowTransaction.CanonicalPayload(transaction);
+            var payloadTest = Rlp.EncodedCanonicalPayload(transaction);
             Assert.Equal(payload, payloadTest.FromByteArrayToHex());
 
-            var envelopeTest = FlowTransaction.CanonicalAuthorizationEnvelope(transaction);
+            var envelopeTest = Rlp.EncodedCanonicalAuthorizationEnvelope(transaction);
             Assert.Equal(envelope, envelopeTest.FromByteArrayToHex());
         }
     }
