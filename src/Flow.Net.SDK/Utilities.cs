@@ -16,16 +16,16 @@ namespace Flow.Net.Sdk
             if (string.IsNullOrEmpty(path))
                 path = AppContext.BaseDirectory;
 
-            var file = File.ReadAllText($"{path}\\{fileName}.json");
+            var file = File.ReadAllText(Path.Combine(path, $"{fileName}.json"));
             return JsonConvert.DeserializeObject<FlowConfig>(file);
         }
 
         public static string ReadCadenceScript(string fileName, string path = null)
         {
             if (string.IsNullOrEmpty(path))
-                path = $"{AppContext.BaseDirectory}\\Cadence";
+                path = Path.Combine(AppContext.BaseDirectory, "Cadence");
 
-            return File.ReadAllText($"{path}\\{fileName}.cdc");
+            return File.ReadAllText(Path.Combine(path, $"{fileName}.cdc"));
         }
 
         public static byte[] Pad(string tag, int length, bool padLeft = true)
