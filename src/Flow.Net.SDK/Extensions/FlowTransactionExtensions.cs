@@ -1,5 +1,6 @@
 ﻿using Flow.Net.Sdk.Crypto;
 using Flow.Net.Sdk.Models;
+using Flow.Net.Sdk.RecursiveLengthPrefix;
 using Google.Protobuf;
 
 namespace Flow.Net.Sdk.Extensions
@@ -8,7 +9,7 @@ namespace Flow.Net.Sdk.Extensions
     {
         public static FlowTransaction AddPayloadSignature(this FlowTransaction flowTransaction, ByteString address, uint keyId, ISigner signer)
         {
-            var canonicalPayload = FlowTransaction.CanonicalPayload(flowTransaction);
+            var canonicalPayload = Rlp.EncodedCanonicalPayload(flowTransaction);
             var message = DomainTag.AddTransactionDomainTag(canonicalPayload);
             var signature = signer.Sign(message);
 
@@ -25,7 +26,7 @@ namespace Flow.Net.Sdk.Extensions
 
         public static FlowTransaction AddEnvelopeSignature(this FlowTransaction flowTransaction, ByteString address, uint keyId, ISigner signer)
         {
-            var canonicalAuthorizationEnvelope = FlowTransaction.CanonicalAuthorizationEnvelope(flowTransaction);
+            var canonicalAuthorizationEnvelope = Rlp.EncodedCanonicalAuthorizationEnvelope(flowTransaction);
             var message = DomainTag.AddTransactionDomainTag(canonicalAuthorizationEnvelope);
             var signature = signer.Sign(message);
 

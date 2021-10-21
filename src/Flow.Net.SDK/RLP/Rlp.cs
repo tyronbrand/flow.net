@@ -83,35 +83,35 @@ namespace Flow.Net.Sdk.RecursiveLengthPrefix
             return RLP.EncodeList(signatureArray.ToArray());
         }
 
-        public static byte[] EncodedCanonicalAuthorizationEnvelope(FlowTransaction flowTransaction, Dictionary<ByteString, int> signerList)
+        public static byte[] EncodedCanonicalAuthorizationEnvelope(FlowTransaction flowTransaction)
         {
             var authEnvelopeElements = new List<byte[]>
             {
                 EncodedCanonicalPayload(flowTransaction),
-                EncodedSignaturesWithSignerList(flowTransaction.PayloadSignatures.ToArray(), signerList)
+                EncodedSignaturesWithSignerList(flowTransaction.PayloadSignatures.ToArray(), flowTransaction.SignerList)
             };
 
             return RLP.EncodeList(authEnvelopeElements.ToArray());
         }
 
-        public static byte[] EncodedCanonicalPaymentEnvelope(FlowTransaction flowTransaction, Dictionary<ByteString, int> signerList)
+        public static byte[] EncodedCanonicalPaymentEnvelope(FlowTransaction flowTransaction)
         {
             var authEnvelopeElements = new List<byte[]>
             {
-                EncodedCanonicalAuthorizationEnvelope(flowTransaction, signerList),
-                EncodedSignaturesWithSignerList(flowTransaction.EnvelopeSignatures.ToArray(), signerList)
+                EncodedCanonicalAuthorizationEnvelope(flowTransaction),
+                EncodedSignaturesWithSignerList(flowTransaction.EnvelopeSignatures.ToArray(), flowTransaction.SignerList)
             };
 
             return RLP.EncodeList(authEnvelopeElements.ToArray());
         }
 
-        public static byte[] EncodedCanonicalTransaction(FlowTransaction flowTransaction, Dictionary<ByteString, int> signerList)
+        public static byte[] EncodedCanonicalTransaction(FlowTransaction flowTransaction)
         {
             var authEnvelopeElements = new List<byte[]>
             {
                 EncodedCanonicalPayload(flowTransaction),
-                EncodedSignaturesWithSignerList(flowTransaction.PayloadSignatures.ToArray(), signerList),
-                EncodedSignaturesWithSignerList(flowTransaction.EnvelopeSignatures.ToArray(), signerList)
+                EncodedSignaturesWithSignerList(flowTransaction.PayloadSignatures.ToArray(), flowTransaction.SignerList),
+                EncodedSignaturesWithSignerList(flowTransaction.EnvelopeSignatures.ToArray(), flowTransaction.SignerList)
             };
 
             return RLP.EncodeList(authEnvelopeElements.ToArray());
