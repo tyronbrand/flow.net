@@ -1,5 +1,4 @@
 ﻿using Xunit;
-using Flow.Net.Sdk.Extensions;
 
 namespace Flow.Net.Sdk.Tests
 {

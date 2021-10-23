@@ -15,4 +15,4 @@ var latestUnsealedBlock = await _flowClient.GetLatestBlockAsync(isSealed);
 
 ## Example
 
-An example can be found [here](https://github.com/tyronbrand/flow.net/blob/main/examples/Flow.Net.Examples/BlockExamples.cs).
+An example can be found [here](https://github.com/tyronbrand/flow.net/blob/main/examples/Flow.Net.Examples/GetLatestBlockExample.cs).

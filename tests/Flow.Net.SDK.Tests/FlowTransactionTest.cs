@@ -1,5 +1,4 @@
-﻿using Flow.Net.Sdk.Extensions;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.RecursiveLengthPrefix;
 using Xunit;
 using Xunit.Abstractions;

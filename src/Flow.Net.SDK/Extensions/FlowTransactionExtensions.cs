@@ -1,9 +1,8 @@
 ﻿using Flow.Net.Sdk.Crypto;
-using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.RecursiveLengthPrefix;
 using Google.Protobuf;
 
-namespace Flow.Net.Sdk.Extensions
+namespace Flow.Net.Sdk.Models
 {
     public static class FlowTransactionExtensions
     {

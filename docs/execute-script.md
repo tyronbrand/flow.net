@@ -23,4 +23,4 @@ await _flowClient.ExecuteScriptAtLatestBlockAsync(script);
 
 ## Example
 
-An example can be found [here](https://github.com/tyronbrand/flow.net/blob/main/examples/Flow.Net.Examples/ScriptExamples.cs).
+An example can be found [here](https://github.com/tyronbrand/flow.net/blob/main/examples/Flow.Net.Examples/ExecuteScriptAtLatestBlockExample.cs).

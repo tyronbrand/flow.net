@@ -1,6 +1,4 @@
-﻿using Flow.Net.Sdk.Extensions;
-using Flow.Net.Sdk.Models;
-using Google.Protobuf;
+﻿using Flow.Net.Sdk.Models;
 using Nethereum.RLP;
 using System;
 using System.Collections.Generic;

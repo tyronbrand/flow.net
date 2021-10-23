@@ -1,6 +1,5 @@
 ﻿using ExpectedObjects;
 using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Extensions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using Xunit;
@@ -24,7 +23,7 @@ namespace Flow.Net.Sdk.Tests
                 new CadenceTestItem
                 {
                     Name = "Simple",
-                    Cadence =   new CadencePath
+                    Cadence = new CadencePath
                         {
                             Value = new CadencePathValue
                             {
