@@ -1,6 +1,5 @@
 ﻿using Flow.Net.Sdk.Cadence;
 using Flow.Net.Sdk.Exceptions;
-using Flow.Net.Sdk.Extensions;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.RecursiveLengthPrefix;
 using Google.Protobuf;

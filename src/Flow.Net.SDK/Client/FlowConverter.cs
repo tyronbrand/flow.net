@@ -1,5 +1,4 @@
 ﻿using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Extensions;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Protos.access;
 using System.Collections.Generic;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Flow.Net.Sdk.Extensions
+namespace Flow.Net.Sdk
 {
     public static class DataExtensions
     {
