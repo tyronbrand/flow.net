@@ -10,4 +10,4 @@ var response = await _flowClient.GetEventsForHeightRangeAsync(eventType : "flow.
 
 ## Example
 
-An example can be found [here](https://github.com/tyronbrand/flow.net/blob/main/examples/Flow.Net.Examples/EventExamples.cs).
+An example can be found [here](https://github.com/tyronbrand/flow.net/blob/main/examples/Flow.Net.Examples/GetEventsForHeightRangeExample.cs).
