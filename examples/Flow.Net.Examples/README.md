@@ -18,12 +18,12 @@ This project contains code samples that interact with the [Flow Emulator](https:
 
 1. Follow [these steps](https://docs.onflow.org/flow-cli/install/) to install the Flow CLI.
 2. Clone the [project](https://github.com/tyronbrand/flow.net).
-3. Open terminal and navigate to the folder containing the examples project eg. (\flow.net\examples\Flow.Net.Examples).
+3. Open terminal and navigate to the directory containing the examples project eg. (\flow.net\examples\Flow.Net.Examples).
     <img src="./emulator-start.png" alt="terminal" height="auto">
-4. Start the emulator by running the following command _in this directory_:
+4. Start the emulator by running the following command _in this directory_:	
     ```sh
     flow emulator start -v
-    ```
+    ```    
 5. Open Solution and uncomment the examples you wish to run.
 
 ### Create Account
