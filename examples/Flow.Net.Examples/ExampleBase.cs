@@ -1,14 +1,12 @@
-﻿using Flow.Net.Sdk.Client;
+﻿using Flow.Net.Examples.Utilities;
+using Flow.Net.Sdk;
 using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Client;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Templates;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
-using Newtonsoft.Json;
-using Flow.Net.Sdk;
-using Flow.Net.Examples.Utilities;
 
 namespace Flow.Net.Examples
 {
