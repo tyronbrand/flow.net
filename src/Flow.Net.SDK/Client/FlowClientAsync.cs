@@ -30,15 +30,16 @@ namespace Flow.Net.Sdk.Client
         /// </summary>
         /// <param name="flowNetworkUrl"></param>
         /// <param name="channelCredentialsSecureSsl"></param>
+        /// <param name="options"></param>
         /// <returns>FlowClientAsync.</returns>
-        public static FlowClientAsync Create(string flowNetworkUrl, bool channelCredentialsSecureSsl = false)
+        public static FlowClientAsync Create(string flowNetworkUrl, bool channelCredentialsSecureSsl = false, List<ChannelOption> options = null)
         {
             try
             {
-                var client = new AccessAPIClient(
-                new Channel(
+                var client = new AccessAPIClient(new Channel(
                     flowNetworkUrl,
-                    channelCredentialsSecureSsl ? ChannelCredentials.SecureSsl : ChannelCredentials.Insecure
+                    channelCredentialsSecureSsl ? ChannelCredentials.SecureSsl : ChannelCredentials.Insecure,
+                    options
                 ));
 
                 return new FlowClientAsync(client);
