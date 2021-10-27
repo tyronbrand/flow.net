@@ -1,0 +1,76 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../",
+          "files": [
+            "src/**.csproj"
+          ],
+		  "exclude": [
+            "Protos/**"
+          ]
+        }
+      ],
+	    "filter": "filter.yml",
+	    "dest": "api",
+      "disableGitFeatures": false,
+      "disableDefaultFilter": false
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "api/**.yml",
+          "api/**.md"
+        ]
+      },
+      {
+        "files": [
+          "guides/**.md",
+          "guides/**/toc.yml"
+        ]
+      },
+      {
+        "files": [
+          "toc.yml",
+          "index.md"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "flowdotnetsmall.png",
+          "flowdotnetfav.png"
+        ]
+      }
+    ],
+    "dest": "_site",
+    "globalMetadata": {
+      "_appName": "Flow.Net",
+      "_appTitle": "Flow.Net SDK Documentation",
+      "_appLogoPath": "flowdotnetsmall.png",
+      "_appFaviconPath": "flowdotnetfav.png",
+      "_enableSearch": false,
+      "_disableAffix": false,
+      "_disableSideFilter": true,
+      "_appFooter": ""
+    },
+    "globalMetadataFiles": [],
+    "fileMetadataFiles": [],
+    "template": [
+      "default"
+    ],
+    "postProcessors": [],
+    "markdownEngineName": "markdig",
+    "noLangKeyword": false,
+    "keepFileLink": false,
+    "cleanupCacheHistory": false,
+    "disableGitFeatures": false,
+    "xrefService": [
+      "https://xref.docs.microsoft.com/query?uid={uid}"
+    ]
+  }
+}
