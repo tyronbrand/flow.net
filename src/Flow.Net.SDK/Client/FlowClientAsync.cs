@@ -302,7 +302,7 @@ namespace Flow.Net.Sdk.Client
         /// <param name="startHeight"></param>
         /// <param name="endHeight"></param>
         /// <param name="options"></param>
-        /// <returns>IEnumerable<FlowBlockEvent>.</returns>
+        /// <returns>List of FlowBlockEvent.</returns>
         public async Task<IEnumerable<FlowBlockEvent>> GetEventsForHeightRangeAsync(string eventType, ulong startHeight, ulong endHeight, CallOptions options = new CallOptions())
         {
             try
@@ -331,7 +331,7 @@ namespace Flow.Net.Sdk.Client
         /// <param name="eventType"></param>
         /// <param name="blockIds"></param>
         /// <param name="options"></param>
-        /// <returns>IEnumerable<FlowBlockEvent>.</returns>
+        /// <returns>List of FlowBlockEvent.</returns>
         public async Task<IEnumerable<FlowBlockEvent>> GetEventsForBlockIdsAsync(string eventType, IEnumerable<ByteString> blockIds, CallOptions options = new CallOptions())
         {
             try
