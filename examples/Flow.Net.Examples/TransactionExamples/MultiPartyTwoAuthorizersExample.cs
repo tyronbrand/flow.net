@@ -1,5 +1,6 @@
 ﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,8 +11,10 @@ namespace Flow.Net.Examples
     {
         public static async Task RunAsync()
         {
+            Console.WriteLine("\nRunning MultiPartyTwoAuthorizersExample\n");
             await CreateFlowClientAsync();
             await Demo();
+            Console.WriteLine("\nMultiPartyTwoAuthorizersExample Complete\n");
         }
 
         private static async Task Demo()

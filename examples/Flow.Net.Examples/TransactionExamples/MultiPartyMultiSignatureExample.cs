@@ -1,5 +1,6 @@
 ﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,8 +10,10 @@ namespace Flow.Net.Examples
     {
         public static async Task RunAsync()
         {
+            Console.WriteLine("\nRunning MultiPartyMultiSignatureExample\n");
             await CreateFlowClientAsync();
             await Demo();
+            Console.WriteLine("\nMultiPartyMultiSignatureExample Complete\n");
         }
 
         private static async Task Demo()

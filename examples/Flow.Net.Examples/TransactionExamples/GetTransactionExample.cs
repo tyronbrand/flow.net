@@ -11,9 +11,11 @@ namespace Flow.Net.Examples
     {
         public static async Task RunAsync()
         {
+            Console.WriteLine("\nRunning GetTransactionExample\n");
             await CreateFlowClientAsync();
             var txId = await PrepTransactionId();
             await Demo(txId);
+            Console.WriteLine("\nGetTransactionExample Complete\n");
         }
 
         private static async Task Demo(ByteString transactionId)

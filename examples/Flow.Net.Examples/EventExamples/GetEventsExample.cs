@@ -14,6 +14,7 @@ namespace Flow.Net.Examples
     {
         public static async Task RunAsync()
         {
+            Console.WriteLine("\nRunning GetEventsExample\n");
             await CreateFlowClientAsync();
             var flowAccount = await PrepFlowAccountWithContract();
             if(flowAccount != null)
@@ -21,6 +22,7 @@ namespace Flow.Net.Examples
                 var flowTransactionId = await PrepFlowTransaction(flowAccount);
                 await Demo(flowAccount, flowTransactionId);
             }
+            Console.WriteLine("\nGetEventsExample Complete\n");
         }
 
         private static async Task Demo(FlowAccount flowAccount, ByteString flowTransactionId)
