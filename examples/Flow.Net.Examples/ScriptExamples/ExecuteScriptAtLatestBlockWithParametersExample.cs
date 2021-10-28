@@ -1,5 +1,6 @@
 ﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Cadence;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -22,7 +23,13 @@ namespace Flow.Net.Examples
                 new CadenceNumber(CadenceNumberType.Int32, "834534")
             };
 
-            var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);           
+            var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);
+            PrintResult(response);
+        }
+
+        private static void PrintResult(ICadence cadence)
+        {
+            Console.WriteLine($"Script result: {cadence.AsCadenceType<CadenceNumber>().Value}");
         }
     }
 }

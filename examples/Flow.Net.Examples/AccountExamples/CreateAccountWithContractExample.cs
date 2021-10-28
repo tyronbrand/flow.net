@@ -60,7 +60,14 @@ namespace Flow.Net.Examples
             var sealedResponse = await _flowClient.WaitForSealAsync(response);
 
             if (sealedResponse.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
-                Console.WriteLine("Account created");
+                PrintResult(flowContract);
+        }
+
+        private static void PrintResult(FlowContract flowContract)
+        {
+            Console.WriteLine("Account created with contract:");
+            Console.WriteLine($"Name: {flowContract.Name}");
+            Console.WriteLine($"Source: {flowContract.Source}");
         }
     }
 }

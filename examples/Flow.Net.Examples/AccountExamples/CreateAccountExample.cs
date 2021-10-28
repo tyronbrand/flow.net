@@ -1,5 +1,6 @@
 ﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,7 +14,16 @@ namespace Flow.Net.Examples
             var flowAccountKey = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);
 
             // example found in base class
-            await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey });
+            var account = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey });
+            PrintResult(account);
+        }
+
+        private static void PrintResult(FlowAccount flowAccount)
+        {
+            Console.WriteLine($"Address: {flowAccount.Address.FromByteStringToHex()}");
+            Console.WriteLine($"Balance: {flowAccount.Balance}");
+            Console.WriteLine($"Contracts: {flowAccount.Contracts.Count}");
+            Console.WriteLine($"Keys: {flowAccount.Keys.Count}\n");
         }
     }
 }
