@@ -9,8 +9,10 @@ namespace Flow.Net.Examples
     {
         public static async Task RunAsync()
         {
+            Console.WriteLine("\nRunning BlockExample\n");
             await CreateFlowClientAsync();
             await Demo();
+            Console.WriteLine("\nBlockExample Complete\n");
         }
 
         private static async Task Demo()

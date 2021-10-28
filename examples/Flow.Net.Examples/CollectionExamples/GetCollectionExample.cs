@@ -1,10 +1,8 @@
 ﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Models;
-using Google.Protobuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Flow.Net.Examples
@@ -13,9 +11,11 @@ namespace Flow.Net.Examples
     {
         public static async Task RunAsync()
         {
+            Console.WriteLine("\nRunning GetCollectionExample\n");
             await CreateFlowClientAsync();
             var collectionGuarantee = await PrepCollectionId();
             await Demo(collectionGuarantee);
+            Console.WriteLine("\nGetCollectionExample Complete\n");
         }
 
         private static async Task Demo(FlowCollectionGuarantee flowCollectionGuarantee)
