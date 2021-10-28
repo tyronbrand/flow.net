@@ -28,38 +28,38 @@ This project contains code samples that interact with the [Flow Emulator](https:
 
 ### Create Account
 
-[Create a new account on Flow.](./CreateAccountExample.cs)
+[Create a new account on Flow.](./AccountExamples/CreateAccountExample.cs)
 
 ### Deploy Contract
 
-[Deploy/Update/Delete a Cadence smart contract.](./DeployUpdateDeleteContractExample.cs)
+[Deploy/Update/Delete a Cadence smart contract.](./AccountExamples/DeployUpdateDeleteContractExample.cs)
 
 ### Query Events
 
-[Query events emitted by transactions.](./GetEventsForHeightRangeExample.cs)
+[Query events emitted by transactions.](./EventExamples/GetEventsExample.cs)
 
 ### Execute Script
 
-[Execute script.](./ExecuteScriptAtLatestBlockExample.cs)
+[Execute script.](./ScriptExamples/ScriptExample.cs)
 
 ### Transaction Signing
 
 #### Single Party, Single Signature
 
-[Sign a transaction with a single account.](./SinglePartySingleSignatureExample.cs)
+[Sign a transaction with a single account.](./TransactionExamples/SinglePartySingleSignatureExample.cs)
 
 #### Single Party, Multiple Signatures
 
-[Sign a transaction with a single account using multiple signatures.](./SinglePartyMultiSignatureExample.cs)
+[Sign a transaction with a single account using multiple signatures.](./TransactionExamples/SinglePartyMultiSignatureExample.cs)
 
 #### Multiple Parties
 
-[Sign a transaction with multiple accounts.](./MultiPartySingleSignatureExample.cs)
+[Sign a transaction with multiple accounts.](./TransactionExamples/MultiPartySingleSignatureExample.cs)
 
 #### Multiple Parties, Two authorizers
 
-[Sign a transaction with multiple accounts and authorize for both of them.](./MultiPartyTwoAuthorizersExample.cs)
+[Sign a transaction with multiple accounts and authorize for both of them.](./TransactionExamples/MultiPartyTwoAuthorizersExample.cs)
 
 #### Multiple Parties, Multiple Signatures
 
-[Sign a transaction with multiple accounts using multiple signatures.](./MultiPartyMultiSignatureExample.cs)
+[Sign a transaction with multiple accounts using multiple signatures.](./TransactionExamples/MultiPartyMultiSignatureExample.cs)

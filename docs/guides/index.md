@@ -17,8 +17,7 @@ uid: Guides
 
 ## Overview 
 
-This reference documents all the methods available in the SDK, and explains in detail how these methods work.
-SDKs are open source, and you can use them according to the licence.
+This reference documents all the methods available in the Flow.Net SDK, and explains in detail how these methods work.
 
 The library client specifications can be found here:
 

@@ -1,14 +1,13 @@
-# Flow .Net SDK
+<br />
+<div align="center">
+  <a href="#">
+    <img src="https://tyronbrand.github.io/flow.net/flowdotnetfull.png" alt="Logo" width="500" height="auto">
+  </a>
+</div><br />
 
-The Flow .Net SDK provides utilities to interact with the Flow blockchain (https://www.onflow.org).
+## Documentation
 
-Warning: This project is still under development and is likely to change.
-
-## Install
-
-```
-Install-Package Flow.Net.Sdk
-```
+Documentation can be found [here](https://tyronbrand.github.io/flow.net/guides/index.html)
 
 ## Features
 
@@ -51,10 +50,6 @@ Transactions:
 ## Examples
 
 Examples can be found [here](https://github.com/tyronbrand/flow.net/tree/main/examples)
-
-## Documentation
-
-Documentation can be found [here](https://github.com/tyronbrand/flow.net/tree/main/docs)
 
 ## Contributing
 
