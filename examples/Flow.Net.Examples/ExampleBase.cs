@@ -1,9 +1,9 @@
-﻿using Flow.Net.Examples.Utilities;
-using Flow.Net.Sdk;
+﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Cadence;
 using Flow.Net.Sdk.Client;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Templates;
+using Google.Protobuf;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,19 +29,15 @@ namespace Flow.Net.Examples
 
         public static async Task<FlowAccount> CreateAccountAsync(List<FlowAccountKey> newFlowAccountKeys)
         {
-            await CreateFlowClientAsync();
-            
-            foreach(var key in newFlowAccountKeys)
-                ConvertToConsoleMessage.WriteInfoMessage(key);
+            await CreateFlowClientAsync();            
             
             // creator (typically a service account)
             var creatorAccount = await _flowClient.ReadAccountFromConfigAsync("emulator-account");
+            // creator key to use
+            var creatorAccountKey = creatorAccount.Keys.FirstOrDefault();
 
             // use template to create a transaction
             var tx = Account.CreateAccount(newFlowAccountKeys, creatorAccount.Address);
-
-            // creator key to use
-            var creatorAccountKey = creatorAccount.Keys.FirstOrDefault();
 
             // set the transaction payer and proposal key
             tx.Payer = creatorAccount.Address;
@@ -58,8 +54,7 @@ namespace Flow.Net.Examples
 
             // sign and submit the transaction
             tx.AddEnvelopeSignature(creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
-
-            ConvertToConsoleMessage.WriteInfoMessage(tx);
+            
             var response = await _flowClient.SendTransactionAsync(tx);
 
             // wait for seal
@@ -67,9 +62,7 @@ namespace Flow.Net.Examples
 
             if (sealedResponse.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
             {
-                ConvertToConsoleMessage.WriteSuccessMessage(sealedResponse);
-                var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
-                ColorConsole.WriteSuccess($"\nnew account address: 0x{newAccountAddress}");
+                var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();                
 
                 // get new account deatils
                 var newAccount = await _flowClient.GetAccountAtLatestBlockAsync(newAccountAddress.FromHexToByteString());
@@ -79,5 +72,33 @@ namespace Flow.Net.Examples
 
             return null;
         }
+
+        public static async Task<ByteString> RandomTransactionAsync()
+        {
+            // creator (typically a service account)
+            var serviceAccount = await _flowClient.ReadAccountFromConfigAsync("emulator-account");
+            // creator key to use
+            var serviceAccountKey = serviceAccount.Keys.FirstOrDefault();
+
+            var latestBlock = await _flowClient.GetLatestBlockAsync();
+            var tx = new FlowTransaction
+            {
+                Script = "transaction {}",
+                ReferenceBlockId = latestBlock.Id,
+                Payer = serviceAccount.Address,
+                ProposalKey = new FlowProposalKey
+                {
+                    Address = serviceAccount.Address,
+                    KeyId = serviceAccountKey.Index,
+                    SequenceNumber = serviceAccountKey.SequenceNumber
+                }
+            };
+
+            tx.AddEnvelopeSignature(serviceAccount.Address, serviceAccountKey.Index, serviceAccountKey.Signer);
+
+            var response = await _flowClient.SendTransactionAsync(tx);
+            return response.Id;
+        }
     }
 }
+

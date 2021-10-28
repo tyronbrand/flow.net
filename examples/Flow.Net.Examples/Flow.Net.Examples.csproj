@@ -19,6 +19,9 @@
     <None Update="Cadence\create-account.cdc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Cadence\greeting.cdc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Cadence\mint-tokens-to-account.cdc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

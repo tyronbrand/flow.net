@@ -6,37 +6,38 @@ namespace Flow.Net.Examples
     {
         static async Task Main(string[] args)
         {
-            // Uncomment one or more of the examples below
+            // uncomment one or more of the examples below
 
-            // Block examples
-            //await GetLatestBlockExample.RunAsync();
-            //await GetBlockByHeightExample.RunAsync();
-            //await GetBlockByIdExample.RunAsync();
-            //await GetLatestBlockHeaderExample.RunAsync();
-            //await GetBlockHeaderByHeightExample.RunAsync();
-            //await GetBlockHeaderByIdExample.RunAsync();
+            // Block example
+            await BlockExample.RunAsync();
+            //await BlockHeaderExample.RunAsync();
 
-            // Account examples
-            //await CreateAccountExample.RunAsync();
-            //await CreateAccountWithContractExample.RunAsync();
-            //await DeployUpdateDeleteContractExample.RunAsync();
+            // Event example
+            //await GetEventsExample.RunAsync();
 
-            // Event examples
-            //await GetEventsForHeightRangeExample.RunAsync();
-            //await GetEventsForBlockIdsExample.RunAsync();
-
-            // Script examples
+            // Script example
+            //await ScriptExample.RunAsync();
             //await ExecuteScriptAtLatestBlockWithParametersExample.RunAsync();
             //await ExecuteScriptAtLatestBlockExample.RunAsync();
             //await ExecuteScriptAtBlockHeightExample.RunAsync();
             //await ExecuteScriptAtBlockIdExample.RunAsync();
 
+            // Collection example
+            //await GetCollectionExample.RunAsync();
+
             // Transaction examples
-            await SinglePartySingleSignatureExample.RunAsync();
+            //await GetTransactionExample.RunAsync();
+            //await SinglePartySingleSignatureExample.RunAsync();
             //await SinglePartyMultiSignatureExample.RunAsync();
             //await MultiPartySingleSignatureExample.RunAsync();
             //await MultiPartyTwoAuthorizersExample.RunAsync();
             //await MultiPartyMultiSignatureExample.RunAsync();
+
+            // Account example            
+            //await CreateAccountExample.RunAsync();
+            //await CreateAccountWithContractExample.RunAsync();
+            //await DeployUpdateDeleteContractExample.RunAsync();
+            //await GetAccountExample.RunAsync();
         }
     }
 }

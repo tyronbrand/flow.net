@@ -1,7 +1,5 @@
-﻿using Flow.Net.Examples.Utilities;
-using Flow.Net.Sdk;
+﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Models;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,20 +10,26 @@ namespace Flow.Net.Examples
         public static async Task RunAsync()
         {
             await CreateFlowClientAsync();
+            await Demo();
+        }
 
-            ColorConsole.WriteWrappedHeader("Single party multi signature example", headerColor: ConsoleColor.Yellow, dashColor: ConsoleColor.Yellow);
-
+        private static async Task Demo()
+        {
+            // generate key 1 for account1
             var flowAccountKey1 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
+            // generate key 2 for account1
             var flowAccountKey2 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
 
-            ColorConsole.WriteWrappedSubHeader("Creating new account");
+            // create account with keys
             var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey1, flowAccountKey2 });
+
+            // select keys
             var account1Key1 = account1.Keys[0];
-            var account1Key2 = account1.Keys[1];            
+            var account1Key2 = account1.Keys[1];
 
-            ColorConsole.WriteWrappedSubHeader("Creating our transaction");
-
+            // get the latest sealed block to use as a reference block
             var lastestBlock = await _flowClient.GetLatestBlockAsync();
+
             var tx = new FlowTransaction
             {
                 Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}",
@@ -50,16 +54,10 @@ namespace Flow.Net.Examples
             tx.AddEnvelopeSignature(account1.Address, account1Key2.Index, account1Key2.Signer);
 
             // send transaction
-            ConvertToConsoleMessage.WriteInfoMessage(tx);
             var txResponse = await _flowClient.SendTransactionAsync(tx);
 
             // wait for seal
-            var sealedResponse = await _flowClient.WaitForSealAsync(txResponse);
-
-            if (sealedResponse.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
-                ConvertToConsoleMessage.WriteSuccessMessage(sealedResponse);
-
-            ColorConsole.WriteWrappedHeader("End single party multi signature example", headerColor: ConsoleColor.Yellow, dashColor: ConsoleColor.Gray);
+            await _flowClient.WaitForSealAsync(txResponse);
         }
     }
 }
