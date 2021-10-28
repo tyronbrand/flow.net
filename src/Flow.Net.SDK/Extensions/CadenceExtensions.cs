@@ -1,4 +1,5 @@
-﻿using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Exceptions;
+using Flow.Net.Sdk.Models;
 using Google.Protobuf;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -45,6 +46,21 @@ namespace Flow.Net.Sdk.Cadence
                     .FirstOrDefault().Payload.AsCadenceType<CadenceComposite>()
                     .Value.Fields.FirstOrDefault().Value.AsCadenceType<CadenceAddress>()
                     .Value.Remove0x();
+        }
+
+        public static ICadence CadenceCompositeValue(this CadenceComposite cadenceComposite, string fieldName)
+        {
+            return cadenceComposite.Value.Fields.Where(w => w.Name == fieldName).Select(s => s.Value).FirstOrDefault();
+        }
+
+        public static T CadenceCompositeValueAsCadenceType<T>(this CadenceComposite cadenceComposite, string fieldName) where T : ICadence
+        {
+            var cadenceCompositeValue = cadenceComposite.CadenceCompositeValue(fieldName);
+
+            if (cadenceCompositeValue == null)
+                throw new FlowException($"Failed to find fieldName: {fieldName}");
+
+            return cadenceCompositeValue.AsCadenceType<T>();
         }
     }
 }
