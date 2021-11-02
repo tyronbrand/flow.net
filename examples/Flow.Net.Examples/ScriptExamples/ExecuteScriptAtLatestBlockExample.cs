@@ -24,7 +24,7 @@ namespace Flow.Net.Examples
 
         private static void PrintResult(ICadence cadence)
         {
-            Console.WriteLine($"Script result: {cadence.AsCadenceType<CadenceNumber>().Value}");
+            Console.WriteLine($"Script result: {cadence.As<CadenceNumber>().Value}");
         }
     }
 }
