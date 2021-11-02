@@ -30,7 +30,7 @@ pub fun main(a: Int): Int {
             };
 
             var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);
-            Console.WriteLine($"Value: {response.AsCadenceType<CadenceNumber>().Value}");
+            Console.WriteLine($"Value: {response.As<CadenceNumber>().Value}");
 
             // complex script
             var complexScript = @"
@@ -73,9 +73,9 @@ pub fun main(name: String): User {
         {
             var user = new User
             {
-                Name = cadenceResponse.AsCadenceType<CadenceComposite>().CadenceCompositeValueAsCadenceType<CadenceString>("name").Value,
-                Address = cadenceResponse.AsCadenceType<CadenceComposite>().CadenceCompositeValueAsCadenceType<CadenceAddress>("address").Value.Remove0x(),
-                Balance = decimal.Parse(cadenceResponse.AsCadenceType<CadenceComposite>().CadenceCompositeValueAsCadenceType<CadenceNumber>("balance").Value)
+                Name = cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceString>("name").Value,
+                Address = cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceAddress>("address").Value.Remove0x(),
+                Balance = decimal.Parse(cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceNumber>("balance").Value)
             };
 
             Console.WriteLine($"Name: {user.Name}");

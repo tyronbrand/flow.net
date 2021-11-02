@@ -19,7 +19,7 @@ namespace Flow.Net.Sdk.Cadence
             return JsonConvert.DeserializeObject<ICadence>(cadenceJson, cadenceConverter ?? new CadenceConverter());
         }
 
-        public static T AsCadenceType<T>(this ICadence cadence) where T : ICadence
+        public static T As<T>(this ICadence cadence) where T : ICadence
         {
             return (T)cadence;
         }
@@ -43,24 +43,24 @@ namespace Flow.Net.Sdk.Cadence
         public static string AccountCreatedAddress(this IList<FlowEvent> flowEvents)
         {
             return flowEvents.Where(w => w.Type == "flow.AccountCreated")
-                    .FirstOrDefault().Payload.AsCadenceType<CadenceComposite>()
-                    .Value.Fields.FirstOrDefault().Value.AsCadenceType<CadenceAddress>()
+                    .FirstOrDefault().Payload.As<CadenceComposite>()
+                    .Value.Fields.FirstOrDefault().Value.As<CadenceAddress>()
                     .Value.Remove0x();
         }
 
-        public static ICadence CadenceCompositeValue(this CadenceComposite cadenceComposite, string fieldName)
+        public static ICadence CompositeField(this CadenceComposite cadenceComposite, string fieldName)
         {
             return cadenceComposite.Value.Fields.Where(w => w.Name == fieldName).Select(s => s.Value).FirstOrDefault();
         }
 
-        public static T CadenceCompositeValueAsCadenceType<T>(this CadenceComposite cadenceComposite, string fieldName) where T : ICadence
+        public static T CompositeFieldAs<T>(this CadenceComposite cadenceComposite, string fieldName) where T : ICadence
         {
-            var cadenceCompositeValue = cadenceComposite.CadenceCompositeValue(fieldName);
+            var cadenceCompositeValue = cadenceComposite.CompositeField(fieldName);
 
             if (cadenceCompositeValue == null)
                 throw new FlowException($"Failed to find fieldName: {fieldName}");
 
-            return cadenceCompositeValue.AsCadenceType<T>();
+            return cadenceCompositeValue.As<T>();
         }
     }
 }
