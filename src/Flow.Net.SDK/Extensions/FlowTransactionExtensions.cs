@@ -1,5 +1,4 @@
 ﻿using Flow.Net.Sdk.Crypto;
-using Google.Protobuf;
 
 namespace Flow.Net.Sdk.Models
 {

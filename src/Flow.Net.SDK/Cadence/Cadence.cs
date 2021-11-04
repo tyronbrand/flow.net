@@ -1,6 +1,4 @@
-﻿using Flow.Net.Sdk.Constants;
-using Flow.Net.Sdk.Exceptions;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Exceptions;
 using Google.Protobuf;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -53,12 +51,9 @@ namespace Flow.Net.Sdk.Cadence
         /// <returns>A <see cref="ICadence"/> that satisfies the condition.</returns>
         public ICadence CompositeField(CadenceComposite cadenceComposite, string fieldName)
         {
-            var cadenceCompositeValue =  cadenceComposite.Value.Fields.Where(w => w.Name == fieldName).Select(s => s.Value).FirstOrDefault();
+            ICadence cadenceCompositeValue = cadenceComposite.Value.Fields.Where(w => w.Name == fieldName).Select(s => s.Value).FirstOrDefault();
 
-            if (cadenceCompositeValue == null)
-                throw new FlowException($"Failed to find fieldName: {fieldName}");
-
-            return cadenceCompositeValue;
+            return cadenceCompositeValue ?? throw new FlowException($"Failed to find fieldName: {fieldName}");
         }
 
         /// <summary>
@@ -71,7 +66,7 @@ namespace Flow.Net.Sdk.Cadence
         public T CompositeFieldAs<T>(CadenceComposite cadenceComposite, string fieldName)
             where T : ICadence
         {
-            var cadenceCompositeValue = cadenceComposite.CompositeField(fieldName);            
+            ICadence cadenceCompositeValue = cadenceComposite.CompositeField(fieldName);
 
             return cadenceCompositeValue.As<T>();
         }
