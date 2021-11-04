@@ -13,7 +13,7 @@ namespace Flow.Net.Sdk.Models
         public FlowAddress(string addressHex)
         {
             Value = addressHex.FromHexToByteString();
-            HexValue = addressHex.Remove0x();
+            HexValue = addressHex.RemoveHexPrefix();
         }
 
         public ByteString Value { get; private set; }
