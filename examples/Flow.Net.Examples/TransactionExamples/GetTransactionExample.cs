@@ -20,10 +20,10 @@ namespace Flow.Net.Examples
 
         private static async Task Demo(ByteString transactionId)
         {
-            var tx = await _flowClient.GetTransactionAsync(transactionId);
+            var tx = await FlowClient.GetTransactionAsync(transactionId);
             PrintTransaction(tx);
 
-            var txr = await _flowClient.GetTransactionResultAsync(transactionId);
+            var txr = await FlowClient.GetTransactionResultAsync(transactionId);
             PrintTransactionResult(txr);
         }
 

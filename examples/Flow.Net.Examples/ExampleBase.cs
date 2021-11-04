@@ -12,19 +12,19 @@ namespace Flow.Net.Examples
 {
     public class ExampleBase
     {
-        public static FlowClientAsync _flowClient;
+        public static FlowClientAsync FlowClient { get; private set; }
 
         public static async Task<FlowClientAsync> CreateFlowClientAsync()
         {
             var networkUrl = "127.0.0.1:3569"; // emulator
 
-            if(_flowClient == null)
+            if(FlowClient == null)
             {
-                _flowClient = FlowClientAsync.Create(networkUrl);
-                await _flowClient.PingAsync();
+                FlowClient = new FlowClientAsync(networkUrl);
+                await FlowClient.PingAsync();
             }
 
-            return _flowClient;
+            return FlowClient;
         }
 
         public static async Task<FlowAccount> CreateAccountAsync(List<FlowAccountKey> newFlowAccountKeys)
@@ -32,7 +32,7 @@ namespace Flow.Net.Examples
             await CreateFlowClientAsync();            
             
             // creator (typically a service account)
-            var creatorAccount = await _flowClient.ReadAccountFromConfigAsync("emulator-account");
+            var creatorAccount = await FlowClient.ReadAccountFromConfigAsync("emulator-account");
             // creator key to use
             var creatorAccountKey = creatorAccount.Keys.FirstOrDefault();
 
@@ -49,23 +49,23 @@ namespace Flow.Net.Examples
             };
 
             // get the latest sealed block to use as a reference block
-            var latestBlock = await _flowClient.GetLatestBlockAsync();
+            var latestBlock = await FlowClient.GetLatestBlockAsync();
             tx.ReferenceBlockId = latestBlock.Id;
 
             // sign and submit the transaction
             tx.AddEnvelopeSignature(creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
             
-            var response = await _flowClient.SendTransactionAsync(tx);
+            var response = await FlowClient.SendTransactionAsync(tx);
 
             // wait for seal
-            var sealedResponse = await _flowClient.WaitForSealAsync(response);
+            var sealedResponse = await FlowClient.WaitForSealAsync(response);
 
             if (sealedResponse.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
             {
-                var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();                
+                var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
 
                 // get new account deatils
-                var newAccount = await _flowClient.GetAccountAtLatestBlockAsync(newAccountAddress.FromHexToByteString());
+                var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
                 newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(newFlowAccountKeys, newAccount.Keys);
                 return newAccount;
             }
@@ -76,11 +76,11 @@ namespace Flow.Net.Examples
         public static async Task<ByteString> RandomTransactionAsync()
         {
             // creator (typically a service account)
-            var serviceAccount = await _flowClient.ReadAccountFromConfigAsync("emulator-account");
+            var serviceAccount = await FlowClient.ReadAccountFromConfigAsync("emulator-account");
             // creator key to use
             var serviceAccountKey = serviceAccount.Keys.FirstOrDefault();
 
-            var latestBlock = await _flowClient.GetLatestBlockAsync();
+            var latestBlock = await FlowClient.GetLatestBlockAsync();
             var tx = new FlowTransaction
             {
                 Script = "transaction {}",
@@ -96,7 +96,7 @@ namespace Flow.Net.Examples
 
             tx.AddEnvelopeSignature(serviceAccount.Address, serviceAccountKey.Index, serviceAccountKey.Signer);
 
-            var response = await _flowClient.SendTransactionAsync(tx);
+            var response = await FlowClient.SendTransactionAsync(tx);
             return response.Id;
         }
     }

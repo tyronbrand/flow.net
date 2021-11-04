@@ -10,6 +10,8 @@ namespace Flow.Net.Sdk
     {
         public static ByteString FromHexToByteString(this string hex)
         {
+            hex = hex.Remove0x();
+
             var numberChars = hex.Length;
             var bytes = new byte[numberChars / 2];
 
@@ -57,8 +59,7 @@ namespace Flow.Net.Sdk
 
         public static byte[] FromHexToBytes(this string hex)
         {
-            if (hex.Substring(0, 2).ToLower() == "0x")
-                hex = hex.ToLower().Replace("0x", string.Empty);
+            hex = hex.Remove0x();
 
             if (hex.IsHexString())
             {
@@ -78,8 +79,7 @@ namespace Flow.Net.Sdk
             if (str.Length == 0)
                 return false;
 
-            if (str.Substring(0, 2).ToLower() == "0x")
-                str = str.ToLower().Replace("0x", string.Empty);
+            str = str.Remove0x();
 
             var regex = new Regex(@"^[0-9a-f]+$");
             return regex.IsMatch(str) && str.Length % 2 == 0;
@@ -88,7 +88,7 @@ namespace Flow.Net.Sdk
         public static string Remove0x(this string value)
         {
             if (value.Substring(0, 2).ToLower() == "0x")
-                value = value.ToLower().Replace("0x", string.Empty);
+                value = value.Substring(2);
 
             return value;
         }

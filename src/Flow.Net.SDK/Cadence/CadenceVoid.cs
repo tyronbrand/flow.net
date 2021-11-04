@@ -2,9 +2,9 @@
 
 namespace Flow.Net.Sdk.Cadence
 {
-    public class CadenceVoid : ICadence
+    public class CadenceVoid : Cadence
     {
         [JsonProperty("type")]
-        public string Type => "Void";
+        public override string Type => "Void";
     }
 }

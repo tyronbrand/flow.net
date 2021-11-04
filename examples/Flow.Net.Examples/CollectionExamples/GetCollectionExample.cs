@@ -21,7 +21,7 @@ namespace Flow.Net.Examples
         private static async Task Demo(FlowCollectionGuarantee flowCollectionGuarantee)
         {
             // get collection by ID
-            var collection = await _flowClient.GetCollectionByIdAsync(flowCollectionGuarantee.CollectionId);
+            var collection = await FlowClient.GetCollectionByIdAsync(flowCollectionGuarantee.CollectionId);
             PrintCollection(collection);
         }
 
@@ -34,10 +34,10 @@ namespace Flow.Net.Examples
         private static async Task<FlowCollectionGuarantee> PrepCollectionId()
         {
             // create account
-            var flowAccountKey = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);
+            var flowAccountKey = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
             await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey });
 
-            var block = await _flowClient.GetBlockByHeightAsync(1);
+            var block = await FlowClient.GetBlockByHeightAsync(1);
             return block.CollectionGuarantees.FirstOrDefault();
         }
     }

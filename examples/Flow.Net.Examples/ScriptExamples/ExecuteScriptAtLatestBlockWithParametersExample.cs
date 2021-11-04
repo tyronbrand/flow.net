@@ -25,7 +25,7 @@ namespace Flow.Net.Examples
                 new CadenceNumber(CadenceNumberType.Int32, "834534")
             };
 
-            var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);
+            var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);
             PrintResult(response);
         }
 

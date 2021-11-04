@@ -16,7 +16,14 @@ namespace Flow.Net.Sdk.Models
         public bool Revoked { get; set; }
         public ISigner Signer { get; set; }
 
-        public static FlowAccountKey NewEcdsaAccountKey(SignatureAlgo signatureAlgo, HashAlgo hashAlgo, uint weight)
+        /// <summary>
+        /// Generates a public and private ECDSA key pair with a random seed
+        /// </summary>
+        /// <param name="signatureAlgo"></param>
+        /// <param name="hashAlgo"></param>
+        /// <param name="weight"></param>
+        /// <returns>A <see cref="FlowAccount"/></returns>
+        public static FlowAccountKey GenerateRandomEcdsaKey(SignatureAlgo signatureAlgo, HashAlgo hashAlgo, uint weight = 1000)
         {
             var newKeys = Crypto.Ecdsa.Utilities.GenerateKeyPair(signatureAlgo);
             var publicKey = Crypto.Ecdsa.Utilities.DecodePublicKeyToHex(newKeys);
@@ -27,7 +34,7 @@ namespace Flow.Net.Sdk.Models
                 PrivateKey = privateKey,
                 PublicKey = publicKey,
                 SignatureAlgorithm = signatureAlgo,
-                HashAlgorithm = hashAlgo,                
+                HashAlgorithm = hashAlgo,
                 Weight = weight
             };
         }

@@ -21,10 +21,10 @@ namespace Flow.Net.Examples
         private static async Task Demo()
         {
             // creator (typically a service account)
-            var creatorAccount = await _flowClient.ReadAccountFromConfigAsync("emulator-account");
+            var creatorAccount = await FlowClient.ReadAccountFromConfigAsync("emulator-account");
 
             // generate our new account key
-            var flowAccountKey = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_secp256k1, HashAlgo.SHA3_256, 1000);
+            var flowAccountKey = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_secp256k1, HashAlgo.SHA3_256);
 
             // contract to deploy
             var helloWorldContract = Utilities.ReadCadenceScript("hello-world-contract");
@@ -50,16 +50,16 @@ namespace Flow.Net.Examples
             };
 
             // get the latest sealed block to use as a reference block
-            var latestBlock = await _flowClient.GetLatestBlockAsync();
+            var latestBlock = await FlowClient.GetLatestBlockAsync();
             tx.ReferenceBlockId = latestBlock.Id;
 
             // sign and submit the transaction
             tx.AddEnvelopeSignature(creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
             
-            var response = await _flowClient.SendTransactionAsync(tx);
+            var response = await FlowClient.SendTransactionAsync(tx);
 
             // wait for seal
-            var sealedResponse = await _flowClient.WaitForSealAsync(response);
+            var sealedResponse = await FlowClient.WaitForSealAsync(response);
 
             if (sealedResponse.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
                 PrintResult(flowContract);

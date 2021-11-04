@@ -19,12 +19,6 @@ namespace Flow.Net.Sdk.Client
         private readonly AccessAPIClient _client;
         private readonly CadenceConverter _cadenceConverter;
 
-        private FlowClientAsync(AccessAPIClient client)
-        {
-            _client = client;
-            _cadenceConverter = new CadenceConverter();
-        }
-
         /// <summary>
         /// A gRPC client for the Flow Access API.
         /// </summary>
@@ -32,17 +26,17 @@ namespace Flow.Net.Sdk.Client
         /// <param name="channelCredentialsSecureSsl"></param>
         /// <param name="options"></param>
         /// <returns>FlowClientAsync.</returns>
-        public static FlowClientAsync Create(string flowNetworkUrl, bool channelCredentialsSecureSsl = false, List<ChannelOption> options = null)
+        public FlowClientAsync(string flowNetworkUrl, bool channelCredentialsSecureSsl = false, List<ChannelOption> options = null)
         {
             try
             {
-                var client = new AccessAPIClient(new Channel(
+                _client = new AccessAPIClient(new Channel(
                     flowNetworkUrl,
                     channelCredentialsSecureSsl ? ChannelCredentials.SecureSsl : ChannelCredentials.Insecure,
                     options
                 ));
 
-                return new FlowClientAsync(client);
+                _cadenceConverter = new CadenceConverter();
             }
             catch (Exception exception)
             {
@@ -517,11 +511,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetAccountAtLatestBlockAsync gets an account by address at the latest sealed block.
+        /// <see cref="GetAccountAtLatestBlockAsync"/> gets an account by address at the latest sealed block.
         /// </summary>
         /// <param name="address"></param>
         /// <param name="options"></param>
-        /// <returns>FlowAccount.</returns>
+        /// <returns>A <see cref="FlowAccount"/>.</returns>
         public async Task<FlowAccount> GetAccountAtLatestBlockAsync(ByteString address, CallOptions options = new CallOptions())
         {
             try

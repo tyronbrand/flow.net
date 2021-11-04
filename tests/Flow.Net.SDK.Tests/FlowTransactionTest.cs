@@ -1,19 +1,11 @@
 ﻿using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.RecursiveLengthPrefix;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Flow.Net.Sdk.Tests
 {
     public class FlowTransactionTest
     {
-        private readonly ITestOutputHelper output;
-
-        public FlowTransactionTest(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
-
         public static FlowTransaction Transaction()
         {
             var transaction = new FlowTransaction

@@ -727,7 +727,7 @@ namespace Flow.Net.Sdk.Tests
 
         private static string TestEncode(ICadence cadence, string expectedJson)
         {
-            var encoded = cadence.Encode();
+            var encoded = cadence.Encode(cadence);
             Assert.Equal(expectedJson, encoded);
             return encoded;
         }

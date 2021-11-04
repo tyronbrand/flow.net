@@ -28,16 +28,16 @@ namespace Flow.Net.Examples
         private static async Task Demo(FlowAccount flowAccount, ByteString flowTransactionId)
         {
             // Query for account creation events by type
-            var eventsForHeightRange = await _flowClient.GetEventsForHeightRangeAsync("flow.AccountCreated", 0, 100);
+            var eventsForHeightRange = await FlowClient.GetEventsForHeightRangeAsync("flow.AccountCreated", 0, 100);
             PrintEvents(eventsForHeightRange);
 
             // Query for our custom event by type
             var customtype = $"A.{flowAccount.Address.FromByteStringToHex()}.EventDemo.Add";
-            var customEventsForHeightRange = await _flowClient.GetEventsForHeightRangeAsync(customtype, 0, 100);
+            var customEventsForHeightRange = await FlowClient.GetEventsForHeightRangeAsync(customtype, 0, 100);
             PrintEvents(customEventsForHeightRange);
 
             // Get events directly from transaction result
-            var txResult = await _flowClient.GetTransactionResultAsync(flowTransactionId);
+            var txResult = await FlowClient.GetTransactionResultAsync(flowTransactionId);
             PrintEvent(txResult.Events);
         }
 
@@ -60,12 +60,12 @@ namespace Flow.Net.Examples
         private static async Task<FlowAccount> PrepFlowAccountWithContract()
         {
             // creator (typically a service account)
-            var creatorAccount = await _flowClient.ReadAccountFromConfigAsync("emulator-account");
+            var creatorAccount = await FlowClient.ReadAccountFromConfigAsync("emulator-account");
             // creator key to use
             var creatorAccountKey = creatorAccount.Keys.FirstOrDefault();
 
             // generate our new account key
-            var flowAccountKey = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_secp256k1, HashAlgo.SHA3_256, 1000);
+            var flowAccountKey = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_secp256k1, HashAlgo.SHA3_256);
 
             // contract to deploy
             var contract = @"
@@ -106,17 +106,17 @@ pub contract EventDemo {
             };
 
             // get the latest sealed block to use as a reference block
-            var latestBlock = await _flowClient.GetLatestBlockAsync();
+            var latestBlock = await FlowClient.GetLatestBlockAsync();
             tx.ReferenceBlockId = latestBlock.Id;
 
             // sign
             tx.AddEnvelopeSignature(creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
 
             // send transaction
-            var response = await _flowClient.SendTransactionAsync(tx);
+            var response = await FlowClient.SendTransactionAsync(tx);
 
             // wait for seal
-            var sealedResponse = await _flowClient.WaitForSealAsync(response);
+            var sealedResponse = await FlowClient.WaitForSealAsync(response);
 
             if (sealedResponse.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
             {
@@ -124,7 +124,7 @@ pub contract EventDemo {
                 var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
 
                 // get new account details
-                var newAccount = await _flowClient.GetAccountAtLatestBlockAsync(newAccountAddress.FromHexToByteString());
+                var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
                 newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(new List<FlowAccountKey> { flowAccountKey }, newAccount.Keys);
                 return newAccount;
             }
@@ -147,7 +147,7 @@ transaction {{
 }}";
 
             // get the latest sealed block to use as a reference block
-            var latestBlock = await _flowClient.GetLatestBlockAsync();
+            var latestBlock = await FlowClient.GetLatestBlockAsync();
 
             // create transaction
             var tx = new FlowTransaction
@@ -167,10 +167,10 @@ transaction {{
             tx.AddEnvelopeSignature(flowAccount.Address, flowAccountKey.Index, flowAccountKey.Signer);
 
             // send transaction
-            var response = await _flowClient.SendTransactionAsync(tx);
+            var response = await FlowClient.SendTransactionAsync(tx);
 
             // wait for seal
-            await _flowClient.WaitForSealAsync(response);
+            await FlowClient.WaitForSealAsync(response);
 
             return response.Id;
         }
