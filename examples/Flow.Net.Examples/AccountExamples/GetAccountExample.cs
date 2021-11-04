@@ -18,7 +18,7 @@ namespace Flow.Net.Examples
         private static async Task Demo()
         {
             // get account from the latest block
-            var address = "f8d6e0586b0a20c7".FromHexToByteString();
+            var address = new FlowAddress("f8d6e0586b0a20c7");
             var account = await FlowClient.GetAccountAtLatestBlockAsync(address);
             PrintResult(account);
 
@@ -29,7 +29,7 @@ namespace Flow.Net.Examples
 
         private static void PrintResult(FlowAccount flowAccount)
         {
-            Console.WriteLine($"Address: {flowAccount.Address.FromByteStringToHex()}");
+            Console.WriteLine($"Address: {flowAccount.Address.HexValue}");
             Console.WriteLine($"Balance: {flowAccount.Balance}");
             Console.WriteLine($"Contracts: {flowAccount.Contracts.Count}");
             Console.WriteLine($"Keys: {flowAccount.Keys.Count}\n");

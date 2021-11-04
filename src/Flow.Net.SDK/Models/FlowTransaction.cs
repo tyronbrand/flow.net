@@ -22,7 +22,7 @@ namespace Flow.Net.Sdk.Models
         /// <param name="keyId"></param>
         /// <param name="signer"></param>
         /// <returns>A <see cref="FlowTransaction"/> with <see cref="FlowSignature"/> appended to <see cref="FlowTransactionBase.PayloadSignatures"/>.</returns>
-        public static FlowTransaction AddPayloadSignature(FlowTransaction flowTransaction, ByteString address, uint keyId, ISigner signer)
+        public static FlowTransaction AddPayloadSignature(FlowTransaction flowTransaction, FlowAddress address, uint keyId, ISigner signer)
         {
             var canonicalPayload = Rlp.EncodedCanonicalPayload(flowTransaction);
             var message = DomainTag.AddTransactionDomainTag(canonicalPayload);
@@ -31,7 +31,7 @@ namespace Flow.Net.Sdk.Models
             flowTransaction.PayloadSignatures.Add(
                 new FlowSignature
                 {
-                    Address = address,
+                    Address = address.Value,
                     KeyId = keyId,
                     Signature = signature
                 });
@@ -47,7 +47,7 @@ namespace Flow.Net.Sdk.Models
         /// <param name="keyId"></param>
         /// <param name="signer"></param>
         /// <returns>A <see cref="FlowTransaction"/> with <see cref="FlowSignature"/> appended to <see cref="FlowTransactionBase.EnvelopeSignatures"/>.</returns>
-        public static FlowTransaction AddEnvelopeSignature(FlowTransaction flowTransaction, ByteString address, uint keyId, ISigner signer)
+        public static FlowTransaction AddEnvelopeSignature(FlowTransaction flowTransaction, FlowAddress address, uint keyId, ISigner signer)
         {
             var canonicalAuthorizationEnvelope = Rlp.EncodedCanonicalAuthorizationEnvelope(flowTransaction);
             var message = DomainTag.AddTransactionDomainTag(canonicalAuthorizationEnvelope);
@@ -56,7 +56,7 @@ namespace Flow.Net.Sdk.Models
             flowTransaction.EnvelopeSignatures.Add(
                 new FlowSignature
                 {
-                    Address = address,
+                    Address = address.Value,
                     KeyId = keyId,
                     Signature = signature
                 });

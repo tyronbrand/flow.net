@@ -15,11 +15,11 @@ namespace Flow.Net.Examples
             // reading script from folder
             var script = Utilities.ReadCadenceScript("greeting");
 
-            var proposerAddress = "9a0766d93b6608b7".FromHexToByteString();
+            var proposerAddress = new FlowAddress("9a0766d93b6608b7");
             uint proposerKeyIndex = 3;
 
-            var payerAddress = "631e88ae7f1d7c20".FromHexToByteString();
-            var authorizerAddress = "7aad92e5a0715d21".FromHexToByteString();
+            var payerAddress = new FlowAddress("631e88ae7f1d7c20");
+            var authorizerAddress = new FlowAddress("7aad92e5a0715d21");
 
             // Establish a connection with an access node
             var accessAPIHost = "";
@@ -41,15 +41,15 @@ namespace Flow.Net.Examples
                 GasLimit = 100,
                 ProposalKey = new FlowProposalKey
                 {
-                    Address = proposerAddress,
+                    Address = proposerAddress.Value,
                     KeyId = proposerKeyIndex,
                     SequenceNumber = sequenceNumber
                 },
-                Payer = payerAddress
+                Payer = payerAddress.Value
             };
 
             // Add authorizer(s)
-            tx.Authorizers.Add(authorizerAddress);
+            tx.Authorizers.Add(authorizerAddress.Value);
 
             // Add argument(s)
             var arguments = new List<ICadence>
@@ -70,11 +70,11 @@ namespace Flow.Net.Examples
                 GasLimit = 100,
                 ProposalKey = new FlowProposalKey
                 {
-                    Address = proposerAccount.Address,
+                    Address = proposerAccount.Address.Value,
                     KeyId = proposerKey.Index,
                     SequenceNumber = proposerKey.SequenceNumber
                 },
-                Payer = proposerAccount.Address
+                Payer = proposerAccount.Address.Value
             };
 
             // construct a signer from your private key and configured signature/hash algorithms
