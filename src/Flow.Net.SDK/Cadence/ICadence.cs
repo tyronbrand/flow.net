@@ -11,5 +11,7 @@ namespace Flow.Net.Sdk.Cadence
         ICadence Decode(string cadenceJson, CadenceConverter cadenceConverter = null);
         T As<T>(ICadence cadence) where T : ICadence;
         IList<ByteString> GenerateTransactionArguments(IEnumerable<ICadence> cadenceValues);
+        ICadence CompositeField(CadenceComposite cadenceComposite, string fieldName);
+        T CompositeFieldAs<T>(CadenceComposite cadenceComposite, string fieldName) where T : ICadence;
     }
 }
