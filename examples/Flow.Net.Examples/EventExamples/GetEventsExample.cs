@@ -32,7 +32,7 @@ namespace Flow.Net.Examples
             PrintEvents(eventsForHeightRange);
 
             // Query for our custom event by type
-            var customtype = $"A.{flowAccount.Address.FromByteStringToHex()}.EventDemo.Add";
+            var customtype = $"A.{flowAccount.Address.HexValue}.EventDemo.Add";
             var customEventsForHeightRange = await FlowClient.GetEventsForHeightRangeAsync(customtype, 0, 100);
             PrintEvents(customEventsForHeightRange);
 
@@ -97,10 +97,10 @@ pub contract EventDemo {
                 });
 
             // set the transaction payer and proposal key
-            tx.Payer = creatorAccount.Address;
+            tx.Payer = creatorAccount.Address.Value;
             tx.ProposalKey = new FlowProposalKey
             {
-                Address = creatorAccount.Address,
+                Address = creatorAccount.Address.Value,
                 KeyId = creatorAccountKey.Index,
                 SequenceNumber = creatorAccountKey.SequenceNumber
             };
@@ -139,7 +139,7 @@ pub contract EventDemo {
 
             // Send a tx that emits the event in the deployed contract
             var script = @$"
-import EventDemo from 0x{flowAccount.Address.FromByteStringToHex()}
+import EventDemo from 0x{flowAccount.Address.HexValue}
 transaction {{
 	execute {{
 		EventDemo.add(x: 2, y: 3)
@@ -153,10 +153,10 @@ transaction {{
             var tx = new FlowTransaction
             {
                 Script = script,
-                Payer = flowAccount.Address,
+                Payer = flowAccount.Address.Value,
                 ProposalKey = new FlowProposalKey
                 {
-                    Address = flowAccount.Address,
+                    Address = flowAccount.Address.Value,
                     KeyId = flowAccountKey.Index,
                     SequenceNumber = flowAccountKey.SequenceNumber
                 },

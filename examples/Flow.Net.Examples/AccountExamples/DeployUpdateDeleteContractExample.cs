@@ -27,19 +27,19 @@ namespace Flow.Net.Examples
             var newAccountAddress = await CreateAccountAsync(new List<FlowAccountKey> { newFlowAccountKey });
 
             // deploy contract
-            await DeployContractAsync(newFlowAccountKey, newAccountAddress.Address.FromByteStringToHex());
+            await DeployContractAsync(newFlowAccountKey, newAccountAddress.Address);
 
             // update contract
-            await UpdateContractAsync(newFlowAccountKey, newAccountAddress.Address.FromByteStringToHex());
+            await UpdateContractAsync(newFlowAccountKey, newAccountAddress.Address);
 
             // delete contract
-            await DeleteContractAsync(newFlowAccountKey, newAccountAddress.Address.FromByteStringToHex());
+            await DeleteContractAsync(newFlowAccountKey, newAccountAddress.Address);
         }
 
-        private static async Task DeployContractAsync(FlowAccountKey newFlowAccountKey, string newAccountAddress)
+        private static async Task DeployContractAsync(FlowAccountKey newFlowAccountKey, FlowAddress newAccountAddress)
         {
             // get new account details
-            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress.FromHexToByteString());
+            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
 
             // contract to deploy            
             var helloWorldContract = Sdk.Utilities.ReadCadenceScript("hello-world-contract");
@@ -56,10 +56,10 @@ namespace Flow.Net.Examples
             var newAccountKey = newAccount.Keys.FirstOrDefault();            
 
             // set the transaction payer and proposal key
-            tx.Payer = newAccount.Address;
+            tx.Payer = newAccount.Address.Value;
             tx.ProposalKey = new FlowProposalKey
             {
-                Address = newAccount.Address,
+                Address = newAccount.Address.Value,
                 KeyId = newAccountKey.Index,
                 SequenceNumber = newAccountKey.SequenceNumber
             };
@@ -81,10 +81,10 @@ namespace Flow.Net.Examples
             }
         }
 
-        private static async Task UpdateContractAsync(FlowAccountKey newFlowAccountKey, string newAccountAddress)
+        private static async Task UpdateContractAsync(FlowAccountKey newFlowAccountKey, FlowAddress newAccountAddress)
         {
             // get new account deatils
-            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress.FromHexToByteString());
+            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
 
             // contract to update            
             var helloWorldContract = Sdk.Utilities.ReadCadenceScript("hello-world-updated-contract");
@@ -101,10 +101,10 @@ namespace Flow.Net.Examples
             var newAccountKey = newAccount.Keys.FirstOrDefault();
 
             // set the transaction payer and proposal key
-            tx.Payer = newAccount.Address;
+            tx.Payer = newAccount.Address.Value;
             tx.ProposalKey = new FlowProposalKey
             {
-                Address = newAccount.Address,
+                Address = newAccount.Address.Value,
                 KeyId = newAccountKey.Index,
                 SequenceNumber = newAccountKey.SequenceNumber
             };
@@ -126,10 +126,10 @@ namespace Flow.Net.Examples
             }
         }
 
-        private static async Task DeleteContractAsync(FlowAccountKey newFlowAccountKey, string newAccountAddress)
+        private static async Task DeleteContractAsync(FlowAccountKey newFlowAccountKey, FlowAddress newAccountAddress)
         {
             // get new account deatils
-            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress.FromHexToByteString());
+            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
 
             // contract to delete
             var flowContractName = "HelloWorld";
@@ -141,10 +141,10 @@ namespace Flow.Net.Examples
             var newAccountKey = newAccount.Keys.FirstOrDefault();
 
             // set the transaction payer and proposal key
-            tx.Payer = newAccount.Address;
+            tx.Payer = newAccount.Address.Value;
             tx.ProposalKey = new FlowProposalKey
             {
-                Address = newAccount.Address,
+                Address = newAccount.Address.Value,
                 KeyId = newAccountKey.Index,
                 SequenceNumber = newAccountKey.SequenceNumber
             };

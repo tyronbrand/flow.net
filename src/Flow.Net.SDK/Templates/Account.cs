@@ -2,7 +2,6 @@
 using Flow.Net.Sdk.Exceptions;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.RecursiveLengthPrefix;
-using Google.Protobuf;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,7 +24,7 @@ transaction(publicKeys: [String], contracts: { String: String})
 	}
 }";
 
-        public static FlowTransaction CreateAccount(IEnumerable<FlowAccountKey> flowAccountKeys, ByteString authorizerAddress, IEnumerable<FlowContract> flowContracts = null)
+        public static FlowTransaction CreateAccount(IEnumerable<FlowAccountKey> flowAccountKeys, FlowAddress authorizerAddress, IEnumerable<FlowContract> flowContracts = null)
         {
 			if (flowAccountKeys == null || flowAccountKeys.Count() == 0)
 				throw new FlowException("Flow account key required.");
@@ -67,12 +66,12 @@ transaction(publicKeys: [String], contracts: { String: String})
 				}.GenerateTransactionArguments();
 
 			// add authorizer
-			tx.Authorizers.Add(authorizerAddress);
+			tx.Authorizers.Add(authorizerAddress.Value);
 
 			return tx;
         }
 
-		private static FlowTransaction AccountContractBase(string script, FlowContract flowContract, ByteString authorizerAddress)
+		private static FlowTransaction AccountContractBase(string script, FlowContract flowContract, FlowAddress authorizerAddress)
         {
 			var tx = new FlowTransaction
 			{
@@ -88,7 +87,7 @@ transaction(publicKeys: [String], contracts: { String: String})
 				}.GenerateTransactionArguments();
 
 			// add authorizer
-			tx.Authorizers.Add(authorizerAddress);
+			tx.Authorizers.Add(authorizerAddress.Value);
 
 			return tx;
 		}
@@ -101,7 +100,7 @@ transaction(name: String, code: String)
 	}
 }";
 
-		public static FlowTransaction AddAccountContract(FlowContract flowContract, ByteString authorizerAddress)
+		public static FlowTransaction AddAccountContract(FlowContract flowContract, FlowAddress authorizerAddress)
 		{
 			return AccountContractBase(AddAccountContractTemplate, flowContract, authorizerAddress);
 		}
@@ -114,7 +113,7 @@ transaction(name: String, code: String)
 	}
 }";
 
-		public static FlowTransaction UpdateAccountContract(FlowContract flowContract, ByteString authorizerAddress)
+		public static FlowTransaction UpdateAccountContract(FlowContract flowContract, FlowAddress authorizerAddress)
 		{
 			return AccountContractBase(UpdateAccountContractTemplate, flowContract, authorizerAddress);
 		}
@@ -126,7 +125,7 @@ transaction(name: String)
 		signer.contracts.remove(name: name)
 	}
 }";
-		public static FlowTransaction DeleteAccountContract(string contractName, ByteString authorizerAddress)
+		public static FlowTransaction DeleteAccountContract(string contractName, FlowAddress authorizerAddress)
         {
 			var tx = new FlowTransaction
 			{
@@ -141,7 +140,7 @@ transaction(name: String)
 				}.GenerateTransactionArguments();
 
 			// add authorizer
-			tx.Authorizers.Add(authorizerAddress);
+			tx.Authorizers.Add(authorizerAddress.Value);
 
 			return tx;
 		}

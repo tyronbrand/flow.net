@@ -232,7 +232,7 @@ namespace Flow.Net.Sdk.Client
         {
             var flowAccount = new FlowAccount
             {
-                Address = accountResponse.Account.Address,
+                Address = new FlowAddress(accountResponse.Account.Address),
                 Balance = accountResponse.Account.Balance,
                 Code = accountResponse.Account.Code
             };

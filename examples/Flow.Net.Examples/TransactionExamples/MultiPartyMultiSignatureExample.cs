@@ -39,10 +39,10 @@ namespace Flow.Net.Examples
             {
                 Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}",
                 GasLimit = 9999,
-                Payer = account2.Address,
+                Payer = account2.Address.Value,
                 ProposalKey = new FlowProposalKey
                 {
-                    Address = account1.Address,
+                    Address = account1.Address.Value,
                     KeyId = account1.Keys[0].Index,
                     SequenceNumber = account1.Keys[0].SequenceNumber
                 },
@@ -50,7 +50,7 @@ namespace Flow.Net.Examples
             };
 
             // authorizers
-            tx.Authorizers.Add(account1.Address);
+            tx.Authorizers.Add(account1.Address.Value);
 
             // account 1 signs the payload with key 1
             tx.AddPayloadSignature(account1.Address, account1.Keys[0].Index, account1.Keys[0].Signer);

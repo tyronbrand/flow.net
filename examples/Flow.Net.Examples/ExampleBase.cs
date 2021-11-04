@@ -40,10 +40,10 @@ namespace Flow.Net.Examples
             var tx = Account.CreateAccount(newFlowAccountKeys, creatorAccount.Address);
 
             // set the transaction payer and proposal key
-            tx.Payer = creatorAccount.Address;
+            tx.Payer = creatorAccount.Address.Value;
             tx.ProposalKey = new FlowProposalKey
             {
-                Address = creatorAccount.Address,
+                Address = creatorAccount.Address.Value,
                 KeyId = creatorAccountKey.Index,
                 SequenceNumber = creatorAccountKey.SequenceNumber
             };
@@ -85,10 +85,10 @@ namespace Flow.Net.Examples
             {
                 Script = "transaction {}",
                 ReferenceBlockId = latestBlock.Id,
-                Payer = serviceAccount.Address,
+                Payer = serviceAccount.Address.Value,
                 ProposalKey = new FlowProposalKey
                 {
-                    Address = serviceAccount.Address,
+                    Address = serviceAccount.Address.Value,
                     KeyId = serviceAccountKey.Index,
                     SequenceNumber = serviceAccountKey.SequenceNumber
                 }

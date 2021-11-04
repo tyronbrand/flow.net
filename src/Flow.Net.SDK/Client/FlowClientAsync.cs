@@ -516,14 +516,14 @@ namespace Flow.Net.Sdk.Client
         /// <param name="address"></param>
         /// <param name="options"></param>
         /// <returns>A <see cref="FlowAccount"/>.</returns>
-        public async Task<FlowAccount> GetAccountAtLatestBlockAsync(ByteString address, CallOptions options = new CallOptions())
+        public async Task<FlowAccount> GetAccountAtLatestBlockAsync(FlowAddress address, CallOptions options = new CallOptions())
         {
             try
             {
                 var response = await _client.GetAccountAtLatestBlockAsync(
                 new GetAccountAtLatestBlockRequest
                 {
-                    Address = address
+                    Address = address.Value
                 }, options);
 
                 return response.ToFlowAccount();
@@ -541,14 +541,14 @@ namespace Flow.Net.Sdk.Client
         /// <param name="blockHeight"></param>
         /// <param name="options"></param>
         /// <returns>FlowAccount.</returns>
-        public async Task<FlowAccount> GetAccountAtBlockHeightAsync(ByteString address, ulong blockHeight, CallOptions options = new CallOptions())
+        public async Task<FlowAccount> GetAccountAtBlockHeightAsync(FlowAddress address, ulong blockHeight, CallOptions options = new CallOptions())
         {
             try
             {
                 var response = await _client.GetAccountAtBlockHeightAsync(
                 new GetAccountAtBlockHeightRequest
                 {
-                    Address = address,
+                    Address = address.Value,
                     BlockHeight = blockHeight
                 }, options);
 
@@ -595,7 +595,7 @@ namespace Flow.Net.Sdk.Client
             if (configAccount == null)
                 throw new FlowException($"Failed to find account \"{accountName}\"");
 
-            var flowAccount = await GetAccountAtLatestBlockAsync(configAccount.Address.FromHexToByteString());
+            var flowAccount = await GetAccountAtLatestBlockAsync(new FlowAddress(configAccount.Address));
 
             if (!string.IsNullOrEmpty(configAccount.Key))
             {

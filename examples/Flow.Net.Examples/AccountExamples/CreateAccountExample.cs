@@ -23,7 +23,7 @@ namespace Flow.Net.Examples
 
         private static void PrintResult(FlowAccount flowAccount)
         {
-            Console.WriteLine($"Address: {flowAccount.Address.FromByteStringToHex()}");
+            Console.WriteLine($"Address: {flowAccount.Address.HexValue}");
             Console.WriteLine($"Balance: {flowAccount.Balance}");
             Console.WriteLine($"Contracts: {flowAccount.Contracts.Count}");
             Console.WriteLine($"Keys: {flowAccount.Keys.Count}\n");
