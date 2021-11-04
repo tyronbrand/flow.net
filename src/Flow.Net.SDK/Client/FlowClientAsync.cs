@@ -25,15 +25,16 @@ namespace Flow.Net.Sdk.Client
         /// <param name="flowNetworkUrl"></param>
         /// <param name="channelCredentialsSecureSsl"></param>
         /// <param name="options"></param>
-        /// <returns>FlowClientAsync.</returns>
+        /// <returns><see cref="FlowClientAsync"/>.</returns>
         public FlowClientAsync(string flowNetworkUrl, bool channelCredentialsSecureSsl = false, List<ChannelOption> options = null)
         {
             try
             {
-                _client = new AccessAPIClient(new Channel(
-                    flowNetworkUrl,
-                    channelCredentialsSecureSsl ? ChannelCredentials.SecureSsl : ChannelCredentials.Insecure,
-                    options
+                _client = new AccessAPIClient(
+                    new Channel(
+                        flowNetworkUrl,
+                        channelCredentialsSecureSsl ? ChannelCredentials.SecureSsl : ChannelCredentials.Insecure,
+                        options
                 ));
 
                 _cadenceConverter = new CadenceConverter();
@@ -45,8 +46,9 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// Ping is used to check if the access node is alive and healthy.
+        /// Check if the access node is alive and healthy.
         /// </summary>
+        /// <param name="options"></param>
         public async Task PingAsync(CallOptions options = new CallOptions())
         {
             try
@@ -60,11 +62,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetLatestBlockAsync gets the full payload of the latest sealed or unsealed block.
+        /// Gets the full payload of the latest sealed or unsealed block.
         /// </summary>
         /// <param name="isSealed"></param>
         /// <param name="options"></param>
-        /// <returns>FlowBlock.</returns>
+        /// <returns><see cref="FlowBlock"/>.</returns>
         public async Task<FlowBlock> GetLatestBlockAsync(bool isSealed = true, CallOptions options = new CallOptions())
         {
             try
@@ -84,11 +86,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetBlockByHeightAsync gets a full block by height.
+        /// Gets a full block by height.
         /// </summary>
         /// <param name="blockHeight"></param>
         /// <param name="options"></param>
-        /// <returns>FlowBlock.</returns>
+        /// <returns><see cref="FlowBlock"/>.</returns>
         public async Task<FlowBlock> GetBlockByHeightAsync(ulong blockHeight, CallOptions options = new CallOptions())
         {
             try
@@ -108,11 +110,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetBlockByIdAsync gets a full block by Id.
+        /// Gets a full block by Id.
         /// </summary>
         /// <param name="blockId"></param>
         /// <param name="options"></param>
-        /// <returns>FlowBlock.</returns>
+        /// <returns><see cref="FlowBlock"/>.</returns>
         public async Task<FlowBlock> GetBlockByIdAsync(ByteString blockId, CallOptions options = new CallOptions())
         {
             try
@@ -132,11 +134,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetLatestBlockHeaderAsync gets the latest sealed or unsealed block header.
+        /// Gets the latest sealed or unsealed block header.
         /// </summary>
         /// <param name="isSealed"></param>
         /// <param name="options"></param>
-        /// <returns>FlowBlockHeader.</returns>
+        /// <returns><see cref="FlowBlockHeader"/>.</returns>
         public async Task<FlowBlockHeader> GetLatestBlockHeaderAsync(bool isSealed = true, CallOptions options = new CallOptions())
         {
             try
@@ -156,11 +158,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetBlockHeaderByHeightAsync gets a block header by height.
+        /// Gets a block header by height.
         /// </summary>
         /// <param name="blockHeaderHeight"></param>
         /// <param name="options"></param>
-        /// <returns>FlowBlockHeader.</returns>
+        /// <returns><see cref="FlowBlockHeader"/>.</returns>
         public async Task<FlowBlockHeader> GetBlockHeaderByHeightAsync(ulong blockHeaderHeight, CallOptions options = new CallOptions())
         {
             try
@@ -180,11 +182,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetBlockHeaderByIdAsync gets a block header by Id.
+        /// Gets a block header by Id.
         /// </summary>
         /// <param name="blockHeaderId"></param>
         /// <param name="options"></param>
-        /// <returns>FlowBlockHeader.</returns>
+        /// <returns><see cref="FlowBlockHeader"/>.</returns>
         public async Task<FlowBlockHeader> GetBlockHeaderByIdAsync(ByteString blockHeaderId, CallOptions options = new CallOptions())
         {
             try
@@ -204,12 +206,12 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// ExecuteScriptAtLatestBlockAsync executes a read-only Cadence script against the latest sealed execution state.
+        /// Executes a read-only Cadence script against the latest sealed execution state.
         /// </summary>
         /// <param name="script"></param>
         /// <param name="arguments"></param>
         /// <param name="options"></param>
-        /// <returns>ICadence.</returns>
+        /// <returns><see cref="ICadence"/>.</returns>
         public async Task<ICadence> ExecuteScriptAtLatestBlockAsync(ByteString script, IEnumerable<ICadence> arguments = null, CallOptions options = new CallOptions())
         {
             try
@@ -231,13 +233,13 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// ExecuteScriptAtBlockHeightAsync executes a ready-only Cadence script against the execution state at the given block height.
+        /// Executes a ready-only Cadence script against the execution state at the given block height.
         /// </summary>
         /// <param name="script"></param>
         /// <param name="blockHeight"></param>
         /// <param name="arguments"></param>
         /// <param name="options"></param>
-        /// <returns>ICadence.</returns>
+        /// <returns><see cref="ICadence"/>.</returns>
         public async Task<ICadence> ExecuteScriptAtBlockHeightAsync(ByteString script, ulong blockHeight, IEnumerable<ICadence> arguments = null, CallOptions options = new CallOptions())
         {
             try
@@ -260,13 +262,13 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// ExecuteScriptAtBlockIdAsync executes a ready-only Cadence script against the execution state at the block with the given Id.
+        /// Executes a ready-only Cadence script against the execution state at the block with the given Id.
         /// </summary>
         /// <param name="script"></param>
         /// <param name="blockId"></param>
         /// <param name="arguments"></param>
         /// <param name="options"></param>
-        /// <returns>ICadence.</returns>
+        /// <returns><see cref="ICadence"/>.</returns>
         public async Task<ICadence> ExecuteScriptAtBlockIdAsync(ByteString script, ByteString blockId, IEnumerable<ICadence> arguments = null, CallOptions options = new CallOptions())
         {
             try
@@ -290,13 +292,13 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetEventsForHeightRangeAsync retrieves events for all sealed blocks between the start and end block heights (inclusive) with the given type.
+        /// Retrieves events for all sealed blocks between the start and end block heights (inclusive) with the given type.
         /// </summary>
         /// <param name="eventType"></param>
         /// <param name="startHeight"></param>
         /// <param name="endHeight"></param>
         /// <param name="options"></param>
-        /// <returns>List of FlowBlockEvent.</returns>
+        /// <returns>A <see cref="IList{T}" /> of type <see cref="FlowBlockEvent"/>.</returns>
         public async Task<IEnumerable<FlowBlockEvent>> GetEventsForHeightRangeAsync(string eventType, ulong startHeight, ulong endHeight, CallOptions options = new CallOptions())
         {
             try
@@ -320,12 +322,12 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetEventsForBlockIdsAsync retrieves events with the given type from the specified block Ids.
+        /// Retrieves events with the given type from the specified block Ids.
         /// </summary>
         /// <param name="eventType"></param>
         /// <param name="blockIds"></param>
         /// <param name="options"></param>
-        /// <returns>List of FlowBlockEvent.</returns>
+        /// <returns>A <see cref="IList{T}" /> of type <see cref="FlowBlockEvent"/>.</returns>
         public async Task<IEnumerable<FlowBlockEvent>> GetEventsForBlockIdsAsync(string eventType, IEnumerable<ByteString> blockIds, CallOptions options = new CallOptions())
         {
             try
@@ -351,11 +353,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// SendTransactionAsync submits a transaction to the network.
+        /// Submits a transaction to the network.
         /// </summary>
         /// <param name="transaction"></param>
         /// <param name="options"></param>
-        /// <returns>FlowSendTransactionResponse.</returns>
+        /// <returns><see cref="FlowSendTransactionResponse"/>.</returns>
         public async Task<FlowSendTransactionResponse> SendTransactionAsync(FlowTransaction transaction, CallOptions options = new CallOptions())
         {
             try
@@ -377,11 +379,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetTransactionAsync gets a transaction by Id.
+        /// Gets a transaction by Id.
         /// </summary>
         /// <param name="transactionId"></param>
         /// <param name="options"></param>
-        /// <returns>FlowTransactionResponse.</returns>
+        /// <returns><see cref="FlowTransactionResponse"/>.</returns>
         public async Task<FlowTransactionResponse> GetTransactionAsync(ByteString transactionId, CallOptions options = new CallOptions())
         {
             try
@@ -401,11 +403,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetTransactionResultAsync gets the result of a transaction.
+        /// Gets the result of a transaction.
         /// </summary>
         /// <param name="transactionId"></param>
         /// <param name="options"></param>
-        /// <returns>FlowTransactionResult.</returns>
+        /// <returns><see cref="FlowTransactionResult"/>.</returns>
         public async Task<FlowTransactionResult> GetTransactionResultAsync(ByteString transactionId, CallOptions options = new CallOptions())
         {
             try
@@ -425,11 +427,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetCollectionByIdAsync gets a collection by Id.
+        /// Gets a collection by Id.
         /// </summary>
         /// <param name="collectionId"></param>
         /// <param name="options"></param>
-        /// <returns>FlowCollectionResponse.</returns>
+        /// <returns><see cref="FlowCollectionResponse"/>.</returns>
         public async Task<FlowCollectionResponse> GetCollectionByIdAsync(ByteString collectionId, CallOptions options = new CallOptions())
         {
             try
@@ -449,10 +451,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetExecutionResultForBlockIdAsync retrieves execution result for the specified block Id.
+        /// Retrieves execution result for the specified block Id.
         /// </summary>
+        /// <param name="blockId"></param>
         /// <param name="options"></param>
-        /// <returns>FlowExecutionResultForBlockIDResponse.</returns>
+        /// <returns><see cref="FlowExecutionResultForBlockIdResponse"/></returns>
         public async Task<FlowExecutionResultForBlockIdResponse> GetExecutionResultForBlockIdAsync(ByteString blockId, CallOptions options = new CallOptions())
         {
             try
@@ -472,11 +475,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetLatestProtocolStateSnapshotAsync retrieves the latest snapshot of the protocol state in serialized form.
+        /// Retrieves the latest snapshot of the protocol state in serialized form.
         /// This is used to generate a root snapshot file used by Flow nodes to bootstrap their local protocol state database.
         /// </summary>
         /// <param name="options"></param>
-        /// <returns>FlowProtocolStateSnapshotResponse.</returns>
+        /// <returns><see cref="FlowProtocolStateSnapshotResponse"/>.</returns>
         public async Task<FlowProtocolStateSnapshotResponse> GetLatestProtocolStateSnapshotAsync(CallOptions options = new CallOptions())
         {
             try
@@ -492,10 +495,10 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetNetworkParametersAsync retrieves network parameters
+        /// Retrieves network parameters
         /// </summary>
         /// <param name="options"></param>
-        /// <returns>FlowGetNetworkParametersResponse.</returns>
+        /// <returns><see cref="FlowGetNetworkParametersResponse"/>.</returns>
         public async Task<FlowGetNetworkParametersResponse> GetNetworkParametersAsync(CallOptions options = new CallOptions())
         {
             try
@@ -511,11 +514,11 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// <see cref="GetAccountAtLatestBlockAsync"/> gets an account by address at the latest sealed block.
+        /// Gets an account by address at the latest sealed block.
         /// </summary>
         /// <param name="address"></param>
         /// <param name="options"></param>
-        /// <returns>A <see cref="FlowAccount"/>.</returns>
+        /// <returns><see cref="FlowAccount"/>.</returns>
         public async Task<FlowAccount> GetAccountAtLatestBlockAsync(FlowAddress address, CallOptions options = new CallOptions())
         {
             try
@@ -535,12 +538,12 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// GetAccountAtBlockHeightAsync gets an account by address at the given block height.
+        /// Gets an account by address at the given block height.
         /// </summary>
         /// <param name="address"></param>
         /// <param name="blockHeight"></param>
         /// <param name="options"></param>
-        /// <returns>FlowAccount.</returns>
+        /// <returns><see cref="FlowAccount"/>.</returns>
         public async Task<FlowAccount> GetAccountAtBlockHeightAsync(FlowAddress address, ulong blockHeight, CallOptions options = new CallOptions())
         {
             try
@@ -561,10 +564,12 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// WaitForSealAsync waits for transaction result status to be sealed.
+        /// Waits for transaction result status to be sealed.
         /// </summary>
         /// <param name="transactionResponse"></param>
-        /// <returns>FlowTransactionResult.</returns>
+        /// <param name="delayMs"></param>
+        /// <param name="timeoutMS"></param>
+        /// <returns><see cref="FlowTransactionResult"/></returns>
         public async Task<FlowTransactionResult> WaitForSealAsync(FlowSendTransactionResponse transactionResponse, int delayMs = 1000, int timeoutMS = 30000)
         {
             var startTime = DateTime.UtcNow;
@@ -583,10 +588,12 @@ namespace Flow.Net.Sdk.Client
         }
 
         /// <summary>
-        /// ReadAccountFromConfigAsync retrieves the account from flow config file and creates signers where private keys exist
+        /// Retrieves the specified account from the flow.json file and generates signers where private keys exist
         /// </summary>
-        /// <param name="options"></param>
-        /// <returns>FlowAccount</returns>
+        /// <param name="accountName"></param>
+        /// <param name="configFileName"></param>
+        /// <param name="configPath"></param>
+        /// <returns><see cref="FlowAccount"/></returns>
         public async Task<FlowAccount> ReadAccountFromConfigAsync(string accountName, string configFileName = null, string configPath = null)
         {
             var config = Utilities.ReadConfig(configFileName, configPath);
