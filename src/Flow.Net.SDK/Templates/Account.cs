@@ -64,7 +64,7 @@ transaction(publicKeys: [String], contracts: { String: String})
 				{
 					accountKeys,
 					contracts
-				}.ToTransactionArguments();
+				}.GenerateTransactionArguments();
 
 			// add authorizer
 			tx.Authorizers.Add(authorizerAddress);
@@ -85,7 +85,7 @@ transaction(publicKeys: [String], contracts: { String: String})
 				{
 					new CadenceString(flowContract.Name),
 					new CadenceString(flowContract.Source.FromStringToHex())
-				}.ToTransactionArguments();
+				}.GenerateTransactionArguments();
 
 			// add authorizer
 			tx.Authorizers.Add(authorizerAddress);
@@ -138,7 +138,7 @@ transaction(name: String)
 				new List<ICadence>
 				{
 					new CadenceString(contractName),
-				}.ToTransactionArguments();
+				}.GenerateTransactionArguments();
 
 			// add authorizer
 			tx.Authorizers.Add(authorizerAddress);

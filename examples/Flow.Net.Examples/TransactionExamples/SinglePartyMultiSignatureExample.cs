@@ -19,9 +19,9 @@ namespace Flow.Net.Examples
         private static async Task Demo()
         {
             // generate key 1 for account1
-            var flowAccountKey1 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
+            var flowAccountKey1 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
             // generate key 2 for account1
-            var flowAccountKey2 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
+            var flowAccountKey2 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
 
             // create account with keys
             var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey1, flowAccountKey2 });
@@ -31,7 +31,7 @@ namespace Flow.Net.Examples
             var account1Key2 = account1.Keys[1];
 
             // get the latest sealed block to use as a reference block
-            var lastestBlock = await _flowClient.GetLatestBlockAsync();
+            var lastestBlock = await FlowClient.GetLatestBlockAsync();
 
             var tx = new FlowTransaction
             {
@@ -57,10 +57,10 @@ namespace Flow.Net.Examples
             tx.AddEnvelopeSignature(account1.Address, account1Key2.Index, account1Key2.Signer);
 
             // send transaction
-            var txResponse = await _flowClient.SendTransactionAsync(tx);
+            var txResponse = await FlowClient.SendTransactionAsync(tx);
 
             // wait for seal
-            await _flowClient.WaitForSealAsync(txResponse);
+            await FlowClient.WaitForSealAsync(txResponse);
         }
     }
 }

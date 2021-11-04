@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Flow.Net.Sdk.Cadence
 {
-    public class CadenceComposite : ICadence
+    public class CadenceComposite : Cadence
     {
         public CadenceComposite(CadenceCompositeType type)
         {
@@ -17,7 +17,7 @@ namespace Flow.Net.Sdk.Cadence
         }
 
         [JsonProperty("type")]
-        public string Type { get; set; }        
+        public override string Type { get; }
 
         [JsonProperty("value")]
         public CadenceCompositeItem Value { get; set; }

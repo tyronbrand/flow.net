@@ -19,21 +19,21 @@ namespace Flow.Net.Examples
         private static async Task Demo()
         {
             // generate key 1 for account1
-            var flowAccount1Key1 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA2_256, 500);
+            var flowAccount1Key1 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA2_256, 500);
             // generate key 2 for account1
-            var flowAccount1Key2 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA2_256, 500);
+            var flowAccount1Key2 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA2_256, 500);
             // create account1
             var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccount1Key1, flowAccount1Key2 });
 
             // generate key 1 for account2
-            var flowAccount2Key3 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
+            var flowAccount2Key3 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
             // generate key 2 for account2
-            var flowAccount2Key4 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
+            var flowAccount2Key4 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
             // create account2
             var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccount2Key3, flowAccount2Key4 });
 
             // get the latest sealed block to use as a reference block
-            var lastestBlock = await _flowClient.GetLatestBlockAsync();
+            var lastestBlock = await FlowClient.GetLatestBlockAsync();
 
             var tx = new FlowTransaction
             {
@@ -65,10 +65,10 @@ namespace Flow.Net.Examples
             tx.AddEnvelopeSignature(account2.Address, account2.Keys[1].Index, account2.Keys[1].Signer);
 
             // send transaction
-            var txResponse = await _flowClient.SendTransactionAsync(tx);
+            var txResponse = await FlowClient.SendTransactionAsync(tx);
 
             // wait for seal
-            await _flowClient.WaitForSealAsync(txResponse);
+            await FlowClient.WaitForSealAsync(txResponse);
         }
     }
 }

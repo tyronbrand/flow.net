@@ -19,11 +19,11 @@ namespace Flow.Net.Examples
         {
             // get account from the latest block
             var address = "f8d6e0586b0a20c7".FromHexToByteString();
-            var account = await _flowClient.GetAccountAtLatestBlockAsync(address);
+            var account = await FlowClient.GetAccountAtLatestBlockAsync(address);
             PrintResult(account);
 
             // get account from the block by height 0
-            account = await _flowClient.GetAccountAtBlockHeightAsync(address, 0);
+            account = await FlowClient.GetAccountAtBlockHeightAsync(address, 0);
             PrintResult(account);
         }
 

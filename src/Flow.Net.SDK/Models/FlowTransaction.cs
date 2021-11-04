@@ -1,4 +1,6 @@
-﻿using Google.Protobuf;
+﻿using Flow.Net.Sdk.Crypto;
+using Flow.Net.Sdk.RecursiveLengthPrefix;
+using Google.Protobuf;
 using System.Collections.Generic;
 
 namespace Flow.Net.Sdk.Models
@@ -11,5 +13,55 @@ namespace Flow.Net.Sdk.Models
         }
 
         public Dictionary<ByteString, int> SignerList { get; set; }
+
+        /// <summary>
+        /// RLP encodes and signs the transaction payload with the specified account key.
+        /// </summary>
+        /// <param name="flowTransaction"></param>
+        /// <param name="address"></param>
+        /// <param name="keyId"></param>
+        /// <param name="signer"></param>
+        /// <returns>A <see cref="FlowTransaction"/> with <see cref="FlowSignature"/> appended to <see cref="FlowTransactionBase.PayloadSignatures"/>.</returns>
+        public static FlowTransaction AddPayloadSignature(FlowTransaction flowTransaction, ByteString address, uint keyId, ISigner signer)
+        {
+            var canonicalPayload = Rlp.EncodedCanonicalPayload(flowTransaction);
+            var message = DomainTag.AddTransactionDomainTag(canonicalPayload);
+            var signature = signer.Sign(message);
+
+            flowTransaction.PayloadSignatures.Add(
+                new FlowSignature
+                {
+                    Address = address,
+                    KeyId = keyId,
+                    Signature = signature
+                });
+
+            return flowTransaction;
+        }
+
+        /// <summary>
+        /// RLP encodes and signs the full transaction (payload + <see cref="FlowTransactionBase.PayloadSignatures"/>) with the specified account key.
+        /// </summary>
+        /// <param name="flowTransaction"></param>
+        /// <param name="address"></param>
+        /// <param name="keyId"></param>
+        /// <param name="signer"></param>
+        /// <returns>A <see cref="FlowTransaction"/> with <see cref="FlowSignature"/> appended to <see cref="FlowTransactionBase.EnvelopeSignatures"/>.</returns>
+        public static FlowTransaction AddEnvelopeSignature(FlowTransaction flowTransaction, ByteString address, uint keyId, ISigner signer)
+        {
+            var canonicalAuthorizationEnvelope = Rlp.EncodedCanonicalAuthorizationEnvelope(flowTransaction);
+            var message = DomainTag.AddTransactionDomainTag(canonicalAuthorizationEnvelope);
+            var signature = signer.Sign(message);
+
+            flowTransaction.EnvelopeSignatures.Add(
+                new FlowSignature
+                {
+                    Address = address,
+                    KeyId = keyId,
+                    Signature = signature
+                });
+
+            return flowTransaction;
+        }
     }    
 }

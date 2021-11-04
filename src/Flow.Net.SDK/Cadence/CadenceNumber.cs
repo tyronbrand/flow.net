@@ -2,7 +2,7 @@
 
 namespace Flow.Net.Sdk.Cadence
 {
-    public class CadenceNumber : ICadence
+    public class CadenceNumber : Cadence
     {
         public CadenceNumber(CadenceNumberType type)
         {
@@ -16,7 +16,7 @@ namespace Flow.Net.Sdk.Cadence
         }
 
         [JsonProperty("type")]
-        public string Type { get; set; }
+        public override string Type { get; }
 
         [JsonProperty("value")]
         public string Value { get; set; }

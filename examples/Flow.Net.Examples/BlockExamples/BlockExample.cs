@@ -18,15 +18,15 @@ namespace Flow.Net.Examples
         private static async Task Demo()
         {
             // get the latest sealed block
-            var latestBlock = await _flowClient.GetLatestBlockAsync();
+            var latestBlock = await FlowClient.GetLatestBlockAsync();
             PrintResult(latestBlock);
 
             // get the block by ID
-            var blockByIdResult = await _flowClient.GetBlockByIdAsync(latestBlock.Id);
+            var blockByIdResult = await FlowClient.GetBlockByIdAsync(latestBlock.Id);
             PrintResult(blockByIdResult);
 
             // get block by height
-            var blockByHeightResult = await _flowClient.GetBlockByHeightAsync(latestBlock.Height);
+            var blockByHeightResult = await FlowClient.GetBlockByHeightAsync(latestBlock.Height);
             PrintResult(blockByHeightResult);
         }
 

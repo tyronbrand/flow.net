@@ -13,7 +13,7 @@ namespace Flow.Net.Examples
         private static async Task Demo()
         {
             // reading script from folder
-            var script = Sdk.Utilities.ReadCadenceScript("greeting");
+            var script = Utilities.ReadCadenceScript("greeting");
 
             var proposerAddress = "9a0766d93b6608b7".FromHexToByteString();
             uint proposerKeyIndex = 3;
@@ -23,13 +23,13 @@ namespace Flow.Net.Examples
 
             // Establish a connection with an access node
             var accessAPIHost = "";
-            var _flowClient = FlowClientAsync.Create(accessAPIHost);
+            var FlowClient = new FlowClientAsync(accessAPIHost);
 
             // Get the latest sealed block to use as a reference block
-            var latestBlock = await _flowClient.GetLatestBlockHeaderAsync();
+            var latestBlock = await FlowClient.GetLatestBlockHeaderAsync();
 
             // Get the latest account info for this address
-            var proposerAccount = await _flowClient.GetAccountAtLatestBlockAsync(proposerAddress);
+            var proposerAccount = await FlowClient.GetAccountAtLatestBlockAsync(proposerAddress);
 
             // Get the latest sequence number for this key
             var proposerKey = proposerAccount.Keys.Where(w => w.Index == proposerKeyIndex).FirstOrDefault();
@@ -56,8 +56,7 @@ namespace Flow.Net.Examples
             {
                 new CadenceString("Hello")
             };
-            tx.Arguments = arguments.ToTransactionArguments();
-
+            tx.Arguments = arguments.GenerateTransactionArguments();
         }
 
         private static void Demo2()

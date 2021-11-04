@@ -8,7 +8,7 @@ namespace Flow.Net.Sdk.Client
 {
     public static class FlowConverter
     {
-        private static CadenceConverter _cadenceConverter;
+        private static readonly CadenceConverter _cadenceConverter;
         static FlowConverter()
         {
             _cadenceConverter = new CadenceConverter();

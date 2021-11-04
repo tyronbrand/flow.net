@@ -4,7 +4,7 @@ namespace Flow.Net.Examples
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static async Task Main()
         {
             // Block example
             await BlockExample.RunAsync();

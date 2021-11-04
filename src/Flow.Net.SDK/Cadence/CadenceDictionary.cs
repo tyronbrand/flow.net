@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Flow.Net.Sdk.Cadence
 {
-    public class CadenceDictionary : ICadence
+    public class CadenceDictionary : Cadence
     {
         public CadenceDictionary() 
         {
@@ -16,7 +16,7 @@ namespace Flow.Net.Sdk.Cadence
         }
 
         [JsonProperty("type")]
-        public string Type => "Dictionary";
+        public override string Type => "Dictionary";
 
         [JsonProperty("value")]
         public IList<CadenceDictionaryKeyValue> Value { get; set; }

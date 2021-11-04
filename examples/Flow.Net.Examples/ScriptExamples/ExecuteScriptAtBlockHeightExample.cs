@@ -18,8 +18,8 @@ namespace Flow.Net.Examples
         private static async Task Demo()
         {
             var script = "pub fun main(): Int { return 1 + 2 }";
-            var latestBlock = await _flowClient.GetLatestBlockAsync(); // getting a height for example purpose
-            var response = await _flowClient.ExecuteScriptAtBlockHeightAsync(script.FromStringToByteString(), latestBlock.Height);
+            var latestBlock = await FlowClient.GetLatestBlockAsync(); // getting a height for example purpose
+            var response = await FlowClient.ExecuteScriptAtBlockHeightAsync(script.FromStringToByteString(), latestBlock.Height);
             PrintResult(response);
         }
 

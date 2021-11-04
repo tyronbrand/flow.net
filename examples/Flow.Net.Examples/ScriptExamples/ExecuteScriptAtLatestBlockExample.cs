@@ -18,7 +18,7 @@ namespace Flow.Net.Examples
         private static async Task Demo()
         {
             var script = "pub fun main(): Int { return 1 + 1 }";
-            var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString());
+            var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString());
             PrintResult(response);
         }
 

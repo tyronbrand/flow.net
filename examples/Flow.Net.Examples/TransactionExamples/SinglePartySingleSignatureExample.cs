@@ -20,14 +20,14 @@ namespace Flow.Net.Examples
         private static async Task Demo()
         {
             // generate key
-            var flowAccountKey = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);           
+            var flowAccountKey = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
             // create account with key
             var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey });
             // select key
             var account1Key = account1.Keys.FirstOrDefault();
 
             // get the latest sealed block to use as a reference block
-            var lastestBlock = await _flowClient.GetLatestBlockAsync();
+            var lastestBlock = await FlowClient.GetLatestBlockAsync();
             
             var tx = new FlowTransaction
             {
@@ -47,13 +47,13 @@ namespace Flow.Net.Examples
             tx.Authorizers.Add(account1.Address);
 
             // account 1 signs the envelope with key 1
-            tx.AddEnvelopeSignature(account1.Address, account1Key.Index, account1Key.Signer);
+            tx = FlowTransaction.AddEnvelopeSignature(tx, account1.Address, account1Key.Index, account1Key.Signer);
 
             // send transaction
-            var txResponse = await _flowClient.SendTransactionAsync(tx);
+            var txResponse = await FlowClient.SendTransactionAsync(tx);
 
             // wait for seal
-            await _flowClient.WaitForSealAsync(txResponse);
+            await FlowClient.WaitForSealAsync(txResponse);
         }
     }
 }
