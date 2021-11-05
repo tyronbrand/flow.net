@@ -357,7 +357,7 @@ pub fun main(a: Int): Int {
         new CadenceNumber(CadenceNumberType.Int, "5")
     };
 
-    var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);
+    var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);
     Console.WriteLine($"Value: {response.As<CadenceNumber>().Value}");
 
     // complex script
@@ -386,7 +386,7 @@ pub fun main(name: String): User {
     {
         new CadenceString("Dete")
     };
-    var complexResponse = await FlowClient.ExecuteScriptAtLatestBlockAsync(complexScript.FromStringToByteString(), complexArguments);
+    var complexResponse = await _flowClient.ExecuteScriptAtLatestBlockAsync(complexScript.FromStringToByteString(), complexArguments);
     PrintComplexScript(complexResponse);
 }
 
@@ -517,10 +517,10 @@ private static async Task Demo()
     var FlowClient = new FlowClientAsync(accessAPIHost);
 
     // Get the latest sealed block to use as a reference block
-    var latestBlock = await FlowClient.GetLatestBlockHeaderAsync();
+    var latestBlock = await _flowClient.GetLatestBlockHeaderAsync();
 
     // Get the latest account info for this address
-    var proposerAccount = await FlowClient.GetAccountAtLatestBlockAsync(proposerAddress);
+    var proposerAccount = await _flowClient.GetAccountAtLatestBlockAsync(proposerAddress);
 
     // Get the latest sequence number for this key
     var proposerKey = proposerAccount.Keys.Where(w => w.Index == proposerKeyIndex).FirstOrDefault();
@@ -612,7 +612,7 @@ var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKe
 var account1Key = account1.Keys.FirstOrDefault();
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await FlowClient.GetLatestBlockAsync();
+var lastestBlock = await _flowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
@@ -635,7 +635,7 @@ tx.Authorizers.Add(account1.Address.Value);
 tx = FlowTransaction.AddEnvelopeSignature(tx, account1.Address, account1Key.Index, account1Key.Signer);
 
 // send transaction
-var txResponse = await FlowClient.SendTransactionAsync(tx);
+var txResponse = await _flowClient.SendTransactionAsync(tx);
 ```
 
 ### [Single party, multiple signatures](https://docs.onflow.org/concepts/transaction-signing/#single-party-multiple-signatures)
@@ -664,7 +664,7 @@ var account1Key1 = account1.Keys[0];
 var account1Key2 = account1.Keys[1];
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await FlowClient.GetLatestBlockAsync();
+var lastestBlock = await _flowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
@@ -690,7 +690,7 @@ tx.AddEnvelopeSignature(account1.Address, account1Key1.Index, account1Key1.Signe
 tx.AddEnvelopeSignature(account1.Address, account1Key2.Index, account1Key2.Signer);
 
 // send transaction
-var txResponse = await FlowClient.SendTransactionAsync(tx);
+var txResponse = await _flowClient.SendTransactionAsync(tx);
 ```
 
 ### [Multiple parties](https://docs.onflow.org/concepts/transaction-signing/#multiple-parties)
@@ -723,7 +723,7 @@ var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKe
 var account2Key = account2.Keys.FirstOrDefault();
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await FlowClient.GetLatestBlockAsync();
+var lastestBlock = await _flowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
@@ -749,7 +749,7 @@ tx.AddPayloadSignature(account1.Address, account1Key.Index, account1Key.Signer);
 tx.AddEnvelopeSignature(account2.Address, account2Key.Index, account2Key.Signer);
 
 // send transaction
-var txResponse = await FlowClient.SendTransactionAsync(tx);
+var txResponse = await _flowClient.SendTransactionAsync(tx);
 ```
 
 ### [Multiple parties, two authorizers](https://docs.onflow.org/concepts/transaction-signing/#multiple-parties)
@@ -783,7 +783,7 @@ var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKe
 var account2Key = account2.Keys.FirstOrDefault();
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await FlowClient.GetLatestBlockAsync();
+var lastestBlock = await _flowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
@@ -816,7 +816,7 @@ tx.AddPayloadSignature(account1.Address, account1Key.Index, account1Key.Signer);
 tx.AddEnvelopeSignature(account2.Address, account2Key.Index, account2Key.Signer);
 
 // send transaction
-var txResponse = await FlowClient.SendTransactionAsync(tx);
+var txResponse = await _flowClient.SendTransactionAsync(tx);
 ```
 
 ### [Multiple parties, multiple signatures](https://docs.onflow.org/concepts/transaction-signing/#multiple-parties)
@@ -850,7 +850,7 @@ var account1Key1 = account1.Keys[0];
 var account1Key2 = account1.Keys[1];
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await FlowClient.GetLatestBlockAsync();
+var lastestBlock = await _flowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
@@ -876,7 +876,7 @@ tx.AddEnvelopeSignature(account1.Address, account1Key1.Index, account1Key1.Signe
 tx.AddEnvelopeSignature(account1.Address, account1Key2.Index, account1Key2.Signer);
 
 // send transaction
-var txResponse = await FlowClient.SendTransactionAsync(tx);
+var txResponse = await _flowClient.SendTransactionAsync(tx);
 ```
 
 ### Send Transactions
@@ -959,7 +959,7 @@ if (result.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
     var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
 
     // get new account details
-    var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
+    var newAccount = await _flowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
     newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(newFlowAccountKeys, newAccount.Keys);
     return newAccount;
 }
