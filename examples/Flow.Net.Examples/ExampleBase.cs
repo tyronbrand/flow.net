@@ -1,6 +1,4 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Client;
+﻿using Flow.Net.Sdk.Client;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Templates;
 using Google.Protobuf;
@@ -64,7 +62,7 @@ namespace Flow.Net.Examples
             {
                 var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
 
-                // get new account deatils
+                // get new account details
                 var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
                 newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(newFlowAccountKeys, newAccount.Keys);
                 return newAccount;

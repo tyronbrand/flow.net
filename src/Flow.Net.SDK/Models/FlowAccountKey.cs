@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace Flow.Net.Sdk.Models
 {
+    /// <summary>
+    /// A FlowAccountKey is a public and/or private key associated with an account.
+    /// </summary>
     public class FlowAccountKey
     {
         public uint Index { get; set; }

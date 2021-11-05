@@ -2,6 +2,9 @@
 
 namespace Flow.Net.Sdk.Models
 {
+    /// <summary>
+    /// FlowAddress represents the address of an account.
+    /// </summary>
     public class FlowAddress
     {
         public FlowAddress(ByteString address)

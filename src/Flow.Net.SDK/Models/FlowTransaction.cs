@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace Flow.Net.Sdk.Models
 {
+    /// <summary>
+    /// A FlowTransaction is a full transaction object containing a payload and signatures.
+    /// </summary>
     public class FlowTransaction : FlowTransactionBase
     {
         public FlowTransaction()
@@ -15,7 +18,7 @@ namespace Flow.Net.Sdk.Models
         public Dictionary<ByteString, int> SignerList { get; set; }
 
         /// <summary>
-        /// RLP encodes and signs the transaction payload with the specified account key.
+        /// Signs the full transaction (TransactionDomainTag + payload) with the specified account key.
         /// </summary>
         /// <param name="flowTransaction"></param>
         /// <param name="address"></param>
@@ -40,7 +43,7 @@ namespace Flow.Net.Sdk.Models
         }
 
         /// <summary>
-        /// RLP encodes and signs the full transaction (payload + <see cref="FlowTransactionBase.PayloadSignatures"/>) with the specified account key.
+        /// Signs the full transaction (TransactionDomainTag + payload + <see cref="FlowTransactionBase.PayloadSignatures"/>) with the specified account key.
         /// </summary>
         /// <param name="flowTransaction"></param>
         /// <param name="address"></param>

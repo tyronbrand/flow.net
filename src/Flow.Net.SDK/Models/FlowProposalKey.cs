@@ -2,6 +2,9 @@
 
 namespace Flow.Net.Sdk.Models
 {
+    /// <summary>
+    /// A FlowProposalKey is the key that specifies the proposal key and sequence number for a transaction.
+    /// </summary>
     public class FlowProposalKey
     {
         public ByteString Address { get; set; }
