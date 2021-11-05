@@ -6,6 +6,9 @@ namespace Flow.Net.Sdk.Models
 {
     public class FlowBlock : FlowBlockHeader
     {
+        /// <summary>
+        /// FlowBlock is a set of state mutations applied to the Flow blockchain.
+        /// </summary>
         public FlowBlock()
         {
             BlockSeals = new List<FlowBlockSeal>();
@@ -26,12 +29,18 @@ namespace Flow.Net.Sdk.Models
         public IEnumerable<ByteString> ResultApprovalSignatures { get; set; }
     }
 
+    /// <summary>
+    /// A FlowCollectionGuarantee is an attestation signed by the nodes that have guaranteed a collection.
+    /// </summary>
     public class FlowCollectionGuarantee
     {
         public ByteString CollectionId { get; set; }
         public IEnumerable<ByteString> Signatures { get; set; }
     }
 
+    /// <summary>
+    /// FlowBlockHeader is a summary of a full block.
+    /// </summary>
     public class FlowBlockHeader
     {
         public ulong Height { get; set; }

@@ -2,6 +2,9 @@
 
 namespace Flow.Net.Sdk.Models
 {
+    /// <summary>
+    /// FlowConfig aids reading of flow.json
+    /// </summary>
     public class FlowConfig
     {
         public IDictionary<string, FlowConfigAccount> Accounts { get; set; }
@@ -9,6 +12,9 @@ namespace Flow.Net.Sdk.Models
         public IDictionary<string, string> Contracts { get; set; }
     }
 
+    /// <summary>
+    /// FlowConfigAccount represents an account
+    /// </summary>
     public class FlowConfigAccount
     {
         public string Address { get; set; }

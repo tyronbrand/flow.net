@@ -7,6 +7,9 @@ using System.Text.RegularExpressions;
 
 namespace Flow.Net.Sdk.Converters
 {
+    /// <summary>
+    /// Converts data types to Hex.
+    /// </summary>
     public class HexConverter
     {
         public static string FromByteStringToHex(ByteString byteString)

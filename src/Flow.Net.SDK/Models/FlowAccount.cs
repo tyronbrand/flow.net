@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Flow.Net.Sdk.Models
 {
+    /// <summary>
+    /// A FlowAccount is an account on the Flow network.
+    /// </summary>
     public class FlowAccount
     {
         public FlowAccount()
