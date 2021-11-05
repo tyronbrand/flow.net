@@ -47,6 +47,8 @@ using Flow.Net.Sdk.Cadence;
 using Flow.Net.Sdk.Client;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Templates;
+using Flow.Net.Sdk.Constants;
+using Flow.Net.Sdk.Converters;
 ```
 
 ## Connect
@@ -63,7 +65,7 @@ The Access Nodes APIs hosted by DapperLabs are accessible at:
 ```csharp
 var testnet = "access.devnet.nodes.onflow.org:9000";
 
-var _flowClient = FlowClientAsync.Create(testnet);
+var _flowClient = new FlowClientAsync(testnet);
 ```
 
 ## Querying the Flow Network
@@ -143,7 +145,7 @@ Example depicts ways to get an account at the latest block and at a specific blo
 private static async Task Demo()
 {
     // get account from the latest block
-    var address = "f8d6e0586b0a20c7".FromHexToByteString();
+    var address = new FlowAddress("f8d6e0586b0a20c7");
     var account = await _flowClient.GetAccountAtLatestBlockAsync(address);
     PrintResult(account);
 
@@ -154,7 +156,7 @@ private static async Task Demo()
 
 private static void PrintResult(FlowAccount flowAccount)
 {
-    Console.WriteLine($"Address: {flowAccount.Address.FromByteStringToHex()}");
+    Console.WriteLine($"Address: {flowAccount.Address.HexValue}");
     Console.WriteLine($"Balance: {flowAccount.Balance}");
     Console.WriteLine($"Contracts: {flowAccount.Contracts.Count}");
     Console.WriteLine($"Keys: {flowAccount.Keys.Count}\n");
@@ -258,7 +260,7 @@ private static async Task Demo(FlowAccount flowAccount, ByteString flowTransacti
     PrintEvents(eventsForHeightRange);
 
     // Query for our custom event by type
-    var customtype = $"A.{flowAccount.Address.FromByteStringToHex()}.EventDemo.Add";
+    var customtype = $"A.{flowAccount.Address.HexValue}.EventDemo.Add";
     var customEventsForHeightRange = await _flowClient.GetEventsForHeightRangeAsync(customtype, 0, 100);
     PrintEvents(customEventsForHeightRange);
 
@@ -355,8 +357,8 @@ pub fun main(a: Int): Int {
         new CadenceNumber(CadenceNumberType.Int, "5")
     };
 
-    var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);
-    Console.WriteLine($"Value: {response.AsCadenceType<CadenceNumber>().Value}");
+    var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);
+    Console.WriteLine($"Value: {response.As<CadenceNumber>().Value}");
 
     // complex script
     var complexScript = @"
@@ -384,7 +386,7 @@ pub fun main(name: String): User {
     {
         new CadenceString("Dete")
     };
-    var complexResponse = await _flowClient.ExecuteScriptAtLatestBlockAsync(complexScript.FromStringToByteString(), complexArguments);
+    var complexResponse = await FlowClient.ExecuteScriptAtLatestBlockAsync(complexScript.FromStringToByteString(), complexArguments);
     PrintComplexScript(complexResponse);
 }
 
@@ -399,9 +401,9 @@ private static void PrintComplexScript(ICadence cadenceResponse)
 {
     var user = new User
     {
-        Name = cadenceResponse.AsCadenceType<CadenceComposite>().CadenceCompositeValueAsCadenceType<CadenceString>("name").Value,
-        Address = cadenceResponse.AsCadenceType<CadenceComposite>().CadenceCompositeValueAsCadenceType<CadenceAddress>("address").Value.Remove0x(),
-        Balance = decimal.Parse(cadenceResponse.AsCadenceType<CadenceComposite>().CadenceCompositeValueAsCadenceType<CadenceNumber>("balance").Value)
+        Name = cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceString>("name").Value,
+        Address = cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceAddress>("address").Value.RemoveHexPrefix(),
+        Balance = decimal.Parse(cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceNumber>("balance").Value)
     };
 
     Console.WriteLine($"Name: {user.Name}");
@@ -502,23 +504,23 @@ transaction(greeting: String) {
 private static async Task Demo()
 {
     // reading script from folder
-    var script = Sdk.Utilities.ReadCadenceScript("greeting");
+    var script = Utilities.ReadCadenceScript("greeting");
 
-    var proposerAddress = "9a0766d93b6608b7".FromHexToByteString();
+    var proposerAddress = new FlowAddress("9a0766d93b6608b7");
     uint proposerKeyIndex = 3;
 
-    var payerAddress = "631e88ae7f1d7c20".FromHexToByteString();
-    var authorizerAddress = "7aad92e5a0715d21".FromHexToByteString();
+    var payerAddress = new FlowAddress("631e88ae7f1d7c20");
+    var authorizerAddress = new FlowAddress("7aad92e5a0715d21");
 
     // Establish a connection with an access node
-    string accessAPIHost = "";
-    var _flowClient = FlowClientAsync.Create(accessAPIHost);
+    var accessAPIHost = "";
+    var FlowClient = new FlowClientAsync(accessAPIHost);
 
     // Get the latest sealed block to use as a reference block
-    var latestBlock = await _flowClient.GetLatestBlockHeaderAsync();
+    var latestBlock = await FlowClient.GetLatestBlockHeaderAsync();
 
     // Get the latest account info for this address
-    var proposerAccount = await _flowClient.GetAccountAtLatestBlockAsync(proposerAddress);
+    var proposerAccount = await FlowClient.GetAccountAtLatestBlockAsync(proposerAddress);
 
     // Get the latest sequence number for this key
     var proposerKey = proposerAccount.Keys.Where(w => w.Index == proposerKeyIndex).FirstOrDefault();
@@ -530,23 +532,22 @@ private static async Task Demo()
         GasLimit = 100,
         ProposalKey = new FlowProposalKey
         {
-            Address = proposerAddress,
+            Address = proposerAddress.Value,
             KeyId = proposerKeyIndex,
             SequenceNumber = sequenceNumber
         },
-        Payer = payerAddress
+        Payer = payerAddress.Value
     };
 
     // Add authorizer(s)
-    tx.Authorizers.Add(authorizerAddress);
+    tx.Authorizers.Add(authorizerAddress.Value);
 
     // Add argument(s)
     var arguments = new List<ICadence>
     {
         new CadenceString("Hello")
     };
-    tx.Arguments = arguments.ToTransactionArguments();
-
+    tx.Arguments = arguments.GenerateTransactionArguments();
 }
 ```
 
@@ -571,11 +572,11 @@ var tx = new FlowTransaction
     GasLimit = 100,
     ProposalKey = new FlowProposalKey
     {
-        Address = proposerAccount.Address,
+        Address = proposerAccount.Address.Value,
         KeyId = proposerKey.Index,
         SequenceNumber = proposerKey.SequenceNumber
     },
-    Payer = proposerAccount.Address
+    Payer = proposerAccount.Address.Value
 };
 ```
 
@@ -604,23 +605,23 @@ Flow supports great flexibility when it comes to transaction signing, we can def
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/TransactionExamples/SinglePartySingleSignatureExample.cs)**
 ```csharp
 // generate key
-var flowAccountKey = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);           
+var flowAccountKey = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
 // create account with key
 var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey });
 // select key
 var account1Key = account1.Keys.FirstOrDefault();
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await _flowClient.GetLatestBlockAsync();
+var lastestBlock = await FlowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
     Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}",
     GasLimit = 100,
-    Payer = account1.Address,
+    Payer = account1.Address.Value,
     ProposalKey = new FlowProposalKey
     {
-        Address = account1.Address,
+        Address = account1.Address.Value,
         KeyId = account1Key.Index,
         SequenceNumber = account1Key.SequenceNumber
     },
@@ -628,12 +629,14 @@ var tx = new FlowTransaction
 };
 
 // authorizers
-tx.Authorizers.Add(account1.Address);
+tx.Authorizers.Add(account1.Address.Value);
 
 // account 1 signs the envelope with key 1
-tx.AddEnvelopeSignature(account1.Address, account1Key.Index, account1Key.Signer);
-```
+tx = FlowTransaction.AddEnvelopeSignature(tx, account1.Address, account1Key.Index, account1Key.Signer);
 
+// send transaction
+var txResponse = await FlowClient.SendTransactionAsync(tx);
+```
 
 ### [Single party, multiple signatures](https://docs.onflow.org/concepts/transaction-signing/#single-party-multiple-signatures)
 
@@ -649,9 +652,9 @@ tx.AddEnvelopeSignature(account1.Address, account1Key.Index, account1Key.Signer)
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/TransactionExamples/SinglePartyMultiSignatureExample.cs)**
 ```csharp
 // generate key 1 for account1
-var flowAccountKey1 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
+var flowAccountKey1 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
 // generate key 2 for account1
-var flowAccountKey2 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
+var flowAccountKey2 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
 
 // create account with keys
 var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey1, flowAccountKey2 });
@@ -661,16 +664,16 @@ var account1Key1 = account1.Keys[0];
 var account1Key2 = account1.Keys[1];
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await _flowClient.GetLatestBlockAsync();
+var lastestBlock = await FlowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
     Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}",
     GasLimit = 9999,
-    Payer = account1.Address,
+    Payer = account1.Address.Value,
     ProposalKey = new FlowProposalKey
     {
-        Address = account1.Address,
+        Address = account1.Address.Value,
         KeyId = account1Key1.Index,
         SequenceNumber = account1Key1.SequenceNumber
     },
@@ -678,13 +681,16 @@ var tx = new FlowTransaction
 };
 
 // authorizers
-tx.Authorizers.Add(account1.Address);
+tx.Authorizers.Add(account1.Address.Value);
 
 // account 1 signs the envelope with key 1
 tx.AddEnvelopeSignature(account1.Address, account1Key1.Index, account1Key1.Signer);
 
 // account 1 signs the envelope with key 2
 tx.AddEnvelopeSignature(account1.Address, account1Key2.Index, account1Key2.Signer);
+
+// send transaction
+var txResponse = await FlowClient.SendTransactionAsync(tx);
 ```
 
 ### [Multiple parties](https://docs.onflow.org/concepts/transaction-signing/#multiple-parties)
@@ -703,30 +709,30 @@ tx.AddEnvelopeSignature(account1.Address, account1Key2.Index, account1Key2.Signe
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/TransactionExamples/MultiPartySingleSignatureExample.cs)**
 ```csharp
 // generate key for account1
-var flowAccountKey1 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);
+var flowAccountKey1 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
 // create account1
 var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey1 });
 // select account1 key
 var account1Key = account1.Keys.FirstOrDefault();
 
 // generate key for account2
-var flowAccountKey2 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);
+var flowAccountKey2 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
 // create account2
 var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey2 });
 // select account2 key
 var account2Key = account2.Keys.FirstOrDefault();
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await _flowClient.GetLatestBlockAsync();
+var lastestBlock = await FlowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
     Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}",
     GasLimit = 9999,
-    Payer = account2.Address,
+    Payer = account2.Address.Value,
     ProposalKey = new FlowProposalKey
     {
-        Address = account1.Address,
+        Address = account1.Address.Value,
         KeyId = account1Key.Index,
         SequenceNumber = account1Key.SequenceNumber
     },
@@ -734,13 +740,16 @@ var tx = new FlowTransaction
 };
 
 // authorizers
-tx.Authorizers.Add(account1.Address);
+tx.Authorizers.Add(account1.Address.Value);
 
 // account 1 signs the payload with key 1
 tx.AddPayloadSignature(account1.Address, account1Key.Index, account1Key.Signer);
 
 // account 2 signs the envelope
 tx.AddEnvelopeSignature(account2.Address, account2Key.Index, account2Key.Signer);
+
+// send transaction
+var txResponse = await FlowClient.SendTransactionAsync(tx);
 ```
 
 ### [Multiple parties, two authorizers](https://docs.onflow.org/concepts/transaction-signing/#multiple-parties)
@@ -760,36 +769,36 @@ tx.AddEnvelopeSignature(account2.Address, account2Key.Index, account2Key.Signer)
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/TransactionExamples/MultiPartyTwoAuthorizersExample.cs)**
 ```csharp
 // generate key for account1
-var flowAccountKey1 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);
+var flowAccountKey1 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
 // create account1
 var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey1 });
 // select account1 key
 var account1Key = account1.Keys.FirstOrDefault();
 
 // generate key for account2
-var flowAccountKey2 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);
+var flowAccountKey2 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
 // create account2
 var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey2 });
 // select account2 key
 var account2Key = account2.Keys.FirstOrDefault();
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await _flowClient.GetLatestBlockAsync();
+var lastestBlock = await FlowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
     Script = @"
 transaction { 
-  prepare(signer1: AuthAccount, signer2: AuthAccount) { 
-    log(signer1.address) 
-    log(signer2.address)
-  }
+	prepare(signer1: AuthAccount, signer2: AuthAccount) { 
+		log(signer1.address) 
+		log(signer2.address)
+	}
 }",
     GasLimit = 9999,
-    Payer = account2.Address,
+    Payer = account2.Address.Value,
     ProposalKey = new FlowProposalKey
     {
-        Address = account1.Address,
+        Address = account1.Address.Value,
         KeyId = account1Key.Index,
         SequenceNumber = account1Key.SequenceNumber
     },
@@ -797,14 +806,17 @@ transaction {
 };
 
 // authorizers
-tx.Authorizers.Add(account1.Address);
-tx.Authorizers.Add(account2.Address);
+tx.Authorizers.Add(account1.Address.Value);
+tx.Authorizers.Add(account2.Address.Value);
 
 // account 1 signs the payload with key 1
 tx.AddPayloadSignature(account1.Address, account1Key.Index, account1Key.Signer);
 
 // account 2 signs the envelope
 tx.AddEnvelopeSignature(account2.Address, account2Key.Index, account2Key.Signer);
+
+// send transaction
+var txResponse = await FlowClient.SendTransactionAsync(tx);
 ```
 
 ### [Multiple parties, multiple signatures](https://docs.onflow.org/concepts/transaction-signing/#multiple-parties)
@@ -826,65 +838,57 @@ tx.AddEnvelopeSignature(account2.Address, account2Key.Index, account2Key.Signer)
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/TransactionExamples/MultiPartyMultiSignatureExample.cs)**
 ```csharp
 // generate key 1 for account1
-var flowAccount1Key1 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA2_256, 500);
+var flowAccountKey1 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
 // generate key 2 for account1
-var flowAccount1Key2 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA2_256, 500);
-// create account1
-var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccount1Key1, flowAccount1Key2 });
+var flowAccountKey2 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
 
-// generate key 1 for account2
-var flowAccount2Key3 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
-// generate key 2 for account2
-var flowAccount2Key4 = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
-// create account2
-var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccount2Key3, flowAccount2Key4 });
+// create account with keys
+var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey1, flowAccountKey2 });
+
+// select keys
+var account1Key1 = account1.Keys[0];
+var account1Key2 = account1.Keys[1];
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await _flowClient.GetLatestBlockAsync();
+var lastestBlock = await FlowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
     Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}",
     GasLimit = 9999,
-    Payer = account2.Address,
+    Payer = account1.Address.Value,
     ProposalKey = new FlowProposalKey
     {
-        Address = account1.Address,
-        KeyId = account1.Keys[0].Index,
-        SequenceNumber = account1.Keys[0].SequenceNumber
+        Address = account1.Address.Value,
+        KeyId = account1Key1.Index,
+        SequenceNumber = account1Key1.SequenceNumber
     },
     ReferenceBlockId = lastestBlock.Id
 };
 
 // authorizers
-tx.Authorizers.Add(account1.Address);
+tx.Authorizers.Add(account1.Address.Value);
 
-// account 1 signs the payload with key 1
-tx.AddPayloadSignature(account1.Address, account1.Keys[0].Index, account1.Keys[0].Signer);
+// account 1 signs the envelope with key 1
+tx.AddEnvelopeSignature(account1.Address, account1Key1.Index, account1Key1.Signer);
 
-// account 1 signs the payload with key 2
-tx.AddPayloadSignature(account1.Address, account1.Keys[1].Index, account1.Keys[1].Signer);
+// account 1 signs the envelope with key 2
+tx.AddEnvelopeSignature(account1.Address, account1Key2.Index, account1Key2.Signer);
 
-// account 2 signs the envelope with key 3
-tx.AddEnvelopeSignature(account2.Address, account2.Keys[0].Index, account2.Keys[0].Signer);
-
-// account 2 signs the envelope with key 3
-tx.AddEnvelopeSignature(account2.Address, account2.Keys[1].Index, account2.Keys[1].Signer);
+// send transaction
+var txResponse = await FlowClient.SendTransactionAsync(tx);
 ```
-
 
 ### Send Transactions
 [<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Client.FlowClientAsync.html#Flow_Net_Sdk_Client_FlowClientAsync_SendTransactionAsync_Flow_Net_Sdk_Models_FlowTransaction_Grpc_Core_CallOptions_)
 
 After a transaction has been [built](#build-transactions) and [signed](#sign-transactions), it can be sent to the Flow blockchain where it will be executed. If sending was successful you can then [retrieve the transaction result](#get-transactions).
 
-
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/TransactionExamples/MultiPartyMultiSignatureExample.cs)**
 ```csharp
 // send transaction
 var txResponse = await _flowClient.SendTransactionAsync(tx);
 ```
-
 
 ### Create Accounts
 [<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Templates.Account.html#Flow_Net_Sdk_Templates_Account_CreateAccount_System_Collections_Generic_IEnumerable_Flow_Net_Sdk_Models_FlowAccountKey__Google_Protobuf_ByteString_System_Collections_Generic_IEnumerable_Flow_Net_Sdk_Models_FlowContract__)
@@ -925,10 +929,10 @@ var creatorAccountKey = creatorAccount.Keys.FirstOrDefault();
 var tx = Account.CreateAccount(newFlowAccountKeys, creatorAccount.Address);
 
 // set the transaction payer and proposal key
-tx.Payer = creatorAccount.Address;
+tx.Payer = creatorAccount.Address.Value;
 tx.ProposalKey = new FlowProposalKey
 {
-    Address = creatorAccount.Address,
+    Address = creatorAccount.Address.Value,
     KeyId = creatorAccountKey.Index,
     SequenceNumber = creatorAccountKey.SequenceNumber
 };
@@ -952,10 +956,10 @@ The new account address will be emitted in a system-level `flow.AccountCreated` 
 
 if (result.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
 {
-    var newAccountAddress = result.Events.AccountCreatedAddress();
+    var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
 
-    // get new account deatils
-    var newAccount = await _flowClient.GetAccountAtLatestBlockAsync(newAccountAddress.FromHexToByteString());
+    // get new account details
+    var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
     newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(newFlowAccountKeys, newAccount.Keys);
     return newAccount;
 }
