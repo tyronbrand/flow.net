@@ -70,7 +70,7 @@ namespace Flow.Net.Examples
 
             // sign and submit the transaction
             var newAccountSigner = new Sdk.Crypto.Ecdsa.Signer(newFlowAccountKey.PrivateKey, newAccountKey.HashAlgorithm, newAccountKey.SignatureAlgorithm);
-            tx.AddEnvelopeSignature(newAccount.Address, newAccountKey.Index, newAccountSigner);
+            tx = FlowTransaction.AddEnvelopeSignature(tx, newAccount.Address, newAccountKey.Index, newAccountSigner);
 
             var response = await FlowClient.SendTransactionAsync(tx);
             var sealedResponse = await FlowClient.WaitForSealAsync(response);
@@ -115,7 +115,7 @@ namespace Flow.Net.Examples
 
             // sign and submit the transaction
             var newAccountSigner = new Sdk.Crypto.Ecdsa.Signer(newFlowAccountKey.PrivateKey, newAccountKey.HashAlgorithm, newAccountKey.SignatureAlgorithm);
-            tx.AddEnvelopeSignature(newAccount.Address, newAccountKey.Index, newAccountSigner);
+            tx = FlowTransaction.AddEnvelopeSignature(tx, newAccount.Address, newAccountKey.Index, newAccountSigner);
 
             var response = await FlowClient.SendTransactionAsync(tx);
             var sealedResponse = await FlowClient.WaitForSealAsync(response);
@@ -155,7 +155,7 @@ namespace Flow.Net.Examples
 
             // sign and submit the transaction
             var newAccountSigner = new Sdk.Crypto.Ecdsa.Signer(newFlowAccountKey.PrivateKey, newAccountKey.HashAlgorithm, newAccountKey.SignatureAlgorithm);
-            tx.AddEnvelopeSignature(newAccount.Address, newAccountKey.Index, newAccountSigner);
+            tx = FlowTransaction.AddEnvelopeSignature(tx, newAccount.Address, newAccountKey.Index, newAccountSigner);
 
             var response = await FlowClient.SendTransactionAsync(tx);
             var sealedResponse = await FlowClient.WaitForSealAsync(response);
