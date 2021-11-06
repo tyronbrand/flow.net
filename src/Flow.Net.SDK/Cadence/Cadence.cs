@@ -21,17 +21,6 @@ namespace Flow.Net.Sdk.Cadence
         }
 
         /// <summary>
-        /// Decodes a <see cref="ICadence"/> JSON string.
-        /// </summary>
-        /// <param name="cadenceJson"></param>
-        /// <param name="cadenceConverter"></param>
-        /// <returns>The deserialized <see cref="ICadence"/> from the JSON string.</returns>
-        public ICadence Decode(string cadenceJson, CadenceConverter cadenceConverter = null)
-        {
-            return JsonConvert.DeserializeObject<ICadence>(cadenceJson, cadenceConverter ?? new CadenceConverter());
-        }
-
-        /// <summary>
         /// Casts <see cref="ICadence"/> to <typeparamref name="T"/>.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -80,7 +69,7 @@ namespace Flow.Net.Sdk.Cadence
         {
             var arguments = new List<ByteString>();
 
-            if (cadenceValues != null && cadenceValues.Count() > 0)
+            if (cadenceValues != null && cadenceValues.Any())
             {
                 foreach (var value in cadenceValues)
                     arguments.Add(value.Encode().FromStringToByteString());
