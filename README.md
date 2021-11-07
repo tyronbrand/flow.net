@@ -207,9 +207,9 @@ private static async Task Demo(ByteString transactionId)
 private static void PrintTransaction(FlowTransactionResponse tx)
 {
     Console.WriteLine($"ReferenceBlockId: {tx.ReferenceBlockId.FromByteStringToHex()}");
-    Console.WriteLine($"Payer: {tx.Payer.FromByteStringToHex()}");
-    Console.WriteLine("Authorizers: [{0}]", string.Join(", ", tx.Authorizers.Select(s => s.FromByteStringToHex()).ToArray()));
-    Console.WriteLine($"Proposer: {tx.ProposalKey.Address.FromByteStringToHex()}");
+    Console.WriteLine($"Payer: {tx.Payer.HexValue}");
+    Console.WriteLine("Authorizers: [{0}]", string.Join(", ", tx.Authorizers.Select(s => s.HexValue).ToArray()));
+    Console.WriteLine($"Proposer: {tx.ProposalKey.Address.Value.FromByteStringToHex()}");
 }
 
 private static void PrintTransactionResult(FlowTransactionResult txr)
@@ -528,15 +528,15 @@ private static async Task Demo()
         GasLimit = 100,
         ProposalKey = new FlowProposalKey
         {
-            Address = proposerAddress.Value,
+            Address = proposerAddress,
             KeyId = proposerKeyIndex,
             SequenceNumber = sequenceNumber
         },
-        Payer = payerAddress.Value
+        Payer = payerAddress
     };
 
     // Add authorizer(s)
-    tx.Authorizers.Add(authorizerAddress.Value);
+    tx.Authorizers.Add(authorizerAddress);
 
     // Add argument(s)
     var arguments = new List<ICadence>
@@ -568,11 +568,11 @@ var tx = new FlowTransaction
     GasLimit = 100,
     ProposalKey = new FlowProposalKey
     {
-        Address = proposerAccount.Address.Value,
+        Address = proposerAccount.Address,
         KeyId = proposerKey.Index,
         SequenceNumber = proposerKey.SequenceNumber
     },
-    Payer = proposerAccount.Address.Value
+    Payer = proposerAccount.Address
 };
 ```
 
@@ -614,10 +614,10 @@ var tx = new FlowTransaction
 {
     Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}",
     GasLimit = 100,
-    Payer = account1.Address.Value,
+    Payer = account1.Address,
     ProposalKey = new FlowProposalKey
     {
-        Address = account1.Address.Value,
+        Address = account1.Address,
         KeyId = account1Key.Index,
         SequenceNumber = account1Key.SequenceNumber
     },
@@ -625,7 +625,7 @@ var tx = new FlowTransaction
 };
 
 // authorizers
-tx.Authorizers.Add(account1.Address.Value);
+tx.Authorizers.Add(account1.Address);
 
 // account 1 signs the envelope with key 1
 tx = FlowTransaction.AddEnvelopeSignature(tx, account1.Address, account1Key.Index, account1Key.Signer);
@@ -666,10 +666,10 @@ var tx = new FlowTransaction
 {
     Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}",
     GasLimit = 9999,
-    Payer = account1.Address.Value,
+    Payer = account1.Address,
     ProposalKey = new FlowProposalKey
     {
-        Address = account1.Address.Value,
+        Address = account1.Address,
         KeyId = account1Key1.Index,
         SequenceNumber = account1Key1.SequenceNumber
     },
@@ -677,7 +677,7 @@ var tx = new FlowTransaction
 };
 
 // authorizers
-tx.Authorizers.Add(account1.Address.Value);
+tx.Authorizers.Add(account1.Address);
 
 // account 1 signs the envelope with key 1
 tx.AddEnvelopeSignature(account1.Address, account1Key1.Index, account1Key1.Signer);
@@ -725,10 +725,10 @@ var tx = new FlowTransaction
 {
     Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}",
     GasLimit = 9999,
-    Payer = account2.Address.Value,
+    Payer = account2.Address,
     ProposalKey = new FlowProposalKey
     {
-        Address = account1.Address.Value,
+        Address = account1.Address,
         KeyId = account1Key.Index,
         SequenceNumber = account1Key.SequenceNumber
     },
@@ -736,7 +736,7 @@ var tx = new FlowTransaction
 };
 
 // authorizers
-tx.Authorizers.Add(account1.Address.Value);
+tx.Authorizers.Add(account1.Address);
 
 // account 1 signs the payload with key 1
 tx.AddPayloadSignature(account1.Address, account1Key.Index, account1Key.Signer);
@@ -791,10 +791,10 @@ transaction {
 	}
 }",
     GasLimit = 9999,
-    Payer = account2.Address.Value,
+    Payer = account2.Address,
     ProposalKey = new FlowProposalKey
     {
-        Address = account1.Address.Value,
+        Address = account1.Address,
         KeyId = account1Key.Index,
         SequenceNumber = account1Key.SequenceNumber
     },
@@ -802,8 +802,8 @@ transaction {
 };
 
 // authorizers
-tx.Authorizers.Add(account1.Address.Value);
-tx.Authorizers.Add(account2.Address.Value);
+tx.Authorizers.Add(account1.Address;
+tx.Authorizers.Add(account2.Address);
 
 // account 1 signs the payload with key 1
 tx.AddPayloadSignature(account1.Address, account1Key.Index, account1Key.Signer);
@@ -852,10 +852,10 @@ var tx = new FlowTransaction
 {
     Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}",
     GasLimit = 9999,
-    Payer = account1.Address.Value,
+    Payer = account1.Address,
     ProposalKey = new FlowProposalKey
     {
-        Address = account1.Address.Value,
+        Address = account1.Address,
         KeyId = account1Key1.Index,
         SequenceNumber = account1Key1.SequenceNumber
     },
@@ -863,7 +863,7 @@ var tx = new FlowTransaction
 };
 
 // authorizers
-tx.Authorizers.Add(account1.Address.Value);
+tx.Authorizers.Add(account1.Address);
 
 // account 1 signs the envelope with key 1
 tx.AddEnvelopeSignature(account1.Address, account1Key1.Index, account1Key1.Signer);
@@ -925,10 +925,10 @@ var creatorAccountKey = creatorAccount.Keys.FirstOrDefault();
 var tx = Account.CreateAccount(newFlowAccountKeys, creatorAccount.Address);
 
 // set the transaction payer and proposal key
-tx.Payer = creatorAccount.Address.Value;
+tx.Payer = creatorAccount.Address;
 tx.ProposalKey = new FlowProposalKey
 {
-    Address = creatorAccount.Address.Value,
+    Address = creatorAccount.Address,
     KeyId = creatorAccountKey.Index,
     SequenceNumber = creatorAccountKey.SequenceNumber
 };
