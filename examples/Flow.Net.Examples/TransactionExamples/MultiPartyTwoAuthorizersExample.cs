@@ -46,10 +46,10 @@ transaction {
 	}
 }",
                 GasLimit = 9999,
-                Payer = account2.Address.Value,
+                Payer = account2.Address,
                 ProposalKey = new FlowProposalKey
                 {
-                    Address = account1.Address.Value,
+                    Address = account1.Address,
                     KeyId = account1Key.Index,
                     SequenceNumber = account1Key.SequenceNumber
                 },
@@ -57,8 +57,8 @@ transaction {
             };
 
             // authorizers
-            tx.Authorizers.Add(account1.Address.Value);
-            tx.Authorizers.Add(account2.Address.Value);
+            tx.Authorizers.Add(account1.Address);
+            tx.Authorizers.Add(account2.Address);
 
             // account 1 signs the payload with key 1
             tx = FlowTransaction.AddPayloadSignature(tx, account1.Address, account1Key.Index, account1Key.Signer);

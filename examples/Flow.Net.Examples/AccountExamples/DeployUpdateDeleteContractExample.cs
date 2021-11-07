@@ -56,10 +56,10 @@ namespace Flow.Net.Examples
             var newAccountKey = newAccount.Keys.FirstOrDefault();            
 
             // set the transaction payer and proposal key
-            tx.Payer = newAccount.Address.Value;
+            tx.Payer = newAccount.Address;
             tx.ProposalKey = new FlowProposalKey
             {
-                Address = newAccount.Address.Value,
+                Address = newAccount.Address,
                 KeyId = newAccountKey.Index,
                 SequenceNumber = newAccountKey.SequenceNumber
             };
@@ -101,10 +101,10 @@ namespace Flow.Net.Examples
             var newAccountKey = newAccount.Keys.FirstOrDefault();
 
             // set the transaction payer and proposal key
-            tx.Payer = newAccount.Address.Value;
+            tx.Payer = newAccount.Address;
             tx.ProposalKey = new FlowProposalKey
             {
-                Address = newAccount.Address.Value,
+                Address = newAccount.Address,
                 KeyId = newAccountKey.Index,
                 SequenceNumber = newAccountKey.SequenceNumber
             };
@@ -141,10 +141,10 @@ namespace Flow.Net.Examples
             var newAccountKey = newAccount.Keys.FirstOrDefault();
 
             // set the transaction payer and proposal key
-            tx.Payer = newAccount.Address.Value;
+            tx.Payer = newAccount.Address;
             tx.ProposalKey = new FlowProposalKey
             {
-                Address = newAccount.Address.Value,
+                Address = newAccount.Address,
                 KeyId = newAccountKey.Index,
                 SequenceNumber = newAccountKey.SequenceNumber
             };

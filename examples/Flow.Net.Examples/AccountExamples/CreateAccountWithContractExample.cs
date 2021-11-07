@@ -41,10 +41,10 @@ namespace Flow.Net.Examples
             var creatorAccountKey = creatorAccount.Keys.FirstOrDefault();
 
             // set the transaction payer and proposal key
-            tx.Payer = creatorAccount.Address.Value;
+            tx.Payer = creatorAccount.Address;
             tx.ProposalKey = new FlowProposalKey
             {
-                Address = creatorAccount.Address.Value,
+                Address = creatorAccount.Address,
                 KeyId = creatorAccountKey.Index,
                 SequenceNumber = creatorAccountKey.SequenceNumber
             };

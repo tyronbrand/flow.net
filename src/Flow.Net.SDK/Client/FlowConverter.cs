@@ -123,12 +123,12 @@ namespace Flow.Net.Sdk.Client
                 Script = transactionResponse.Transaction.Script.FromByteStringToString(),
                 ReferenceBlockId = transactionResponse.Transaction.ReferenceBlockId,
                 GasLimit = transactionResponse.Transaction.GasLimit,
-                Payer = transactionResponse.Transaction.Payer,
+                Payer = new FlowAddress(transactionResponse.Transaction.Payer),
                 Arguments = transactionResponse.Transaction.Arguments,
-                Authorizers = transactionResponse.Transaction.Authorizers,
+                Authorizers = transactionResponse.Transaction.Authorizers.Select(s => new FlowAddress(s)).ToList(),
                 ProposalKey = new FlowProposalKey
                 { 
-                    Address = transactionResponse.Transaction.ProposalKey.Address,
+                    Address = new FlowAddress(transactionResponse.Transaction.ProposalKey.Address),
                     KeyId = transactionResponse.Transaction.ProposalKey.KeyId,
                     SequenceNumber = transactionResponse.Transaction.ProposalKey.SequenceNumber
                 },
@@ -263,7 +263,7 @@ namespace Flow.Net.Sdk.Client
             var tx = new Protos.entities.Transaction
             {
                 Script = flowTransaction.Script.FromStringToByteString(),
-                Payer = flowTransaction.Payer,
+                Payer = flowTransaction.Payer.Value,
                 GasLimit = flowTransaction.GasLimit,
                 ReferenceBlockId = flowTransaction.ReferenceBlockId,
                 ProposalKey = flowTransaction.ProposalKey.FromFlowProposalKey()
@@ -273,7 +273,7 @@ namespace Flow.Net.Sdk.Client
                 tx.Arguments.Add(argument);
             
             foreach(var authorizer in flowTransaction.Authorizers)
-                tx.Authorizers.Add(authorizer);
+                tx.Authorizers.Add(authorizer.Value);
             
             foreach(var payloadSignature in flowTransaction.PayloadSignatures)
                 tx.PayloadSignatures.Add(payloadSignature.FromFlowSignature());
@@ -288,7 +288,7 @@ namespace Flow.Net.Sdk.Client
         {
             return new Protos.entities.Transaction.Types.ProposalKey
             {
-                Address = flowProposalKey.Address,
+                Address = flowProposalKey.Address.Value,
                 KeyId = flowProposalKey.KeyId,
                 SequenceNumber = flowProposalKey.SequenceNumber
             };

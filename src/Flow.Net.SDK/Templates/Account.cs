@@ -66,7 +66,7 @@ transaction(publicKeys: [String], contracts: { String: String})
 				}.GenerateTransactionArguments();
 
 			// add authorizer
-			tx.Authorizers.Add(authorizerAddress.Value);
+			tx.Authorizers.Add(authorizerAddress);
 
 			return tx;
         }
@@ -87,7 +87,7 @@ transaction(publicKeys: [String], contracts: { String: String})
 				}.GenerateTransactionArguments();
 
 			// add authorizer
-			tx.Authorizers.Add(authorizerAddress.Value);
+			tx.Authorizers.Add(authorizerAddress);
 
 			return tx;
 		}
@@ -140,7 +140,7 @@ transaction(name: String)
 				}.GenerateTransactionArguments();
 
 			// add authorizer
-			tx.Authorizers.Add(authorizerAddress.Value);
+			tx.Authorizers.Add(authorizerAddress);
 
 			return tx;
 		}

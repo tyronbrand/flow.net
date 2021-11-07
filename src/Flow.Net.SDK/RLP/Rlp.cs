@@ -29,7 +29,7 @@ namespace Flow.Net.Sdk.RecursiveLengthPrefix
 
             var authArray = new List<byte[]>();
             foreach (var authorizer in flowTransaction.Authorizers)
-                authArray.Add(RLP.EncodeElement(Utilities.Pad(authorizer.ToByteArray(), 8)));
+                authArray.Add(RLP.EncodeElement(Utilities.Pad(authorizer.Value.ToByteArray(), 8)));
 
             var payloadElements = new List<byte[]>
             {
@@ -37,10 +37,10 @@ namespace Flow.Net.Sdk.RecursiveLengthPrefix
                 RLP.EncodeList(argArray.ToArray()),
                 RLP.EncodeElement(Utilities.Pad(flowTransaction.ReferenceBlockId.ToByteArray(), 32)),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.GasLimit))),
-                RLP.EncodeElement(Utilities.Pad(flowTransaction.ProposalKey.Address.ToByteArray(), 8)),
+                RLP.EncodeElement(Utilities.Pad(flowTransaction.ProposalKey.Address.Value.ToByteArray(), 8)),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.ProposalKey.KeyId))),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.ProposalKey.SequenceNumber))),
-                RLP.EncodeElement(Utilities.Pad(flowTransaction.Payer.ToByteArray(), 8)),
+                RLP.EncodeElement(Utilities.Pad(flowTransaction.Payer.Value.ToByteArray(), 8)),
                 RLP.EncodeList(authArray.ToArray())
             };
 
