@@ -30,9 +30,9 @@ namespace Flow.Net.Examples
         private static void PrintTransaction(FlowTransactionResponse tx)
         {
             Console.WriteLine($"ReferenceBlockId: {tx.ReferenceBlockId.FromByteStringToHex()}");
-            Console.WriteLine($"Payer: {tx.Payer.FromByteStringToHex()}");
-            Console.WriteLine("Authorizers: [{0}]", string.Join(", ", tx.Authorizers.Select(s => s.FromByteStringToHex()).ToArray()));
-            Console.WriteLine($"Proposer: {tx.ProposalKey.Address.FromByteStringToHex()}");
+            Console.WriteLine($"Payer: {tx.Payer.Value.FromByteStringToHex()}");
+            Console.WriteLine("Authorizers: [{0}]", string.Join(", ", tx.Authorizers.Select(s => s.HexValue).ToArray()));
+            Console.WriteLine($"Proposer: {tx.ProposalKey.Address.Value.FromByteStringToHex()}");
         }
 
         private static void PrintTransactionResult(FlowTransactionResult txr)

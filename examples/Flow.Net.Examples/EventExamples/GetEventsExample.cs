@@ -97,10 +97,10 @@ pub contract EventDemo {
                 });
 
             // set the transaction payer and proposal key
-            tx.Payer = creatorAccount.Address.Value;
+            tx.Payer = creatorAccount.Address;
             tx.ProposalKey = new FlowProposalKey
             {
-                Address = creatorAccount.Address.Value,
+                Address = creatorAccount.Address,
                 KeyId = creatorAccountKey.Index,
                 SequenceNumber = creatorAccountKey.SequenceNumber
             };
@@ -153,10 +153,10 @@ transaction {{
             var tx = new FlowTransaction
             {
                 Script = script,
-                Payer = flowAccount.Address.Value,
+                Payer = flowAccount.Address,
                 ProposalKey = new FlowProposalKey
                 {
-                    Address = flowAccount.Address.Value,
+                    Address = flowAccount.Address,
                     KeyId = flowAccountKey.Index,
                     SequenceNumber = flowAccountKey.SequenceNumber
                 },

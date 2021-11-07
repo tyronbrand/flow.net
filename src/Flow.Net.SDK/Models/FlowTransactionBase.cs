@@ -10,7 +10,7 @@ namespace Flow.Net.Sdk.Models
         public FlowTransactionBase()
         {
             Arguments = new List<ByteString>();
-            Authorizers = new List<ByteString>();
+            Authorizers = new List<FlowAddress>();
             PayloadSignatures = new List<FlowSignature>();
             EnvelopeSignatures = new List<FlowSignature>();
             GasLimit = 9999;
@@ -20,9 +20,9 @@ namespace Flow.Net.Sdk.Models
         public IList<ByteString> Arguments { get; set; }
         public ByteString ReferenceBlockId { get; set; }
         public ulong GasLimit { get; set; }
-        public ByteString Payer { get; set; }
+        public FlowAddress Payer { get; set; }
         public FlowProposalKey ProposalKey { get; set; }
-        public IList<ByteString> Authorizers { get; set; }
+        public IList<FlowAddress> Authorizers { get; set; }
         public IList<FlowSignature> PayloadSignatures { get; set; }
         public IList<FlowSignature> EnvelopeSignatures { get; set; }
 

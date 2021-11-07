@@ -41,15 +41,15 @@ namespace Flow.Net.Examples
                 GasLimit = 100,
                 ProposalKey = new FlowProposalKey
                 {
-                    Address = proposerAddress.Value,
+                    Address = proposerAddress,
                     KeyId = proposerKeyIndex,
                     SequenceNumber = sequenceNumber
                 },
-                Payer = payerAddress.Value
+                Payer = payerAddress
             };
 
             // Add authorizer(s)
-            tx.Authorizers.Add(authorizerAddress.Value);
+            tx.Authorizers.Add(authorizerAddress);
 
             // Add argument(s)
             var arguments = new List<ICadence>
@@ -70,11 +70,11 @@ namespace Flow.Net.Examples
                 GasLimit = 100,
                 ProposalKey = new FlowProposalKey
                 {
-                    Address = proposerAccount.Address.Value,
+                    Address = proposerAccount.Address,
                     KeyId = proposerKey.Index,
                     SequenceNumber = proposerKey.SequenceNumber
                 },
-                Payer = proposerAccount.Address.Value
+                Payer = proposerAccount.Address
             };
 
             // construct a signer from your private key and configured signature/hash algorithms
