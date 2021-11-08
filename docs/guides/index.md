@@ -944,7 +944,7 @@ var latestBlock = await _flowClient.GetLatestBlockAsync();
 tx.ReferenceBlockId = latestBlock.Id;
 
 // sign and submit the transaction
-tx.AddEnvelopeSignature(creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
+tx = FlowTransaction.AddEnvelopeSignature(tx, creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
 
 await _flowClient.SendTransactionAsync(tx);
 ```
