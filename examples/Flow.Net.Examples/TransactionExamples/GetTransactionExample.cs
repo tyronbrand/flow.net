@@ -32,7 +32,7 @@ namespace Flow.Net.Examples
             Console.WriteLine($"ReferenceBlockId: {tx.ReferenceBlockId.FromByteStringToHex()}");
             Console.WriteLine($"Payer: {tx.Payer.Value.FromByteStringToHex()}");
             Console.WriteLine("Authorizers: [{0}]", string.Join(", ", tx.Authorizers.Select(s => s.HexValue).ToArray()));
-            Console.WriteLine($"Proposer: {tx.ProposalKey.Address.Value.FromByteStringToHex()}");
+            Console.WriteLine($"Proposer: {tx.ProposalKey.Address.HexValue}");
         }
 
         private static void PrintTransactionResult(FlowTransactionResult txr)
