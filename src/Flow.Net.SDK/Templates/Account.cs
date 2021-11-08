@@ -63,7 +63,7 @@ transaction(publicKeys: [String], contracts: { String: String})
 				{
 					accountKeys,
 					contracts
-				}.GenerateTransactionArguments();
+				};
 
 			// add authorizer
 			tx.Authorizers.Add(authorizerAddress);
@@ -84,7 +84,7 @@ transaction(publicKeys: [String], contracts: { String: String})
 				{
 					new CadenceString(flowContract.Name),
 					new CadenceString(flowContract.Source.FromStringToHex())
-				}.GenerateTransactionArguments();
+				};
 
 			// add authorizer
 			tx.Authorizers.Add(authorizerAddress);
@@ -132,12 +132,8 @@ transaction(name: String)
 				Script = DeleteAccountContractTemplate
 			};
 
-			// add arguments
-			tx.Arguments =
-				new List<ICadence>
-				{
-					new CadenceString(contractName),
-				}.GenerateTransactionArguments();
+			// add argument
+			tx.Arguments.Add(new CadenceString(contractName));
 
 			// add authorizer
 			tx.Authorizers.Add(authorizerAddress);

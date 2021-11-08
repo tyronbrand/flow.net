@@ -1,7 +1,4 @@
-﻿using Google.Protobuf;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Newtonsoft.Json;
 
 namespace Flow.Net.Sdk.Cadence
 {
@@ -13,17 +10,27 @@ namespace Flow.Net.Sdk.Cadence
             return cadence.Encode(cadence);
         }
 
-        ///<inheritdoc cref="Cadence.Decode"/>
+        /// <summary>
+        /// Decodes a <see cref="ICadence"/> JSON string.
+        /// </summary>
+        /// <param name="cadenceJson"></param>
+        /// <param name="cadenceConverter"></param>
+        /// <returns>The deserialized <see cref="ICadence"/> from the JSON string.</returns>
         public static ICadence Decode(this string cadenceJson, CadenceConverter cadenceConverter = null)
         {
             return JsonConvert.DeserializeObject<ICadence>(cadenceJson, cadenceConverter ?? new CadenceConverter());
         }
 
-        ///<inheritdoc cref="Cadence.As"/>
+        /// <summary>
+        /// Casts <see cref="ICadence"/> to <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="cadence"></param>
+        /// <returns><typeparamref name="T"/>.</returns>
         public static T As<T>(this ICadence cadence)
             where T : ICadence
         {
-            return cadence.As<T>(cadence);
+            return (T)cadence;
         }
 
         ///<inheritdoc cref="Cadence.CompositeField"/>
@@ -37,20 +44,6 @@ namespace Flow.Net.Sdk.Cadence
             where T : ICadence
         {
             return cadenceComposite.CompositeFieldAs<T>(cadenceComposite, fieldName);
-        }
-
-        ///<inheritdoc cref="Cadence.GenerateTransactionArguments"/>
-        public static IList<ByteString> GenerateTransactionArguments(this IEnumerable<ICadence> cadenceValues)
-        {
-            var arguments = new List<ByteString>();
-
-            if (cadenceValues != null && cadenceValues.Count() > 0)
-            {
-                foreach (var value in cadenceValues)
-                    arguments.Add(value.Encode().FromStringToByteString());
-            }
-
-            return arguments;
         }
     }
 }

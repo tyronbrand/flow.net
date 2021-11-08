@@ -7,8 +7,7 @@ namespace Flow.Net.Sdk.Cadence
     {
         string Type { get; }
 
-        string Encode(ICadence cadence);
-        T As<T>(ICadence cadence) where T : ICadence;
+        string Encode(ICadence cadence);        
         IList<ByteString> GenerateTransactionArguments(IEnumerable<ICadence> cadenceValues);
         ICadence CompositeField(CadenceComposite cadenceComposite, string fieldName);
         T CompositeFieldAs<T>(CadenceComposite cadenceComposite, string fieldName) where T : ICadence;

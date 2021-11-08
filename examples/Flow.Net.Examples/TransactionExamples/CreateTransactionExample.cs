@@ -2,7 +2,6 @@
 using Flow.Net.Sdk.Cadence;
 using Flow.Net.Sdk.Client;
 using Flow.Net.Sdk.Models;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,15 +47,11 @@ namespace Flow.Net.Examples
                 Payer = payerAddress
             };
 
-            // Add authorizer(s)
+            // Add authorizer
             tx.Authorizers.Add(authorizerAddress);
 
-            // Add argument(s)
-            var arguments = new List<ICadence>
-            {
-                new CadenceString("Hello")
-            };
-            tx.Arguments = arguments.GenerateTransactionArguments();
+            // Add argument            
+            tx.Arguments.Add(new CadenceString("Hello"));
         }
 
         private static void Demo2()

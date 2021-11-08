@@ -1,4 +1,5 @@
-﻿using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Models;
 using Nethereum.RLP;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Flow.Net.Sdk.RecursiveLengthPrefix
         {
             var argArray = new List<byte[]>();
             foreach (var argument in flowTransaction.Arguments)
-                argArray.Add(RLP.EncodeElement(argument.ToByteArray()));
+                argArray.Add(RLP.EncodeElement(argument.Encode().ToBytesForRLPEncoding()));
 
             var authArray = new List<byte[]>();
             foreach (var authorizer in flowTransaction.Authorizers)
