@@ -1,6 +1,7 @@
 ﻿using Flow.Net.Sdk.Cadence;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Protos.access;
+using Google.Protobuf;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -123,8 +124,7 @@ namespace Flow.Net.Sdk.Client
                 Script = transactionResponse.Transaction.Script.FromByteStringToString(),
                 ReferenceBlockId = transactionResponse.Transaction.ReferenceBlockId,
                 GasLimit = transactionResponse.Transaction.GasLimit,
-                Payer = new FlowAddress(transactionResponse.Transaction.Payer),
-                Arguments = transactionResponse.Transaction.Arguments,
+                Payer = new FlowAddress(transactionResponse.Transaction.Payer),                
                 Authorizers = transactionResponse.Transaction.Authorizers.Select(s => new FlowAddress(s)).ToList(),
                 ProposalKey = new FlowProposalKey
                 { 
@@ -135,6 +135,9 @@ namespace Flow.Net.Sdk.Client
                 PayloadSignatures = payloadSignatures,
                 EnvelopeSignatures = envelopeSignatures 
             };
+
+            foreach(var argument in transactionResponse.Transaction.Arguments)
+                sendResponse.Arguments.Add(argument.FromByteStringToString().Decode());
 
             return sendResponse;
         }
@@ -269,8 +272,11 @@ namespace Flow.Net.Sdk.Client
                 ProposalKey = flowTransaction.ProposalKey.FromFlowProposalKey()
             };
 
-            foreach(var argument in flowTransaction.Arguments)
-                tx.Arguments.Add(argument);
+            if (flowTransaction.Arguments != null && flowTransaction.Arguments.Any())
+            {
+                foreach (var argument in flowTransaction.Arguments)
+                    tx.Arguments.Add(argument.Encode().FromStringToByteString());
+            }                
             
             foreach(var authorizer in flowTransaction.Authorizers)
                 tx.Authorizers.Add(authorizer.Value);

@@ -21,18 +21,6 @@ namespace Flow.Net.Sdk.Cadence
         }
 
         /// <summary>
-        /// Casts <see cref="ICadence"/> to <typeparamref name="T"/>.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="cadence"></param>
-        /// <returns><typeparamref name="T"/>.</returns>
-        public T As<T>(ICadence cadence)
-            where T : ICadence
-        {
-            return (T)cadence;
-        }
-
-        /// <summary>
         /// Filters <see cref="CadenceCompositeItem.Fields"/> where <see cref="CadenceCompositeItemValue.Name"/> is equal to <paramref name="fieldName"/> and returns the <see cref="CadenceCompositeItemValue.Value"/>.
         /// </summary>
         /// <param name="cadenceComposite"></param>
