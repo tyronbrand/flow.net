@@ -18,6 +18,6 @@ namespace Flow.Net.Sdk.Models
         public ByteString Code { get; set; }
         public decimal Balance { get; set; }
         public IList<FlowAccountKey> Keys { get; set; }
-        public IList<FlowContract> Contracts { get; set; }
+        public IList<FlowContract> Contracts { get; }
     }
 }

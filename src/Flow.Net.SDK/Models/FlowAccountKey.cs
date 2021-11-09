@@ -46,12 +46,12 @@ namespace Flow.Net.Sdk.Models
         {
             foreach(var key in updatedFlowAccountKeys)
             {
-                var currentKey = currentFlowAccountKeys.Where(w => w.PublicKey == key.PublicKey).FirstOrDefault();
-                if(currentKey != null && !string.IsNullOrEmpty(currentKey.PrivateKey))
-                {
-                    key.PrivateKey = currentKey.PrivateKey;
-                    key.Signer = Crypto.Ecdsa.Utilities.CreateSigner(key.PrivateKey, key.SignatureAlgorithm, key.HashAlgorithm);
-                }
+                var currentKey = currentFlowAccountKeys.FirstOrDefault(w => w.PublicKey == key.PublicKey);
+                if (currentKey == null || string.IsNullOrEmpty(currentKey.PrivateKey))
+                    continue;
+                
+                key.PrivateKey = currentKey.PrivateKey;
+                key.Signer = Crypto.Ecdsa.Utilities.CreateSigner(key.PrivateKey, key.SignatureAlgorithm, key.HashAlgorithm);
             }
 
             return updatedFlowAccountKeys;

@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Flow.Net.Examples
+namespace Flow.Net.Examples.TransactionExamples
 {
     public class GetTransactionExample : ExampleBase
     {
@@ -27,7 +27,7 @@ namespace Flow.Net.Examples
             PrintTransactionResult(txr);
         }
 
-        private static void PrintTransaction(FlowTransactionResponse tx)
+        private static void PrintTransaction(FlowTransactionBase tx)
         {
             Console.WriteLine($"ReferenceBlockId: {tx.ReferenceBlockId.FromByteStringToHex()}");
             Console.WriteLine($"Payer: {tx.Payer.Value.FromByteStringToHex()}");

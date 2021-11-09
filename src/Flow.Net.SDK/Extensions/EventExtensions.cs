@@ -5,7 +5,7 @@ namespace Flow.Net.Sdk.Models
     public static class EventExtensions
     {
         ///<inheritdoc cref="FlowEvent.AccountCreatedAddress"/>
-        public static FlowAddress AccountCreatedAddress(this IList<FlowEvent> flowEvents)
+        public static FlowAddress AccountCreatedAddress(this IEnumerable<FlowEvent> flowEvents)
         {
             return FlowEvent.AccountCreatedAddress(flowEvents);
         }

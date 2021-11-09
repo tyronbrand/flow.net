@@ -16,7 +16,7 @@ namespace Flow.Net.Sdk.Cadence
         }
 
         [JsonProperty("type")]
-        public override string Type { get; }
+        public sealed override string Type { get; set; }
 
         [JsonProperty("value")]
         public string Value { get; set; }

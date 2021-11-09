@@ -9,9 +9,9 @@ namespace Flow.Net.Sdk.Crypto.Ecdsa
 {
     public class Signer : ISigner
     {
-        public ECPrivateKeyParameters PrivateKey { get; private set; }
-        public HashAlgo HashAlgo { get; private set; }
-        public string SignatureCurveName { get; private set; }
+        private ECPrivateKeyParameters PrivateKey { get; }
+        private HashAlgo HashAlgo { get; }
+        private string SignatureCurveName { get; }
 
         public Signer(ECPrivateKeyParameters privateKey, HashAlgo hashAlgorithm, SignatureAlgo signatureAlgo)
         {

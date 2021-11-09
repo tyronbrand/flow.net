@@ -1,9 +1,8 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Models;
 using System;
 using System.Threading.Tasks;
 
-namespace Flow.Net.Examples
+namespace Flow.Net.Examples.AccountExamples
 {
     public class GetAccountExample : ExampleBase
     {

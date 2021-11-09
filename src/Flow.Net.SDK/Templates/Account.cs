@@ -1,15 +1,14 @@
 ﻿using Flow.Net.Sdk.Cadence;
 using Flow.Net.Sdk.Exceptions;
 using Flow.Net.Sdk.Models;
-using Flow.Net.Sdk.RecursiveLengthPrefix;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Flow.Net.Sdk.Templates
 {
-    public class Account
+    public static class Account
     {
-		private static readonly string CreateAccountTemplate = @"
+	    private const string CreateAccountTemplate = @"
 transaction(publicKeys: [String], contracts: { String: String})
 {
 	prepare(signer: AuthAccount)
@@ -24,9 +23,14 @@ transaction(publicKeys: [String], contracts: { String: String})
 	}
 }";
 
-        public static FlowTransaction CreateAccount(IEnumerable<FlowAccountKey> flowAccountKeys, FlowAddress authorizerAddress, IEnumerable<FlowContract> flowContracts = null)
+	    public static FlowTransaction CreateAccount(IEnumerable<FlowAccountKey> flowAccountKeys, FlowAddress authorizerAddress, IEnumerable<FlowContract> flowContracts = null)
         {
-			if (flowAccountKeys == null || flowAccountKeys.Count() == 0)
+			if (flowAccountKeys == null)
+				throw new FlowException("Flow account key required.");
+
+			flowAccountKeys = flowAccountKeys.ToList();
+			
+			if(!flowAccountKeys.Any())
 				throw new FlowException("Flow account key required.");
 
 			var accountKeys = new CadenceArray();
@@ -39,31 +43,34 @@ transaction(publicKeys: [String], contracts: { String: String})
 			}
 
 			var contracts = new CadenceDictionary();
-			if (flowContracts != null && flowContracts.Count() > 0)
+			
+			if (flowContracts != null)
             {
-				foreach(var contract in flowContracts)
-                {
-					contracts.Value.Add(
-					new CadenceDictionaryKeyValue
-					{
-						Key = new CadenceString(contract.Name),
-						Value = new CadenceString(contract.Source.FromStringToHex())
-					});
-				}				
+	            flowContracts = flowContracts.ToList();
+
+	            if (flowContracts.Any())
+	            {
+		            foreach(var contract in flowContracts)
+		            {
+			            contracts.Value.Add(
+				            new CadenceDictionaryKeyValue
+				            {
+					            Key = new CadenceString(contract.Name),
+					            Value = new CadenceString(contract.Source.FromStringToHex())
+				            });
+		            }
+	            }
             }
 
 			var tx = new FlowTransaction
 			{
-				Script = CreateAccountTemplate
-			};
-
-			// add arguments
-			tx.Arguments = 
-				new List<ICadence>
+				Script = CreateAccountTemplate,
+				Arguments = new List<ICadence>
 				{
 					accountKeys,
 					contracts
-				};
+				}
+			};
 
 			// add authorizer
 			tx.Authorizers.Add(authorizerAddress);
@@ -75,16 +82,13 @@ transaction(publicKeys: [String], contracts: { String: String})
         {
 			var tx = new FlowTransaction
 			{
-				Script = script
-			};
-
-			// add arguments
-			tx.Arguments =
-				new List<ICadence>
+				Script = script,
+				Arguments = new List<ICadence>
 				{
 					new CadenceString(flowContract.Name),
 					new CadenceString(flowContract.Source.FromStringToHex())
-				};
+				}
+			};
 
 			// add authorizer
 			tx.Authorizers.Add(authorizerAddress);
@@ -92,7 +96,7 @@ transaction(publicKeys: [String], contracts: { String: String})
 			return tx;
 		}
 
-		private static readonly string AddAccountContractTemplate = @"
+		private const string AddAccountContractTemplate = @"
 transaction(name: String, code: String)
 {
 	prepare(signer: AuthAccount) {
@@ -105,7 +109,7 @@ transaction(name: String, code: String)
 			return AccountContractBase(AddAccountContractTemplate, flowContract, authorizerAddress);
 		}
 
-		private static readonly string UpdateAccountContractTemplate = @"
+		private const string UpdateAccountContractTemplate = @"
 transaction(name: String, code: String)
 {
 	prepare(signer: AuthAccount) {
@@ -118,13 +122,14 @@ transaction(name: String, code: String)
 			return AccountContractBase(UpdateAccountContractTemplate, flowContract, authorizerAddress);
 		}
 
-		private static readonly string DeleteAccountContractTemplate = @"
+		private const string DeleteAccountContractTemplate = @"
 transaction(name: String)
 {
 	prepare(signer: AuthAccount) {
 		signer.contracts.remove(name: name)
 	}
 }";
+
 		public static FlowTransaction DeleteAccountContract(string contractName, FlowAddress authorizerAddress)
         {
 			var tx = new FlowTransaction

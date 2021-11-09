@@ -9,6 +9,6 @@
     public enum HashAlgo
     {
         SHA2_256 = 1,
-        SHA3_256 = 3,
+        SHA3_256 = 3
     }    
 }

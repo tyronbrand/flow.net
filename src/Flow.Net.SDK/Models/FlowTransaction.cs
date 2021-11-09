@@ -1,5 +1,4 @@
 ﻿using Flow.Net.Sdk.Crypto;
-using Flow.Net.Sdk.RecursiveLengthPrefix;
 using Google.Protobuf;
 using System.Collections.Generic;
 
@@ -15,7 +14,7 @@ namespace Flow.Net.Sdk.Models
             SignerList = new Dictionary<ByteString, int>();
         }
 
-        public Dictionary<ByteString, int> SignerList { get; set; }
+        public Dictionary<ByteString, int> SignerList { get; }
 
         /// <summary>
         /// Signs the full transaction (TransactionDomainTag + payload) with the specified account key.

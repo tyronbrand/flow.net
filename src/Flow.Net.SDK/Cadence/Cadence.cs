@@ -1,14 +1,12 @@
 ﻿using Flow.Net.Sdk.Exceptions;
-using Google.Protobuf;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Flow.Net.Sdk.Cadence
 {
     public abstract class Cadence : ICadence
     {
-        public virtual string Type { get; }
+        public virtual string Type { get; set; }
 
         /// <summary>
         /// Encodes <see cref="ICadence"/>.
@@ -28,7 +26,7 @@ namespace Flow.Net.Sdk.Cadence
         /// <returns>A <see cref="ICadence"/> that satisfies the condition.</returns>
         public ICadence CompositeField(CadenceComposite cadenceComposite, string fieldName)
         {
-            ICadence cadenceCompositeValue = cadenceComposite.Value.Fields.Where(w => w.Name == fieldName).Select(s => s.Value).FirstOrDefault();
+            var cadenceCompositeValue = cadenceComposite.Value.Fields.Where(w => w.Name == fieldName).Select(s => s.Value).FirstOrDefault();
 
             return cadenceCompositeValue ?? throw new FlowException($"Failed to find fieldName: {fieldName}");
         }
@@ -43,27 +41,7 @@ namespace Flow.Net.Sdk.Cadence
         public T CompositeFieldAs<T>(CadenceComposite cadenceComposite, string fieldName)
             where T : ICadence
         {
-            ICadence cadenceCompositeValue = cadenceComposite.CompositeField(fieldName);
-
-            return cadenceCompositeValue.As<T>();
-        }
-
-        /// <summary>
-        /// Encodes a <see cref="IEnumerable{T}" /> of <see cref="ICadence"/> to <see cref="IList{T}" /> of <see cref="ByteString"/>.
-        /// </summary>
-        /// <param name="cadenceValues"></param>
-        /// <returns>Arguments JSON encoded as a <see cref="IList{T}" /> of <see cref="ByteString"/>.</returns>
-        public IList<ByteString> GenerateTransactionArguments(IEnumerable<ICadence> cadenceValues)
-        {
-            var arguments = new List<ByteString>();
-
-            if (cadenceValues != null && cadenceValues.Any())
-            {
-                foreach (var value in cadenceValues)
-                    arguments.Add(value.Encode().FromStringToByteString());
-            }
-
-            return arguments;
+            return cadenceComposite.CompositeField(fieldName).As<T>();
         }
     }
 }

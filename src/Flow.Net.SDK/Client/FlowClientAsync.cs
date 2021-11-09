@@ -3,7 +3,6 @@ using Flow.Net.Sdk.Exceptions;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Protos.access;
 using Google.Protobuf;
-using Google.Protobuf.Collections;
 using Grpc.Core;
 using Org.BouncyCastle.Crypto.Parameters;
 using System;
@@ -26,7 +25,7 @@ namespace Flow.Net.Sdk.Client
         /// <param name="channelCredentialsSecureSsl"></param>
         /// <param name="options"></param>
         /// <returns><see cref="FlowClientAsync"/>.</returns>
-        public FlowClientAsync(string flowNetworkUrl, bool channelCredentialsSecureSsl = false, List<ChannelOption> options = null)
+        public FlowClientAsync(string flowNetworkUrl, bool channelCredentialsSecureSsl = false, IEnumerable<ChannelOption> options = null)
         {
             try
             {
@@ -72,10 +71,10 @@ namespace Flow.Net.Sdk.Client
             try
             {
                 var response = await _client.GetLatestBlockAsync(
-                new GetLatestBlockRequest()
-                {
-                    IsSealed = isSealed
-                }, options);
+                    new GetLatestBlockRequest
+                    {
+                        IsSealed = isSealed
+                    }, options);
 
                 return response.ToFlowBlock();
             }
@@ -96,10 +95,10 @@ namespace Flow.Net.Sdk.Client
             try
             {
                 var response = await _client.GetBlockByHeightAsync(
-                new GetBlockByHeightRequest()
-                {
-                    Height = blockHeight
-                }, options);
+                    new GetBlockByHeightRequest
+                    {
+                        Height = blockHeight
+                    }, options);
 
                 return response.ToFlowBlock();
             }
@@ -120,10 +119,10 @@ namespace Flow.Net.Sdk.Client
             try
             {
                 var response = await _client.GetBlockByIDAsync(
-                new GetBlockByIDRequest()
-                {
-                    Id = blockId
-                }, options);
+                    new GetBlockByIDRequest
+                    {
+                        Id = blockId
+                    }, options);
 
                 return response.ToFlowBlock();
             }
@@ -216,7 +215,7 @@ namespace Flow.Net.Sdk.Client
         {
             try
             {
-                var request = new ExecuteScriptAtLatestBlockRequest()
+                var request = new ExecuteScriptAtLatestBlockRequest
                 {
                     Script = script
                 };
@@ -244,7 +243,7 @@ namespace Flow.Net.Sdk.Client
         {
             try
             {
-                var request = new ExecuteScriptAtBlockHeightRequest()
+                var request = new ExecuteScriptAtBlockHeightRequest
                 {
                     Script = script,
                     BlockHeight = blockHeight
@@ -273,7 +272,7 @@ namespace Flow.Net.Sdk.Client
         {
             try
             {
-                var request = new ExecuteScriptAtBlockIDRequest()
+                var request = new ExecuteScriptAtBlockIDRequest
                 {
                     Script = script,
                     BlockId = blockId
@@ -303,7 +302,7 @@ namespace Flow.Net.Sdk.Client
         {
             try
             {
-                startHeight = startHeight >= 0 ? startHeight : 0;
+                startHeight = startHeight > 0 ? startHeight : 0;
 
                 var response = await _client.GetEventsForHeightRangeAsync(
                     new GetEventsForHeightRangeRequest
@@ -337,7 +336,7 @@ namespace Flow.Net.Sdk.Client
                     Type = eventType
                 };
 
-                if (blockIds != null && blockIds.Count() > 0)
+                if (blockIds != null)
                 {
                     foreach (var block in blockIds)
                         request.BlockIds.Add(block);
@@ -389,10 +388,10 @@ namespace Flow.Net.Sdk.Client
             try
             {
                 var response = await _client.GetTransactionAsync(
-                new GetTransactionRequest()
-                {
-                    Id = transactionId
-                }, options);
+                    new GetTransactionRequest
+                    {
+                        Id = transactionId
+                    }, options);
 
                 return response.ToFlowTransactionResponse();
             }
@@ -461,10 +460,10 @@ namespace Flow.Net.Sdk.Client
             try
             {
                 var response = await _client.GetExecutionResultForBlockIDAsync(
-                new GetExecutionResultForBlockIDRequest
-                {
-                    BlockId = blockId
-                }, options);
+                    new GetExecutionResultForBlockIDRequest
+                    {
+                        BlockId = blockId
+                    }, options);
 
                 return response.ToFlowExecutionResultForBlockIdResponse();
             }
@@ -568,9 +567,9 @@ namespace Flow.Net.Sdk.Client
         /// </summary>
         /// <param name="transactionResponse"></param>
         /// <param name="delayMs"></param>
-        /// <param name="timeoutMS"></param>
+        /// <param name="timeoutMs"></param>
         /// <returns><see cref="FlowTransactionResult"/></returns>
-        public async Task<FlowTransactionResult> WaitForSealAsync(FlowSendTransactionResponse transactionResponse, int delayMs = 1000, int timeoutMS = 30000)
+        public async Task<FlowTransactionResult> WaitForSealAsync(FlowSendTransactionResponse transactionResponse, int delayMs = 1000, int timeoutMs = 30000)
         {
             var startTime = DateTime.UtcNow;
             while (true)
@@ -580,7 +579,7 @@ namespace Flow.Net.Sdk.Client
                 if (result != null && result.Status == Protos.entities.TransactionStatus.Sealed)
                     return result;
 
-                if (DateTime.UtcNow.Subtract(startTime).TotalMilliseconds > timeoutMS)
+                if (DateTime.UtcNow.Subtract(startTime).TotalMilliseconds > timeoutMs)
                     throw new FlowException("Timed out waiting for seal.");
 
                 await Task.Delay(delayMs);
@@ -597,44 +596,43 @@ namespace Flow.Net.Sdk.Client
         public async Task<FlowAccount> ReadAccountFromConfigAsync(string accountName, string configFileName = null, string configPath = null)
         {
             var config = Utilities.ReadConfig(configFileName, configPath);
-            config.Accounts.TryGetValue(accountName, out FlowConfigAccount configAccount);
+            config.Accounts.TryGetValue(accountName, out var configAccount);
 
             if (configAccount == null)
                 throw new FlowException($"Failed to find account \"{accountName}\"");
 
             var flowAccount = await GetAccountAtLatestBlockAsync(new FlowAddress(configAccount.Address));
 
-            if (!string.IsNullOrEmpty(configAccount.Key))
+            if (string.IsNullOrEmpty(configAccount.Key)) 
+                return flowAccount;
+            
+            foreach (var key in flowAccount.Keys)
             {
-                foreach (var key in flowAccount.Keys)
-                {
-                    // getting the public key so we can match it to our account public keys
-                    var keyPair = Crypto.Ecdsa.Utilities.AsymmetricCipherKeyPairFromPrivateKey(configAccount.Key, key.SignatureAlgorithm);
-                    var publicKey = Crypto.Ecdsa.Utilities.DecodePublicKeyToHex(keyPair);
+                // getting the public key so we can match it to our account public keys
+                var keyPair = Crypto.Ecdsa.Utilities.AsymmetricCipherKeyPairFromPrivateKey(configAccount.Key, key.SignatureAlgorithm);
+                var publicKey = Crypto.Ecdsa.Utilities.DecodePublicKeyToHex(keyPair);
 
-                    // select the key with a matching public key
-                    var flowAccountKey = flowAccount.Keys.Where(w => w.PublicKey == publicKey).FirstOrDefault();
+                // select the key with a matching public key
+                var flowAccountKey = flowAccount.Keys.FirstOrDefault(w => w.PublicKey == publicKey);
 
-                    if (flowAccountKey != null)
-                    {
-                        flowAccountKey.PrivateKey = configAccount.Key;
+                if (flowAccountKey == null)
+                    continue;
+                
+                flowAccountKey.PrivateKey = configAccount.Key;
 
-                        var privateKey = keyPair.Private as ECPrivateKeyParameters;
-                        flowAccountKey.Signer = new Crypto.Ecdsa.Signer(privateKey, flowAccountKey.HashAlgorithm, flowAccountKey.SignatureAlgorithm);
-                    }
-                }
+                var privateKey = keyPair.Private as ECPrivateKeyParameters;
+                flowAccountKey.Signer = new Crypto.Ecdsa.Signer(privateKey, flowAccountKey.HashAlgorithm, flowAccountKey.SignatureAlgorithm);
             }
 
             return flowAccount;
         }
 
-        private void AddArgumentsToRequest(IEnumerable<ICadence> arguments, RepeatedField<ByteString> requestArguments)
+        private static void AddArgumentsToRequest(IEnumerable<ICadence> arguments, ICollection<ByteString> requestArguments)
         {
-            if (arguments != null && arguments.Count() > 0)
-            {
-                foreach (var argument in arguments)
-                    requestArguments.Add(argument.Encode().FromStringToByteString());
-            }
+            if (arguments == null) return;
+            
+            foreach (var argument in arguments)
+                requestArguments.Add(argument.Encode().FromStringToByteString());
         }
     }
 }

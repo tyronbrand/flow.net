@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Flow.Net.Examples
+namespace Flow.Net.Examples.TransactionExamples
 {
     public class MultiPartyMultiSignatureExample : ExampleBase
     {
@@ -33,7 +33,7 @@ namespace Flow.Net.Examples
             var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccount2Key3, flowAccount2Key4 });
 
             // get the latest sealed block to use as a reference block
-            var lastestBlock = await FlowClient.GetLatestBlockAsync();
+            var latestBlock = await FlowClient.GetLatestBlockAsync();
 
             var tx = new FlowTransaction
             {
@@ -46,7 +46,7 @@ namespace Flow.Net.Examples
                     KeyId = account1.Keys[0].Index,
                     SequenceNumber = account1.Keys[0].SequenceNumber
                 },
-                ReferenceBlockId = lastestBlock.Id
+                ReferenceBlockId = latestBlock.Id
             };
 
             // authorizers

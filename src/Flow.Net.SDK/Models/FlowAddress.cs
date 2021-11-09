@@ -19,7 +19,7 @@ namespace Flow.Net.Sdk.Models
             HexValue = addressHex.RemoveHexPrefix();
         }
 
-        public ByteString Value { get; private set; }
-        public string HexValue { get; private set; }
+        public ByteString Value { get; }
+        public string HexValue { get; }
     }
 }

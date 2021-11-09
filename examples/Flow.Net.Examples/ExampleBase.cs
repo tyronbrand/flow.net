@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples
 {
-    public class ExampleBase
+    public abstract class ExampleBase
     {
-        public static FlowClientAsync FlowClient { get; private set; }
+        protected static FlowClientAsync FlowClient { get; private set; }
 
-        public static async Task<FlowClientAsync> CreateFlowClientAsync()
+        protected static async Task<FlowClientAsync> CreateFlowClientAsync()
         {
-            var networkUrl = "127.0.0.1:3569"; // emulator
+            const string networkUrl = "127.0.0.1:3569"; // emulator
 
-            if(FlowClient == null)
-            {
-                FlowClient = new FlowClientAsync(networkUrl);
-                await FlowClient.PingAsync();
-            }
+            if (FlowClient != null)
+                return FlowClient;
+            
+            FlowClient = new FlowClientAsync(networkUrl);
+            await FlowClient.PingAsync();
 
             return FlowClient;
         }
 
-        public static async Task<FlowAccount> CreateAccountAsync(List<FlowAccountKey> newFlowAccountKeys)
+        protected static async Task<FlowAccount> CreateAccountAsync(List<FlowAccountKey> newFlowAccountKeys)
         {
             await CreateFlowClientAsync();            
             
@@ -58,20 +58,18 @@ namespace Flow.Net.Examples
             // wait for seal
             var sealedResponse = await FlowClient.WaitForSealAsync(response);
 
-            if (sealedResponse.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
-            {
-                var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
+            if (sealedResponse.Status != Sdk.Protos.entities.TransactionStatus.Sealed) 
+                return null;
+            
+            var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
 
-                // get new account details
-                var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
-                newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(newFlowAccountKeys, newAccount.Keys);
-                return newAccount;
-            }
-
-            return null;
+            // get new account details
+            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
+            newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(newFlowAccountKeys, newAccount.Keys);
+            return newAccount;
         }
 
-        public static async Task<ByteString> RandomTransactionAsync()
+        protected static async Task<ByteString> RandomTransactionAsync()
         {
             // creator (typically a service account)
             var serviceAccount = await FlowClient.ReadAccountFromConfigAsync("emulator-account");

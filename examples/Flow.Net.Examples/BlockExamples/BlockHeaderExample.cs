@@ -3,7 +3,7 @@ using Flow.Net.Sdk.Models;
 using System;
 using System.Threading.Tasks;
 
-namespace Flow.Net.Examples
+namespace Flow.Net.Examples.BlockExamples
 {
     public class BlockHeaderExample : ExampleBase
     {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Flow.Net.Examples
+namespace Flow.Net.Examples.ScriptExamples
 {
     public class ExecuteScriptAtLatestBlockWithParametersExample : ExampleBase
     {

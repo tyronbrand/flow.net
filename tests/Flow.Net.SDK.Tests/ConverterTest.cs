@@ -20,12 +20,12 @@ namespace Flow.Net.Sdk.Tests
         [Fact]
         public void TestFromHexToByteString0xPrefix()
         {
-            var expectedResult = "0102030405060708";
+            const string expectedResult = "0102030405060708";
 
-            var hexWith0x = "0x0102030405060708";
+            const string hexWith0x = "0x0102030405060708";
             var removed0xResult = ByteStringConverter.FromHexToByteString(hexWith0x);
 
-            var hexWithout0x = "0102030405060708";
+            const string hexWithout0x = "0102030405060708";
             var result = ByteStringConverter.FromHexToByteString(hexWithout0x);
 
             Assert.Equal(expectedResult, removed0xResult.FromByteStringToHex());
@@ -35,8 +35,8 @@ namespace Flow.Net.Sdk.Tests
         [Fact]
         public void TestRemoveHexPrefix()
         {
-            var expectedResult = "0102030405060708";
-            var hexWith0x = "0x0102030405060708";
+            const string expectedResult = "0102030405060708";
+            const string hexWith0x = "0x0102030405060708";
 
             var removed0xResult = HexConverter.RemoveHexPrefix(hexWith0x);
             var result = HexConverter.RemoveHexPrefix(expectedResult);
@@ -48,8 +48,8 @@ namespace Flow.Net.Sdk.Tests
         [Fact]
         public void TestFromStringToHex()
         {
-            var expectedResult = "0102030405060708";
-            var str = "\u0001\u0002\u0003\u0004\u0005\u0006\a\b";
+            const string expectedResult = "0102030405060708";
+            const string str = "\u0001\u0002\u0003\u0004\u0005\u0006\a\b";
 
             var result = HexConverter.FromStringToHex(str);
 
@@ -60,7 +60,7 @@ namespace Flow.Net.Sdk.Tests
         public void TestFromHexToBytes()
         {
             var expectedResult = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
-            var hex = "0102030405060708";
+            const string hex = "0102030405060708";
 
             var result = HexConverter.FromHexToBytes(hex);
 
