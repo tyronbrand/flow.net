@@ -3,7 +3,7 @@ using Flow.Net.Sdk.Cadence;
 using System;
 using System.Threading.Tasks;
 
-namespace Flow.Net.Examples
+namespace Flow.Net.Examples.ScriptExamples
 {
     public class ExecuteScriptAtLatestBlockExample : ExampleBase
     {

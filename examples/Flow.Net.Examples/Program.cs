@@ -1,10 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using Flow.Net.Examples.AccountExamples;
+using Flow.Net.Examples.BlockExamples;
+using Flow.Net.Examples.CollectionExamples;
+using Flow.Net.Examples.EventExamples;
+using Flow.Net.Examples.ScriptExamples;
+using Flow.Net.Examples.TransactionExamples;
+using System.Threading.Tasks;
 
 namespace Flow.Net.Examples
 {
-    class Program
+    internal static class Program
     {
-        static async Task Main()
+        private static async Task Main()
         {
             // Block example
             await BlockExample.RunAsync();

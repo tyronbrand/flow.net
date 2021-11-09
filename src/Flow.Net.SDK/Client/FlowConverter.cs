@@ -1,7 +1,6 @@
 ﻿using Flow.Net.Sdk.Cadence;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Protos.access;
-using Google.Protobuf;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,11 +8,7 @@ namespace Flow.Net.Sdk.Client
 {
     public static class FlowConverter
     {
-        private static readonly CadenceConverter _cadenceConverter;
-        static FlowConverter()
-        {
-            _cadenceConverter = new CadenceConverter();
-        }
+        private static readonly CadenceConverter _cadenceConverter = new CadenceConverter();
 
         public static FlowGetNetworkParametersResponse ToFlowGetNetworkParametersResponse(this GetNetworkParametersResponse getNetworkParametersResponse)
         {
@@ -31,38 +26,31 @@ namespace Flow.Net.Sdk.Client
             };
         }
 
-        public static FlowExecutionResultForBlockIdResponse ToFlowExecutionResultForBlockIdResponse(this ExecutionResultForBlockIDResponse executionResultForBlockIDResponse)
+        public static FlowExecutionResultForBlockIdResponse ToFlowExecutionResultForBlockIdResponse(this ExecutionResultForBlockIDResponse executionResultForBlockIdResponse)
         {
-            var flowChunks = new List<FlowChunk>();
-            foreach(var chunk in executionResultForBlockIDResponse.ExecutionResult.Chunks)
-            {
-                flowChunks.Add(
-                    new FlowChunk
-                    {
-                        BlockId = chunk.BlockId,
-                        EndState = chunk.EndState,
-                        EventCollection = chunk.EventCollection,
-                        Index = chunk.Index,
-                        NumberOfTransactions = chunk.NumberOfTransactions,
-                        StartState = chunk.StartState,
-                        TotalComputationUsed = chunk.TotalComputationUsed
-                    });
-            }
-
-            var serviceEvents = new List<FlowServiceEvent>();
-            foreach (var serviceEvent in executionResultForBlockIDResponse.ExecutionResult.ServiceEvents)
-            {
-                serviceEvents.Add(new FlowServiceEvent
+            var flowChunks = executionResultForBlockIdResponse.ExecutionResult.Chunks.Select(chunk =>
+                new FlowChunk
                 {
-                    Payload = serviceEvent.Payload,
+                    BlockId = chunk.BlockId,
+                    EndState = chunk.EndState,
+                    EventCollection = chunk.EventCollection,
+                    Index = chunk.Index,
+                    NumberOfTransactions = chunk.NumberOfTransactions,
+                    StartState = chunk.StartState,
+                    TotalComputationUsed = chunk.TotalComputationUsed
+                }).ToList();
+
+            var serviceEvents = executionResultForBlockIdResponse.ExecutionResult.ServiceEvents.Select(serviceEvent =>
+                new FlowServiceEvent
+                {
+                    Payload = serviceEvent.Payload, 
                     Type = serviceEvent.Type
-                });
-            }
+                }).ToList();
 
             return new FlowExecutionResultForBlockIdResponse
             {
-                BlockId = executionResultForBlockIDResponse.ExecutionResult.BlockId,
-                PreviousResultId = executionResultForBlockIDResponse.ExecutionResult.PreviousResultId,
+                BlockId = executionResultForBlockIdResponse.ExecutionResult.BlockId,
+                PreviousResultId = executionResultForBlockIdResponse.ExecutionResult.PreviousResultId,
                 Chunks = flowChunks,
                 ServiceEvents = serviceEvents
             };
@@ -79,9 +67,7 @@ namespace Flow.Net.Sdk.Client
 
         public static FlowTransactionResult ToFlowTransactionResult(this TransactionResultResponse transactionResultResponse)
         {
-            var events = new List<FlowEvent>();
-            foreach(var @event in transactionResultResponse.Events)
-                events.Add(@event.ToFlowEvent());
+            var events = transactionResultResponse.Events.Select(@event => @event.ToFlowEvent()).ToList();
             
             return new FlowTransactionResult
             {
@@ -95,29 +81,21 @@ namespace Flow.Net.Sdk.Client
 
         public static FlowTransactionResponse ToFlowTransactionResponse(this TransactionResponse transactionResponse)
         {
-            var payloadSignatures = new List<FlowSignature>();
-            foreach (var payloadSignature in transactionResponse.Transaction.PayloadSignatures)
-            {
-                payloadSignatures.Add(
-                    new FlowSignature
-                    {
-                        Address = payloadSignature.Address,
-                        KeyId = payloadSignature.KeyId,
-                        Signature = payloadSignature.Signature_.ToByteArray()
-                    });
-            }
+            var payloadSignatures = transactionResponse.Transaction.PayloadSignatures.Select(payloadSignature => 
+                new FlowSignature
+                {
+                    Address = payloadSignature.Address,
+                    KeyId = payloadSignature.KeyId,
+                    Signature = payloadSignature.Signature_.ToByteArray()
+                }).ToList();
 
-            var envelopeSignatures = new List<FlowSignature>();
-            foreach(var envelopeSignature in transactionResponse.Transaction.EnvelopeSignatures)
-            {
-                envelopeSignatures.Add(
-                    new FlowSignature
-                    {
-                        Address = envelopeSignature.Address,
-                        KeyId = envelopeSignature.KeyId,
-                        Signature = envelopeSignature.Signature_.ToByteArray()
-                    });
-            }
+            var envelopeSignatures = transactionResponse.Transaction.EnvelopeSignatures.Select(envelopeSignature =>
+                new FlowSignature
+                {
+                    Address = envelopeSignature.Address,
+                    KeyId = envelopeSignature.KeyId,
+                    Signature = envelopeSignature.Signature_.ToByteArray()
+                }).ToList();
 
             var sendResponse = new FlowTransactionResponse
             {
@@ -157,7 +135,7 @@ namespace Flow.Net.Sdk.Client
                 Height = blockHeaderResponse.Block.Height,
                 Id = blockHeaderResponse.Block.Id,
                 ParentId = blockHeaderResponse.Block.ParentId,
-                Timestamp = blockHeaderResponse.Block.Timestamp.ToDateTimeOffset(),
+                Timestamp = blockHeaderResponse.Block.Timestamp.ToDateTimeOffset()
             };
         }
 
@@ -219,7 +197,7 @@ namespace Flow.Net.Sdk.Client
             return blockEvents;
         }
 
-        public static FlowEvent ToFlowEvent(this Protos.entities.Event @event)
+        private static FlowEvent ToFlowEvent(this Protos.entities.Event @event)
         {
             return new FlowEvent
             {
@@ -254,7 +232,7 @@ namespace Flow.Net.Sdk.Client
                         PublicKey = key.PublicKey.FromByteStringToHex(),
                         SequenceNumber = key.SequenceNumber,
                         Revoked = key.Revoked,
-                        Weight = key.Weight,
+                        Weight = key.Weight
                     });
             }
 

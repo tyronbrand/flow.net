@@ -16,11 +16,11 @@ namespace Flow.Net.Sdk.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Filters a <see cref="IList{T}" /> of type <see cref="FlowEvent"/> where <see cref="Type"/> is equal to "flow.AccountCreated" and returns a <see cref="FlowAddress"/>.
+        /// Filters a <see cref="IEnumerable{T}" /> of type <see cref="FlowEvent"/> where <see cref="Type"/> is equal to "flow.AccountCreated" and returns a <see cref="FlowAddress"/>.
         /// </summary>
         /// <param name="flowEvents"></param>
         /// <returns>A <see cref="FlowAddress"/> that satisfies the condition.</returns>
-        public static FlowAddress AccountCreatedAddress(IList<FlowEvent> flowEvents)
+        public static FlowAddress AccountCreatedAddress(IEnumerable<FlowEvent> flowEvents)
         {
             var accountCreatedEvent = flowEvents.FirstOrDefault(w => w.Type == Event.AccountCreated);
 
@@ -30,12 +30,17 @@ namespace Flow.Net.Sdk.Models
             if (accountCreatedEvent.Payload == null)
                 throw new FlowException($"Payload for event type \"{Event.AccountCreated}\" can not be null.");
 
-            var compositeItemFields = accountCreatedEvent.Payload.As<CadenceComposite>().Value.Fields;
+            var compositeItemFields = accountCreatedEvent.Payload.As<CadenceComposite>().Value.Fields.ToList();
 
-            if (compositeItemFields.Count() == 0)
-                throw new FlowException($"Payload fields can not be empty.");
+            if (!compositeItemFields.Any())
+                throw new FlowException("Payload fields can not be empty.");
 
-            return new FlowAddress(compositeItemFields.FirstOrDefault().Value.As<CadenceAddress>().Value);
+            var addressValue = compositeItemFields.FirstOrDefault();
+
+            if (addressValue == null)
+                throw new FlowException("Address can not be null.");
+
+            return new FlowAddress(addressValue.Value.As<CadenceAddress>().Value);
         }
     }
 }

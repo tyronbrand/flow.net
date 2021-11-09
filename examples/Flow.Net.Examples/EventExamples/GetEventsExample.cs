@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Flow.Net.Examples
+namespace Flow.Net.Examples.EventExamples
 {
     public class GetEventsExample : ExampleBase
     {
@@ -32,8 +32,8 @@ namespace Flow.Net.Examples
             PrintEvents(eventsForHeightRange);
 
             // Query for our custom event by type
-            var customtype = $"A.{flowAccount.Address.HexValue}.EventDemo.Add";
-            var customEventsForHeightRange = await FlowClient.GetEventsForHeightRangeAsync(customtype, 0, 100);
+            var customType = $"A.{flowAccount.Address.HexValue}.EventDemo.Add";
+            var customEventsForHeightRange = await FlowClient.GetEventsForHeightRangeAsync(customType, 0, 100);
             PrintEvents(customEventsForHeightRange);
 
             // Get events directly from transaction result
@@ -118,18 +118,16 @@ pub contract EventDemo {
             // wait for seal
             var sealedResponse = await FlowClient.WaitForSealAsync(response);
 
-            if (sealedResponse.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
-            {
-                // get newly created accounts address
-                var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
+            if (sealedResponse.Status != Sdk.Protos.entities.TransactionStatus.Sealed)
+                return null;
+            
+            // get newly created accounts address
+            var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
 
-                // get new account details
-                var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
-                newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(new List<FlowAccountKey> { flowAccountKey }, newAccount.Keys);
-                return newAccount;
-            }
-
-            return null;
+            // get new account details
+            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
+            newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(new List<FlowAccountKey> { flowAccountKey }, newAccount.Keys);
+            return newAccount;
         }
 
         private static async Task<ByteString> PrepFlowTransaction(FlowAccount flowAccount)

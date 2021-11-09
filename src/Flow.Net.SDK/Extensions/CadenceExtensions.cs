@@ -39,7 +39,7 @@ namespace Flow.Net.Sdk.Cadence
             return cadenceComposite.CompositeField(cadenceComposite, fieldName);
         }
 
-        ///<inheritdoc cref="Cadence.CompositeFieldAs"/>
+        ///<inheritdoc cref="Cadence.CompositeFieldAs{T}(CadenceComposite, string)"/>
         public static T CompositeFieldAs<T>(this CadenceComposite cadenceComposite, string fieldName)
             where T : ICadence
         {

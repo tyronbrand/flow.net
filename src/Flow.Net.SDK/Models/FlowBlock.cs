@@ -16,8 +16,8 @@ namespace Flow.Net.Sdk.Models
             Signatures = new List<ByteString>();
         }
 
-        public IList<FlowBlockSeal> BlockSeals { get; set; }
-        public IList<FlowCollectionGuarantee> CollectionGuarantees { get; set; }
+        public IList<FlowBlockSeal> BlockSeals { get; }
+        public IList<FlowCollectionGuarantee> CollectionGuarantees { get; }
         public IEnumerable<ByteString> Signatures { get; set; }
     }
 

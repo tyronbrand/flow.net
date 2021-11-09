@@ -32,31 +32,25 @@ namespace Flow.Net.Sdk
         {
             var bytes = Encoding.UTF8.GetBytes(tag);
 
-            if (padLeft)
-                return bytes.PadLeft(length);
-            else
-                return bytes.PadRight(length);
+            return padLeft ? bytes.PadLeft(length) : bytes.PadRight(length);
         }
 
         public static byte[] Pad(byte[] bytes, int length, bool padLeft = true)
         {
-            if (padLeft)
-                return bytes.PadLeft(length);
-            else
-                return bytes.PadRight(length);
+            return padLeft ? bytes.PadLeft(length) : bytes.PadRight(length);
         }
 
-        public static byte[] PadLeft(this byte[] bytes, int length)
+        private static byte[] PadLeft(this byte[] bytes, int length)
         {
             if (bytes.Length >= length)
                 return bytes;
 
             var newArray = new byte[length];
-            Array.Copy(bytes, 0, newArray, (newArray.Length - bytes.Length), bytes.Length);
+            Array.Copy(bytes, 0, newArray, newArray.Length - bytes.Length, bytes.Length);
             return newArray;
         }
 
-        public static byte[] PadRight(this byte[] bytes, int length)
+        private static byte[] PadRight(this byte[] bytes, int length)
         {
             if (bytes.Length >= length)
                 return bytes;

@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Flow.Net.Sdk.RecursiveLengthPrefix
+namespace Flow.Net.Sdk
 {
-    public class Rlp
+    public static class Rlp
     {
         public static byte[] EncodedAccountKey(FlowAccountKey flowAccountKey)
         {
@@ -24,34 +24,26 @@ namespace Flow.Net.Sdk.RecursiveLengthPrefix
 
         public static byte[] EncodedCanonicalPayload(FlowTransaction flowTransaction)
         {
-            var argArray = new List<byte[]>();
-            foreach (var argument in flowTransaction.Arguments)
-                argArray.Add(RLP.EncodeElement(argument.Encode().ToBytesForRLPEncoding()));
-
-            var authArray = new List<byte[]>();
-            foreach (var authorizer in flowTransaction.Authorizers)
-                authArray.Add(RLP.EncodeElement(Utilities.Pad(authorizer.Value.ToByteArray(), 8)));
-
             var payloadElements = new List<byte[]>
             {
                 RLP.EncodeElement(flowTransaction.Script.ToBytesForRLPEncoding()),
-                RLP.EncodeList(argArray.ToArray()),
+                RLP.EncodeList(flowTransaction.Arguments.Select(argument => RLP.EncodeElement(argument.Encode().ToBytesForRLPEncoding())).ToArray()),
                 RLP.EncodeElement(Utilities.Pad(flowTransaction.ReferenceBlockId.ToByteArray(), 32)),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.GasLimit))),
                 RLP.EncodeElement(Utilities.Pad(flowTransaction.ProposalKey.Address.Value.ToByteArray(), 8)),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.ProposalKey.KeyId))),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.ProposalKey.SequenceNumber))),
                 RLP.EncodeElement(Utilities.Pad(flowTransaction.Payer.Value.ToByteArray(), 8)),
-                RLP.EncodeList(authArray.ToArray())
+                RLP.EncodeList(flowTransaction.Authorizers.Select(authorizer => RLP.EncodeElement(Utilities.Pad(authorizer.Value.ToByteArray(), 8))).ToArray())
             };
 
             return RLP.EncodeList(payloadElements.ToArray());
         }
 
-        public static byte[] EncodedSignatures(FlowSignature[] signatures, FlowTransaction flowTransaction)
+        private static byte[] EncodedSignatures(IReadOnlyList<FlowSignature> signatures, FlowTransaction flowTransaction)
         {
             var signatureElements = new List<byte[]>();
-            for (var i = 0; i < signatures.Length; i++)
+            for (var i = 0; i < signatures.Count; i++)
             {
                 var index = i;
                 if (flowTransaction.SignerList.ContainsKey(signatures[i].Address))
@@ -68,9 +60,9 @@ namespace Flow.Net.Sdk.RecursiveLengthPrefix
             }
 
             return RLP.EncodeList(signatureElements.ToArray());
-        }        
+        }
 
-        public static byte[] EncodedSignature(FlowSignature signature, int index)
+        private static byte[] EncodedSignature(FlowSignature signature, int index)
         {
             var signatureArray = new List<byte[]>
             {

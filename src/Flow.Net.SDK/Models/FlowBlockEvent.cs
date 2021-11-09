@@ -14,6 +14,6 @@ namespace Flow.Net.Sdk.Models
         public ulong BlockHeight { get; set; }
         public ByteString BlockId { get; set; }
         public DateTimeOffset BlockTimestamp { get; set; }
-        public IList<FlowEvent> Events { get; set; }
+        public IList<FlowEvent> Events { get; }
     }
 }

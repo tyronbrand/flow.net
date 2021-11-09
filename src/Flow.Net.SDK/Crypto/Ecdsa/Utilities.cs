@@ -3,10 +3,11 @@ using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Math;
-using Org.BouncyCastle.Math.EC;
 using Org.BouncyCastle.Security;
 using System;
+using System.Diagnostics;
 using System.Linq;
+using Flow.Net.Sdk.Exceptions;
 
 namespace Flow.Net.Sdk.Crypto.Ecdsa
 {
@@ -14,22 +15,25 @@ namespace Flow.Net.Sdk.Crypto.Ecdsa
     {
         public static AsymmetricCipherKeyPair GenerateKeyPair(SignatureAlgo signatureAlgo = SignatureAlgo.ECDSA_P256)
         {
-            var curveName = SignatureAlgorithmCurveName(signatureAlgo);
+            while (true)
+            {
+                var curveName = SignatureAlgorithmCurveName(signatureAlgo);
 
-            var curve = ECNamedCurveTable.GetByName(curveName);
-            var domainParams = new ECDomainParameters(curve.Curve, curve.G, curve.N, curve.H, curve.GetSeed());
+                var curve = ECNamedCurveTable.GetByName(curveName);
+                var domainParams = new ECDomainParameters(curve.Curve, curve.G, curve.N, curve.H, curve.GetSeed());
 
-            var secureRandom = new SecureRandom();
-            var keyParams = new ECKeyGenerationParameters(domainParams, secureRandom);
+                var secureRandom = new SecureRandom();
+                var keyParams = new ECKeyGenerationParameters(domainParams, secureRandom);
 
-            var generator = new ECKeyPairGenerator("ECDSA");
-            generator.Init(keyParams);
-            var key = generator.GenerateKeyPair();
+                var generator = new ECKeyPairGenerator("ECDSA");
+                generator.Init(keyParams);
+                var key = generator.GenerateKeyPair();
 
-            if (DecodePublicKeyToHex(key).Length != 128)
-                return GenerateKeyPair(signatureAlgo);
-
-            return key;
+                if (DecodePublicKeyToHex(key).Length != 128)
+                    continue;
+                
+                return key;
+            }
         }
 
         public static ECPrivateKeyParameters GeneratePrivateKeyFromHex(string privateKeyHex, SignatureAlgo signatureAlgo)
@@ -42,13 +46,17 @@ namespace Flow.Net.Sdk.Crypto.Ecdsa
 
         public static string DecodePrivateKeyToHex(AsymmetricCipherKeyPair keyPair)
         {
-            var privateKey = keyPair.Private as ECPrivateKeyParameters;
+            if (!(keyPair.Private is ECPrivateKeyParameters privateKey))
+                throw new FlowException("Private key is invalid.");
+            
             return privateKey.D.ToByteArrayUnsigned().FromByteArrayToHex();
         }
 
         public static string DecodePublicKeyToHex(AsymmetricCipherKeyPair keyPair)
         {
-            var publicKey = keyPair.Public as ECPublicKeyParameters;
+            if (!(keyPair.Public is ECPublicKeyParameters publicKey))
+                throw new FlowException("Public key not valid.");
+            
             var pubKeyX = publicKey.Q.XCoord.ToBigInteger().ToByteArrayUnsigned();
             var pubKeyY = publicKey.Q.YCoord.ToBigInteger().ToByteArrayUnsigned();
             return pubKeyX.Concat(pubKeyY).ToArray().FromByteArrayToHex();
@@ -59,12 +67,12 @@ namespace Flow.Net.Sdk.Crypto.Ecdsa
             var privateParams = GeneratePrivateKeyFromHex(privateKeyHex, signatureAlgo);
             var privateKeyArray = privateParams.D.ToByteArrayUnsigned();
 
-            var privKeyInt = new BigInteger(+1, privateKeyArray);
+            var privateKeyInt = new BigInteger(+1, privateKeyArray);
 
             var curveName = SignatureAlgorithmCurveName(signatureAlgo);
             var curve = ECNamedCurveTable.GetByName(curveName);
             var domain = new ECDomainParameters(curve.Curve, curve.G, curve.N, curve.H);
-            ECPoint eCPoint = curve.G.Multiply(privKeyInt).Normalize();
+            var eCPoint = curve.G.Multiply(privateKeyInt).Normalize();
 
             var publicKey = new ECPublicKeyParameters(eCPoint, domain);
 
@@ -73,17 +81,19 @@ namespace Flow.Net.Sdk.Crypto.Ecdsa
 
         public static SignatureAlgo GetSignatureAlgorithm(AsymmetricCipherKeyPair keyPair)
         {
-            var publicKey = keyPair.Public as ECPublicKeyParameters;
-            var ECNamedCurves = ECNamedCurveTable.Names;
+            if (!(keyPair.Public is ECPublicKeyParameters publicKey))
+                throw new FlowException("Public key not valid.");
 
-            foreach (var name in ECNamedCurves)
+            var ecNamedCurves = ECNamedCurveTable.Names;
+
+            foreach (var name in ecNamedCurves)
             {
                 var curve = ECNamedCurveTable.GetByName((string)name);
                 if (curve != null
-                    && curve.Curve == publicKey.Parameters.Curve
-                    && curve.G == publicKey.Parameters.G
-                    && curve.N == publicKey.Parameters.N
-                    && curve.H == publicKey.Parameters.H)
+                    && curve.Curve.Equals(publicKey.Parameters.Curve)
+                    && curve.G.Equals(publicKey.Parameters.G)
+                    && Equals(curve.N, publicKey.Parameters.N)
+                    && Equals(curve.H, publicKey.Parameters.H))
                 {
                     switch ((string)name)
                     {
@@ -95,7 +105,7 @@ namespace Flow.Net.Sdk.Crypto.Ecdsa
                 }
             }
 
-            throw new Exception("Failed to find signature algorithm");
+            throw new FlowException("Failed to find signature algorithm");
         }
 
         public static string SignatureAlgorithmCurveName(SignatureAlgo signatureAlgo)
@@ -106,9 +116,9 @@ namespace Flow.Net.Sdk.Crypto.Ecdsa
                     return "P-256";
                 case SignatureAlgo.ECDSA_secp256k1:
                     return "secp256k1";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(signatureAlgo), signatureAlgo, null);
             }
-
-            throw new Exception("Invalid signature algorithm");
         }
 
         public static ISigner CreateSigner(string privateKeyHex, SignatureAlgo signatureAlgo, HashAlgo hashAlgo)

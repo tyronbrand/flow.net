@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Flow.Net.Examples
+namespace Flow.Net.Examples.AccountExamples
 {
     public class DeployUpdateDeleteContractExample : ExampleBase
     {
@@ -42,7 +42,7 @@ namespace Flow.Net.Examples
             var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
 
             // contract to deploy            
-            var helloWorldContract = Sdk.Utilities.ReadCadenceScript("hello-world-contract");
+            var helloWorldContract = Utilities.ReadCadenceScript("hello-world-contract");
             var flowContract = new FlowContract
             {
                 Name = "HelloWorld",
@@ -83,11 +83,11 @@ namespace Flow.Net.Examples
 
         private static async Task UpdateContractAsync(FlowAccountKey newFlowAccountKey, FlowAddress newAccountAddress)
         {
-            // get new account deatils
+            // get new account details
             var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
 
             // contract to update            
-            var helloWorldContract = Sdk.Utilities.ReadCadenceScript("hello-world-updated-contract");
+            var helloWorldContract = Utilities.ReadCadenceScript("hello-world-updated-contract");
             var flowContract = new FlowContract
             {
                 Name = "HelloWorld",
@@ -128,7 +128,7 @@ namespace Flow.Net.Examples
 
         private static async Task DeleteContractAsync(FlowAccountKey newFlowAccountKey, FlowAddress newAccountAddress)
         {
-            // get new account deatils
+            // get new account details
             var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
 
             // contract to delete

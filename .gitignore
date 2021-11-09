@@ -364,3 +364,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp
+/.idea/.idea.Flow.Net/.idea
+/.idea/sonarlint/issuestore

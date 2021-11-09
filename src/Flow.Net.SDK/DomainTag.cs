@@ -4,7 +4,7 @@ namespace Flow.Net.Sdk
 {
     public static class DomainTag
     {
-        public static byte[] MessageWithDomain(byte[] bytes, byte[] domain)
+        private static byte[] MessageWithDomain(byte[] bytes, byte[] domain)
         {
             var newBytes = new byte[domain.Length + bytes.Length];
             Buffer.BlockCopy(domain, 0, newBytes, 0, domain.Length);

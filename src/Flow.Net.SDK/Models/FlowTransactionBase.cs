@@ -6,7 +6,7 @@ namespace Flow.Net.Sdk.Models
 {
     public abstract class FlowTransactionBase
     {
-        public FlowTransactionBase()
+        protected FlowTransactionBase()
         {
             Arguments = new List<ICadence>();
             Authorizers = new List<FlowAddress>();

@@ -1,6 +1,4 @@
-﻿using Google.Protobuf;
-
-namespace Flow.Net.Sdk.Models
+﻿namespace Flow.Net.Sdk.Models
 {
     /// <summary>
     /// A FlowProposalKey is the key that specifies the proposal key and sequence number for a transaction.

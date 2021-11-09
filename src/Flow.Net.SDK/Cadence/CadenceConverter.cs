@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
+using Flow.Net.Sdk.Exceptions;
 
 namespace Flow.Net.Sdk.Cadence
 {
@@ -28,7 +29,7 @@ namespace Flow.Net.Sdk.Cadence
             return target;
         }
 
-        public ICadence Create(JObject jObject)
+        private static ICadence Create(JObject jObject)
         {
             var type = (string)jObject.Property("type");
 
@@ -85,7 +86,7 @@ namespace Flow.Net.Sdk.Cadence
                     return new CadenceNumber((CadenceNumberType)Enum.Parse(typeof(CadenceNumberType), type));
             }
 
-            throw new Exception(string.Format("The type {0} is not supported!", type));
+            throw new FlowException($"The type {type} is not supported!");
         }
 
         public override ICadence Create(Type objectType)

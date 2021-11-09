@@ -5,11 +5,11 @@ using Flow.Net.Sdk.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Flow.Net.Examples
+namespace Flow.Net.Examples.TransactionExamples
 {
-    public class CreateTransactionExample
-    {
-        private static async Task Demo()
+    public static class CreateTransactionExample
+    {        
+        public static async Task Demo()
         {
             // reading script from folder
             var script = Utilities.ReadCadenceScript("greeting");
@@ -22,16 +22,16 @@ namespace Flow.Net.Examples
 
             // Establish a connection with an access node
             var accessAPIHost = "";
-            var FlowClient = new FlowClientAsync(accessAPIHost);
+            var flowClient = new FlowClientAsync(accessAPIHost);
 
             // Get the latest sealed block to use as a reference block
-            var latestBlock = await FlowClient.GetLatestBlockHeaderAsync();
+            var latestBlock = await flowClient.GetLatestBlockHeaderAsync();
 
             // Get the latest account info for this address
-            var proposerAccount = await FlowClient.GetAccountAtLatestBlockAsync(proposerAddress);
+            var proposerAccount = await flowClient.GetAccountAtLatestBlockAsync(proposerAddress);
 
             // Get the latest sequence number for this key
-            var proposerKey = proposerAccount.Keys.Where(w => w.Index == proposerKeyIndex).FirstOrDefault();
+            var proposerKey = proposerAccount.Keys.FirstOrDefault(w => w.Index == proposerKeyIndex);
             var sequenceNumber = proposerKey.SequenceNumber;
 
             var tx = new FlowTransaction
@@ -44,7 +44,8 @@ namespace Flow.Net.Examples
                     KeyId = proposerKeyIndex,
                     SequenceNumber = sequenceNumber
                 },
-                Payer = payerAddress
+                Payer = payerAddress,
+                ReferenceBlockId = latestBlock.Id
             };
 
             // Add authorizer
@@ -54,10 +55,10 @@ namespace Flow.Net.Examples
             tx.Arguments.Add(new CadenceString("Hello"));
         }
 
-        private static void Demo2()
+        public static void Demo2()
         {
             var proposerAccount = new FlowAccount();
-            var proposerKey = proposerAccount.Keys.Where(w => w.Index == 1).FirstOrDefault();
+            var proposerKey = proposerAccount.Keys.FirstOrDefault(w => w.Index == 1);
 
             var tx = new FlowTransaction
             {
@@ -75,7 +76,7 @@ namespace Flow.Net.Examples
             // construct a signer from your private key and configured signature/hash algorithms
             var signer = Sdk.Crypto.Ecdsa.Utilities.CreateSigner("privateKey", SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
 
-            tx = FlowTransaction.AddEnvelopeSignature(tx, proposerAccount.Address, proposerKey.Index, signer);
+            FlowTransaction.AddEnvelopeSignature(tx, proposerAccount.Address, proposerKey.Index, signer);
         }
     }
 }

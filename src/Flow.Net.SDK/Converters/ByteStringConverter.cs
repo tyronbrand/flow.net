@@ -7,7 +7,7 @@ namespace Flow.Net.Sdk.Converters
     /// <summary>
     /// Converts data types to ByteString.
     /// </summary>
-    public class ByteStringConverter
+    public static class ByteStringConverter
     {
         public static ByteString FromHexToByteString(string hex)
         {
