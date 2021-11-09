@@ -516,10 +516,10 @@ private static async Task Demo()
     var FlowClient = new FlowClientAsync(accessAPIHost);
 
     // Get the latest sealed block to use as a reference block
-    var latestBlock = await flowClient.GetLatestBlockHeaderAsync();
+    var latestBlock = await _flowClient.GetLatestBlockHeaderAsync();
 
     // Get the latest account info for this address
-    var proposerAccount = await flowClient.GetAccountAtLatestBlockAsync(proposerAddress);
+    var proposerAccount = await _flowClient.GetAccountAtLatestBlockAsync(proposerAddress);
 
     // Get the latest sequence number for this key
     var proposerKey = proposerAccount.Keys.FirstOrDefault(w => w.Index == proposerKeyIndex);
@@ -563,7 +563,7 @@ var proposerAccount = new FlowAccount();
 var proposerKey = proposerAccount.Keys.Where(w => w.Index == 1).FirstOrDefault();
 
 // Get the latest sealed block to use as a reference block
-var latestBlock = await flowClient.GetLatestBlockHeaderAsync();
+var latestBlock = await _flowClient.GetLatestBlockHeaderAsync();
 
 var tx = new FlowTransaction
 {
