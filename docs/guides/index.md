@@ -60,7 +60,7 @@ The library uses gRPC to communicate with the access nodes and it must be config
 The Access Nodes APIs hosted by DapperLabs are accessible at:
 - Testnet `access.devnet.nodes.onflow.org:9000`
 - Mainnet `access.mainnet.nodes.onflow.org:9000`
-- Local Emulator `127.0.0.1:3569` 
+- Local Emulator `127.0.0.1:3569`
 
 ```csharp
 var testnet = "access.devnet.nodes.onflow.org:9000";
@@ -260,8 +260,8 @@ private static async Task Demo(FlowAccount flowAccount, ByteString flowTransacti
     PrintEvents(eventsForHeightRange);
 
     // Query for our custom event by type
-    var customtype = $"A.{flowAccount.Address.HexValue}.EventDemo.Add";
-    var customEventsForHeightRange = await _flowClient.GetEventsForHeightRangeAsync(customtype, 0, 100);
+    var customType = $"A.{flowAccount.Address.HexValue}.EventDemo.Add";
+    var customEventsForHeightRange = await _flowClient.GetEventsForHeightRangeAsync(customType, 0, 100);
     PrintEvents(customEventsForHeightRange);
 
     // Get events directly from transaction result
@@ -358,7 +358,6 @@ pub fun main(a: Int): Int {
     };
 
     var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);
-    Console.WriteLine($"Value: {response.As<CadenceNumber>().Value}");
 
     // complex script
     var complexScript = @"
@@ -517,13 +516,13 @@ private static async Task Demo()
     var FlowClient = new FlowClientAsync(accessAPIHost);
 
     // Get the latest sealed block to use as a reference block
-    var latestBlock = await _flowClient.GetLatestBlockHeaderAsync();
+    var latestBlock = await flowClient.GetLatestBlockHeaderAsync();
 
     // Get the latest account info for this address
-    var proposerAccount = await _flowClient.GetAccountAtLatestBlockAsync(proposerAddress);
+    var proposerAccount = await flowClient.GetAccountAtLatestBlockAsync(proposerAddress);
 
     // Get the latest sequence number for this key
-    var proposerKey = proposerAccount.Keys.Where(w => w.Index == proposerKeyIndex).FirstOrDefault();
+    var proposerKey = proposerAccount.Keys.FirstOrDefault(w => w.Index == proposerKeyIndex);
     var sequenceNumber = proposerKey.SequenceNumber;
 
     var tx = new FlowTransaction
@@ -536,7 +535,8 @@ private static async Task Demo()
             KeyId = proposerKeyIndex,
             SequenceNumber = sequenceNumber
         },
-        Payer = payerAddress
+        Payer = payerAddress,
+        ReferenceBlockId = latestBlock.Id
     };
 
     // Add authorizer
@@ -562,6 +562,9 @@ Quick example of building a transaction:
 var proposerAccount = new FlowAccount();
 var proposerKey = proposerAccount.Keys.Where(w => w.Index == 1).FirstOrDefault();
 
+// Get the latest sealed block to use as a reference block
+var latestBlock = await flowClient.GetLatestBlockHeaderAsync();
+
 var tx = new FlowTransaction
 {
     Script = "transaction { execute { log(\"Hello, World!\") } }",
@@ -572,7 +575,8 @@ var tx = new FlowTransaction
         KeyId = proposerKey.Index,
         SequenceNumber = proposerKey.SequenceNumber
     },
-    Payer = proposerAccount.Address
+    Payer = proposerAccount.Address,
+    ReferenceBlockId = latestBlock.Id
 };
 ```
 
