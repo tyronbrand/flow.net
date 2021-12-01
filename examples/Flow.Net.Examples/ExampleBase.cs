@@ -1,4 +1,5 @@
-﻿using Flow.Net.Sdk.Client;
+﻿using Flow.Net.Sdk;
+using Flow.Net.Sdk.Client;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Templates;
 using Google.Protobuf;
@@ -25,43 +26,11 @@ namespace Flow.Net.Examples
             return FlowClient;
         }
 
-        protected static async Task<FlowAccount> CreateAccountAsync(List<FlowAccountKey> newFlowAccountKeys)
+        protected static async Task<FlowAccount> CreateAccountAsync(IList<FlowAccountKey> newFlowAccountKeys)
         {
-            await CreateFlowClientAsync();            
-            
-            // creator (typically a service account)
-            var creatorAccount = await FlowClient.ReadAccountFromConfigAsync("emulator-account");
-            // creator key to use
-            var creatorAccountKey = creatorAccount.Keys.FirstOrDefault();
+            var response = await CreateAddressTransaction(newFlowAccountKeys);
 
-            // use template to create a transaction
-            var tx = Account.CreateAccount(newFlowAccountKeys, creatorAccount.Address);
-
-            // set the transaction payer and proposal key
-            tx.Payer = creatorAccount.Address;
-            tx.ProposalKey = new FlowProposalKey
-            {
-                Address = creatorAccount.Address,
-                KeyId = creatorAccountKey.Index,
-                SequenceNumber = creatorAccountKey.SequenceNumber
-            };
-
-            // get the latest sealed block to use as a reference block
-            var latestBlock = await FlowClient.GetLatestBlockAsync();
-            tx.ReferenceBlockId = latestBlock.Id;
-
-            // sign and submit the transaction
-            tx = FlowTransaction.AddEnvelopeSignature(tx, creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
-            
-            var response = await FlowClient.SendTransactionAsync(tx);
-
-            // wait for seal
-            var sealedResponse = await FlowClient.WaitForSealAsync(response);
-
-            if (sealedResponse.Status != Sdk.Protos.entities.TransactionStatus.Sealed) 
-                return null;
-            
-            var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
+            var newAccountAddress = response.Events.AccountCreatedAddress();
 
             // get new account details
             var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
@@ -94,6 +63,54 @@ namespace Flow.Net.Examples
 
             var response = await FlowClient.SendTransactionAsync(tx);
             return response.Id;
+        }
+
+        protected static async Task<FlowAddress> GenerateRandomAddressAsync()
+        {
+            // generate random key
+            var flowAccountKey = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
+
+            var response = await CreateAddressTransaction(new List<FlowAccountKey> { flowAccountKey });
+            return response.Events.AccountCreatedAddress();
+        }
+
+        private static async Task<FlowTransactionResult> CreateAddressTransaction(IEnumerable<FlowAccountKey> newFlowAccountKeys)
+        {
+            await CreateFlowClientAsync();
+
+            // creator (typically a service account)
+            var creatorAccount = await FlowClient.ReadAccountFromConfigAsync("emulator-account");
+            // creator key to use
+            var creatorAccountKey = creatorAccount.Keys.FirstOrDefault();
+
+            // use template to create a transaction
+            var tx = Account.CreateAccount(newFlowAccountKeys, creatorAccount.Address);
+
+            // set the transaction payer and proposal key
+            tx.Payer = creatorAccount.Address;
+            tx.ProposalKey = new FlowProposalKey
+            {
+                Address = creatorAccount.Address,
+                KeyId = creatorAccountKey.Index,
+                SequenceNumber = creatorAccountKey.SequenceNumber
+            };
+
+            // get the latest sealed block to use as a reference block
+            var latestBlock = await FlowClient.GetLatestBlockAsync();
+            tx.ReferenceBlockId = latestBlock.Id;
+
+            // sign and submit the transaction
+            tx = FlowTransaction.AddEnvelopeSignature(tx, creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
+
+            var response = await FlowClient.SendTransactionAsync(tx);
+
+            // wait for seal
+            var sealedResponse = await FlowClient.WaitForSealAsync(response);
+
+            if (sealedResponse.Status != Sdk.Protos.entities.TransactionStatus.Sealed)
+                return null;
+
+            return sealedResponse;
         }
     }
 }

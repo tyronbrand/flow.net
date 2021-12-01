@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Flow.Net.Sdk
@@ -57,6 +58,23 @@ namespace Flow.Net.Sdk
 
             Array.Resize(ref bytes, length);
             return bytes;
+        }
+
+        public static byte[] CombineByteArrays(byte[][] arrays)
+        {
+            var rv = new byte[arrays.Sum(a => a.Length)];
+            var offset = 0;
+            foreach (byte[] array in arrays)
+            {
+                Buffer.BlockCopy(array, 0, rv, offset, array.Length);
+                offset += array.Length;
+            }
+            return rv;
+        }
+
+        public static byte[] SerializeObject(object value)
+        {
+            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value));
         }
     }
 }

@@ -54,5 +54,10 @@ namespace Flow.Net.Sdk
         {
             return HexConverter.RemoveHexPrefix(hex);
         }
+
+        public static string AddHexPrefix(this string hex)
+        {
+            return HexConverter.AddHexPrefix(hex);
+        }
     }
 }

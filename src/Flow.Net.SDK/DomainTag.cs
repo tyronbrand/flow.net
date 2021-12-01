@@ -1,15 +1,14 @@
-﻿using System;
-
-namespace Flow.Net.Sdk
+﻿namespace Flow.Net.Sdk
 {
     public static class DomainTag
     {
         private static byte[] MessageWithDomain(byte[] bytes, byte[] domain)
         {
-            var newBytes = new byte[domain.Length + bytes.Length];
-            Buffer.BlockCopy(domain, 0, newBytes, 0, domain.Length);
-            Buffer.BlockCopy(bytes, 0, newBytes, domain.Length, bytes.Length);
-            return newBytes;
+            return Utilities.CombineByteArrays(new[]
+            {
+                domain,
+                bytes
+            });
         }
 
         public static byte[] AddUserDomainTag(byte[] bytes)
