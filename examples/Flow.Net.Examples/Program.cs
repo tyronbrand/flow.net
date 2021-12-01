@@ -4,6 +4,7 @@ using Flow.Net.Examples.CollectionExamples;
 using Flow.Net.Examples.EventExamples;
 using Flow.Net.Examples.ScriptExamples;
 using Flow.Net.Examples.TransactionExamples;
+using Flow.Net.Examples.UserSignaturesExamples;
 using System.Threading.Tasks;
 
 namespace Flow.Net.Examples
@@ -41,7 +42,12 @@ namespace Flow.Net.Examples
             await CreateAccountExample.RunAsync();
             await CreateAccountWithContractExample.RunAsync();
             await DeployUpdateDeleteContractExample.RunAsync();
-            //await GetAccountExample.RunAsync();
+            await GetAccountExample.RunAsync();
+
+            // User signature examples
+            await UserSignatureExample.RunAsync();
+            await UserSignatureValidateAnyExample.RunAsync();
+            await UserSignatureValidateAllExample.RunAsync();
         }
     }
 }

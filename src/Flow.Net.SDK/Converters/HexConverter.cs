@@ -105,5 +105,20 @@ namespace Flow.Net.Sdk.Converters
                 throw new FlowException("Failed to remove hex prefix", exception);
             }            
         }
+
+        public static string AddHexPrefix(string hex)
+        {
+            try
+            {
+                if(!hex.StartsWith("0x"))
+                    hex = $"0x{hex}";
+
+                return hex;
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("Failed to remove hex prefix", exception);
+            }
+        }
     }
 }

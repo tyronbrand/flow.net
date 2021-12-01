@@ -10,6 +10,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Cadence\user-signature-all-example.cdc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Cadence\user-signature-any-example.cdc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Cadence\user-signature-example.cdc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Cadence\add-account-key.cdc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
