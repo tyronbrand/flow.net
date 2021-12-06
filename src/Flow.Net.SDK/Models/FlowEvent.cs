@@ -1,6 +1,5 @@
 ﻿using Flow.Net.Sdk.Cadence;
 using Flow.Net.Sdk.Constants;
-using Flow.Net.Sdk.Exceptions;
 using Google.Protobuf;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,20 +24,20 @@ namespace Flow.Net.Sdk.Models
             var accountCreatedEvent = flowEvents.FirstOrDefault(w => w.Type == Event.AccountCreated);
 
             if (accountCreatedEvent == null)
-                throw new FlowException($"Failed to find event with type \"{Event.AccountCreated}\".");
+                return null;
 
             if (accountCreatedEvent.Payload == null)
-                throw new FlowException($"Payload for event type \"{Event.AccountCreated}\" can not be null.");
+                return null;
 
             var compositeItemFields = accountCreatedEvent.Payload.As<CadenceComposite>().Value.Fields.ToList();
 
             if (!compositeItemFields.Any())
-                throw new FlowException("Payload fields can not be empty.");
+                return null;
 
             var addressValue = compositeItemFields.FirstOrDefault();
 
             if (addressValue == null)
-                throw new FlowException("Address can not be null.");
+                return null;
 
             return new FlowAddress(addressValue.Value.As<CadenceAddress>().Value);
         }
