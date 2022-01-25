@@ -24,5 +24,6 @@ namespace Flow.Net.Sdk.Models
         public IList<FlowAddress> Authorizers { get; set; }
         public IList<FlowSignature> PayloadSignatures { get; set; }
         public IList<FlowSignature> EnvelopeSignatures { get; set; }
+        public Dictionary<string, string> AddressMap { get; set; } = new Dictionary<string, string>();
     }
 }

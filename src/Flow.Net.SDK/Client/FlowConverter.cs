@@ -3,6 +3,7 @@ using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Protos.access;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Flow.Net.Sdk.Client
 {
@@ -243,7 +244,9 @@ namespace Flow.Net.Sdk.Client
         {
             var tx = new Protos.entities.Transaction
             {
-                Script = flowTransaction.Script.FromStringToByteString(),
+                Script = flowTransaction.Script
+                    .ReplaceImports(flowTransaction.AddressMap)
+                    .FromStringToByteString(),
                 Payer = flowTransaction.Payer.Value,
                 GasLimit = flowTransaction.GasLimit,
                 ReferenceBlockId = flowTransaction.ReferenceBlockId,
@@ -286,6 +289,43 @@ namespace Flow.Net.Sdk.Client
                 KeyId = flowSignature.KeyId,
                 Signature_ = flowSignature.Signature.FromByteArrayToByteString()
             };
+        }
+
+        private static string ReplaceImports(this string txText, Dictionary<string, string> addressMap)
+        {
+            var pattern = @"^(\s*import \w+ from\s+)((?:0x)?\w+)\s*$";
+            return string.Join("\n",
+                txText.Split('\n')
+                .Select(line =>
+                {
+                    var match = Regex.Match(line, pattern);
+                    if (match.Success && match.Groups.Count == 3)
+                    {
+                        var key = match.Groups[2].Value.TrimStart("0x");
+                        var replAddress = addressMap.GetValueOrDefault(key)
+                            ?? addressMap.GetValueOrDefault($"0x{key}");
+                        if (!string.IsNullOrEmpty(replAddress))
+                        {
+                            replAddress = replAddress.TrimStart("0x");
+                            return $"{match.Groups[1].Value}0x{replAddress}";
+                        }
+                    }
+                    return line;
+                }));
+        }
+
+        private static string TrimStart(this string s, string start)
+        {
+            return s.StartsWith(start)
+                ? s.Substring(start.Length)
+                : s;
+        }
+
+        private static V GetValueOrDefault<K, V>(this Dictionary<K, V> x, K key)
+        {
+            if(x.TryGetValue(key, out V value))
+                return value;
+            return default;
         }
     }
 }
