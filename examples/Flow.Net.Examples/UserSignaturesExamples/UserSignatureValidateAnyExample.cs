@@ -33,15 +33,18 @@ namespace Flow.Net.Examples.UserSignaturesExamples
             var aliceSigner = new Sdk.Crypto.Ecdsa.Signer(flowAccountKeyAlice.PrivateKey, flowAccountKeyAlice.HashAlgorithm, flowAccountKeyAlice.SignatureAlgorithm);
             var aliceSignature = UserMessage.Sign(message, aliceSigner);            
 
-            var script =  Utilities.ReadCadenceScript("user-signature-any-example").FromStringToByteString();
+            var script =  Utilities.ReadCadenceScript("user-signature-any-example");
 
             var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(
-                script,
-                new List<ICadence>
+                new FlowScript
                 {
-                    new CadenceAddress(flowAccount.Address.HexValue),
-                    new CadenceString(aliceSignature.FromByteArrayToHex()),
-                    new CadenceString(Encoding.UTF8.GetString(message))
+                    Script = script,
+                    Arguments = new List<ICadence>
+                    {
+                        new CadenceAddress(flowAccount.Address.HexValue),
+                        new CadenceString(aliceSignature.FromByteArrayToHex()),
+                        new CadenceString(Encoding.UTF8.GetString(message))
+                    }
                 });
 
             Console.WriteLine(response.As<CadenceBool>().Value

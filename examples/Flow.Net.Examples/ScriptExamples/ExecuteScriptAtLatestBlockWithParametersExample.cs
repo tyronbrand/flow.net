@@ -1,5 +1,6 @@
 ﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,7 +26,12 @@ namespace Flow.Net.Examples.ScriptExamples
                 new CadenceNumber(CadenceNumberType.Int32, "834534")
             };
 
-            var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);
+            var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(
+                new FlowScript
+                {
+                    Script = script,
+                    Arguments = arguments
+                });
             PrintResult(response);
         }
 

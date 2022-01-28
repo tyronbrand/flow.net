@@ -1,5 +1,6 @@
 ﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -18,7 +19,11 @@ namespace Flow.Net.Examples.ScriptExamples
         private static async Task Demo()
         {
             var script = "pub fun main(): Int { return 1 + 1 }";
-            var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString());
+            var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(
+                new FlowScript
+                {
+                    Script = script
+                });
             PrintResult(response);
         }
 

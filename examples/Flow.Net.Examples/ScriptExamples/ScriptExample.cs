@@ -1,5 +1,6 @@
 ﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,7 +30,12 @@ pub fun main(a: Int): Int {
                 new CadenceNumber(CadenceNumberType.Int, "5")
             };
 
-            var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);
+            var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(
+                new FlowScript
+                {
+                    Script = script,
+                    Arguments = arguments
+                });
             Console.WriteLine($"Value: {response.As<CadenceNumber>().Value}");
 
             // complex script
@@ -58,7 +64,12 @@ pub fun main(name: String): User {
             {
                 new CadenceString("Dete")
             };
-            var complexResponse = await FlowClient.ExecuteScriptAtLatestBlockAsync(complexScript.FromStringToByteString(), complexArguments);
+            var complexResponse = await FlowClient.ExecuteScriptAtLatestBlockAsync(
+                new FlowScript
+                {
+                    Script = complexScript,
+                    Arguments = complexArguments
+                });
             PrintComplexScript(complexResponse);
         }
 

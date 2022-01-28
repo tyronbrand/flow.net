@@ -79,19 +79,23 @@ namespace Flow.Net.Examples.UserSignaturesExamples
                     new CadenceString(bobSignature.FromByteArrayToHex())
                 });
 
-            var script =  Utilities.ReadCadenceScript("user-signature-example").FromStringToByteString();
+            var script =  Utilities.ReadCadenceScript("user-signature-example");
 
             var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(
-                script,
-                new List<ICadence>
+                new FlowScript
                 {
-                    publicKeys,
-                    weights,
-                    signatures,
-                    toAddress,
-                    fromAddress,
-                    amount,
-                });
+                    Script = script,
+                    Arguments = new List<ICadence>
+                    {
+                        publicKeys,
+                        weights,
+                        signatures,
+                        toAddress,
+                        fromAddress,
+                        amount,
+                    }
+                }
+                );
 
             Console.WriteLine(response.As<CadenceBool>().Value
                 ? "Signature verification succeeded"

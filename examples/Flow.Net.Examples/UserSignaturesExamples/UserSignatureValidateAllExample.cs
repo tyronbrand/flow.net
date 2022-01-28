@@ -50,16 +50,19 @@ namespace Flow.Net.Examples.UserSignaturesExamples
                     new CadenceNumber(CadenceNumberType.Int, "0")
                 });
 
-            var script =  Utilities.ReadCadenceScript("user-signature-all-example").FromStringToByteString();
+            var script =  Utilities.ReadCadenceScript("user-signature-all-example");
 
             var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(
-                script,
-                new List<ICadence>
+                new FlowScript
                 {
-                    new CadenceAddress(flowAccount.Address.HexValue),
-                    signatures,
-                    signatureIndexes,
-                    new CadenceString(Encoding.UTF8.GetString(message))
+                    Script = script,
+                    Arguments = new List<ICadence>
+                    {
+                        new CadenceAddress(flowAccount.Address.HexValue),
+                        signatures,
+                        signatureIndexes,
+                        new CadenceString(Encoding.UTF8.GetString(message))
+                    }
                 });
 
             Console.WriteLine(response.As<CadenceBool>().Value
