@@ -353,7 +353,11 @@ pub fun main(a: Int): Int {
         new CadenceNumber(CadenceNumberType.Int, "5")
     };
 
-    var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(script.FromStringToByteString(), arguments);
+    var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(new FlowScript
+    {
+        Script = script, 
+        Arguments = arguments
+    });
 
     // complex script
     var complexScript = @"
@@ -381,7 +385,11 @@ pub fun main(name: String): User {
     {
         new CadenceString("Dete")
     };
-    var complexResponse = await _flowClient.ExecuteScriptAtLatestBlockAsync(complexScript.FromStringToByteString(), complexArguments);
+    var complexResponse = await _flowClient.ExecuteScriptAtLatestBlockAsync(new FlowScript
+    {
+        Script = complexScript, 
+        Arguments = complexArguments
+    });
     PrintComplexScript(complexResponse);
 }
 
