@@ -242,8 +242,9 @@ namespace Flow.Net.Sdk.Client
         }
 
         public static ExecuteScriptAtBlockHeightRequest FromFlowScript(this FlowScript script,
-            ulong blockHeight, Dictionary<string, string> clientAddressMap)
+            ulong blockHeight, Dictionary<string, string> clientAddressMap = null)
         {
+            clientAddressMap = clientAddressMap ?? new Dictionary<string, string>();
             var request = new ExecuteScriptAtBlockHeightRequest
             {
                 Script = script.Script
@@ -258,8 +259,9 @@ namespace Flow.Net.Sdk.Client
         }
 
         public static ExecuteScriptAtLatestBlockRequest FromFlowScript(this FlowScript script,
-            Dictionary<string, string> clientAddressMap)
+            Dictionary<string, string> clientAddressMap = null)
         {
+            clientAddressMap = clientAddressMap ?? new Dictionary<string, string>();
             var request = new ExecuteScriptAtLatestBlockRequest
             {
                 Script = script.Script
@@ -273,8 +275,9 @@ namespace Flow.Net.Sdk.Client
         }
 
         public static ExecuteScriptAtBlockIDRequest FromFlowScript(this FlowScript script,
-            ByteString blockId, Dictionary<string, string> clientAddressMap)
+            ByteString blockId, Dictionary<string, string> clientAddressMap = null)
         {
+            clientAddressMap = clientAddressMap ?? new Dictionary<string, string>();
             var request = new ExecuteScriptAtBlockIDRequest
             {
                 Script = script.Script
@@ -294,8 +297,9 @@ namespace Flow.Net.Sdk.Client
         }
 
         public static Protos.entities.Transaction FromFlowTransaction(this FlowTransaction flowTransaction,
-            Dictionary<string, string> clientAddressMap)
+            Dictionary<string, string> clientAddressMap = null)
         {
+            clientAddressMap = clientAddressMap ?? new Dictionary<string, string>();
             var tx = new Protos.entities.Transaction
             {
                 Script = flowTransaction.Script
