@@ -1,6 +1,7 @@
 ﻿using Flow.Net.Sdk.Cadence;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Protos.access;
+using Google.Protobuf;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -240,12 +241,65 @@ namespace Flow.Net.Sdk.Client
             return flowAccount;
         }
 
-        public static Protos.entities.Transaction FromFlowTransaction(this FlowTransaction flowTransaction)
+        public static ExecuteScriptAtBlockHeightRequest FromFlowScript(this FlowScript script,
+            ulong blockHeight, Dictionary<string, string> clientAddressMap)
+        {
+            var request = new ExecuteScriptAtBlockHeightRequest
+            {
+                Script = script.Script
+                    .ReplaceImports(clientAddressMap.Merge(script.AddressMap))
+                    .FromStringToByteString(),
+                BlockHeight = blockHeight
+            };
+
+            request.Arguments.AddRange(script.Arguments.FromArguments());
+
+            return request;
+        }
+
+        public static ExecuteScriptAtLatestBlockRequest FromFlowScript(this FlowScript script,
+            Dictionary<string, string> clientAddressMap)
+        {
+            var request = new ExecuteScriptAtLatestBlockRequest
+            {
+                Script = script.Script
+                    .ReplaceImports(clientAddressMap.Merge(script.AddressMap))
+                    .FromStringToByteString()
+            };
+
+            request.Arguments.AddRange(script.Arguments.FromArguments());
+
+            return request;
+        }
+
+        public static ExecuteScriptAtBlockIDRequest FromFlowScript(this FlowScript script,
+            ByteString blockId, Dictionary<string, string> clientAddressMap)
+        {
+            var request = new ExecuteScriptAtBlockIDRequest
+            {
+                Script = script.Script
+                    .ReplaceImports(clientAddressMap.Merge(script.AddressMap))
+                    .FromStringToByteString(),
+                BlockId = blockId
+            };
+
+            request.Arguments.AddRange(script.Arguments.FromArguments());
+
+            return request;
+        }
+        
+        private static IEnumerable<ByteString> FromArguments(this IEnumerable<ICadence> arguments)
+        {
+            return arguments.Select(x => x.Encode().FromStringToByteString());
+        }
+
+        public static Protos.entities.Transaction FromFlowTransaction(this FlowTransaction flowTransaction,
+            Dictionary<string, string> clientAddressMap)
         {
             var tx = new Protos.entities.Transaction
             {
                 Script = flowTransaction.Script
-                    .ReplaceImports(flowTransaction.AddressMap)
+                    .ReplaceImports(clientAddressMap.Merge(flowTransaction.AddressMap))
                     .FromStringToByteString(),
                 Payer = flowTransaction.Payer.Value,
                 GasLimit = flowTransaction.GasLimit,
@@ -253,11 +307,7 @@ namespace Flow.Net.Sdk.Client
                 ProposalKey = flowTransaction.ProposalKey.FromFlowProposalKey()
             };
 
-            if (flowTransaction.Arguments != null && flowTransaction.Arguments.Any())
-            {
-                foreach (var argument in flowTransaction.Arguments)
-                    tx.Arguments.Add(argument.Encode().FromStringToByteString());
-            }                
+            tx.Arguments.AddRange(flowTransaction.Arguments.FromArguments());
             
             foreach(var authorizer in flowTransaction.Authorizers)
                 tx.Authorizers.Add(authorizer.Value);
@@ -326,6 +376,18 @@ namespace Flow.Net.Sdk.Client
             if(x.TryGetValue(key, out V value))
                 return value;
             return default;
+        }
+
+        /// <summary>
+        /// Merge dictionaries where collisions favor the second dictionary keys
+        /// </summary>
+        private static Dictionary<K, V> Merge<K, V>(this Dictionary<K, V> firstDict,
+            Dictionary<K, V> secondDict)
+        {
+            return secondDict
+                .Concat(firstDict)
+                .GroupBy(d => d.Key)
+                .ToDictionary(x => x.Key, x => x.First().Value);
         }
     }
 }
