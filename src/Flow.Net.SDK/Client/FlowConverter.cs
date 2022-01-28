@@ -347,7 +347,7 @@ namespace Flow.Net.Sdk.Client
 
         private static string ReplaceImports(this string txText, Dictionary<string, string> addressMap)
         {
-            var pattern = @"^(\s*import \w+ from\s+)((?:0x)?\w+)\s*$";
+            var pattern = @"^(\s*import\s+\w+\s+from\s+)(?:0x)?(\w+)\s*$";
             return string.Join("\n",
                 txText.Split('\n')
                 .Select(line =>
@@ -355,7 +355,7 @@ namespace Flow.Net.Sdk.Client
                     var match = Regex.Match(line, pattern);
                     if (match.Success && match.Groups.Count == 3)
                     {
-                        var key = match.Groups[2].Value.TrimStart("0x");
+                        var key = match.Groups[2].Value;
                         var replAddress = addressMap.GetValueOrDefault(key)
                             ?? addressMap.GetValueOrDefault($"0x{key}");
                         if (!string.IsNullOrEmpty(replAddress))
