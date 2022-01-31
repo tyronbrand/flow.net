@@ -161,5 +161,58 @@ namespace Flow.Net.Sdk.Tests
 
             Assert.Equal(expected, result.Script.FromByteStringToString());
         }
+
+        [Fact]
+        public void ReplaceImportsFromAddressMapClientAddressMap()
+        {
+            var expected = @"
+            import FungibleToken from 0x1111
+            import FUSD from 0x2222
+            import FlowToken from 0x3333
+            
+            transaction(arg1: String) {
+                prepare(acct: AuthAccount) {
+                    log(""Hello World"")
+                }
+            }
+            ";
+            var script = @"
+            import FungibleToken from 0xFungibleToken
+            import FUSD from FUSD
+            import FlowToken from FlowToken
+            
+            transaction(arg1: String) {
+                prepare(acct: AuthAccount) {
+                    log(""Hello World"")
+                }
+            }
+            ";
+            var address = new FlowAddress("0x123456");
+            var tx = new FlowTransaction()
+            {
+                Script = script,
+                Payer = address,
+                GasLimit = 100,
+                ReferenceBlockId = ByteString.Empty,
+                ProposalKey = new FlowProposalKey()
+                {
+                    Address = address
+                },
+                AddressMap = new Dictionary<string, string>()
+                {
+                    { "FungibleToken", "1111" },
+                    { "FUSD", "0x2222" }
+                }
+            };
+
+            var clientAddressMap = new Dictionary<string, string>()
+            {
+                { "FUSD", "0x6789" },
+                { "FlowToken", "0x3333" },
+            };
+            var result = tx.FromFlowTransaction(clientAddressMap);
+
+            Assert.Equal(expected, result.Script.FromByteStringToString());
+        }
     }
 }

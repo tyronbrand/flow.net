@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static Flow.Net.Sdk.Protos.access.AccessAPI;
+using static Flow.Net.Sdk.Constants.Defaults;
 
 namespace Flow.Net.Sdk.Client
 {
@@ -17,13 +18,7 @@ namespace Flow.Net.Sdk.Client
     {
         private readonly AccessAPIClient _client;
         private readonly CadenceConverter _cadenceConverter;
-        private readonly Dictionary<string, string> _addressMap = new Dictionary<string, string>()
-        {
-            { "FlowToken", "0x0ae53cb6e3f42a79" },
-            { "FungibleToken", "0xee82856bf20e2aa6" },
-            { "FlowFees", "0xe5a8b7f23e8b548f" },
-            { "FlowStorageFees", "0xf8d6e0586b0a20c7" },
-        };
+        private readonly Dictionary<string, string> _addressMap = EmulatorAddresses;
 
         /// <summary>
         /// A gRPC client for the Flow Access API.
