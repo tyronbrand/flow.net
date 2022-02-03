@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Flow.Net.Sdk.Client;
 using Flow.Net.Sdk.Converters;
 using Flow.Net.Sdk.Models;
@@ -114,7 +115,7 @@ namespace Flow.Net.Sdk.Tests
 
             var result = tx.FromFlowTransaction();
 
-            Assert.Equal(expected, result.Script.FromByteStringToString());
+            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(result.Script.FromByteStringToString()));
         }
 
         [Fact]
@@ -159,7 +160,7 @@ namespace Flow.Net.Sdk.Tests
 
             var result = tx.FromFlowTransaction();
 
-            Assert.Equal(expected, result.Script.FromByteStringToString());
+            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(result.Script.FromByteStringToString()));
         }
 
         [Fact]
@@ -212,7 +213,14 @@ namespace Flow.Net.Sdk.Tests
             };
             var result = tx.FromFlowTransaction(clientAddressMap);
 
-            Assert.Equal(expected, result.Script.FromByteStringToString());
+            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(result.Script.FromByteStringToString()));
+        }
+
+        private static string NormalizeNewLines(string value)
+        {
+            return value
+                .Replace("\r\n", "\n")
+                .Replace("\n", Environment.NewLine);
         }
     }
 }
