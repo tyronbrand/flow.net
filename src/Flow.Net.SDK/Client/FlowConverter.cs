@@ -1,8 +1,10 @@
 ﻿using Flow.Net.Sdk.Cadence;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Protos.access;
+using Google.Protobuf;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Flow.Net.Sdk.Client
 {
@@ -239,22 +241,77 @@ namespace Flow.Net.Sdk.Client
             return flowAccount;
         }
 
-        public static Protos.entities.Transaction FromFlowTransaction(this FlowTransaction flowTransaction)
+        public static ExecuteScriptAtBlockHeightRequest FromFlowScript(this FlowScript script,
+            ulong blockHeight, Dictionary<string, string> clientAddressMap = null)
         {
+            clientAddressMap = clientAddressMap ?? new Dictionary<string, string>();
+            var request = new ExecuteScriptAtBlockHeightRequest
+            {
+                Script = script.Script
+                    .ReplaceImports(clientAddressMap.Merge(script.AddressMap))
+                    .FromStringToByteString(),
+                BlockHeight = blockHeight
+            };
+
+            request.Arguments.AddRange(script.Arguments.FromArguments());
+
+            return request;
+        }
+
+        public static ExecuteScriptAtLatestBlockRequest FromFlowScript(this FlowScript script,
+            Dictionary<string, string> clientAddressMap = null)
+        {
+            clientAddressMap = clientAddressMap ?? new Dictionary<string, string>();
+            var request = new ExecuteScriptAtLatestBlockRequest
+            {
+                Script = script.Script
+                    .ReplaceImports(clientAddressMap.Merge(script.AddressMap))
+                    .FromStringToByteString()
+            };
+
+            request.Arguments.AddRange(script.Arguments.FromArguments());
+
+            return request;
+        }
+
+        public static ExecuteScriptAtBlockIDRequest FromFlowScript(this FlowScript script,
+            ByteString blockId, Dictionary<string, string> clientAddressMap = null)
+        {
+            clientAddressMap = clientAddressMap ?? new Dictionary<string, string>();
+            var request = new ExecuteScriptAtBlockIDRequest
+            {
+                Script = script.Script
+                    .ReplaceImports(clientAddressMap.Merge(script.AddressMap))
+                    .FromStringToByteString(),
+                BlockId = blockId
+            };
+
+            request.Arguments.AddRange(script.Arguments.FromArguments());
+
+            return request;
+        }
+        
+        private static IEnumerable<ByteString> FromArguments(this IEnumerable<ICadence> arguments)
+        {
+            return arguments.Select(x => x.Encode().FromStringToByteString());
+        }
+
+        public static Protos.entities.Transaction FromFlowTransaction(this FlowTransaction flowTransaction,
+            Dictionary<string, string> clientAddressMap = null)
+        {
+            clientAddressMap = clientAddressMap ?? new Dictionary<string, string>();
             var tx = new Protos.entities.Transaction
             {
-                Script = flowTransaction.Script.FromStringToByteString(),
+                Script = flowTransaction.Script
+                    .ReplaceImports(clientAddressMap.Merge(flowTransaction.AddressMap))
+                    .FromStringToByteString(),
                 Payer = flowTransaction.Payer.Value,
                 GasLimit = flowTransaction.GasLimit,
                 ReferenceBlockId = flowTransaction.ReferenceBlockId,
                 ProposalKey = flowTransaction.ProposalKey.FromFlowProposalKey()
             };
 
-            if (flowTransaction.Arguments != null && flowTransaction.Arguments.Any())
-            {
-                foreach (var argument in flowTransaction.Arguments)
-                    tx.Arguments.Add(argument.Encode().FromStringToByteString());
-            }                
+            tx.Arguments.AddRange(flowTransaction.Arguments.FromArguments());
             
             foreach(var authorizer in flowTransaction.Authorizers)
                 tx.Authorizers.Add(authorizer.Value);
@@ -286,6 +343,29 @@ namespace Flow.Net.Sdk.Client
                 KeyId = flowSignature.KeyId,
                 Signature_ = flowSignature.Signature.FromByteArrayToByteString()
             };
+        }
+
+        private static string ReplaceImports(this string txText, Dictionary<string, string> addressMap)
+        {
+            var pattern = @"^(\s*import\s+\w+\s+from\s+)(?:0x)?(\w+)\s*$";
+            return string.Join("\n",
+                txText.Split('\n')
+                .Select(line =>
+                {
+                    var match = Regex.Match(line, pattern);
+                    if (match.Success && match.Groups.Count == 3)
+                    {
+                        var key = match.Groups[2].Value;
+                        var replAddress = addressMap.GetValueOrDefault(key)
+                            ?? addressMap.GetValueOrDefault($"0x{key}");
+                        if (!string.IsNullOrEmpty(replAddress))
+                        {
+                            replAddress = replAddress.TrimStart("0x");
+                            return $"{match.Groups[1].Value}0x{replAddress}";
+                        }
+                    }
+                    return line;
+                }));
         }
     }
 }

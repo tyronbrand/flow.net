@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static Flow.Net.Sdk.Protos.access.AccessAPI;
+using static Flow.Net.Sdk.Constants.Defaults;
 
 namespace Flow.Net.Sdk.Client
 {
@@ -17,6 +18,7 @@ namespace Flow.Net.Sdk.Client
     {
         private readonly AccessAPIClient _client;
         private readonly CadenceConverter _cadenceConverter;
+        private readonly Dictionary<string, string> _addressMap = EmulatorAddresses;
 
         /// <summary>
         /// A gRPC client for the Flow Access API.
@@ -25,7 +27,10 @@ namespace Flow.Net.Sdk.Client
         /// <param name="channelCredentialsSecureSsl"></param>
         /// <param name="options"></param>
         /// <returns><see cref="FlowClientAsync"/>.</returns>
-        public FlowClientAsync(string flowNetworkUrl, bool channelCredentialsSecureSsl = false, IEnumerable<ChannelOption> options = null)
+        public FlowClientAsync(string flowNetworkUrl, 
+            bool channelCredentialsSecureSsl = false, 
+            IEnumerable<ChannelOption> options = null,
+            Dictionary<string, string> addressMap = null)
         {
             try
             {
@@ -37,6 +42,7 @@ namespace Flow.Net.Sdk.Client
                 ));
 
                 _cadenceConverter = new CadenceConverter();
+                _addressMap = addressMap ?? _addressMap;
             }
             catch (Exception exception)
             {
@@ -211,17 +217,11 @@ namespace Flow.Net.Sdk.Client
         /// <param name="arguments"></param>
         /// <param name="options"></param>
         /// <returns><see cref="ICadence"/>.</returns>
-        public async Task<ICadence> ExecuteScriptAtLatestBlockAsync(ByteString script, IEnumerable<ICadence> arguments = null, CallOptions options = new CallOptions())
+        public async Task<ICadence> ExecuteScriptAtLatestBlockAsync(FlowScript script, CallOptions options = new CallOptions())
         {
             try
             {
-                var request = new ExecuteScriptAtLatestBlockRequest
-                {
-                    Script = script
-                };
-
-                AddArgumentsToRequest(arguments, request.Arguments);
-
+                var request = script.FromFlowScript(_addressMap);
                 var response = await _client.ExecuteScriptAtLatestBlockAsync(request, options);
                 return response.Value.FromByteStringToString().Decode(_cadenceConverter);
             }
@@ -239,18 +239,11 @@ namespace Flow.Net.Sdk.Client
         /// <param name="arguments"></param>
         /// <param name="options"></param>
         /// <returns><see cref="ICadence"/>.</returns>
-        public async Task<ICadence> ExecuteScriptAtBlockHeightAsync(ByteString script, ulong blockHeight, IEnumerable<ICadence> arguments = null, CallOptions options = new CallOptions())
+        public async Task<ICadence> ExecuteScriptAtBlockHeightAsync(FlowScript script, ulong blockHeight, CallOptions options = new CallOptions())
         {
             try
             {
-                var request = new ExecuteScriptAtBlockHeightRequest
-                {
-                    Script = script,
-                    BlockHeight = blockHeight
-                };
-
-                AddArgumentsToRequest(arguments, request.Arguments);
-
+                var request = script.FromFlowScript(blockHeight, _addressMap);
                 var response = await _client.ExecuteScriptAtBlockHeightAsync(request, options);
                 return response.Value.FromByteStringToString().Decode(_cadenceConverter);
             }
@@ -268,20 +261,12 @@ namespace Flow.Net.Sdk.Client
         /// <param name="arguments"></param>
         /// <param name="options"></param>
         /// <returns><see cref="ICadence"/>.</returns>
-        public async Task<ICadence> ExecuteScriptAtBlockIdAsync(ByteString script, ByteString blockId, IEnumerable<ICadence> arguments = null, CallOptions options = new CallOptions())
+        public async Task<ICadence> ExecuteScriptAtBlockIdAsync(FlowScript script, ByteString blockId, CallOptions options = new CallOptions())
         {
             try
             {
-                var request = new ExecuteScriptAtBlockIDRequest
-                {
-                    Script = script,
-                    BlockId = blockId
-                };
-
-                AddArgumentsToRequest(arguments, request.Arguments);
-
+                var request = script.FromFlowScript(blockId, _addressMap);
                 var response = await _client.ExecuteScriptAtBlockIDAsync(request, options);
-
                 return response.Value.FromByteStringToString().Decode(_cadenceConverter);
             }
             catch (Exception exception)
@@ -361,7 +346,7 @@ namespace Flow.Net.Sdk.Client
         {
             try
             {
-                var tx = transaction.FromFlowTransaction();
+                var tx = transaction.FromFlowTransaction(_addressMap);
 
                 var response = await _client.SendTransactionAsync(
                     new SendTransactionRequest

@@ -4,19 +4,16 @@ using System.Collections.Generic;
 
 namespace Flow.Net.Sdk.Models
 {
-    public abstract class FlowTransactionBase
+    public abstract class FlowTransactionBase : FlowInteractionBase
     {
-        protected FlowTransactionBase()
+        protected FlowTransactionBase() : base()
         {
-            Arguments = new List<ICadence>();
             Authorizers = new List<FlowAddress>();
             PayloadSignatures = new List<FlowSignature>();
             EnvelopeSignatures = new List<FlowSignature>();
             GasLimit = 9999;
         }
 
-        public string Script { get; set; }
-        public IList<ICadence> Arguments { get; set; }
         public ByteString ReferenceBlockId { get; set; }
         public ulong GasLimit { get; set; }
         public FlowAddress Payer { get; set; }

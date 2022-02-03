@@ -1,5 +1,6 @@
 ﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -19,7 +20,11 @@ namespace Flow.Net.Examples.ScriptExamples
         {
             var script = "pub fun main(): Int { return 1 + 3 }";
             var latestBlock = await FlowClient.GetLatestBlockAsync(); // getting a height for example purpose
-            var response = await FlowClient.ExecuteScriptAtBlockIdAsync(script.FromStringToByteString(), latestBlock.Id);
+            var response = await FlowClient.ExecuteScriptAtBlockIdAsync(
+                new FlowScript
+                {
+                    Script = script
+                }, latestBlock.Id);
             PrintResult(response);
         }
 
