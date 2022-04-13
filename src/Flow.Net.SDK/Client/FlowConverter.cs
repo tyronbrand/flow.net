@@ -1,7 +1,10 @@
 ﻿using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Crypto;
 using Flow.Net.Sdk.Models;
 using Flow.Net.Sdk.Protos.access;
 using Google.Protobuf;
+using Google.Protobuf.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -308,7 +311,7 @@ namespace Flow.Net.Sdk.Client
                 Payer = flowTransaction.Payer.Value,
                 GasLimit = flowTransaction.GasLimit,
                 ReferenceBlockId = flowTransaction.ReferenceBlockId,
-                ProposalKey = flowTransaction.ProposalKey.FromFlowProposalKey()
+                ProposalKey = flowTransaction.ProposalKey.FromFlowProposalKey()                
             };
 
             tx.Arguments.AddRange(flowTransaction.Arguments.FromArguments());
@@ -316,11 +319,8 @@ namespace Flow.Net.Sdk.Client
             foreach(var authorizer in flowTransaction.Authorizers)
                 tx.Authorizers.Add(authorizer.Value);
             
-            foreach(var payloadSignature in flowTransaction.PayloadSignatures)
-                tx.PayloadSignatures.Add(payloadSignature.FromFlowSignature());
-
-            foreach (var envelopeSignature in flowTransaction.EnvelopeSignatures)
-                tx.EnvelopeSignatures.Add(envelopeSignature.FromFlowSignature());
+            tx.PayloadSignatures.AddRange(flowTransaction.CreatePayloadSignatures());
+            tx.EnvelopeSignatures.AddRange(flowTransaction.CreateEnvelopeSignatures());
 
             return tx;
         }
@@ -332,6 +332,33 @@ namespace Flow.Net.Sdk.Client
                 Address = flowProposalKey.Address.Value,
                 KeyId = flowProposalKey.KeyId,
                 SequenceNumber = flowProposalKey.SequenceNumber
+            };
+        }
+
+        private static IEnumerable<Protos.entities.Transaction.Types.Signature> CreatePayloadSignatures(this FlowTransaction transaction)
+        {
+            var signatures = new RepeatedField<Protos.entities.Transaction.Types.Signature>();
+            var canonicalPayload = Rlp.EncodedCanonicalPayload(transaction);
+            return transaction.PayloadSigners.Select(x => x.CreateSignature(canonicalPayload).FromFlowSignature());
+        }
+
+        private static IEnumerable<Protos.entities.Transaction.Types.Signature> CreateEnvelopeSignatures(this FlowTransaction transaction)
+        {
+            var signatures = new RepeatedField<Protos.entities.Transaction.Types.Signature>();
+            var canonicalPayload = Rlp.EncodedCanonicalAuthorizationEnvelope(transaction);
+            return transaction.EnvelopeSigners.Select(x => x.CreateSignature(canonicalPayload).FromFlowSignature());
+        }
+
+        private static FlowSignature CreateSignature(this FlowSigner signer, byte[] canonicalPayload)
+        {
+            var message = DomainTag.AddTransactionDomainTag(canonicalPayload);
+            var signature = signer.Signer.Sign(message);
+
+            return new FlowSignature
+            {
+                Address = signer.Address,
+                KeyId = signer.KeyId,
+                Signature = signature
             };
         }
 

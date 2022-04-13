@@ -15,6 +15,8 @@ namespace Flow.Net.Sdk.Models
         }
 
         public Dictionary<ByteString, int> SignerList { get; }
+        public IList<FlowSigner> PayloadSigners { get; set; } = new List<FlowSigner>();
+        public IList<FlowSigner> EnvelopeSigners { get; set; } = new List<FlowSigner>();
 
         /// <summary>
         /// Signs the full transaction (TransactionDomainTag + payload) with the specified account key.
@@ -24,18 +26,14 @@ namespace Flow.Net.Sdk.Models
         /// <param name="keyId"></param>
         /// <param name="signer"></param>
         /// <returns>A <see cref="FlowTransaction"/> with <see cref="FlowSignature"/> appended to <see cref="FlowTransactionBase.PayloadSignatures"/>.</returns>
-        public static FlowTransaction AddPayloadSignature(FlowTransaction flowTransaction, FlowAddress address, uint keyId, ISigner signer)
+        public static FlowTransaction AddPayloadSigner(FlowTransaction flowTransaction, FlowAddress address, uint keyId, ISigner signer)
         {
-            var canonicalPayload = Rlp.EncodedCanonicalPayload(flowTransaction);
-            var message = DomainTag.AddTransactionDomainTag(canonicalPayload);
-            var signature = signer.Sign(message);
-
-            flowTransaction.PayloadSignatures.Add(
-                new FlowSignature
+            flowTransaction.PayloadSigners.Add(
+                new FlowSigner
                 {
                     Address = address.Value,
                     KeyId = keyId,
-                    Signature = signature
+                    Signer = signer
                 });
 
             return flowTransaction;
@@ -49,18 +47,14 @@ namespace Flow.Net.Sdk.Models
         /// <param name="keyId"></param>
         /// <param name="signer"></param>
         /// <returns>A <see cref="FlowTransaction"/> with <see cref="FlowSignature"/> appended to <see cref="FlowTransactionBase.EnvelopeSignatures"/>.</returns>
-        public static FlowTransaction AddEnvelopeSignature(FlowTransaction flowTransaction, FlowAddress address, uint keyId, ISigner signer)
+        public static FlowTransaction AddEnvelopeSigner(FlowTransaction flowTransaction, FlowAddress address, uint keyId, ISigner signer)
         {
-            var canonicalAuthorizationEnvelope = Rlp.EncodedCanonicalAuthorizationEnvelope(flowTransaction);
-            var message = DomainTag.AddTransactionDomainTag(canonicalAuthorizationEnvelope);
-            var signature = signer.Sign(message);
-
-            flowTransaction.EnvelopeSignatures.Add(
-                new FlowSignature
+            flowTransaction.EnvelopeSigners.Add(
+                new FlowSigner
                 {
                     Address = address.Value,
                     KeyId = keyId,
-                    Signature = signature
+                    Signer = signer
                 });
 
             return flowTransaction;

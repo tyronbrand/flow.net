@@ -9,8 +9,6 @@ namespace Flow.Net.Sdk.Models
         protected FlowTransactionBase() : base()
         {
             Authorizers = new List<FlowAddress>();
-            PayloadSignatures = new List<FlowSignature>();
-            EnvelopeSignatures = new List<FlowSignature>();
             GasLimit = 9999;
         }
 
@@ -19,7 +17,5 @@ namespace Flow.Net.Sdk.Models
         public FlowAddress Payer { get; set; }
         public FlowProposalKey ProposalKey { get; set; }
         public IList<FlowAddress> Authorizers { get; set; }
-        public IList<FlowSignature> PayloadSignatures { get; set; }
-        public IList<FlowSignature> EnvelopeSignatures { get; set; }
     }
 }
