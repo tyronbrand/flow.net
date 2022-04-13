@@ -110,7 +110,7 @@ pub contract EventDemo {
             tx.ReferenceBlockId = latestBlock.Id;
 
             // sign
-            tx = FlowTransaction.AddEnvelopeSignature(tx, creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
+            tx = FlowTransaction.AddEnvelopeSigner(tx, creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
 
             // send transaction
             var response = await FlowClient.SendTransactionAsync(tx);
@@ -162,7 +162,7 @@ transaction {{
             };
 
             // sign
-            tx = FlowTransaction.AddEnvelopeSignature(tx, flowAccount.Address, flowAccountKey.Index, flowAccountKey.Signer);
+            tx = FlowTransaction.AddEnvelopeSigner(tx, flowAccount.Address, flowAccountKey.Index, flowAccountKey.Signer);
 
             // send transaction
             var response = await FlowClient.SendTransactionAsync(tx);

@@ -54,7 +54,7 @@ namespace Flow.Net.Examples.AccountExamples
             tx.ReferenceBlockId = latestBlock.Id;
 
             // sign and submit the transaction
-            tx = FlowTransaction.AddEnvelopeSignature(tx, creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
+            tx = FlowTransaction.AddEnvelopeSigner(tx, creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
             
             var response = await FlowClient.SendTransactionAsync(tx);
 

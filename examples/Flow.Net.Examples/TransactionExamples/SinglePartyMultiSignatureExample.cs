@@ -51,10 +51,10 @@ namespace Flow.Net.Examples.TransactionExamples
             tx.Authorizers.Add(account1.Address);
 
             // account 1 signs the envelope with key 1
-            tx = FlowTransaction.AddEnvelopeSignature(tx, account1.Address, account1Key1.Index, account1Key1.Signer);
+            tx = FlowTransaction.AddEnvelopeSigner(tx, account1.Address, account1Key1.Index, account1Key1.Signer);
 
             // account 1 signs the envelope with key 2
-            tx = FlowTransaction.AddEnvelopeSignature(tx, account1.Address, account1Key2.Index, account1Key2.Signer);
+            tx = FlowTransaction.AddEnvelopeSigner(tx, account1.Address, account1Key2.Index, account1Key2.Signer);
 
             // send transaction
             var txResponse = await FlowClient.SendTransactionAsync(tx);
