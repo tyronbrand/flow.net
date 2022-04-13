@@ -24,7 +24,7 @@ namespace Flow.Net.Sdk
 
         public static void AddTransactionSignatures(Protos.entities.Transaction tx, FlowTransaction flowTransaction)
         {
-            var canonicalPayload = EncodedCanonicalPayload(flowTransaction);
+            var canonicalPayload = EncodedCanonicalPayload(tx);
             var payloadSignatures = flowTransaction.PayloadSigners
                 .Select(x => x.SignatureFromSigner(canonicalPayload));
 
@@ -50,19 +50,19 @@ namespace Flow.Net.Sdk
             };
         }
 
-        private static byte[] EncodedCanonicalPayload(FlowTransaction flowTransaction)
+        private static byte[] EncodedCanonicalPayload(Protos.entities.Transaction tx)
         {
             var payloadElements = new List<byte[]>
             {
-                RLP.EncodeElement(flowTransaction.Script.ToBytesForRLPEncoding()),
-                RLP.EncodeList(flowTransaction.Arguments.Select(argument => RLP.EncodeElement(argument.Encode().ToBytesForRLPEncoding())).ToArray()),
-                RLP.EncodeElement(Utilities.Pad(flowTransaction.ReferenceBlockId.ToByteArray(), 32)),
-                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.GasLimit))),
-                RLP.EncodeElement(Utilities.Pad(flowTransaction.ProposalKey.Address.Value.ToByteArray(), 8)),
-                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.ProposalKey.KeyId))),
-                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.ProposalKey.SequenceNumber))),
-                RLP.EncodeElement(Utilities.Pad(flowTransaction.Payer.Value.ToByteArray(), 8)),
-                RLP.EncodeList(flowTransaction.Authorizers.Select(authorizer => RLP.EncodeElement(Utilities.Pad(authorizer.Value.ToByteArray(), 8))).ToArray())
+                RLP.EncodeElement(tx.Script.FromByteStringToString().ToBytesForRLPEncoding()),
+                RLP.EncodeList(tx.Arguments.Select(argument => RLP.EncodeElement(argument.FromByteStringToString().ToBytesForRLPEncoding())).ToArray()),
+                RLP.EncodeElement(Utilities.Pad(tx.ReferenceBlockId.ToByteArray(), 32)),
+                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(tx.GasLimit))),
+                RLP.EncodeElement(Utilities.Pad(tx.ProposalKey.Address.ToByteArray(), 8)),
+                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(tx.ProposalKey.KeyId))),
+                RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(tx.ProposalKey.SequenceNumber))),
+                RLP.EncodeElement(Utilities.Pad(tx.Payer.ToByteArray(), 8)),
+                RLP.EncodeList(tx.Authorizers.Select(authorizer => RLP.EncodeElement(Utilities.Pad(authorizer.ToByteArray(), 8))).ToArray())
             };
 
             return RLP.EncodeList(payloadElements.ToArray());
