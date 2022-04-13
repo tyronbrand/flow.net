@@ -318,57 +318,19 @@ namespace Flow.Net.Sdk.Client
             
             foreach(var authorizer in flowTransaction.Authorizers)
                 tx.Authorizers.Add(authorizer.Value);
-            
-            tx.PayloadSignatures.AddRange(flowTransaction.CreatePayloadSignatures());
-            tx.EnvelopeSignatures.AddRange(flowTransaction.CreateEnvelopeSignatures());
+
+            Rlp.AddTransactionSignatures(tx, flowTransaction);
 
             return tx;
         }
 
-        public static Protos.entities.Transaction.Types.ProposalKey FromFlowProposalKey(this FlowProposalKey flowProposalKey)
+        private static Protos.entities.Transaction.Types.ProposalKey FromFlowProposalKey(this FlowProposalKey flowProposalKey)
         {
             return new Protos.entities.Transaction.Types.ProposalKey
             {
                 Address = flowProposalKey.Address.Value,
                 KeyId = flowProposalKey.KeyId,
                 SequenceNumber = flowProposalKey.SequenceNumber
-            };
-        }
-
-        private static IEnumerable<Protos.entities.Transaction.Types.Signature> CreatePayloadSignatures(this FlowTransaction transaction)
-        {
-            var signatures = new RepeatedField<Protos.entities.Transaction.Types.Signature>();
-            var canonicalPayload = Rlp.EncodedCanonicalPayload(transaction);
-            return transaction.PayloadSigners.Select(x => x.CreateSignature(canonicalPayload).FromFlowSignature());
-        }
-
-        private static IEnumerable<Protos.entities.Transaction.Types.Signature> CreateEnvelopeSignatures(this FlowTransaction transaction)
-        {
-            var signatures = new RepeatedField<Protos.entities.Transaction.Types.Signature>();
-            var canonicalPayload = Rlp.EncodedCanonicalAuthorizationEnvelope(transaction);
-            return transaction.EnvelopeSigners.Select(x => x.CreateSignature(canonicalPayload).FromFlowSignature());
-        }
-
-        private static FlowSignature CreateSignature(this FlowSigner signer, byte[] canonicalPayload)
-        {
-            var message = DomainTag.AddTransactionDomainTag(canonicalPayload);
-            var signature = signer.Signer.Sign(message);
-
-            return new FlowSignature
-            {
-                Address = signer.Address,
-                KeyId = signer.KeyId,
-                Signature = signature
-            };
-        }
-
-        public static Protos.entities.Transaction.Types.Signature FromFlowSignature(this FlowSignature flowSignature)
-        {
-            return new Protos.entities.Transaction.Types.Signature
-            {
-                Address = flowSignature.Address,
-                KeyId = flowSignature.KeyId,
-                Signature_ = flowSignature.Signature.FromByteArrayToByteString()
             };
         }
 

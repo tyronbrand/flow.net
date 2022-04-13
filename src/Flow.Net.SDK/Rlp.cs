@@ -22,7 +22,35 @@ namespace Flow.Net.Sdk
             return RLP.EncodeList(accountElements.ToArray());
         }
 
-        public static byte[] EncodedCanonicalPayload(FlowTransaction flowTransaction)
+        public static void AddTransactionSignatures(Protos.entities.Transaction tx, FlowTransaction flowTransaction)
+        {
+            var canonicalPayload = EncodedCanonicalPayload(flowTransaction);
+            var payloadSignatures = flowTransaction.PayloadSigners
+                .Select(x => x.SignatureFromSigner(canonicalPayload));
+
+            tx.PayloadSignatures.AddRange(payloadSignatures.Select(x => x.FromFlowSignature()));
+
+            var canonicalEnvelope = EncodedCanonicalAuthorizationEnvelope(canonicalPayload, payloadSignatures);
+            var envelopeSignatures = flowTransaction.EnvelopeSigners
+                .Select(x => x.SignatureFromSigner(canonicalEnvelope));
+
+            tx.EnvelopeSignatures.AddRange(envelopeSignatures.Select(x => x.FromFlowSignature()));
+        }
+
+        private static FlowSignature SignatureFromSigner(this FlowSigner signer, byte[] canonicalPayload)
+        {
+            var message = DomainTag.AddTransactionDomainTag(canonicalPayload);
+            var signature = signer.Signer.Sign(message);
+
+            return new FlowSignature
+            {
+                Address = signer.Address,
+                KeyId = signer.KeyId,
+                Signature = signature
+            };
+        }
+
+        private static byte[] EncodedCanonicalPayload(FlowTransaction flowTransaction)
         {
             var payloadElements = new List<byte[]>
             {
@@ -62,6 +90,29 @@ namespace Flow.Net.Sdk
             return RLP.EncodeList(signatureElements.ToArray());
         }
 
+        private static byte[] EncodedSignatures(IReadOnlyList<FlowSignature> signatures)
+        {
+            var signatureElements = new List<byte[]>();
+            var signerList = new Dictionary<Google.Protobuf.ByteString, int>();
+            for (var i = 0; i < signatures.Count; i++)
+            {
+                var index = i;
+                if (signerList.ContainsKey(signatures[i].Address))
+                {
+                    index = signerList[signatures[i].Address];
+                }
+                else
+                {
+                    signerList.Add(signatures[i].Address, i);
+                }
+
+                var signatureEncoded = EncodedSignature(signatures[i], index);
+                signatureElements.Add(signatureEncoded);
+            }
+
+            return RLP.EncodeList(signatureElements.ToArray());
+        }
+
         private static byte[] EncodedSignature(FlowSignature signature, int index)
         {
             var signatureArray = new List<byte[]>
@@ -74,38 +125,25 @@ namespace Flow.Net.Sdk
             return RLP.EncodeList(signatureArray.ToArray());
         }
 
-        public static byte[] EncodedCanonicalAuthorizationEnvelope(FlowTransaction flowTransaction)
+        private static byte[] EncodedCanonicalAuthorizationEnvelope(byte[] canonicalPayload, IEnumerable<FlowSignature> payloadSignatures)
         {
             var authEnvelopeElements = new List<byte[]>
             {
-                EncodedCanonicalPayload(flowTransaction),
-                EncodedSignatures(flowTransaction.PayloadSignatures.ToArray(), flowTransaction)
+                canonicalPayload,
+                EncodedSignatures(payloadSignatures.ToArray())
             };
 
             return RLP.EncodeList(authEnvelopeElements.ToArray());
         }
 
-        public static byte[] EncodedCanonicalPaymentEnvelope(FlowTransaction flowTransaction)
+        private static Protos.entities.Transaction.Types.Signature FromFlowSignature(this FlowSignature flowSignature)
         {
-            var authEnvelopeElements = new List<byte[]>
+            return new Protos.entities.Transaction.Types.Signature
             {
-                EncodedCanonicalAuthorizationEnvelope(flowTransaction),
-                EncodedSignatures(flowTransaction.EnvelopeSignatures.ToArray(), flowTransaction)
+                Address = flowSignature.Address,
+                KeyId = flowSignature.KeyId,
+                Signature_ = flowSignature.Signature.FromByteArrayToByteString()
             };
-
-            return RLP.EncodeList(authEnvelopeElements.ToArray());
-        }
-
-        public static byte[] EncodedCanonicalTransaction(FlowTransaction flowTransaction)
-        {
-            var authEnvelopeElements = new List<byte[]>
-            {
-                EncodedCanonicalPayload(flowTransaction),
-                EncodedSignatures(flowTransaction.PayloadSignatures.ToArray(), flowTransaction),
-                EncodedSignatures(flowTransaction.EnvelopeSignatures.ToArray(), flowTransaction)
-            };
-
-            return RLP.EncodeList(authEnvelopeElements.ToArray());
         }
     }
 }

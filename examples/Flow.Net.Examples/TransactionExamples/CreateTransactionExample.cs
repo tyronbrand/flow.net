@@ -76,7 +76,7 @@ namespace Flow.Net.Examples.TransactionExamples
             // construct a signer from your private key and configured signature/hash algorithms
             var signer = Sdk.Crypto.Ecdsa.Utilities.CreateSigner("privateKey", SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
 
-            FlowTransaction.AddEnvelopeSignature(tx, proposerAccount.Address, proposerKey.Index, signer);
+            FlowTransaction.AddEnvelopeSigner(tx, proposerAccount.Address, proposerKey.Index, signer);
         }
     }
 }
