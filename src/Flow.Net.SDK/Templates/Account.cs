@@ -64,7 +64,10 @@ transaction(publicKeys: [String], contracts: { String: String})
 
 			var tx = new FlowTransaction
 			{
-				Script = CreateAccountTemplate,
+				Script = new FlowCadenceScript
+                {
+					Script = CreateAccountTemplate
+				},
 				Arguments = new List<ICadence>
 				{
 					accountKeys,
@@ -82,7 +85,10 @@ transaction(publicKeys: [String], contracts: { String: String})
         {
 			var tx = new FlowTransaction
 			{
-				Script = script,
+				Script = new FlowCadenceScript
+                {
+					Script = script
+				},
 				Arguments = new List<ICadence>
 				{
 					new CadenceString(flowContract.Name),
@@ -134,7 +140,10 @@ transaction(name: String)
         {
 			var tx = new FlowTransaction
 			{
-				Script = DeleteAccountContractTemplate
+				Script = new FlowCadenceScript
+                {
+					Script = DeleteAccountContractTemplate
+				}
 			};
 
 			// add argument

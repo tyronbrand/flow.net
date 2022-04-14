@@ -150,7 +150,10 @@ transaction {{
             // create transaction
             var tx = new FlowTransaction
             {
-                Script = script,
+                Script = new FlowCadenceScript
+                {
+                    Script = script
+                },
                 Payer = flowAccount.Address,
                 ProposalKey = new FlowProposalKey
                 {

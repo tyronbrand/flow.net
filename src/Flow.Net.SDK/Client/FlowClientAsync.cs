@@ -18,7 +18,7 @@ namespace Flow.Net.Sdk.Client
     {
         private readonly AccessAPIClient _client;
         private readonly CadenceConverter _cadenceConverter;
-        private readonly Dictionary<string, string> _addressMap = EmulatorAddresses;
+        public readonly Dictionary<string, string> AddressMap = EmulatorAddresses;
 
         /// <summary>
         /// A gRPC client for the Flow Access API.
@@ -42,7 +42,7 @@ namespace Flow.Net.Sdk.Client
                 ));
 
                 _cadenceConverter = new CadenceConverter();
-                _addressMap = addressMap ?? _addressMap;
+                AddressMap = addressMap ?? AddressMap;
             }
             catch (Exception exception)
             {
@@ -221,7 +221,7 @@ namespace Flow.Net.Sdk.Client
         {
             try
             {
-                var request = script.FromFlowScript(_addressMap);
+                var request = script.FromFlowScript();
                 var response = await _client.ExecuteScriptAtLatestBlockAsync(request, options);
                 return response.Value.FromByteStringToString().Decode(_cadenceConverter);
             }
@@ -243,7 +243,7 @@ namespace Flow.Net.Sdk.Client
         {
             try
             {
-                var request = script.FromFlowScript(blockHeight, _addressMap);
+                var request = script.FromFlowScript(blockHeight);
                 var response = await _client.ExecuteScriptAtBlockHeightAsync(request, options);
                 return response.Value.FromByteStringToString().Decode(_cadenceConverter);
             }
@@ -265,7 +265,7 @@ namespace Flow.Net.Sdk.Client
         {
             try
             {
-                var request = script.FromFlowScript(blockId, _addressMap);
+                var request = script.FromFlowScript(blockId);
                 var response = await _client.ExecuteScriptAtBlockIDAsync(request, options);
                 return response.Value.FromByteStringToString().Decode(_cadenceConverter);
             }
@@ -346,7 +346,7 @@ namespace Flow.Net.Sdk.Client
         {
             try
             {
-                var tx = transaction.FromFlowTransaction(_addressMap);
+                var tx = transaction.FromFlowTransaction();
 
                 var response = await _client.SendTransactionAsync(
                     new SendTransactionRequest

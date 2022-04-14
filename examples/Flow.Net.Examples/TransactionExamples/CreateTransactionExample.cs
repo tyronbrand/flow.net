@@ -36,7 +36,10 @@ namespace Flow.Net.Examples.TransactionExamples
 
             var tx = new FlowTransaction
             {
-                Script = script,
+                Script = new FlowCadenceScript
+                {
+                    Script = script
+                },
                 GasLimit = 100,
                 ProposalKey = new FlowProposalKey
                 {
@@ -62,7 +65,10 @@ namespace Flow.Net.Examples.TransactionExamples
 
             var tx = new FlowTransaction
             {
-                Script = "transaction { execute { log(\"Hello, World!\") } }",
+                Script = new FlowCadenceScript
+                {
+                    Script = "transaction { execute { log(\"Hello, World!\") } }"
+                },
                 GasLimit = 100,
                 ProposalKey = new FlowProposalKey
                 {

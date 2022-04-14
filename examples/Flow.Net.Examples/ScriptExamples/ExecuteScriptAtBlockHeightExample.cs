@@ -23,7 +23,10 @@ namespace Flow.Net.Examples.ScriptExamples
             var response = await FlowClient.ExecuteScriptAtBlockHeightAsync(
                 new FlowScript
                 { 
-                    Script = script
+                    Script = new FlowCadenceScript
+                    {
+                        Script = script
+                    }
                 }, latestBlock.Height);
             PrintResult(response);
         }

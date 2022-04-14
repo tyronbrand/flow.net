@@ -22,7 +22,10 @@ namespace Flow.Net.Examples.ScriptExamples
             var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(
                 new FlowScript
                 {
-                    Script = script
+                    Script = new FlowCadenceScript
+                    {
+                        Script = script
+                    }
                 });
             PrintResult(response);
         }

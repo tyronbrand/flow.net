@@ -26,7 +26,7 @@ namespace Flow.Net.Sdk
         {
             var payloadElements = new List<byte[]>
             {
-                RLP.EncodeElement(flowTransaction.Script.ToBytesForRLPEncoding()),
+                RLP.EncodeElement(flowTransaction.Script.Script.ToBytesForRLPEncoding()),
                 RLP.EncodeList(flowTransaction.Arguments.Select(argument => RLP.EncodeElement(argument.Encode().ToBytesForRLPEncoding())).ToArray()),
                 RLP.EncodeElement(Utilities.Pad(flowTransaction.ReferenceBlockId.ToByteArray(), 32)),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.GasLimit))),

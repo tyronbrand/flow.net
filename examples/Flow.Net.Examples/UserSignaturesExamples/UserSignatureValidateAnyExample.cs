@@ -38,7 +38,10 @@ namespace Flow.Net.Examples.UserSignaturesExamples
             var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(
                 new FlowScript
                 {
-                    Script = script,
+                    Script = new FlowCadenceScript
+                    {
+                        Script = script
+                    },
                     Arguments = new List<ICadence>
                     {
                         new CadenceAddress(flowAccount.Address.HexValue),
