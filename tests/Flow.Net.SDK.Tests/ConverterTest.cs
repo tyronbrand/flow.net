@@ -101,12 +101,9 @@ namespace Flow.Net.Sdk.Tests
                 { "FungibleToken", "1111" },
                 { "FUSD", "0x2222" }
             };
-            var tx = new FlowTransaction()
+            var tx = new FlowTransaction(addressMap)
             {
-                Script = new FlowCadenceScript(addressMap)
-                {
-                    Script = script
-                },
+                Script = script,
                 Payer = address,
                 GasLimit = 100,
                 ReferenceBlockId = ByteString.Empty,
@@ -149,12 +146,9 @@ namespace Flow.Net.Sdk.Tests
             {
                 { "FungibleToken", "1111" }
             };
-            var tx = new FlowTransaction()
+            var tx = new FlowTransaction(addressMap)
             {
-                Script = new FlowCadenceScript(addressMap)
-                {
-                    Script = script
-                },
+                Script = script,
                 Payer = address,
                 GasLimit = 100,
                 ReferenceBlockId = ByteString.Empty,
@@ -164,7 +158,7 @@ namespace Flow.Net.Sdk.Tests
                 }
             };
 
-            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(tx.Script.Script));
+            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(tx.Script));
         }
 
         [Fact]
@@ -203,12 +197,9 @@ namespace Flow.Net.Sdk.Tests
                 { "FungibleToken", "1111" },
                 { "FUSD", "0x2222" }
             };
-            var tx = new FlowTransaction()
+            var tx = new FlowTransaction(clientAddressMap.Merge(addressMap))
             {
-                Script = new FlowCadenceScript(clientAddressMap.Merge(addressMap))
-                {
-                    Script = script
-                },
+                Script = script,
                 Payer = address,
                 GasLimit = 100,
                 ReferenceBlockId = ByteString.Empty,
@@ -218,7 +209,7 @@ namespace Flow.Net.Sdk.Tests
                 }
             };            
 
-            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(tx.Script.Script));
+            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(tx.Script));
         }
 
         [Fact]
@@ -260,12 +251,9 @@ namespace Flow.Net.Sdk.Tests
                 { "FungibleToken", "1111" },
                 { "FUSD", "0x2222" }
             };
-            var tx = new FlowTransaction()
+            var tx = new FlowTransaction(flowClient.AddressMap.Merge(addressMap))
             {
-                Script = new FlowCadenceScript(flowClient.AddressMap.Merge(addressMap))
-                {
-                    Script = script
-                },
+                Script = script,
                 Payer = address,
                 GasLimit = 100,
                 ReferenceBlockId = ByteString.Empty,
@@ -275,7 +263,7 @@ namespace Flow.Net.Sdk.Tests
                 }
             };
 
-            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(tx.Script.Script));
+            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(tx.Script));
         }
 
         private static string NormalizeNewLines(string value)

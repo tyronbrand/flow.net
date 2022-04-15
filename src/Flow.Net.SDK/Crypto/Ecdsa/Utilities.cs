@@ -5,7 +5,6 @@ using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Security;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Flow.Net.Sdk.Exceptions;
 

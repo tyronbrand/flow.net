@@ -5,10 +5,10 @@ namespace Flow.Net.Sdk
 {
     public static class UtilityExtensions
     {
-
         /// <summary>
         /// Removes string "start" from beginning of the string
         /// </summary>
+        /// <param name="s">string</param>
         /// <param name="start">string to trim</param>
         public static string TrimStart(this string s, string start)
         {

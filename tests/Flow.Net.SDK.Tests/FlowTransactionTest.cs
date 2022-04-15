@@ -18,10 +18,7 @@ namespace Flow.Net.Sdk.Tests
                 GasLimit = 42,
                 Payer = new FlowAddress("01"),
                 ReferenceBlockId = "f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b".FromHexToByteString(),
-                Script = new FlowCadenceScript
-                {
-                    Script = "transaction { execute { log(\"Hello, World!\") } }"
-                }
+                Script = "transaction { execute { log(\"Hello, World!\") } }"
             };
 
             transaction.Authorizers.Add(new FlowAddress("01"));

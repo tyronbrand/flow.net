@@ -1,12 +1,12 @@
-﻿using Flow.Net.Sdk.Cadence;
-using Google.Protobuf;
+﻿using Google.Protobuf;
 using System.Collections.Generic;
 
 namespace Flow.Net.Sdk.Models
 {
     public abstract class FlowTransactionBase : FlowInteractionBase
     {
-        protected FlowTransactionBase() : base()
+        protected FlowTransactionBase(Dictionary<string, string> addressMap = null) 
+            : base(addressMap)
         {
             Authorizers = new List<FlowAddress>();
             PayloadSignatures = new List<FlowSignature>();

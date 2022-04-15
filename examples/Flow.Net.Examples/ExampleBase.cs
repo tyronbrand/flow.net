@@ -48,10 +48,7 @@ namespace Flow.Net.Examples
             var latestBlock = await FlowClient.GetLatestBlockAsync();
             var tx = new FlowTransaction
             {
-                Script = new FlowCadenceScript
-                {
-                    Script = "transaction {}"
-                },
+                Script = "transaction {}",
                 ReferenceBlockId = latestBlock.Id,
                 Payer = serviceAccount.Address,
                 ProposalKey = new FlowProposalKey

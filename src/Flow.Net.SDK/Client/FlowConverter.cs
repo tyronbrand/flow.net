@@ -4,7 +4,6 @@ using Flow.Net.Sdk.Protos.access;
 using Google.Protobuf;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Flow.Net.Sdk.Client
 {
@@ -101,10 +100,7 @@ namespace Flow.Net.Sdk.Client
 
             var sendResponse = new FlowTransactionResponse
             {
-                Script = new FlowCadenceScript
-                {
-                    Script = transactionResponse.Transaction.Script.FromByteStringToString()
-                },
+                Script = transactionResponse.Transaction.Script.FromByteStringToString(),
                 ReferenceBlockId = transactionResponse.Transaction.ReferenceBlockId,
                 GasLimit = transactionResponse.Transaction.GasLimit,
                 Payer = new FlowAddress(transactionResponse.Transaction.Payer),                
@@ -248,7 +244,7 @@ namespace Flow.Net.Sdk.Client
         {            
             var request = new ExecuteScriptAtBlockHeightRequest
             {
-                Script = script.Script.Script.FromStringToByteString(),
+                Script = script.Script.FromStringToByteString(),
                 BlockHeight = blockHeight
             };
 
@@ -261,7 +257,7 @@ namespace Flow.Net.Sdk.Client
         {
             var request = new ExecuteScriptAtLatestBlockRequest
             {
-                Script = script.Script.Script.FromStringToByteString()
+                Script = script.Script.FromStringToByteString()
             };
 
             request.Arguments.AddRange(script.Arguments.FromArguments());
@@ -273,7 +269,7 @@ namespace Flow.Net.Sdk.Client
         {
             var request = new ExecuteScriptAtBlockIDRequest
             {
-                Script = script.Script.Script.FromStringToByteString(),
+                Script = script.Script.FromStringToByteString(),
                 BlockId = blockId
             };
 
@@ -291,7 +287,7 @@ namespace Flow.Net.Sdk.Client
         {
             var tx = new Protos.entities.Transaction
             {
-                Script = flowTransaction.Script.Script.FromStringToByteString(),
+                Script = flowTransaction.Script.FromStringToByteString(),
                 Payer = flowTransaction.Payer.Value,
                 GasLimit = flowTransaction.GasLimit,
                 ReferenceBlockId = flowTransaction.ReferenceBlockId,

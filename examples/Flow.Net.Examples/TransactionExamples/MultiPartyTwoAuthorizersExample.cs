@@ -38,16 +38,13 @@ namespace Flow.Net.Examples.TransactionExamples
 
             var tx = new FlowTransaction
             {
-                Script = new FlowCadenceScript
-                {
-                    Script = @"
+                Script = @"
 transaction { 
 	prepare(signer1: AuthAccount, signer2: AuthAccount) { 
 		log(signer1.address) 
 		log(signer2.address)
 	}
-}"
-                },
+}",
                 GasLimit = 9999,
                 Payer = account2.Address,
                 ProposalKey = new FlowProposalKey

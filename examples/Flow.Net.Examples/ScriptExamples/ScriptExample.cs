@@ -33,10 +33,7 @@ pub fun main(a: Int): Int {
             var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(
                 new FlowScript
                 {
-                    Script = new FlowCadenceScript
-                    {
-                        Script = script
-                    },
+                    Script = script,
                     Arguments = arguments
                 });
             Console.WriteLine($"Value: {response.As<CadenceNumber>().Value}");
@@ -70,10 +67,7 @@ pub fun main(name: String): User {
             var complexResponse = await FlowClient.ExecuteScriptAtLatestBlockAsync(
                 new FlowScript
                 {
-                    Script = new FlowCadenceScript
-                    {
-                        Script = complexScript
-                    },
+                    Script = complexScript,
                     Arguments = complexArguments
                 });
             PrintComplexScript(complexResponse);

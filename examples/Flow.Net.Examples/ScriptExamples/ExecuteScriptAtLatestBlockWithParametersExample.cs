@@ -1,5 +1,4 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Cadence;
+﻿using Flow.Net.Sdk.Cadence;
 using Flow.Net.Sdk.Models;
 using System;
 using System.Collections.Generic;
@@ -29,10 +28,7 @@ namespace Flow.Net.Examples.ScriptExamples
             var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(
                 new FlowScript
                 {
-                    Script = new FlowCadenceScript
-                    {
-                        Script = script
-                    },
+                    Script = script,
                     Arguments = arguments
                 });
             PrintResult(response);

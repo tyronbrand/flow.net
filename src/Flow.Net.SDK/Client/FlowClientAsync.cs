@@ -26,6 +26,7 @@ namespace Flow.Net.Sdk.Client
         /// <param name="flowNetworkUrl"></param>
         /// <param name="channelCredentialsSecureSsl"></param>
         /// <param name="options"></param>
+        /// <param name="addressMap">global address map</param>
         /// <returns><see cref="FlowClientAsync"/>.</returns>
         public FlowClientAsync(string flowNetworkUrl, 
             bool channelCredentialsSecureSsl = false, 
@@ -214,7 +215,6 @@ namespace Flow.Net.Sdk.Client
         /// Executes a read-only Cadence script against the latest sealed execution state.
         /// </summary>
         /// <param name="script"></param>
-        /// <param name="arguments"></param>
         /// <param name="options"></param>
         /// <returns><see cref="ICadence"/>.</returns>
         public async Task<ICadence> ExecuteScriptAtLatestBlockAsync(FlowScript script, CallOptions options = new CallOptions())
@@ -236,7 +236,6 @@ namespace Flow.Net.Sdk.Client
         /// </summary>
         /// <param name="script"></param>
         /// <param name="blockHeight"></param>
-        /// <param name="arguments"></param>
         /// <param name="options"></param>
         /// <returns><see cref="ICadence"/>.</returns>
         public async Task<ICadence> ExecuteScriptAtBlockHeightAsync(FlowScript script, ulong blockHeight, CallOptions options = new CallOptions())
@@ -258,7 +257,6 @@ namespace Flow.Net.Sdk.Client
         /// </summary>
         /// <param name="script"></param>
         /// <param name="blockId"></param>
-        /// <param name="arguments"></param>
         /// <param name="options"></param>
         /// <returns><see cref="ICadence"/>.</returns>
         public async Task<ICadence> ExecuteScriptAtBlockIdAsync(FlowScript script, ByteString blockId, CallOptions options = new CallOptions())
@@ -610,14 +608,6 @@ namespace Flow.Net.Sdk.Client
             }
 
             return flowAccount;
-        }
-
-        private static void AddArgumentsToRequest(IEnumerable<ICadence> arguments, ICollection<ByteString> requestArguments)
-        {
-            if (arguments == null) return;
-            
-            foreach (var argument in arguments)
-                requestArguments.Add(argument.Encode().FromStringToByteString());
         }
     }
 }

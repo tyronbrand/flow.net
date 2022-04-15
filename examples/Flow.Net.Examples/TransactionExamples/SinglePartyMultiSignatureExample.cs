@@ -35,10 +35,7 @@ namespace Flow.Net.Examples.TransactionExamples
 
             var tx = new FlowTransaction
             {
-                Script = new FlowCadenceScript
-                {
-                    Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}"
-                },
+                Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}",
                 GasLimit = 9999,
                 Payer = account1.Address,
                 ProposalKey = new FlowProposalKey
