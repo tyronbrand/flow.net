@@ -308,7 +308,7 @@ namespace Flow.Net.Sdk.Client
             return tx;
         }
 
-        public static Protos.entities.Transaction.Types.ProposalKey FromFlowProposalKey(this FlowProposalKey flowProposalKey)
+        private static Protos.entities.Transaction.Types.ProposalKey FromFlowProposalKey(this FlowProposalKey flowProposalKey)
         {
             return new Protos.entities.Transaction.Types.ProposalKey
             {
@@ -318,7 +318,7 @@ namespace Flow.Net.Sdk.Client
             };
         }
 
-        public static Protos.entities.Transaction.Types.Signature FromFlowSignature(this FlowSignature flowSignature)
+        private static Protos.entities.Transaction.Types.Signature FromFlowSignature(this FlowSignature flowSignature)
         {
             return new Protos.entities.Transaction.Types.Signature
             {
@@ -327,7 +327,5 @@ namespace Flow.Net.Sdk.Client
                 Signature_ = flowSignature.Signature.FromByteArrayToByteString()
             };
         }
-
-        
     }
 }

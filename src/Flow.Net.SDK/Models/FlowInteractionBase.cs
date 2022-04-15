@@ -9,36 +9,21 @@ namespace Flow.Net.Sdk.Models
     {
         private readonly Dictionary<string, string> _addressMap;
 
-        public FlowInteractionBase(Dictionary<string, string> addressMap = null)
+        protected FlowInteractionBase(Dictionary<string, string> addressMap = null)
         {
             _addressMap = addressMap;
         }
 
         private string _script;
-
         public string Script
         {
-            get
-            {
-                return _script;
-            }
-
-            set
-            {
-                if (_addressMap != null)
-                {
-                    _script = ReplaceImports(value, _addressMap);
-                }
-                else
-                {
-                    _script = value;
-                }
-            }
+            get => _script;
+            set => _script = _addressMap != null ? ReplaceImports(value, _addressMap) : value;
         }
 
         private static string ReplaceImports(string txText, Dictionary<string, string> addressMap)
         {
-            var pattern = @"^(\s*import\s+\w+\s+from\s+)(?:0x)?(\w+)\s*$";
+            const string pattern = @"^(\s*import\s+\w+\s+from\s+)(?:0x)?(\w+)\s*$";
             return string.Join("\n",
                 txText.Split('\n')
                 .Select(line =>
