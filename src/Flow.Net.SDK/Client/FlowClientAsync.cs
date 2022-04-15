@@ -18,7 +18,7 @@ namespace Flow.Net.Sdk.Client
     {
         private readonly AccessAPIClient _client;
         private readonly CadenceConverter _cadenceConverter;
-        private readonly Dictionary<string, string> _addressMap = EmulatorAddresses;
+        public readonly Dictionary<string, string> AddressMap = EmulatorAddresses;
 
         /// <summary>
         /// A gRPC client for the Flow Access API.
@@ -26,6 +26,7 @@ namespace Flow.Net.Sdk.Client
         /// <param name="flowNetworkUrl"></param>
         /// <param name="channelCredentialsSecureSsl"></param>
         /// <param name="options"></param>
+        /// <param name="addressMap">global address map</param>
         /// <returns><see cref="FlowClientAsync"/>.</returns>
         public FlowClientAsync(string flowNetworkUrl, 
             bool channelCredentialsSecureSsl = false, 
@@ -42,7 +43,7 @@ namespace Flow.Net.Sdk.Client
                 ));
 
                 _cadenceConverter = new CadenceConverter();
-                _addressMap = addressMap ?? _addressMap;
+                AddressMap = addressMap ?? AddressMap;
             }
             catch (Exception exception)
             {
@@ -214,14 +215,13 @@ namespace Flow.Net.Sdk.Client
         /// Executes a read-only Cadence script against the latest sealed execution state.
         /// </summary>
         /// <param name="script"></param>
-        /// <param name="arguments"></param>
         /// <param name="options"></param>
         /// <returns><see cref="ICadence"/>.</returns>
         public async Task<ICadence> ExecuteScriptAtLatestBlockAsync(FlowScript script, CallOptions options = new CallOptions())
         {
             try
             {
-                var request = script.FromFlowScript(_addressMap);
+                var request = script.FromFlowScript();
                 var response = await _client.ExecuteScriptAtLatestBlockAsync(request, options);
                 return response.Value.FromByteStringToString().Decode(_cadenceConverter);
             }
@@ -236,14 +236,13 @@ namespace Flow.Net.Sdk.Client
         /// </summary>
         /// <param name="script"></param>
         /// <param name="blockHeight"></param>
-        /// <param name="arguments"></param>
         /// <param name="options"></param>
         /// <returns><see cref="ICadence"/>.</returns>
         public async Task<ICadence> ExecuteScriptAtBlockHeightAsync(FlowScript script, ulong blockHeight, CallOptions options = new CallOptions())
         {
             try
             {
-                var request = script.FromFlowScript(blockHeight, _addressMap);
+                var request = script.FromFlowScript(blockHeight);
                 var response = await _client.ExecuteScriptAtBlockHeightAsync(request, options);
                 return response.Value.FromByteStringToString().Decode(_cadenceConverter);
             }
@@ -258,14 +257,13 @@ namespace Flow.Net.Sdk.Client
         /// </summary>
         /// <param name="script"></param>
         /// <param name="blockId"></param>
-        /// <param name="arguments"></param>
         /// <param name="options"></param>
         /// <returns><see cref="ICadence"/>.</returns>
         public async Task<ICadence> ExecuteScriptAtBlockIdAsync(FlowScript script, ByteString blockId, CallOptions options = new CallOptions())
         {
             try
             {
-                var request = script.FromFlowScript(blockId, _addressMap);
+                var request = script.FromFlowScript(blockId);
                 var response = await _client.ExecuteScriptAtBlockIDAsync(request, options);
                 return response.Value.FromByteStringToString().Decode(_cadenceConverter);
             }
@@ -346,7 +344,7 @@ namespace Flow.Net.Sdk.Client
         {
             try
             {
-                var tx = transaction.FromFlowTransaction(_addressMap);
+                var tx = transaction.FromFlowTransaction();
 
                 var response = await _client.SendTransactionAsync(
                     new SendTransactionRequest
@@ -610,14 +608,6 @@ namespace Flow.Net.Sdk.Client
             }
 
             return flowAccount;
-        }
-
-        private static void AddArgumentsToRequest(IEnumerable<ICadence> arguments, ICollection<ByteString> requestArguments)
-        {
-            if (arguments == null) return;
-            
-            foreach (var argument in arguments)
-                requestArguments.Add(argument.Encode().FromStringToByteString());
         }
     }
 }

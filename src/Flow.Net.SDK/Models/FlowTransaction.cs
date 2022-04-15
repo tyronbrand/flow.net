@@ -9,7 +9,8 @@ namespace Flow.Net.Sdk.Models
     /// </summary>
     public class FlowTransaction : FlowTransactionBase
     {
-        public FlowTransaction()
+        public FlowTransaction(Dictionary<string, string> addressMap = null)
+            : base(addressMap)
         {
             SignerList = new Dictionary<ByteString, int>();
         }
