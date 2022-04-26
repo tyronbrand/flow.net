@@ -1,4 +1,5 @@
-﻿using Flow.Net.Sdk.Converters;
+﻿using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Converters;
 using Google.Protobuf;
 
 namespace Flow.Net.Sdk
@@ -58,6 +59,16 @@ namespace Flow.Net.Sdk
         public static string AddHexPrefix(this string hex)
         {
             return HexConverter.AddHexPrefix(hex);
+        }
+
+        public static CadenceHashAlgorithm FromHashAlgoToCadenceHashAlgorithm(this HashAlgo hashAlgo)
+        {
+            return CadenceExtensions.FromHashAlgoToCadenceHashAlgorithm(hashAlgo);
+        }
+
+        public static CadenceSignatureAlgorithm FromSignatureAlgoToCadenceSignatureAlgorithm(this SignatureAlgo signatureAlgo)
+        {
+            return CadenceExtensions.FromSignatureAlgoToCadenceSignatureAlgorithm(signatureAlgo);
         }
     }
 }

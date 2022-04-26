@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Flow.Net.Sdk.Exceptions;
+using Newtonsoft.Json;
 
 namespace Flow.Net.Sdk.Cadence
 {
@@ -44,6 +45,42 @@ namespace Flow.Net.Sdk.Cadence
             where T : ICadence
         {
             return cadenceComposite.CompositeFieldAs<T>(cadenceComposite, fieldName);
+        }
+
+        /// <summary>
+        /// Converts from <see cref="HashAlgo"/> to Cadence Enum <see cref="CadenceHashAlgorithm"/>
+        /// </summary>
+        /// <param name="hashAlgo"></param>
+        /// <returns><see cref="CadenceHashAlgorithm"/> value</returns>
+        public static CadenceHashAlgorithm FromHashAlgoToCadenceHashAlgorithm(HashAlgo hashAlgo)
+        {
+            switch(hashAlgo)
+            {
+                case HashAlgo.SHA3_256:
+                    return CadenceHashAlgorithm.SHA3_256;
+                case HashAlgo.SHA2_256:
+                    return CadenceHashAlgorithm.SHA2_256;                
+            }
+
+            throw new FlowException($"Failed to convert {hashAlgo} to adenceHashAlgorithm");
+        }
+
+        /// <summary>
+        /// Converts from <see cref="SignatureAlgo"/> to Cadence Enum <see cref="CadenceSignatureAlgorithm"/>
+        /// </summary>
+        /// <param name="signatureAlgo"></param>
+        /// <returns><see cref="CadenceSignatureAlgorithm"/> value</returns>
+        public static CadenceSignatureAlgorithm FromSignatureAlgoToCadenceSignatureAlgorithm(SignatureAlgo signatureAlgo) 
+        {
+            switch (signatureAlgo)
+            {
+                case SignatureAlgo.ECDSA_P256:
+                    return CadenceSignatureAlgorithm.ECDSA_P256;
+                case SignatureAlgo.ECDSA_secp256k1:
+                    return CadenceSignatureAlgorithm.ECDSA_secp256k1;
+            }
+
+            throw new FlowException($"Failed to convert {signatureAlgo} to CadenceSignatureAlgorithm");
         }
     }
 }
