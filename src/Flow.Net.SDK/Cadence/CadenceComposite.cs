@@ -29,7 +29,7 @@ namespace Flow.Net.Sdk.Cadence
         public string Id { get; set; }
 
         [JsonProperty("fields")]
-        public IEnumerable<CadenceCompositeItemValue> Fields { get; set; }        
+        public IEnumerable<CadenceCompositeItemValue> Fields { get; set; }
     }
 
     public class CadenceCompositeItemValue

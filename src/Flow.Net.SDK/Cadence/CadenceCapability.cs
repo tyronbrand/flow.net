@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Flow.Net.Sdk.Cadence.Types;
+using Newtonsoft.Json;
 
 namespace Flow.Net.Sdk.Cadence
 {
@@ -23,10 +24,10 @@ namespace Flow.Net.Sdk.Cadence
         [JsonProperty("path")]
         public CadencePath Path { get; set; }
 
-        [JsonProperty("borrowType")]
-        public string BorrowType { get; set; }
-
         [JsonProperty("address")]
-        public string Address { get; set; }        
+        public string Address { get; set; }
+
+        [JsonProperty("borrowType")]
+        public ICadenceType BorrowType { get; set; }
     }    
 }

@@ -1,5 +1,6 @@
 ﻿using ExpectedObjects;
 using Flow.Net.Sdk.Cadence;
+using Flow.Net.Sdk.Cadence.Types;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using Xunit;
@@ -9,10 +10,12 @@ namespace Flow.Net.Sdk.Tests
     public class CadenceTest
     {
         private readonly CadenceConverter _cadenceConverter;
+        private readonly CadenceTypeConverter _cadenceTypeConverter;
 
         public CadenceTest()
         {
             _cadenceConverter = new CadenceConverter();
+            _cadenceTypeConverter = new CadenceTypeConverter();
         }
 
         [Fact]
@@ -57,10 +60,13 @@ namespace Flow.Net.Sdk.Tests
                                 }
                             },
                         Address = "0x0000000102030405",
-                        BorrowType = "Int"
+                        BorrowType = new CadenceType
+                        {
+                            Kind = "Int"
+                        }
 
                     }),
-                    ExpectedJson = "{\"type\":\"Capability\",\"value\":{\"path\":{\"type\":\"Path\",\"value\":{\"domain\":\"storage\",\"identifier\":\"foo\"}},\"borrowType\":\"Int\",\"address\":\"0x0000000102030405\"}}"
+                    ExpectedJson = "{\"type\":\"Capability\",\"value\":{\"path\":{\"type\":\"Path\",\"value\":{\"domain\":\"storage\",\"identifier\":\"foo\"}},\"address\":\"0x0000000102030405\",\"borrowType\":{\"kind\":\"Int\"}}}"
                 }
             };
 
@@ -75,12 +81,15 @@ namespace Flow.Net.Sdk.Tests
                 new ()
                 {
                     Name = "Simple",
-                    Cadence =  new CadenceType(
-                        new CadenceTypeValue
+                    Cadence =  new CadenceTypeValue(
+                        new CadenceTypeValueValue
                         {
-                            StaticType = "Int"
+                            StaticType = new CadenceType
+                            {
+                                Kind = "String"
+                            }
                         }),
-                    ExpectedJson = "{\"type\":\"Type\",\"value\":{\"staticType\":\"Int\"}}"
+                    ExpectedJson = "{\"type\":\"Type\",\"value\":{\"staticType\":{\"kind\":\"String\"}}}"
                 }
             };
 
@@ -124,7 +133,7 @@ namespace Flow.Net.Sdk.Tests
                 {
                     Name = "Simple",
                     Cadence =  new CadenceComposite(
-                        CadenceCompositeType.Contract,
+                        Cadence.CadenceCompositeType.Contract,
                         new CadenceCompositeItem
                         {
                             Id = "S.test.FooContract",
@@ -158,7 +167,7 @@ namespace Flow.Net.Sdk.Tests
                 {
                     Name = "Simple",
                     Cadence =  new CadenceComposite(
-                        CadenceCompositeType.Event,
+                        Cadence.CadenceCompositeType.Event,
                         new CadenceCompositeItem
                         {
                             Id = "S.test.FooEvent",
@@ -192,7 +201,7 @@ namespace Flow.Net.Sdk.Tests
                 {
                     Name = "Simple",
                     Cadence =  new CadenceComposite(
-                        CadenceCompositeType.Struct,
+                        Cadence.CadenceCompositeType.Struct,
                         new CadenceCompositeItem
                         {
                             Id = "S.test.FooStruct",
@@ -226,7 +235,7 @@ namespace Flow.Net.Sdk.Tests
                 {
                     Name = "Simple",
                     Cadence =  new CadenceComposite(
-                        CadenceCompositeType.Resource,
+                        Cadence.CadenceCompositeType.Resource,
                         new CadenceCompositeItem
                         {
                             Id = "S.test.Foo",
@@ -290,7 +299,7 @@ namespace Flow.Net.Sdk.Tests
                             {
                                 Key = new CadenceString("a"),
                                 Value = new CadenceComposite(
-                                    CadenceCompositeType.Resource,
+                                    Cadence.CadenceCompositeType.Resource,
                                     new CadenceCompositeItem
                                     {
                                         Id = "S.test.Foo",
@@ -308,7 +317,7 @@ namespace Flow.Net.Sdk.Tests
                             {
                                 Key = new CadenceString("b"),
                                 Value = new CadenceComposite(
-                                    CadenceCompositeType.Resource, new CadenceCompositeItem
+                                    Cadence.CadenceCompositeType.Resource, new CadenceCompositeItem
                                     {
                                         Id = "S.test.Foo",
                                         Fields = new List<CadenceCompositeItemValue>
@@ -325,7 +334,7 @@ namespace Flow.Net.Sdk.Tests
                             {
                                 Key = new CadenceString("c"),
                                 Value = new CadenceComposite(
-                                    CadenceCompositeType.Resource, new CadenceCompositeItem
+                                    Cadence.CadenceCompositeType.Resource, new CadenceCompositeItem
                                     {
                                         Id = "S.test.Foo",
                                         Fields = new List<CadenceCompositeItemValue>
@@ -376,7 +385,7 @@ namespace Flow.Net.Sdk.Tests
                         new List<ICadence>
                         {
                             new CadenceComposite(
-                                CadenceCompositeType.Resource, new CadenceCompositeItem
+                                Cadence.CadenceCompositeType.Resource, new CadenceCompositeItem
                                 {
                                     Id = "S.test.Foo",
                                     Fields = new List<CadenceCompositeItemValue>
@@ -389,7 +398,7 @@ namespace Flow.Net.Sdk.Tests
                                     }
                                 }),
                             new CadenceComposite(
-                                CadenceCompositeType.Resource, new CadenceCompositeItem
+                                Cadence.CadenceCompositeType.Resource, new CadenceCompositeItem
                                 {
                                     Id = "S.test.Foo",
                                     Fields = new List<CadenceCompositeItemValue>
@@ -402,7 +411,7 @@ namespace Flow.Net.Sdk.Tests
                                     }
                                 }),
                             new CadenceComposite(
-                                CadenceCompositeType.Resource, new CadenceCompositeItem
+                                Cadence.CadenceCompositeType.Resource, new CadenceCompositeItem
                                 {
                                     Id = "S.test.Foo",
                                     Fields = new List<CadenceCompositeItemValue>
@@ -734,7 +743,8 @@ namespace Flow.Net.Sdk.Tests
 
         private void TestDecode(string actualJson, ICadence cadence)
         {
-            var decoded = JsonConvert.DeserializeObject<ICadence>(actualJson, _cadenceConverter);
+            JsonConverter[] jsonConverters = { _cadenceConverter, _cadenceTypeConverter };
+            var decoded = JsonConvert.DeserializeObject<ICadence>(actualJson, jsonConverters);
             cadence.ToExpectedObject().ShouldEqual(decoded);
         }
 
