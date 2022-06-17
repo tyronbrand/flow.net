@@ -7,10 +7,16 @@ namespace Flow.Net.Sdk.Cadence.Types
     {
         public CadenceCompositeType(CadenceCompositeTypeKind kind)
         {
-            Kind = Kind.ToString();
+            Kind = kind.ToString();
         }
 
-        public CadenceCompositeType(CadenceCompositeTypeKind kind, string typeId, IList<CadenceInitializerType> initializers, IList<CadenceFieldType> fields)
+        public CadenceCompositeType(CadenceCompositeTypeKind kind, string typeId)
+        {
+            Kind = kind.ToString();
+            TypeId = typeId;
+        }
+
+        public CadenceCompositeType(CadenceCompositeTypeKind kind, string typeId, List<IList<CadenceInitializerType>> initializers, IList<CadenceFieldType> fields)
         {
             Kind = kind.ToString();
             TypeId = typeId;
@@ -23,16 +29,16 @@ namespace Flow.Net.Sdk.Cadence.Types
         public sealed override string Kind { get; set; }
 
         [JsonProperty("type")]
-        public string Type { get; }
+        public string Type { get; } = "";
 
         [JsonProperty("typeID")]
         public string TypeId { get; set; }
 
         [JsonProperty("initializers")]
-        public IList<CadenceInitializerType> Initializers { get; set; }
+        public IList<IList<CadenceInitializerType>> Initializers { get; set; } = new List<IList<CadenceInitializerType>>();
 
         [JsonProperty("fields")]
-        public IList<CadenceFieldType> Fields { get; set; }
+        public IList<CadenceFieldType> Fields { get; set; } = new List<CadenceFieldType>();
 
     }
 
@@ -41,7 +47,7 @@ namespace Flow.Net.Sdk.Cadence.Types
         Struct,
         Resource,
         Event,
-        Constract,
+        Contract,
         StructInterface,
         ResourceInterface,
         ContractInterface

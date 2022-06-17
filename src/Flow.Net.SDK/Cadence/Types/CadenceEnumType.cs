@@ -23,7 +23,7 @@ namespace Flow.Net.Sdk.Cadence.Types
         public string TypeId { get; set; }
 
         [JsonProperty("initializers")]
-        public IList<CadenceInitializerType> Initializers { get; }
+        public IList<CadenceInitializerType> Initializers { get; } = new List<CadenceInitializerType>();
 
         [JsonProperty("fields")]
         public IList<CadenceFieldType> Fields { get; set; }

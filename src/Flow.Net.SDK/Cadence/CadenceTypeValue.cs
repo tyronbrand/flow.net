@@ -17,7 +17,7 @@ namespace Flow.Net.Sdk.Cadence
 
         [JsonProperty("value")]
         public CadenceTypeValueValue Value { get; set; }
-    }
+    }        
 
     public class CadenceTypeValueValue
     {

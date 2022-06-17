@@ -1,4 +1,5 @@
-﻿using Flow.Net.Sdk.Exceptions;
+﻿using Flow.Net.Sdk.Cadence.Types;
+using Flow.Net.Sdk.Exceptions;
 using Newtonsoft.Json;
 using System.Linq;
 
@@ -15,7 +16,7 @@ namespace Flow.Net.Sdk.Cadence
         /// <returns>A JSON string representation of <see cref="ICadence"/>.</returns>
         public string Encode(ICadence cadence)
         {
-            return JsonConvert.SerializeObject(cadence);
+            return JsonConvert.SerializeObject(cadence, new CadenceRepeatedTypeConverter());
         }
 
         /// <summary>

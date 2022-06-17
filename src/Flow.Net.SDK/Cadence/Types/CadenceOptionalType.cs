@@ -6,11 +6,6 @@ namespace Flow.Net.Sdk.Cadence.Types
     {
         public CadenceOptionalType() { }
 
-        public CadenceOptionalType(ICadenceType type)
-        {
-            Type = type;
-        }
-
         [JsonProperty("kind")]
         public override string Kind => "Optional";
 

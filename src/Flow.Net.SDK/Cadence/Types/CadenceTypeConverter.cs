@@ -4,26 +4,30 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Flow.Net.Sdk.Cadence.Types
 {
     public class CadenceTypeConverter : CustomCreationConverter<ICadenceType>
     {
+        private static Dictionary<string, ICadenceType> _compositeDictionary = new Dictionary<string, ICadenceType>();
+
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            if (reader.Path == "type" && reader.TokenType == JsonToken.String && _compositeDictionary.TryGetValue((string)reader.Value, out var composite))
+                return composite;
+
             var jObject = JObject.Load(reader);
             var target = Create(jObject);
+            HandleCadenceCompositeType(jObject, target);
             serializer.Populate(jObject.CreateReader(), target);
-
-            return target;
+            return target;            
         }
 
         private static ICadenceType Create(JObject jObject)
         {
-            var type = (string)jObject.Property("kind");
+            var kind = (string)jObject.Property("kind");
 
-            switch (type)
+            switch (kind)
             {
                 case "VariableSizedArray":
                     return new CadenceVariableSizedArrayType();
@@ -38,7 +42,7 @@ namespace Flow.Net.Sdk.Cadence.Types
                 case "StructInterface":
                 case "ResourceInterface":
                 case "ContractInterface":
-                    return new CadenceCompositeType((CadenceCompositeTypeKind)Enum.Parse(typeof(CadenceCompositeTypeKind), type));
+                    return new CadenceCompositeType((CadenceCompositeTypeKind)Enum.Parse(typeof(CadenceCompositeTypeKind), kind));
                 case "Function":
                     return new CadenceFunctionType();
                 case "Reference":
@@ -55,12 +59,23 @@ namespace Flow.Net.Sdk.Cadence.Types
                     return new CadenceType();
             }
 
-            throw new FlowException($"The cadence type {type} is not supported!");
+            throw new FlowException($"The cadence type {kind} is not supported!");
         }
 
-        public override ICadenceType Create(Type objectType)
+        private void HandleCadenceCompositeType(JObject jObject, ICadenceType cadenceType)
         {
-            throw new NotImplementedException();
+            if (cadenceType is CadenceEnumType enumType)
+            {
+                enumType.TypeId = (string)jObject.Property("typeID");
+                _compositeDictionary[enumType.TypeId] = enumType;
+            }
+            else if (cadenceType is CadenceCompositeType compositeType)
+            {
+                compositeType.TypeId = (string)jObject.Property("typeID");
+                _compositeDictionary[compositeType.TypeId] = compositeType;
+            }
         }
+
+        public override ICadenceType Create(Type objectType) => throw new NotImplementedException();
     }
 }
