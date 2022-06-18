@@ -767,7 +767,7 @@ namespace Flow.Net.Sdk.Tests
                         }),
                     ExpectedJson = "{\"type\":\"Type\",\"value\":{\"staticType\":{\"kind\":\"" + type + "\"}}}"
                 });
-            };
+            }
 
             TestEncodeAndDecode(testItems);
         }
@@ -1135,7 +1135,6 @@ namespace Flow.Net.Sdk.Tests
                             Type = new Cadence.Types.CadenceCompositeType(CadenceCompositeTypeKind.Resource)
                             {
                                 TypeId = "S.test.Foo",
-                                Initializers = new List<IList<CadenceInitializerType>>(),
                                 Fields = new List<CadenceFieldType>
                                 {
                                     new CadenceFieldType
@@ -1166,52 +1165,48 @@ namespace Flow.Net.Sdk.Tests
             TestEncodeAndDecode(testItems);
         }
 
-        //[Fact]
-        //public void CadenceNonRecursiceRepeatedTypes()
-        //{
-        //    var testItems = new List<CadenceTestItem>();
-        //    foreach (CadenceCompositeTypeKind kind in Enum.GetValues(typeof(CadenceCompositeTypeKind)))
-        //    {
-        //        testItems.Add(
-        //            new()
-        //            {
-        //                Name = "Simple",
-        //                Cadence = new CadenceTypeValue(
-        //                new CadenceTypeValueValue()
-        //                {
-        //                    StaticType = new Cadence.Types.CadenceCompositeType(kind)
-        //                    {
-        //                        TypeId = "S.test.Bar",
-        //                        Initializers = new List<IList<CadenceInitializerType>>(),
-        //                        Fields = new List<CadenceFieldType>
-        //                        {
-        //                            new CadenceFieldType
-        //                            {
-        //                                Id = "foo1",
-        //                                Type = new Cadence.Types.CadenceCompositeType(CadenceCompositeTypeKind.Resource)
-        //                                {
-        //                                    TypeId = "S.test.Foo"
-        //                                }
-        //                            },
-        //                            new CadenceFieldType
-        //                            {
-        //                                Id = "foo2",
-        //                                Type = new CadenceRepeatedType
-        //                                {
-        //                                    Type = "S.test.Foo"
-        //                                }
-        //                            }
-        //                        }
-        //                    }
-        //                }),
-        //                //              {"type":"Type","value":{"staticType":{"kind":"Resource","typeID":"S.test.Bar","fields":[{"id":"foo1","type":{"kind":"Resource","typeID":"S.test.Foo","fields":[],"initializers":[],"type":""}},{"id":"foo2","type":"S.test.Foo"}],"initializers":[],"type":""}}}`,
-        //                ExpectedJson = "{\"type\":\"Type\",\"value\":{\"staticType\":{\"kind\":\"" + kind.ToString() + "\",\"type\":\"\",\"typeID\":\"S.test.Bar\",\"initializers\":[],\"fields\":[{\"id\":\"foo1\",\"type\":{\"kind\":\"Resource\",\"type\":\"\",\"typeID\":\"S.test.Foo\",\"initializers\":[],\"fields\":[]}},{\"id\":\"foo2\",\"type\":\"S.test.Foo\"}]}}}"
-        //            }
-        //        );
-        //    }
+        [Fact]
+        public void CadenceNonRecursiceRepeatedTypes()
+        {
+            var fooType = new Cadence.Types.CadenceCompositeType(CadenceCompositeTypeKind.Resource)
+            {
+                TypeId = "S.test.Foo"
+            };
 
-        //    TestEncodeAndDecode(testItems);
-        //}
+            var barType = new Cadence.Types.CadenceCompositeType(CadenceCompositeTypeKind.Resource)
+            {
+                TypeId = "S.test.Bar",
+                Fields = new List<CadenceFieldType>
+                {
+                    new CadenceFieldType
+                    {
+                        Id = "foo1",
+                        Type = fooType
+                    },
+                    new CadenceFieldType
+                    {
+                        Id = "foo2",
+                        Type = fooType
+                    }
+                }
+            };
+
+            var testItems = new List<CadenceTestItem>
+            {
+                new()
+                    {
+                        Name = "Simple",
+                        Cadence = new CadenceTypeValue(
+                        new CadenceTypeValueValue()
+                        {
+                            StaticType = barType
+                        }),
+                        ExpectedJson = "{\"type\":\"Type\",\"value\":{\"staticType\":{\"kind\":\"Resource\",\"type\":\"\",\"typeID\":\"S.test.Bar\",\"initializers\":[],\"fields\":[{\"id\":\"foo1\",\"type\":{\"kind\":\"Resource\",\"type\":\"\",\"typeID\":\"S.test.Foo\",\"initializers\":[],\"fields\":[]}},{\"id\":\"foo2\",\"type\":\"S.test.Foo\"}]}}}"
+                    }
+            };
+
+            TestEncodeAndDecode(testItems);
+        }
 
         private void TestEncodeAndDecode(IEnumerable<CadenceTestItem> testItems)
         {

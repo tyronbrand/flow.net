@@ -1,5 +1,4 @@
-﻿using Flow.Net.Sdk.Exceptions;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
@@ -9,11 +8,11 @@ namespace Flow.Net.Sdk.Cadence.Types
 {
     public class CadenceTypeConverter : CustomCreationConverter<ICadenceType>
     {
-        private static Dictionary<string, ICadenceType> _compositeDictionary = new Dictionary<string, ICadenceType>();
+        private static readonly Dictionary<string, ICadenceType> _compositeDictionary = new Dictionary<string, ICadenceType>();
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if (reader.Path == "type" && reader.TokenType == JsonToken.String && _compositeDictionary.TryGetValue((string)reader.Value, out var composite))
+            if (reader.Path.Contains("type") && reader.TokenType == JsonToken.String && _compositeDictionary.TryGetValue((string)reader.Value, out var composite))
                 return composite;
 
             var jObject = JObject.Load(reader);
@@ -58,21 +57,20 @@ namespace Flow.Net.Sdk.Cadence.Types
                 default:
                     return new CadenceType();
             }
-
-            throw new FlowException($"The cadence type {kind} is not supported!");
         }
 
-        private void HandleCadenceCompositeType(JObject jObject, ICadenceType cadenceType)
+        private static void HandleCadenceCompositeType(JObject jObject, ICadenceType cadenceType)
         {
-            if (cadenceType is CadenceEnumType enumType)
+            switch (cadenceType)
             {
-                enumType.TypeId = (string)jObject.Property("typeID");
-                _compositeDictionary[enumType.TypeId] = enumType;
-            }
-            else if (cadenceType is CadenceCompositeType compositeType)
-            {
-                compositeType.TypeId = (string)jObject.Property("typeID");
-                _compositeDictionary[compositeType.TypeId] = compositeType;
+                case CadenceEnumType enumType:
+                    enumType.TypeId = (string)jObject.Property("typeID");
+                    _compositeDictionary[enumType.TypeId] = enumType;
+                    break;
+                case CadenceCompositeType compositeType:
+                    compositeType.TypeId = (string)jObject.Property("typeID");
+                    _compositeDictionary[compositeType.TypeId] = compositeType;
+                    break;
             }
         }
 

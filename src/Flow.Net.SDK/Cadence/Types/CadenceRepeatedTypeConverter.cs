@@ -3,8 +3,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Flow.Net.Sdk.Cadence.Types
 {
@@ -62,7 +60,6 @@ namespace Flow.Net.Sdk.Cadence.Types
                         }
                     }
                     jo.WriteTo(writer);
-
                 }
             }       
         }
@@ -75,23 +72,6 @@ namespace Flow.Net.Sdk.Cadence.Types
             _repeatedIds.Add(key, cadenceType);
             return false;
         }
-
-        //private void AddRemoveSerializedProperties(JObject jObject, MahMan baseContract)
-        //{
-        //    jObject.AddFirst(....);
-
-        //    foreach (KeyValuePair<string, JToken> propertyJToken in jObject)
-        //    {
-        //        if (propertyJToken.Value.Type != JTokenType.Object)
-        //            continue;
-
-        //        JToken nestedJObject = propertyJToken.Value;
-        //        PropertyInfo clrProperty = baseContract.GetType().GetProperty(propertyJToken.Key);
-        //        MahMan nestedObjectValue = clrProperty.GetValue(baseContract) as MahMan;
-        //        if (nestedObj != null)
-        //            AddRemoveSerializedProperties((JObject)nestedJObject, nestedObjectValue);
-        //    }
-        //}
     }
 
 }

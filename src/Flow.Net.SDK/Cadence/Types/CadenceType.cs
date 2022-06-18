@@ -14,7 +14,7 @@ namespace Flow.Net.Sdk.Cadence.Types
         /// <returns>A JSON string representation of <see cref="ICadenceType"/>.</returns>
         public string Encode(ICadenceType cadenceType)
         {
-            return JsonConvert.SerializeObject(cadenceType);
+            return JsonConvert.SerializeObject(cadenceType, new CadenceRepeatedTypeConverter());
         }
     }
 }

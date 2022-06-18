@@ -10,20 +10,13 @@ namespace Flow.Net.Sdk.Cadence.Types
             Kind = kind.ToString();
         }
 
-        public CadenceCompositeType(CadenceCompositeTypeKind kind, string typeId)
-        {
-            Kind = kind.ToString();
-            TypeId = typeId;
-        }
-
-        public CadenceCompositeType(CadenceCompositeTypeKind kind, string typeId, List<IList<CadenceInitializerType>> initializers, IList<CadenceFieldType> fields)
+        public CadenceCompositeType(CadenceCompositeTypeKind kind, string typeId, IList<IList<CadenceInitializerType>> initializers, IList<CadenceFieldType> fields)
         {
             Kind = kind.ToString();
             TypeId = typeId;
             Initializers = initializers;
             Fields = fields;
         }
-
 
         [JsonProperty("kind")]
         public sealed override string Kind { get; set; }

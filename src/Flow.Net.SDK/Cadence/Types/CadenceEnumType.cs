@@ -7,10 +7,11 @@ namespace Flow.Net.Sdk.Cadence.Types
     {
         public CadenceEnumType() { }
 
-        public CadenceEnumType(string typeId, ICadenceType type)
+        public CadenceEnumType(string typeId, ICadenceType type, IList<CadenceFieldType> fields)
         {
             TypeId = typeId;
             Type = type;
+            Fields = fields;
         }
 
         [JsonProperty("kind")]
@@ -26,6 +27,6 @@ namespace Flow.Net.Sdk.Cadence.Types
         public IList<CadenceInitializerType> Initializers { get; } = new List<CadenceInitializerType>();
 
         [JsonProperty("fields")]
-        public IList<CadenceFieldType> Fields { get; set; }
+        public IList<CadenceFieldType> Fields { get; set; } = new List<CadenceFieldType>();
     }
 }
