@@ -50,7 +50,7 @@ namespace Flow.Net.Sdk.Cadence
                 case "Capability":
                     return new CadenceCapability();
                 case "Type":
-                    return new CadenceType();
+                    return new CadenceTypeValue();
                 case "Optional":
                     return new CadenceOptional();
                 case "Path":
