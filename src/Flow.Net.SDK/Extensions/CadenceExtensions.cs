@@ -1,4 +1,5 @@
-﻿using Flow.Net.Sdk.Exceptions;
+﻿using Flow.Net.Sdk.Cadence.Types;
+using Flow.Net.Sdk.Exceptions;
 using Newtonsoft.Json;
 
 namespace Flow.Net.Sdk.Cadence
@@ -19,7 +20,8 @@ namespace Flow.Net.Sdk.Cadence
         /// <returns>The deserialized <see cref="ICadence"/> from the JSON string.</returns>
         public static ICadence Decode(this string cadenceJson, CadenceConverter cadenceConverter = null)
         {
-            return JsonConvert.DeserializeObject<ICadence>(cadenceJson, cadenceConverter ?? new CadenceConverter());
+            JsonConverter[] jsonConverters = { cadenceConverter ?? new CadenceConverter(), new CadenceTypeConverter() };
+            return JsonConvert.DeserializeObject<ICadence>(cadenceJson, jsonConverters);
         }
 
         /// <summary>
