@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.TransactionExamples
 {
-    public class MultiPartyTwoAuthorizersExample : ExampleBase
+    public class MultiPartyTwoAuthorizersExample : GrpcExampleBase
     {
         public static async Task RunAsync()
         {

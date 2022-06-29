@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.EventExamples
 {
-    public class GetEventsExample : ExampleBase
+    public class GetEventsExample : GrpcExampleBase
     {
         public static async Task RunAsync()
         {

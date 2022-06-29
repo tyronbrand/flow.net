@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.TransactionExamples
 {
-    public class MultiPartyMultiSignatureExample : ExampleBase
+    public class MultiPartyMultiSignatureExample : GrpcExampleBase
     {
         public static async Task RunAsync()
         {

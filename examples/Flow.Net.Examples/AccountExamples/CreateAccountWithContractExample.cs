@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.AccountExamples
 {
-    public class CreateAccountWithContractExample : ExampleBase
+    public class CreateAccountWithContractExample : GrpcExampleBase
     {
         public static async Task RunAsync()
         {

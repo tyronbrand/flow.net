@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.ScriptExamples
 {
-    public class ScriptExample : ExampleBase
+    public class ScriptExample : GrpcExampleBase
     {
         public static async Task RunAsync()
         {

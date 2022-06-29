@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples
 {
-    public abstract class ExampleBase
+    public abstract class GrpcExampleBase
     {
         protected static FlowClientAsync FlowClient { get; private set; }
 

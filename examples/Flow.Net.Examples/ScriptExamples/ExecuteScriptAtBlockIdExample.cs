@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.ScriptExamples
 {
-    public class ExecuteScriptAtBlockIdExample : ExampleBase
+    public class ExecuteScriptAtBlockIdExample : GrpcExampleBase
     {
         public static async Task RunAsync()
         {

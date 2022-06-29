@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.TransactionExamples
 {
-    public class GetTransactionExample : ExampleBase
+    public class GetTransactionExample : GrpcExampleBase
     {
         public static async Task RunAsync()
         {

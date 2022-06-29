@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.CollectionExamples
 {
-    public class GetCollectionExample : ExampleBase
+    public class GetCollectionExample : GrpcExampleBase
     {
         public static async Task RunAsync()
         {

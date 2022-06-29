@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.BlockExamples
 {
-    public class BlockExample : ExampleBase
+    public class BlockExample : GrpcExampleBase
     {
         public static async Task RunAsync()
         {

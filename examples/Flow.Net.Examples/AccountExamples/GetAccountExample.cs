@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.AccountExamples
 {
-    public class GetAccountExample : ExampleBase
+    public class GetAccountExample : GrpcExampleBase
     {
         public static async Task RunAsync()
         {

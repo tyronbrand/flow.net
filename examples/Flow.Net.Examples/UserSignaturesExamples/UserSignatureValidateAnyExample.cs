@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.UserSignaturesExamples
 {
-    public class UserSignatureValidateAnyExample : ExampleBase
+    public class UserSignatureValidateAnyExample : GrpcExampleBase
     {
         public static async Task RunAsync()
         {
