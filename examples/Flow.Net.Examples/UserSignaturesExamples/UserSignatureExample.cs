@@ -1,14 +1,15 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.UserSignaturesExamples
 {
-    public class UserSignatureExample : GrpcExampleBase
+    public class UserSignatureExample : ExampleBase
     {
         public static async Task RunAsync()
         {
@@ -28,14 +29,14 @@ namespace Flow.Net.Examples.UserSignaturesExamples
             var aliceFlowAccount = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKeyAlice });
             var bobFlowAccount = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKeyBob });
 
-            var toAddress = new CadenceAddress(aliceFlowAccount.Address.HexValue);
-            var fromAddress = new CadenceAddress(bobFlowAccount.Address.HexValue);
+            var toAddress = new CadenceAddress(aliceFlowAccount.Address.Address);
+            var fromAddress = new CadenceAddress(bobFlowAccount.Address.Address);
             var amount = new CadenceNumber(CadenceNumberType.UInt64, "100");
 
             var message = Utilities.CombineByteArrays(new[]
             {
-                aliceFlowAccount.Address.HexValue.FromHexToBytes(),
-                bobFlowAccount.Address.HexValue.FromHexToBytes()
+                Encoding.UTF8.GetBytes(aliceFlowAccount.Address.Address),
+                Encoding.UTF8.GetBytes(bobFlowAccount.Address.Address)
             });
 
             var amountBytes = BitConverter.GetBytes(ulong.Parse(amount.Value));
@@ -48,8 +49,8 @@ namespace Flow.Net.Examples.UserSignaturesExamples
             });
 
             // sign the message with Alice and Bob
-            var aliceSigner = new Sdk.Crypto.Ecdsa.Signer(flowAccountKeyAlice.PrivateKey, flowAccountKeyAlice.HashAlgorithm, flowAccountKeyAlice.SignatureAlgorithm);
-            var bobSigner = new Sdk.Crypto.Ecdsa.Signer(flowAccountKeyBob.PrivateKey, flowAccountKeyBob.HashAlgorithm, flowAccountKeyBob.SignatureAlgorithm);
+            var aliceSigner = new Sdk.Core.Crypto.Ecdsa.Signer(flowAccountKeyAlice.PrivateKey, flowAccountKeyAlice.HashAlgorithm, flowAccountKeyAlice.SignatureAlgorithm);
+            var bobSigner = new Sdk.Core.Crypto.Ecdsa.Signer(flowAccountKeyBob.PrivateKey, flowAccountKeyBob.HashAlgorithm, flowAccountKeyBob.SignatureAlgorithm);
 
             var aliceSignature = UserMessage.Sign(message, aliceSigner);
             var bobSignature = UserMessage.Sign(message, bobSigner);

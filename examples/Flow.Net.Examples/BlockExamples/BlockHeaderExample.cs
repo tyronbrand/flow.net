@@ -1,11 +1,10 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.BlockExamples
 {
-    public class BlockHeaderExample : GrpcExampleBase
+    public class BlockHeaderExample : ExampleBase
     {
         public static async Task RunAsync()
         {
@@ -32,7 +31,7 @@ namespace Flow.Net.Examples.BlockExamples
 
         private static void PrintResult(FlowBlockHeader flowBlockHeader)
         {
-            Console.WriteLine($"ID: {flowBlockHeader.Id.FromByteStringToHex()}");
+            Console.WriteLine($"ID: {flowBlockHeader.Id}");
             Console.WriteLine($"height: {flowBlockHeader.Height}");
             Console.WriteLine($"timestamp: {flowBlockHeader.Timestamp}\n");
         }

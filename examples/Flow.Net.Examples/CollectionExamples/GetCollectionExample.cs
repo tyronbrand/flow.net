@@ -1,5 +1,5 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.CollectionExamples
 {
-    public class GetCollectionExample : GrpcExampleBase
+    public class GetCollectionExample : ExampleBase
     {
         public static async Task RunAsync()
         {
@@ -21,14 +21,14 @@ namespace Flow.Net.Examples.CollectionExamples
         private static async Task Demo(FlowCollectionGuarantee flowCollectionGuarantee)
         {
             // get collection by ID
-            var collection = await FlowClient.GetCollectionByIdAsync(flowCollectionGuarantee.CollectionId);
+            var collection = await FlowClient.GetCollectionAsync(flowCollectionGuarantee.CollectionId);
             PrintCollection(collection);
         }
 
-        private static void PrintCollection(FlowCollectionResponse flowCollection)
+        private static void PrintCollection(FlowCollection flowCollection)
         {
-            Console.WriteLine($"ID: {flowCollection.Id.FromByteStringToHex()}");
-            Console.WriteLine("Transactions: [{0}]", string.Join(", ", flowCollection.TransactionIds.Select(s => s.FromByteStringToHex()).ToArray()));
+            Console.WriteLine($"ID: {flowCollection.Id}");
+            Console.WriteLine("Transactions: [{0}]", string.Join(", ", flowCollection.TransactionIds.Select(s => s.Id).ToArray()));
         }
 
         private static async Task<FlowCollectionGuarantee> PrepCollectionId()
@@ -38,7 +38,7 @@ namespace Flow.Net.Examples.CollectionExamples
             await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey });
 
             var block = await FlowClient.GetBlockByHeightAsync(1);
-            return block.CollectionGuarantees.FirstOrDefault();
+            return block.Payload.CollectionGuarantees.FirstOrDefault();
         }
     }
 }

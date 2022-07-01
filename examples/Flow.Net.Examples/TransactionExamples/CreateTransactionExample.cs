@@ -1,15 +1,16 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Client;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Client.Http;
+using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Models;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.TransactionExamples
 {
     public static class CreateTransactionExample
     {        
-        public static async Task Demo()
+        private static async Task Demo()
         {
             // reading script from folder
             var script = Utilities.ReadCadenceScript("greeting");
@@ -22,13 +23,13 @@ namespace Flow.Net.Examples.TransactionExamples
 
             // Establish a connection with an access node
             var accessAPIHost = "";
-            var flowClient = new FlowClientAsync(accessAPIHost);
+            var flowClient = new FlowHttpClient(new HttpClient(), accessAPIHost);
 
             // Get the latest sealed block to use as a reference block
             var latestBlock = await flowClient.GetLatestBlockHeaderAsync();
 
             // Get the latest account info for this address
-            var proposerAccount = await flowClient.GetAccountAtLatestBlockAsync(proposerAddress);
+            var proposerAccount = await flowClient.GetAccountAtLatestBlockAsync(proposerAddress.Address);
 
             // Get the latest sequence number for this key
             var proposerKey = proposerAccount.Keys.FirstOrDefault(w => w.Index == proposerKeyIndex);
@@ -55,7 +56,7 @@ namespace Flow.Net.Examples.TransactionExamples
             tx.Arguments.Add(new CadenceString("Hello"));
         }
 
-        public static void Demo2()
+        private static void Demo2()
         {
             var proposerAccount = new FlowAccount();
             var proposerKey = proposerAccount.Keys.FirstOrDefault(w => w.Index == 1);
@@ -74,7 +75,7 @@ namespace Flow.Net.Examples.TransactionExamples
             };
 
             // construct a signer from your private key and configured signature/hash algorithms
-            var signer = Sdk.Crypto.Ecdsa.Utilities.CreateSigner("privateKey", SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
+            var signer = Sdk.Core.Crypto.Ecdsa.Utilities.CreateSigner("privateKey", SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
 
             FlowTransaction.AddEnvelopeSignature(tx, proposerAccount.Address, proposerKey.Index, signer);
         }

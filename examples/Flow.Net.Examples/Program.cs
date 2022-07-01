@@ -1,13 +1,4 @@
-﻿using Flow.Net.Examples.AccountExamples;
-using Flow.Net.Examples.BlockExamples;
-using Flow.Net.Examples.CollectionExamples;
-using Flow.Net.Examples.EventExamples;
-using Flow.Net.Examples.ScriptExamples;
-using Flow.Net.Examples.TransactionExamples;
-using Flow.Net.Examples.UserSignaturesExamples;
-using Flow.Net.Sdk.Client.Http;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Flow.Net.Examples
 {
@@ -15,44 +6,42 @@ namespace Flow.Net.Examples
     {
         private static async Task Main()
         {
-            //// Block example
-            //await BlockExample.RunAsync();
-            //await BlockHeaderExample.RunAsync();
+            // Block example
+            await BlockExamples.BlockExample.RunAsync();
+            await BlockExamples.BlockHeaderExample.RunAsync();
 
-            //// Event example
-            //await GetEventsExample.RunAsync();
+            // Event example
+            await EventExamples.GetEventsExample.RunAsync();
 
-            //// Script example
-            //await ScriptExample.RunAsync();
-            //await ExecuteScriptAtLatestBlockWithParametersExample.RunAsync();
-            //await ExecuteScriptAtLatestBlockExample.RunAsync();
-            //await ExecuteScriptAtBlockHeightExample.RunAsync();
-            //await ExecuteScriptAtBlockIdExample.RunAsync();
+            // Script example
+            await ScriptExamples.ScriptExample.RunAsync();
+            await ScriptExamples.ExecuteScriptAtLatestBlockWithParametersExample.RunAsync();
+            await ScriptExamples.ExecuteScriptAtLatestBlockExample.RunAsync();
+            await ScriptExamples.ExecuteScriptAtBlockHeightExample.RunAsync();
+            await ScriptExamples.ExecuteScriptAtBlockIdExample.RunAsync();
 
-            //// Collection example
-            //await GetCollectionExample.RunAsync();
+            // Collection example
+            await CollectionExamples.GetCollectionExample.RunAsync();
 
-            //// Transaction examples
-            //await GetTransactionExample.RunAsync();
-            //await SinglePartySingleSignatureExample.RunAsync();
-            //await SinglePartyMultiSignatureExample.RunAsync();
-            //await MultiPartySingleSignatureExample.RunAsync();
-            //await MultiPartyTwoAuthorizersExample.RunAsync();
-            //await MultiPartyMultiSignatureExample.RunAsync();
+            // Transaction examples
+            await TransactionExamples.GetTransactionExample.RunAsync();
+            await TransactionExamples.SinglePartySingleSignatureExample.RunAsync();
+            await TransactionExamples.SinglePartyMultiSignatureExample.RunAsync();
+            await TransactionExamples.MultiPartySingleSignatureExample.RunAsync();
+            await TransactionExamples.MultiPartyTwoAuthorizersExample.RunAsync();
+            await TransactionExamples.MultiPartyMultiSignatureExample.RunAsync();
 
-            //// Account example            
-            //await CreateAccountExample.RunAsync();
-            //await CreateAccountWithContractExample.RunAsync();
-            //await DeployUpdateDeleteContractExample.RunAsync();
-            //await GetAccountExample.RunAsync();
+            // Account example            
+            await AccountExamples.CreateAccountExample.RunAsync();
+            await AccountExamples.CreateAccountWithContractExample.RunAsync();
+            await AccountExamples.DeployUpdateDeleteContractExample.RunAsync();
+            await AccountExamples.GetAccountExample.RunAsync();
 
-            //// User signature examples
-            //await UserSignatureExample.RunAsync();
-            //await UserSignatureValidateAnyExample.RunAsync();
-            //await UserSignatureValidateAllExample.RunAsync();
+            // User signature examples
+            await UserSignaturesExamples.UserSignatureExample.RunAsync();
+            await UserSignaturesExamples.UserSignatureValidateAnyExample.RunAsync();
+            await UserSignaturesExamples.UserSignatureValidateAllExample.RunAsync();
 
-            //await ScriptExamples.Http.ExecuteScriptAtLatestBlockWithParametersExample.RunAsync();
-            await TransactionExamples.Http.GetTransactionExample.RunAsync();
         }
     }
 }

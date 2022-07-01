@@ -763,7 +763,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
         /// <param name="select">A comma-separated list indicating which properties of the content to return.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public Task<BlockEvents> EventsAsync(string type, string start_height, string end_height, IEnumerable<string> block_ids, IEnumerable<string> select)
+        public Task<ICollection<BlockEvents>> EventsAsync(string type, string start_height, string end_height, IEnumerable<string> block_ids, IEnumerable<string> select)
         {
             return EventsAsync(type, start_height, end_height, block_ids, select, System.Threading.CancellationToken.None);
         }
@@ -777,7 +777,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
         /// <param name="select">A comma-separated list indicating which properties of the content to return.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async Task<BlockEvents> EventsAsync(string type, string start_height, string end_height, IEnumerable<string> block_ids, IEnumerable<string> select, System.Threading.CancellationToken cancellationToken)
+        public async Task<ICollection<BlockEvents>> EventsAsync(string type, string start_height, string end_height, IEnumerable<string> block_ids, IEnumerable<string> select, System.Threading.CancellationToken cancellationToken)
         {
             if (type == null)
                 throw new ArgumentNullException("type");
@@ -831,7 +831,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200")
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<BlockEvents>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ICollection<BlockEvents>>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -859,7 +859,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
 
-                        return default(BlockEvents);
+                        return default;
                     }
                     finally
                     {
@@ -1694,12 +1694,12 @@ namespace Flow.Net.Sdk.Client.Http.Generated
         [Required(AllowEmptyStrings = true)]
         public string Collection_id { get; set; }
 
-        [JsonProperty("signer_ids", Required = Required.Always)]
+        [JsonProperty("signer_ids")]
         [Required]
         [MinLength(1)]
         public ICollection<string> Signer_ids { get; set; } = new System.Collections.ObjectModel.Collection<string>();
 
-        [JsonProperty("signature", Required = Required.Always)]
+        [JsonProperty("signature")]
         [Required(AllowEmptyStrings = true)]
         public byte[] Signature { get; set; }
 

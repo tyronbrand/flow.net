@@ -1,4 +1,6 @@
 ﻿using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Models;
+using System.Collections.Generic;
 
 namespace Flow.Net.Sdk.Core
 {
@@ -42,6 +44,12 @@ namespace Flow.Net.Sdk.Core
         public static CadenceSignatureAlgorithm FromSignatureAlgoToCadenceSignatureAlgorithm(this SignatureAlgo signatureAlgo)
         {
             return CadenceExtensions.FromSignatureAlgoToCadenceSignatureAlgorithm(signatureAlgo);
+        }
+
+        ///<inheritdoc cref="Converter.AccountCreatedAddress"/>
+        public static FlowAddress AccountCreatedAddress(this IEnumerable<FlowEvent> flowEvents)
+        {
+            return Converter.AccountCreatedAddress(flowEvents);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Flow.Net.Examples
+namespace Flow.Net.Examples.GrpcExamples
 {
     public abstract class GrpcExampleBase
     {
@@ -19,7 +19,7 @@ namespace Flow.Net.Examples
 
             if (FlowClient != null)
                 return FlowClient;
-            
+
             FlowClient = new FlowClientAsync(networkUrl);
             await FlowClient.PingAsync();
 

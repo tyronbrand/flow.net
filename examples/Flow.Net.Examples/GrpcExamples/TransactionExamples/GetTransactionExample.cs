@@ -1,11 +1,14 @@
-﻿using Flow.Net.Sdk.Core.Models;
+﻿using Flow.Net.Examples.GrpcExamples;
+using Flow.Net.Sdk;
+using Flow.Net.Sdk.Models;
+using Google.Protobuf;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Flow.Net.Examples.TransactionExamples.Http
+namespace Flow.Net.Examples.GrpcExamples.TransactionExamples
 {
-    public class GetTransactionExample : HttpExampleBase
+    public class GetTransactionExample : GrpcExampleBase
     {
         public static async Task RunAsync()
         {
@@ -16,7 +19,7 @@ namespace Flow.Net.Examples.TransactionExamples.Http
             Console.WriteLine("\nGetTransactionExample Complete\n");
         }
 
-        private static async Task Demo(string transactionId)
+        private static async Task Demo(ByteString transactionId)
         {
             var tx = await FlowClient.GetTransactionAsync(transactionId);
             PrintTransaction(tx);
@@ -27,19 +30,19 @@ namespace Flow.Net.Examples.TransactionExamples.Http
 
         private static void PrintTransaction(FlowTransactionBase tx)
         {
-            Console.WriteLine($"ReferenceBlockId: {tx.ReferenceBlockId}");
-            Console.WriteLine($"Payer: {tx.Payer.Address}");
-            Console.WriteLine("Authorizers: [{0}]", string.Join(", ", tx.Authorizers.Select(s => s.Address).ToArray()));
-            Console.WriteLine($"Proposer: {tx.ProposalKey.Address.Address}");
+            Console.WriteLine($"ReferenceBlockId: {tx.ReferenceBlockId.FromByteStringToHex()}");
+            Console.WriteLine($"Payer: {tx.Payer.Value.FromByteStringToHex()}");
+            Console.WriteLine("Authorizers: [{0}]", string.Join(", ", tx.Authorizers.Select(s => s.HexValue).ToArray()));
+            Console.WriteLine($"Proposer: {tx.ProposalKey.Address.HexValue}");
         }
 
         private static void PrintTransactionResult(FlowTransactionResult txr)
         {
             Console.WriteLine($"Status: {txr.Status}");
-            Console.WriteLine($"Error: {txr.ErrorMessage}\n");
+            Console.WriteLine($"Error: {txr.ErrorMessage}\n");            
         }
 
-        private static async Task<string> PrepTransactionId()
+        private static async Task<ByteString> PrepTransactionId()
         {
             return await RandomTransactionAsync();
         }

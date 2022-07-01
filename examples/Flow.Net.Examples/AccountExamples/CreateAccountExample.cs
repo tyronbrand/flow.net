@@ -1,12 +1,12 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.AccountExamples
 {
-    public class CreateAccountExample : GrpcExampleBase
+    public class CreateAccountExample : ExampleBase
     {
         public static async Task RunAsync()
         {
@@ -23,10 +23,10 @@ namespace Flow.Net.Examples.AccountExamples
 
         private static void PrintResult(FlowAccount flowAccount)
         {
-            Console.WriteLine($"Address: {flowAccount.Address.HexValue}");
+            Console.WriteLine($"Address: {flowAccount.Address.Address}");
             Console.WriteLine($"Balance: {flowAccount.Balance}");
-            Console.WriteLine($"Contracts: {flowAccount.Contracts.Count}");
-            Console.WriteLine($"Keys: {flowAccount.Keys.Count}\n");
+            Console.WriteLine($"Contracts: {flowAccount.Contracts?.Count}");
+            Console.WriteLine($"Keys: {flowAccount.Keys?.Count}\n");
         }
     }
 }

@@ -11,6 +11,6 @@ namespace Flow.Net.Sdk.Core.Models
         public string Code { get; set; }
         public decimal Balance { get; set; }
         public IList<FlowAccountKey> Keys { get; set; } = new List<FlowAccountKey>();
-        public IList<FlowContract> Contracts { get; } = new List<FlowContract>();
+        public IList<FlowContract> Contracts { get; set; } = new List<FlowContract>();
     }
 }

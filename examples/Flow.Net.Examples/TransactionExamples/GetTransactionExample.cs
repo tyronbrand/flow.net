@@ -1,13 +1,11 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Models;
-using Google.Protobuf;
+﻿using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.TransactionExamples
 {
-    public class GetTransactionExample : GrpcExampleBase
+    public class GetTransactionExample : ExampleBase
     {
         public static async Task RunAsync()
         {
@@ -18,7 +16,7 @@ namespace Flow.Net.Examples.TransactionExamples
             Console.WriteLine("\nGetTransactionExample Complete\n");
         }
 
-        private static async Task Demo(ByteString transactionId)
+        private static async Task Demo(string transactionId)
         {
             var tx = await FlowClient.GetTransactionAsync(transactionId);
             PrintTransaction(tx);
@@ -29,19 +27,19 @@ namespace Flow.Net.Examples.TransactionExamples
 
         private static void PrintTransaction(FlowTransactionBase tx)
         {
-            Console.WriteLine($"ReferenceBlockId: {tx.ReferenceBlockId.FromByteStringToHex()}");
-            Console.WriteLine($"Payer: {tx.Payer.Value.FromByteStringToHex()}");
-            Console.WriteLine("Authorizers: [{0}]", string.Join(", ", tx.Authorizers.Select(s => s.HexValue).ToArray()));
-            Console.WriteLine($"Proposer: {tx.ProposalKey.Address.HexValue}");
+            Console.WriteLine($"ReferenceBlockId: {tx.ReferenceBlockId}");
+            Console.WriteLine($"Payer: {tx.Payer.Address}");
+            Console.WriteLine("Authorizers: [{0}]", string.Join(", ", tx.Authorizers.Select(s => s.Address).ToArray()));
+            Console.WriteLine($"Proposer: {tx.ProposalKey.Address.Address}");
         }
 
         private static void PrintTransactionResult(FlowTransactionResult txr)
         {
             Console.WriteLine($"Status: {txr.Status}");
-            Console.WriteLine($"Error: {txr.ErrorMessage}\n");            
+            Console.WriteLine($"Error: {txr.ErrorMessage}\n");
         }
 
-        private static async Task<ByteString> PrepTransactionId()
+        private static async Task<string> PrepTransactionId()
         {
             return await RandomTransactionAsync();
         }

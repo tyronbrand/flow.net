@@ -1,5 +1,9 @@
-﻿using Flow.Net.Sdk.Core.Exceptions;
+﻿using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Constants;
+using Flow.Net.Sdk.Core.Exceptions;
+using Flow.Net.Sdk.Core.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -97,6 +101,34 @@ namespace Flow.Net.Sdk.Core
             {
                 throw new FlowException("Failed to remove hex prefix", exception);
             }
+        }
+
+        /// <summary>
+        /// Filters a <see cref="IEnumerable{T}" /> of type <see cref="FlowEvent"/> where <see cref="Type"/> is equal to "flow.AccountCreated" and returns a <see cref="FlowAddress"/>.
+        /// </summary>
+        /// <param name="flowEvents"></param>
+        /// <returns>A <see cref="FlowAddress"/> that satisfies the condition.</returns>
+        public static FlowAddress AccountCreatedAddress(IEnumerable<FlowEvent> flowEvents)
+        {
+            var accountCreatedEvent = flowEvents.FirstOrDefault(w => w.Type == Event.AccountCreated);
+
+            if (accountCreatedEvent == null)
+                return null;
+
+            if (accountCreatedEvent.Payload == null)
+                return null;
+
+            var compositeItemFields = accountCreatedEvent.Payload.As<CadenceComposite>().Value.Fields.ToList();
+
+            if (!compositeItemFields.Any())
+                return null;
+
+            var addressValue = compositeItemFields.FirstOrDefault();
+
+            if (addressValue == null)
+                return null;
+
+            return new FlowAddress(addressValue.Value.As<CadenceAddress>().Value);
         }
     }
 }

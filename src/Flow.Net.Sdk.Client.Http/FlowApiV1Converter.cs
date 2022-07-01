@@ -18,26 +18,31 @@ namespace Flow.Net.Sdk.Client.Http
                 Address = new FlowAddress(account.Address),
                 Balance = decimal.Parse(account.Balance),
                 Code = null,
-                //Contracts = account.Contracts,
-                Keys = account.Keys?.FromAccountPublicKey()
+                Contracts = account.Contracts?.ToFlowContract(),
+                Keys = account.Keys?.ToFlowAccountKey()
             };
         }
 
         public static FlowCollection ToFlowCollection(this Collection collection)
         {
-            return new FlowCollection
+            var flowCollection = new FlowCollection
             {
-                Id = collection.Id,
-                TransactionIds = collection.Transactions.Select(s => s.ToFlowTransactionId()).ToList()
+                Id = collection.Id
             };
+
+            if (collection.Transactions != null)
+                flowCollection.TransactionIds = collection.Transactions?.Select(s => s.ToFlowTransactionId()).ToList();
+
+            return flowCollection;
         }
 
-        public static FlowBlock ToFlowBlock(this ICollection<Block> blocks)
+        public static IList<FlowBlock> ToFlowBlock(this ICollection<Block> blocks)
         {
-            if (blocks.Count > 0)
+            var flowBlock = new List<FlowBlock>();
+
+            foreach(var block in blocks)
             {
-                var block = blocks.FirstOrDefault();
-                return new FlowBlock
+                flowBlock.Add(new FlowBlock
                 {
                     Header = new FlowBlockHeader
                     {
@@ -51,9 +56,9 @@ namespace Flow.Net.Sdk.Client.Http
                         CollectionGuarantees = block.Payload?.Collection_guarantees.FromCollectionGuarantees(),
                         Seals = block.Payload?.Block_seals.FromBlockSeals(),
                     }
-                };
+                });
             }
-            return new FlowBlock();
+            return flowBlock;
         }
 
         public static IList<FlowBlockSeal> FromBlockSeals(this ICollection<BlockSeal> blockSeals)
@@ -83,7 +88,21 @@ namespace Flow.Net.Sdk.Client.Http
             return flowCollectionGuarantees;
         }
 
-        public static IList<FlowAccountKey> FromAccountPublicKey(this ICollection<AccountPublicKey> accountPublicKey)
+        public static IList<FlowContract> ToFlowContract(this IDictionary<string, byte[]> contracts)
+        {
+            var flowContracts = new List<FlowContract>();
+            foreach(var contract in contracts)
+            {
+                flowContracts.Add(new FlowContract
+                {
+                    Name = contract.Key,
+                    Source = Encoding.UTF8.GetString(contract.Value)
+                });
+            }
+            return flowContracts;
+        }
+
+        public static IList<FlowAccountKey> ToFlowAccountKey(this ICollection<AccountPublicKey> accountPublicKey)
         {
             var flowAccountKeys = new List<FlowAccountKey>();
             foreach(var key in accountPublicKey)
@@ -264,24 +283,41 @@ namespace Flow.Net.Sdk.Client.Http
             return flowExecutionResults;
         }
 
-        public static IEnumerable<FlowBlockEvent> ToFlowBlockEvent(this BlockEvents blockEvents)
+        public static IEnumerable<FlowBlockEvent> ToFlowBlockEvent(this ICollection<BlockEvents> blockEvents)
         {
             var flowBlockEvents = new List<FlowBlockEvent>();
 
-            foreach (var @event in blockEvents.Events)
+            foreach (var block in blockEvents)
             {
-                var blockEvent = new FlowBlockEvent
-                {
-                    BlockId = blockEvents.Block_id,
-                    BlockHeight = ulong.Parse(blockEvents.Block_height),
-                    BlockTimestamp = blockEvents.Block_timestamp
-                };
-                
-                blockEvent.Events.Add(@event.ToFlowEvent());
-                flowBlockEvents.Add(blockEvent);
+                flowBlockEvents.Add(new FlowBlockEvent
+                {                    
+                    BlockId = block.Block_id,
+                    BlockHeight = ulong.Parse(block.Block_height),
+                    BlockTimestamp = block.Block_timestamp,
+                    Events = block.Events.ToFlowEvent()
+                });
             }
 
             return flowBlockEvents;
+        }
+
+        public static IEnumerable<FlowEvent> ToFlowEvent(this ICollection<Event> events)
+        {
+            var flowEvents = new List<FlowEvent>();
+
+            foreach(var @event in events)
+            {
+                flowEvents.Add(new FlowEvent
+                {
+                    EventIndex = uint.Parse(@event.Event_index),
+                    Payload = Encoding.UTF8.GetString(@event.Payload).Decode(),
+                    TransactionId = @event.Transaction_id,
+                    TransactionIndex = uint.Parse(@event.Transaction_index),
+                    Type = @event.Type
+                });
+            }
+
+            return flowEvents;
         }
 
         private static ICollection<byte[]> FromArguments(this IEnumerable<ICadence> cadenceArguments)

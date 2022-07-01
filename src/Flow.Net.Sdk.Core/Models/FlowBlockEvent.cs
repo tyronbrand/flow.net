@@ -8,6 +8,6 @@ namespace Flow.Net.Sdk.Core.Models
         public ulong BlockHeight { get; set; }
         public string BlockId { get; set; }
         public DateTimeOffset BlockTimestamp { get; set; }
-        public IList<FlowEvent> Events { get; } = new List<FlowEvent>();
+        public IEnumerable<FlowEvent> Events { get; set; } = new List<FlowEvent>();
     }
 }

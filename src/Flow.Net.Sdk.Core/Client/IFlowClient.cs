@@ -27,5 +27,6 @@ namespace Flow.Net.Sdk.Core.Client
         Task<IEnumerable<FlowBlockEvent>> GetEventsForBlockIdsAsync(string eventType, IEnumerable<string> blockIds);
         Task GetLatestProtocolStateSnapshotAsync();
         Task<FlowExecutionResult> GetExecutionResultForBlockIdAsync(string blockId);
+        Task<FlowTransactionResult> WaitForSealAsync(string transactionId, int delayMs = 1000, int timeoutMs = 30000);
     }
 }

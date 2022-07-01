@@ -1,6 +1,6 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Models;
-using Flow.Net.Sdk.Templates;
+﻿using Flow.Net.Sdk.Client.Http.Templates;
+using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.AccountExamples
 {
-    public class DeployUpdateDeleteContractExample : GrpcExampleBase
+    public class DeployUpdateDeleteContractExample :ExampleBase
     {
         public static async Task RunAsync()
         {
@@ -39,7 +39,7 @@ namespace Flow.Net.Examples.AccountExamples
         private static async Task DeployContractAsync(FlowAccountKey newFlowAccountKey, FlowAddress newAccountAddress)
         {
             // get new account details
-            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
+            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress.Address);
 
             // contract to deploy            
             var helloWorldContract = Utilities.ReadCadenceScript("hello-world-contract");
@@ -50,7 +50,7 @@ namespace Flow.Net.Examples.AccountExamples
             };
 
             // use template to create a transaction
-            var tx = Account.AddAccountContract(flowContract, newAccount.Address);
+            var tx = AccountTemplates.AddAccountContract(flowContract, newAccount.Address);
 
             // key to use
             var newAccountKey = newAccount.Keys.FirstOrDefault();            
@@ -66,16 +66,16 @@ namespace Flow.Net.Examples.AccountExamples
 
             // get the latest sealed block to use as a reference block
             var latestBlock = await FlowClient.GetLatestBlockAsync();
-            tx.ReferenceBlockId = latestBlock.Id;
+            tx.ReferenceBlockId = latestBlock.Header.Id;
 
             // sign and submit the transaction
-            var newAccountSigner = new Sdk.Crypto.Ecdsa.Signer(newFlowAccountKey.PrivateKey, newAccountKey.HashAlgorithm, newAccountKey.SignatureAlgorithm);
+            var newAccountSigner = new Sdk.Core.Crypto.Ecdsa.Signer(newFlowAccountKey.PrivateKey, newAccountKey.HashAlgorithm, newAccountKey.SignatureAlgorithm);
             tx = FlowTransaction.AddEnvelopeSignature(tx, newAccount.Address, newAccountKey.Index, newAccountSigner);
 
             var response = await FlowClient.SendTransactionAsync(tx);
-            var sealedResponse = await FlowClient.WaitForSealAsync(response);
+            var sealedResponse = await FlowClient.WaitForSealAsync(response.Id);
 
-            if (sealedResponse.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
+            if (sealedResponse.Status == TransactionStatus.Sealed)
             {
                 Console.WriteLine($"Contract \"{flowContract.Name}\" deployed!");
             }
@@ -84,7 +84,7 @@ namespace Flow.Net.Examples.AccountExamples
         private static async Task UpdateContractAsync(FlowAccountKey newFlowAccountKey, FlowAddress newAccountAddress)
         {
             // get new account details
-            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
+            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress.Address);
 
             // contract to update            
             var helloWorldContract = Utilities.ReadCadenceScript("hello-world-updated-contract");
@@ -95,7 +95,7 @@ namespace Flow.Net.Examples.AccountExamples
             };
 
             // use template to create a transaction
-            var tx = Account.UpdateAccountContract(flowContract, newAccount.Address);
+            var tx = AccountTemplates.UpdateAccountContract(flowContract, newAccount.Address);
 
             // key to use
             var newAccountKey = newAccount.Keys.FirstOrDefault();
@@ -111,16 +111,16 @@ namespace Flow.Net.Examples.AccountExamples
 
             // get the latest sealed block to use as a reference block
             var latestBlock = await FlowClient.GetLatestBlockAsync();
-            tx.ReferenceBlockId = latestBlock.Id;
+            tx.ReferenceBlockId = latestBlock.Header.Id;
 
             // sign and submit the transaction
-            var newAccountSigner = new Sdk.Crypto.Ecdsa.Signer(newFlowAccountKey.PrivateKey, newAccountKey.HashAlgorithm, newAccountKey.SignatureAlgorithm);
+            var newAccountSigner = new Sdk.Core.Crypto.Ecdsa.Signer(newFlowAccountKey.PrivateKey, newAccountKey.HashAlgorithm, newAccountKey.SignatureAlgorithm);
             tx = FlowTransaction.AddEnvelopeSignature(tx, newAccount.Address, newAccountKey.Index, newAccountSigner);
 
             var response = await FlowClient.SendTransactionAsync(tx);
-            var sealedResponse = await FlowClient.WaitForSealAsync(response);
+            var sealedResponse = await FlowClient.WaitForSealAsync(response.Id);
 
-            if (sealedResponse.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
+            if (sealedResponse.Status == TransactionStatus.Sealed)
             {
                 Console.WriteLine($"Contract \"{flowContract.Name}\" updated!");
             }
@@ -129,13 +129,13 @@ namespace Flow.Net.Examples.AccountExamples
         private static async Task DeleteContractAsync(FlowAccountKey newFlowAccountKey, FlowAddress newAccountAddress)
         {
             // get new account details
-            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
+            var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress.Address);
 
             // contract to delete
             var flowContractName = "HelloWorld";
 
             // use template to create a transaction
-            var tx = Account.DeleteAccountContract(flowContractName, newAccount.Address);
+            var tx = AccountTemplates.DeleteAccountContract(flowContractName, newAccount.Address);
 
             // key to use
             var newAccountKey = newAccount.Keys.FirstOrDefault();
@@ -151,19 +151,19 @@ namespace Flow.Net.Examples.AccountExamples
 
             // get the latest sealed block to use as a reference block
             var latestBlock = await FlowClient.GetLatestBlockAsync();
-            tx.ReferenceBlockId = latestBlock.Id;
+            tx.ReferenceBlockId = latestBlock.Header.Id;
 
             // sign and submit the transaction
-            var newAccountSigner = new Sdk.Crypto.Ecdsa.Signer(newFlowAccountKey.PrivateKey, newAccountKey.HashAlgorithm, newAccountKey.SignatureAlgorithm);
+            var newAccountSigner = new Sdk.Core.Crypto.Ecdsa.Signer(newFlowAccountKey.PrivateKey, newAccountKey.HashAlgorithm, newAccountKey.SignatureAlgorithm);
             tx = FlowTransaction.AddEnvelopeSignature(tx, newAccount.Address, newAccountKey.Index, newAccountSigner);
 
             var response = await FlowClient.SendTransactionAsync(tx);
-            var sealedResponse = await FlowClient.WaitForSealAsync(response);
+            var sealedResponse = await FlowClient.WaitForSealAsync(response.Id);
 
-            if (sealedResponse.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
+            if (sealedResponse.Status == TransactionStatus.Sealed)
             {
                 Console.WriteLine($"Contract \"{flowContractName}\" deleted!");
-            }            
+            }
         }
     }
 }

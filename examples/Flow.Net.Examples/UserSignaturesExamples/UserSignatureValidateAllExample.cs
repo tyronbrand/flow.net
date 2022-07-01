@@ -1,6 +1,6 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.UserSignaturesExamples
 {
-    public class UserSignatureValidateAllExample : GrpcExampleBase
+    public class UserSignatureValidateAllExample : ExampleBase
     {
         public static async Task RunAsync()
         {
@@ -30,8 +30,8 @@ namespace Flow.Net.Examples.UserSignaturesExamples
             var message = Encoding.UTF8.GetBytes("ananas");
 
             // sign the message
-            var aliceSigner = new Sdk.Crypto.Ecdsa.Signer(flowAccountKeyAlice.PrivateKey, flowAccountKeyAlice.HashAlgorithm, flowAccountKeyAlice.SignatureAlgorithm);
-            var bobSigner = new Sdk.Crypto.Ecdsa.Signer(flowAccountKeyBob.PrivateKey, flowAccountKeyBob.HashAlgorithm, flowAccountKeyBob.SignatureAlgorithm);
+            var aliceSigner = new Sdk.Core.Crypto.Ecdsa.Signer(flowAccountKeyAlice.PrivateKey, flowAccountKeyAlice.HashAlgorithm, flowAccountKeyAlice.SignatureAlgorithm);
+            var bobSigner = new Sdk.Core.Crypto.Ecdsa.Signer(flowAccountKeyBob.PrivateKey, flowAccountKeyBob.HashAlgorithm, flowAccountKeyBob.SignatureAlgorithm);
 
             var aliceSignature = UserMessage.Sign(message, aliceSigner);
             var bobSignature = UserMessage.Sign(message, bobSigner);
@@ -58,7 +58,7 @@ namespace Flow.Net.Examples.UserSignaturesExamples
                     Script = script,
                     Arguments = new List<ICadence>
                     {
-                        new CadenceAddress(flowAccount.Address.HexValue),
+                        new CadenceAddress(flowAccount.Address.Address),
                         signatures,
                         signatureIndexes,
                         new CadenceString(Encoding.UTF8.GetString(message))

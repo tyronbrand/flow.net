@@ -1,11 +1,11 @@
-﻿using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.ScriptExamples
 {
-    public class ExecuteScriptAtLatestBlockExample : GrpcExampleBase
+    public class ExecuteScriptAtLatestBlockExample : ExampleBase
     {
         public static async Task RunAsync()
         {

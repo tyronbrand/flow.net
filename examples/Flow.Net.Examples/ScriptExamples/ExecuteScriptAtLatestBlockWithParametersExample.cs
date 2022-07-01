@@ -1,12 +1,12 @@
-﻿using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Flow.Net.Examples.ScriptExamples
 {
-    public class ExecuteScriptAtLatestBlockWithParametersExample : GrpcExampleBase
+    public class ExecuteScriptAtLatestBlockWithParametersExample : ExampleBase
     {
         public static async Task RunAsync()
         {
@@ -17,9 +17,9 @@ namespace Flow.Net.Examples.ScriptExamples
         }
 
         private static async Task Demo()
-        {            
+        {
             var script = "pub fun main(num: Int32): Int32 { return 54534 + num }";
-            
+
             var arguments = new List<ICadence>
             {
                 new CadenceNumber(CadenceNumberType.Int32, "834534")

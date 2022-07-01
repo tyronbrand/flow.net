@@ -28,7 +28,7 @@ namespace Flow.Net.Sdk.Client.Http
             try
             {
                 var converted = flowScript.FromFlowScript();
-                var response = await _flowApiV1.ScriptsAsync(null, blockHeight.ToString(), converted);
+                var response = await _flowApiV1.ScriptsAsync(null, blockHeight.ToString(), converted).ConfigureAwait(false);
                 return response.Value.Decode();
             }
             catch (Exception ex)
@@ -42,7 +42,7 @@ namespace Flow.Net.Sdk.Client.Http
             try
             {
                 var converted = flowScript.FromFlowScript();
-                var response = await _flowApiV1.ScriptsAsync(blockId, null, converted);
+                var response = await _flowApiV1.ScriptsAsync(blockId, null, converted).ConfigureAwait(false);
                 return response.Value.Decode();
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace Flow.Net.Sdk.Client.Http
             try
             {
                 var converted = flowScript.FromFlowScript();
-                var response = await _flowApiV1.ScriptsAsync(null, null, converted);
+                var response = await _flowApiV1.ScriptsAsync(null, null, converted).ConfigureAwait(false);
                 return response.Value.Decode();
             }
             catch (Exception ex)
@@ -69,7 +69,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.AccountsAsync(address, blockHeight.ToString(), new List<string> { "keys", "contracts" });
+                var response = await _flowApiV1.AccountsAsync(address, blockHeight.ToString(), new List<string> { "keys", "contracts" }).ConfigureAwait(false);
                 return response.ToFlowAccount();
             }
             catch (Exception ex)
@@ -82,7 +82,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.AccountsAsync(address, "sealed", new List<string> { "keys", "contracts" });
+                var response = await _flowApiV1.AccountsAsync(address, "sealed", new List<string> { "keys", "contracts" }).ConfigureAwait(false);
                 return response.ToFlowAccount();
             }
             catch (Exception ex)
@@ -95,7 +95,20 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.BlocksAllAsync(new List<string> { height.ToString() }, null, null, new List<string> { "payload" }, null);
+                var response = await _flowApiV1.BlocksAllAsync(new List<string> { height.ToString() }, null, null, new List<string> { "payload" }, null).ConfigureAwait(false);
+                return response.ToFlowBlock().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new FlowException("Get block by height error", ex);
+            }
+        }
+
+        public async Task<IEnumerable<FlowBlock>> GetBlocksByHeightAsync(IEnumerable<ulong> heights)
+        {
+            try
+            {
+                var response = await _flowApiV1.BlocksAllAsync(heights.Select(s => s.ToString()).ToList(), null, null, new List<string> { "payload" }, null).ConfigureAwait(false);
                 return response.ToFlowBlock();
             }
             catch (Exception ex)
@@ -108,7 +121,20 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.BlocksAsync(new List<string> { blockId }, new List<string> { "payload" }, null);
+                var response = await _flowApiV1.BlocksAsync(new List<string> { blockId }, new List<string> { "payload" }, null).ConfigureAwait(false);
+                return response.ToFlowBlock().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new FlowException("Get block by Id error", ex);
+            }
+        }
+
+        public async Task<IEnumerable<FlowBlock>> GetBlocksByIdAsync(IEnumerable<string> blockIds)
+        {
+            try
+            {
+                var response = await _flowApiV1.BlocksAsync(blockIds, new List<string> { "payload" }, null).ConfigureAwait(false);
                 return response.ToFlowBlock();
             }
             catch (Exception ex)
@@ -121,8 +147,21 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.BlocksAllAsync(new List<string> { height.ToString() }, null, null, null, new List<string> { "header" });
-                return response.ToFlowBlock().Header;
+                var response = await _flowApiV1.BlocksAllAsync(new List<string> { height.ToString() }, null, null, null, null).ConfigureAwait(false);
+                return response.ToFlowBlock().FirstOrDefault()?.Header;
+            }
+            catch (Exception ex)
+            {
+                throw new FlowException("Get block header by height error", ex);
+            }
+        }
+
+        public async Task<IEnumerable<FlowBlockHeader>> GetBlockHeadersByHeightAsync(IEnumerable<ulong> heights)
+        {
+            try
+            {
+                var response = await _flowApiV1.BlocksAllAsync(heights.Select(s => s.ToString()).ToList(), null, null, null, null).ConfigureAwait(false);                
+                return response.ToFlowBlock().Select(s => s.Header).ToList();
             }
             catch (Exception ex)
             {
@@ -134,8 +173,21 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.BlocksAsync(new List<string> { blockId }, null, new List<string> { "header" });
-                return response.ToFlowBlock().Header;
+                var response = await _flowApiV1.BlocksAsync(new List<string> { blockId }, null, null).ConfigureAwait(false);
+                return response.ToFlowBlock().FirstOrDefault()?.Header;
+            }
+            catch (Exception ex)
+            {
+                throw new FlowException("Get block header by Id error", ex);
+            }
+        }
+
+        public async Task<IEnumerable<FlowBlockHeader>> GetBlockHeadersByIdAsync(IEnumerable<string> blockIds)
+        {
+            try
+            {
+                var response = await _flowApiV1.BlocksAsync(blockIds, null, null).ConfigureAwait(false);
+                return response.ToFlowBlock().Select(s => s.Header).ToList();
             }
             catch (Exception ex)
             {
@@ -147,7 +199,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.CollectionsAsync(collectionId);
+                var response = await _flowApiV1.CollectionsAsync(collectionId).ConfigureAwait(false);
                 return response.ToFlowCollection();
             }
             catch (Exception ex)
@@ -160,7 +212,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.EventsAsync(eventType, null, null, blockIds, null);
+                var response = await _flowApiV1.EventsAsync(eventType, null, null, blockIds, null).ConfigureAwait(false);
                 return response.ToFlowBlockEvent();
             }
             catch (Exception ex)
@@ -173,7 +225,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.EventsAsync(eventType, startHeight.ToString(), endHeight.ToString(), null, null);
+                var response = await _flowApiV1.EventsAsync(eventType, startHeight.ToString(), endHeight.ToString(), null, null).ConfigureAwait(false);
                 return response.ToFlowBlockEvent();
             }
             catch (Exception ex)
@@ -186,7 +238,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.ResultsAllAsync( new List<string> { blockId });
+                var response = await _flowApiV1.ResultsAllAsync(new List<string> { blockId }).ConfigureAwait(false);
                 return response.ToFlowExecutionResult().FirstOrDefault();
             }
             catch (Exception ex)
@@ -199,8 +251,8 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.BlocksAllAsync(new List<string> { isSealed ? "sealed" : "final" }, null, null, null, null);
-                return response.ToFlowBlock();
+                var response = await _flowApiV1.BlocksAllAsync(new List<string> { isSealed ? "sealed" : "final" }, null, null, null, null).ConfigureAwait(false);
+                return response.ToFlowBlock().FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -212,8 +264,8 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.BlocksAllAsync(new List<string> { isSealed ? "sealed" : "final" }, null, null, null, new List<string> { "header" });
-                return response.ToFlowBlock().Header;
+                var response = await _flowApiV1.BlocksAllAsync(new List<string> { isSealed ? "sealed" : "final" }, null, null, null, null).ConfigureAwait(false);
+                return response.ToFlowBlock().FirstOrDefault()?.Header;
             }
             catch (Exception ex)
             {
@@ -230,7 +282,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.TransactionsAsync(transactionId, null, null);
+                var response = await _flowApiV1.TransactionsAsync(transactionId, null, null).ConfigureAwait(false);
                 return response.ToFlowTransactionResponse();
             }
             catch (Exception ex)
@@ -243,7 +295,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.TransactionsAsync(transactionId, new List<string> { "result" }, null);
+                var response = await _flowApiV1.TransactionsAsync(transactionId, new List<string> { "result" }, null).ConfigureAwait(false);
                 return response.ToFlowTransactionResult();
             }
             catch (Exception ex)
@@ -256,7 +308,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                await _flowApiV1.BlocksAllAsync(new List<string> { "sealed" }, "", "", null, null);
+                await _flowApiV1.BlocksAllAsync(new List<string> { "sealed" }, "", "", null, null).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -269,12 +321,36 @@ namespace Flow.Net.Sdk.Client.Http
             try
             {
                 var converted = flowTransaction.FromFlowTransaction();
-                var response = await _flowApiV1.SendTransactionAsync(converted);
+                var response = await _flowApiV1.SendTransactionAsync(converted).ConfigureAwait(false);
                 return response.ToFlowTransactionId();
             }
             catch (Exception ex)
             {
                 throw new FlowException("Send transaction error", ex);
+            }
+        }
+
+        /// <summary>
+        /// Waits for transaction result status to be sealed.
+        /// </summary>
+        /// <param name="transactionId"></param>
+        /// <param name="delayMs"></param>
+        /// <param name="timeoutMs"></param>
+        /// <returns><see cref="FlowTransactionResult"/></returns>
+        public async Task<FlowTransactionResult> WaitForSealAsync(string transactionId, int delayMs = 1000, int timeoutMs = 30000)
+        {
+            var startTime = DateTime.UtcNow;
+            while (true)
+            {
+                var result = await GetTransactionResultAsync(transactionId);
+
+                if (result != null && result.Status == Core.TransactionStatus.Sealed)
+                    return result;
+
+                if (DateTime.UtcNow.Subtract(startTime).TotalMilliseconds > timeoutMs)
+                    throw new FlowException("Timed out waiting for seal.");
+
+                await Task.Delay(delayMs);
             }
         }
     }
