@@ -35,8 +35,8 @@ namespace Flow.Net.Examples.UserSignaturesExamples
 
             var message = Utilities.CombineByteArrays(new[]
             {
-                Encoding.UTF8.GetBytes(aliceFlowAccount.Address.Address),
-                Encoding.UTF8.GetBytes(bobFlowAccount.Address.Address)
+                aliceFlowAccount.Address.Address.FromHexToBytes(),
+                bobFlowAccount.Address.Address.FromHexToBytes()
             });
 
             var amountBytes = BitConverter.GetBytes(ulong.Parse(amount.Value));
@@ -95,8 +95,7 @@ namespace Flow.Net.Examples.UserSignaturesExamples
                         fromAddress,
                         amount,
                     }
-                }
-                );
+                });
 
             Console.WriteLine(response.As<CadenceBool>().Value
                 ? "Signature verification succeeded"

@@ -169,7 +169,7 @@ namespace Flow.Net.Sdk.Client.Http
             var payloadSignatures = transaction.Payload_signatures.Select(payloadSignature =>
                 new FlowSignature
                 {
-                    Address = payloadSignature.Address,
+                    Address = new FlowAddress(payloadSignature.Address),
                     KeyId = uint.Parse(payloadSignature.Key_index),
                     Signature = payloadSignature.Signature
                 }).ToList();
@@ -177,7 +177,7 @@ namespace Flow.Net.Sdk.Client.Http
             var envelopeSignatures = transaction.Envelope_signatures.Select(envelopeSignature =>
                 new FlowSignature
                 {
-                    Address = envelopeSignature.Address,
+                    Address = new FlowAddress(envelopeSignature.Address),
                     KeyId = uint.Parse(envelopeSignature.Key_index),
                     Signature = envelopeSignature.Signature
                 }).ToList();
@@ -235,7 +235,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             return new TransactionSignature
             {
-                Address = flowSignature.Address,
+                Address = flowSignature.Address.Address,
                 Key_index = flowSignature.KeyId.ToString(),
                 Signature = flowSignature.Signature,
             };

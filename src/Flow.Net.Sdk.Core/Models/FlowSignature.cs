@@ -5,7 +5,7 @@
     /// </summary>
     public class FlowSignature
     {
-        public string Address { get; set; }
+        public FlowAddress Address { get; set; }
         public uint KeyId { get; set; }
         public byte[] Signature { get; set; }
     }

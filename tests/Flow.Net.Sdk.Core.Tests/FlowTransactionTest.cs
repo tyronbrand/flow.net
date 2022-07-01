@@ -25,7 +25,7 @@ namespace Flow.Net.Sdk.Core.Tests
             transaction.PayloadSignatures.Add(
                 new FlowSignature
                 {
-                    Address = "01",
+                    Address = new FlowAddress("01"),
                     KeyId = 4,
                     Signature = "f7225388c1d69d57e6251c9fda50cbbf9e05131e5adb81e5aa0422402f048162".FromHexToBytes()
                 });
@@ -58,7 +58,7 @@ namespace Flow.Net.Sdk.Core.Tests
             transaction.EnvelopeSignatures.Add(
                 new FlowSignature
                 {
-                    Address = "01",
+                    Address = new FlowAddress("01"),
                     KeyId = 4,
                     Signature = "f7225388c1d69d57e6251c9fda50cbbf9e05131e5adb81e5aa0422402f048162".FromHexToBytes()
                 });

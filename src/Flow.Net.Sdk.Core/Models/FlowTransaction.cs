@@ -12,10 +12,10 @@ namespace Flow.Net.Sdk.Core.Models
         public FlowTransaction(Dictionary<string, string> addressMap = null)
             : base(addressMap)
         {
-            SignerList = new Dictionary<byte[], int>();
+            SignerList = new Dictionary<string, int>();
         }
 
-        public Dictionary<byte[], int> SignerList { get; }
+        public Dictionary<string, int> SignerList { get; }
 
         /// <summary>
         /// Signs the full transaction (TransactionDomainTag + payload) with the specified account key.
@@ -34,7 +34,7 @@ namespace Flow.Net.Sdk.Core.Models
             flowTransaction.PayloadSignatures.Add(
                 new FlowSignature
                 {
-                    Address = address.Address,
+                    Address = address,
                     KeyId = keyId,
                     Signature = signature
                 });
@@ -59,7 +59,7 @@ namespace Flow.Net.Sdk.Core.Models
             flowTransaction.EnvelopeSignatures.Add(
                 new FlowSignature
                 {
-                    Address = address.Address,
+                    Address = address,
                     KeyId = keyId,
                     Signature = signature
                 });

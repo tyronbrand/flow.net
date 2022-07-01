@@ -7,7 +7,7 @@ namespace Flow.Net.Sdk.Core.Cadence
         public CadenceAddress() { }
         public CadenceAddress(string value)
         {
-            Value = null; //value.AddHexPrefix();
+            Value = value.AddHexPrefix();
         }
 
         [JsonProperty("type")]
