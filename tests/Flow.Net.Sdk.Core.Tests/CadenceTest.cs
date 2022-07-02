@@ -1253,10 +1253,10 @@ namespace Flow.Net.Sdk.Core.Tests
 
         private class CadenceTestItem
         {
-            public string Name { get; set; }
-            public ICadence Cadence { get; init; }
-            public ICadenceType CadenceType { get; init; }
-            public string ExpectedJson { get; init; }
+            public string? Name { get; set; }
+            public ICadence? Cadence { get; init; }
+            public ICadenceType? CadenceType { get; init; }
+            public string? ExpectedJson { get; init; }
         }
     }
 }

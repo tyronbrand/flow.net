@@ -59,7 +59,7 @@
 
         private class KeyEncodingTestItem : FlowAccountKey
         {
-            public string ExpectedResult { get; init; }
+            public string? ExpectedResult { get; init; }
         }
     }
 }
