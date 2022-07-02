@@ -24,6 +24,24 @@ namespace Flow.Net.Sdk.Core.Cadence
             return JsonConvert.DeserializeObject<ICadence>(cadenceJson, jsonConverters);
         }
 
+        ///<inheritdoc cref="CadenceType.Encode"/>
+        public static string Encode(this ICadenceType cadenceType)
+        {
+            return cadenceType.Encode(cadenceType);
+        }
+
+        /// <summary>
+        /// Decodes a <see cref="ICadenceType"/> JSON string.
+        /// </summary>
+        /// <param name="cadenceJson"></param>
+        /// <param name="cadenceConverter"></param>
+        /// <returns>The deserialized <see cref="ICadenceType"/> from the JSON string.</returns>
+        public static ICadenceType DecodeType(this string cadenceJson, CadenceConverter cadenceConverter = null)
+        {
+            JsonConverter[] jsonConverters = { cadenceConverter ?? new CadenceConverter(), new CadenceTypeConverter() };
+            return JsonConvert.DeserializeObject<ICadenceType>(cadenceJson, jsonConverters);
+        }
+
         /// <summary>
         /// Casts <see cref="ICadence"/> to <typeparamref name="T"/>.
         /// </summary>

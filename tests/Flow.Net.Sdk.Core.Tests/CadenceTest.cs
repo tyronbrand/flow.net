@@ -7,15 +7,6 @@ namespace Flow.Net.Sdk.Core.Tests
 {
     public class CadenceTest
     {
-        private readonly CadenceConverter _cadenceConverter;
-        private readonly CadenceTypeConverter _cadenceTypeConverter;
-
-        public CadenceTest()
-        {
-            _cadenceConverter = new CadenceConverter();
-            _cadenceTypeConverter = new CadenceTypeConverter();
-        }
-
         [Fact]
         public void TestCadencePath()
         {
@@ -1210,16 +1201,20 @@ namespace Flow.Net.Sdk.Core.Tests
             foreach (var testItem in testItems)
             {
                 string encodeResult;
-                if (testItem.Cadence != null)
+                if(testItem.ExpectedJson != null)
                 {
-                    encodeResult = TestEncode(testItem.Cadence, testItem.ExpectedJson);
-                    TestDecode(encodeResult, testItem.Cadence);
+                    if (testItem.Cadence != null)
+                    {
+                        encodeResult = TestEncode(testItem.Cadence, testItem.ExpectedJson);
+                        TestDecode(encodeResult, testItem.Cadence);
+                    }
+                    else if (testItem.CadenceType != null)
+                    {
+                        encodeResult = TestEncode(testItem.CadenceType, testItem.ExpectedJson);
+                        TestDecode(encodeResult, testItem.CadenceType);
+                    }
                 }
-                else
-                {
-                    encodeResult = TestEncode(testItem.CadenceType, testItem.ExpectedJson);
-                    TestDecode(encodeResult, testItem.CadenceType);
-                }
+                
             }
         }
 
@@ -1238,16 +1233,14 @@ namespace Flow.Net.Sdk.Core.Tests
         }
 
         private void TestDecode(string actualJson, ICadence cadence)
-        {
-            JsonConverter[] jsonConverters = { _cadenceConverter, _cadenceTypeConverter };
-            var decoded = JsonConvert.DeserializeObject<ICadence>(actualJson, jsonConverters);
+        {            
+            var decoded = CadenceExtensions.Decode(actualJson);
             cadence.ToExpectedObject().ShouldEqual(decoded);
         }
 
         private void TestDecode(string actualJson, ICadenceType cadenceType)
         {
-            JsonConverter[] jsonConverters = { _cadenceConverter, _cadenceTypeConverter };
-            var decoded = JsonConvert.DeserializeObject<ICadenceType>(actualJson, jsonConverters);
+            var decoded = CadenceExtensions.DecodeType(actualJson);
             cadenceType.ToExpectedObject().ShouldEqual(decoded);
         }
 

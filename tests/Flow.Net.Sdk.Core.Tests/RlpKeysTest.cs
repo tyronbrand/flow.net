@@ -1,4 +1,4 @@
-﻿namespace Flow.Net.Sdk.Tests
+﻿namespace Flow.Net.Sdk.Core.Tests
 {
     public class RlpKeysTest
     {
