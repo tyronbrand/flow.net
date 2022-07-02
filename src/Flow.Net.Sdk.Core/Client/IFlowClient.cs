@@ -115,7 +115,6 @@ namespace Flow.Net.Sdk.Core.Client
         /// Executes a read-only Cadence script against the latest sealed execution state.
         /// </summary>
         /// <param name="flowScript"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns><see cref="ICadence"/></returns>
         /// <exception cref="FlowException"></exception>
         Task<ICadence> ExecuteScriptAtLatestBlockAsync(FlowScript flowScript);

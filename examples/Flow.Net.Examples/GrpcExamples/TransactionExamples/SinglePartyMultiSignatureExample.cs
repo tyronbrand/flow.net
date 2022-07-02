@@ -1,5 +1,4 @@
-﻿using Flow.Net.Examples.GrpcExamples;
-using Flow.Net.Sdk;
+﻿using Flow.Net.Sdk;
 using Flow.Net.Sdk.Models;
 using System;
 using System.Collections.Generic;

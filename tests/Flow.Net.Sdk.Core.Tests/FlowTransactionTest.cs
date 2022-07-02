@@ -1,5 +1,3 @@
-using Flow.Net.Sdk.Core.Models;
-
 namespace Flow.Net.Sdk.Core.Tests
 {
     public class FlowTransactionTest
