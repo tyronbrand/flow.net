@@ -12,7 +12,7 @@ namespace Flow.Net.Sdk.Core
 {
     public static class Converter
     {
-        public static string FromByteArrayToHex(byte[] data, bool include0x = false)
+        public static string BytesToHex(byte[] data, bool include0x = false)
         {
             try
             {
@@ -24,11 +24,11 @@ namespace Flow.Net.Sdk.Core
             }
         }
 
-        public static string FromStringToHex(string str)
+        public static string StringToHex(string str)
         {
             try
             {
-                return FromByteArrayToHex(Encoding.UTF8.GetBytes(str));
+                return BytesToHex(Encoding.UTF8.GetBytes(str));
             }
             catch (Exception exception)
             {
@@ -36,7 +36,7 @@ namespace Flow.Net.Sdk.Core
             }
         }
 
-        public static byte[] FromHexToBytes(string hex)
+        public static byte[] HexToBytes(string hex)
         {
             try
             {

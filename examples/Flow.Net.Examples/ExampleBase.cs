@@ -1,5 +1,5 @@
 ﻿using Flow.Net.Sdk.Client.Http;
-using Flow.Net.Sdk.Client.Http.Templates;
+using Flow.Net.Sdk.Core.Templates;
 using Flow.Net.Sdk.Core;
 using Flow.Net.Sdk.Core.Client;
 using Flow.Net.Sdk.Core.Models;
@@ -14,17 +14,14 @@ namespace Flow.Net.Examples
     {
         protected static IFlowClient FlowClient { get; private set; }
 
-        protected static async Task<IFlowClient> CreateFlowClientAsync()
+        protected static async Task CreateFlowClientAsync()
         {
-            const string networkUrl = "http://127.0.0.1:8888/v1"; // emulator
-
             if (FlowClient != null)
-                return FlowClient;
+                return;
 
+            const string networkUrl = "http://127.0.0.1:8888/v1"; // emulator
             FlowClient = new FlowHttpClient(new HttpClient(), networkUrl);
             await FlowClient.PingAsync();
-
-            return FlowClient;
         }
 
         protected static async Task<FlowAccount> CreateAccountAsync(IList<FlowAccountKey> newFlowAccountKeys)

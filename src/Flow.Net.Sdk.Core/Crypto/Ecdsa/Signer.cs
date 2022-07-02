@@ -31,7 +31,7 @@ namespace Flow.Net.Sdk.Core.Crypto.Ecdsa
         {
             var curve = ECNamedCurveTable.GetByName(SignatureCurveName);
             var domain = new ECDomainParameters(curve.Curve, curve.G, curve.N, curve.H);
-            var keyParameters = new ECPrivateKeyParameters(new BigInteger(PrivateKey.D.ToByteArrayUnsigned().FromByteArrayToHex(), 16), domain);
+            var keyParameters = new ECPrivateKeyParameters(new BigInteger(PrivateKey.D.ToByteArrayUnsigned().BytesToHex(), 16), domain);
 
             var hash = Hasher.CalculateHash(bytes, HashAlgo);
 

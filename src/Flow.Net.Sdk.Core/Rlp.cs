@@ -14,7 +14,7 @@ namespace Flow.Net.Sdk.Core
         {
             var accountElements = new List<byte[]>
             {
-                RLP.EncodeElement(flowAccountKey.PublicKey.FromHexToBytes()),
+                RLP.EncodeElement(flowAccountKey.PublicKey.HexToBytes()),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes((uint)flowAccountKey.SignatureAlgorithm))),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes((uint)flowAccountKey.HashAlgorithm))),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowAccountKey.Weight)))
@@ -29,13 +29,13 @@ namespace Flow.Net.Sdk.Core
             {
                 RLP.EncodeElement(flowTransaction.Script.ToBytesForRLPEncoding()),
                 RLP.EncodeList(flowTransaction.Arguments.Select(argument => RLP.EncodeElement(argument.Encode().ToBytesForRLPEncoding())).ToArray()),
-                RLP.EncodeElement(Utilities.Pad(flowTransaction.ReferenceBlockId.FromHexToBytes(), 32)),
+                RLP.EncodeElement(Utilities.Pad(flowTransaction.ReferenceBlockId.HexToBytes(), 32)),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.GasLimit))),
-                RLP.EncodeElement(Utilities.Pad(flowTransaction.ProposalKey.Address.Address.FromHexToBytes(), 8)),
+                RLP.EncodeElement(Utilities.Pad(flowTransaction.ProposalKey.Address.Address.HexToBytes(), 8)),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.ProposalKey.KeyId))),
                 RLP.EncodeElement(ConvertorForRLPEncodingExtensions.ToBytesFromNumber(BitConverter.GetBytes(flowTransaction.ProposalKey.SequenceNumber))),
-                RLP.EncodeElement(Utilities.Pad(flowTransaction.Payer.Address.FromHexToBytes(), 8)),
-                RLP.EncodeList(flowTransaction.Authorizers.Select(authorizer => RLP.EncodeElement(Utilities.Pad(authorizer.Address.FromHexToBytes(), 8))).ToArray())
+                RLP.EncodeElement(Utilities.Pad(flowTransaction.Payer.Address.HexToBytes(), 8)),
+                RLP.EncodeList(flowTransaction.Authorizers.Select(authorizer => RLP.EncodeElement(Utilities.Pad(authorizer.Address.HexToBytes(), 8))).ToArray())
             };
 
             return RLP.EncodeList(payloadElements.ToArray());

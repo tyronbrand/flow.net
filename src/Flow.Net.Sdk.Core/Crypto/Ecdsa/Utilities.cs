@@ -48,7 +48,7 @@ namespace Flow.Net.Sdk.Core.Crypto.Ecdsa
             if (!(keyPair.Private is ECPrivateKeyParameters privateKey))
                 throw new FlowException("Private key is invalid.");
             
-            return privateKey.D.ToByteArrayUnsigned().FromByteArrayToHex();
+            return privateKey.D.ToByteArrayUnsigned().BytesToHex();
         }
 
         public static string DecodePublicKeyToHex(AsymmetricCipherKeyPair keyPair)
@@ -58,7 +58,7 @@ namespace Flow.Net.Sdk.Core.Crypto.Ecdsa
             
             var pubKeyX = publicKey.Q.XCoord.ToBigInteger().ToByteArrayUnsigned();
             var pubKeyY = publicKey.Q.YCoord.ToBigInteger().ToByteArrayUnsigned();
-            return pubKeyX.Concat(pubKeyY).ToArray().FromByteArrayToHex();
+            return pubKeyX.Concat(pubKeyY).ToArray().BytesToHex();
         }
 
         public static AsymmetricCipherKeyPair AsymmetricCipherKeyPairFromPrivateKey(string privateKeyHex, SignatureAlgo signatureAlgo)

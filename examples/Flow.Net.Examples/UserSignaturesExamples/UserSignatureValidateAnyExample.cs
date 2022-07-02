@@ -42,7 +42,7 @@ namespace Flow.Net.Examples.UserSignaturesExamples
                     Arguments = new List<ICadence>
                     {
                         new CadenceAddress(flowAccount.Address.Address),
-                        new CadenceString(aliceSignature.FromByteArrayToHex()),
+                        new CadenceString(aliceSignature.BytesToHex()),
                         new CadenceString(Encoding.UTF8.GetString(message))
                     }
                 });

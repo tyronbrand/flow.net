@@ -6,19 +6,19 @@ namespace Flow.Net.Sdk.Core
 {
     public static class Extensions
     {        
-        public static string FromByteArrayToHex(this byte[] data, bool include0x = false)
+        public static string BytesToHex(this byte[] data, bool include0x = false)
         {
-            return Converter.FromByteArrayToHex(data, include0x);
+            return Converter.BytesToHex(data, include0x);
         }        
 
-        public static string FromStringToHex(this string str)
+        public static string StringToHex(this string str)
         {
-            return Converter.FromStringToHex(str);
+            return Converter.StringToHex(str);
         }
 
-        public static byte[] FromHexToBytes(this string hex)
+        public static byte[] HexToBytes(this string hex)
         {
-            return Converter.FromHexToBytes(hex);
+            return Converter.HexToBytes(hex);
         }
 
         public static bool IsHexString(this string str)

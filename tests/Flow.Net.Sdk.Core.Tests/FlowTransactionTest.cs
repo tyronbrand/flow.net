@@ -27,7 +27,7 @@ namespace Flow.Net.Sdk.Core.Tests
                 {
                     Address = new FlowAddress("01"),
                     KeyId = 4,
-                    Signature = "f7225388c1d69d57e6251c9fda50cbbf9e05131e5adb81e5aa0422402f048162".FromHexToBytes()
+                    Signature = "f7225388c1d69d57e6251c9fda50cbbf9e05131e5adb81e5aa0422402f048162".HexToBytes()
                 });
 
             return transaction;
@@ -42,10 +42,10 @@ namespace Flow.Net.Sdk.Core.Tests
             var transaction = Transaction();
 
             var payloadTest = Rlp.EncodedCanonicalPayload(transaction);
-            Assert.Equal(payload, payloadTest.FromByteArrayToHex());
+            Assert.Equal(payload, payloadTest.BytesToHex());
 
             var envelopeTest = Rlp.EncodedCanonicalAuthorizationEnvelope(transaction);
-            Assert.Equal(envelope, envelopeTest.FromByteArrayToHex());
+            Assert.Equal(envelope, envelopeTest.BytesToHex());
         }
 
         [Fact]
@@ -60,14 +60,14 @@ namespace Flow.Net.Sdk.Core.Tests
                 {
                     Address = new FlowAddress("01"),
                     KeyId = 4,
-                    Signature = "f7225388c1d69d57e6251c9fda50cbbf9e05131e5adb81e5aa0422402f048162".FromHexToBytes()
+                    Signature = "f7225388c1d69d57e6251c9fda50cbbf9e05131e5adb81e5aa0422402f048162".HexToBytes()
                 });
 
             var payloadTest = Rlp.EncodedCanonicalPayload(transaction);
-            Assert.Equal(payload, payloadTest.FromByteArrayToHex());
+            Assert.Equal(payload, payloadTest.BytesToHex());
 
             var envelopeTest = Rlp.EncodedCanonicalAuthorizationEnvelope(transaction);
-            Assert.Equal(envelope, envelopeTest.FromByteArrayToHex());
+            Assert.Equal(envelope, envelopeTest.BytesToHex());
         }
 
         [Fact]
@@ -80,10 +80,10 @@ namespace Flow.Net.Sdk.Core.Tests
             transaction.Authorizers.Add(new FlowAddress("02"));
 
             var payloadTest = Rlp.EncodedCanonicalPayload(transaction);
-            Assert.Equal(payload, payloadTest.FromByteArrayToHex());
+            Assert.Equal(payload, payloadTest.BytesToHex());
 
             var envelopeTest = Rlp.EncodedCanonicalAuthorizationEnvelope(transaction);
-            Assert.Equal(envelope, envelopeTest.FromByteArrayToHex());
+            Assert.Equal(envelope, envelopeTest.BytesToHex());
         }
     }
 }

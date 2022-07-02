@@ -35,8 +35,8 @@ namespace Flow.Net.Examples.UserSignaturesExamples
 
             var message = Utilities.CombineByteArrays(new[]
             {
-                aliceFlowAccount.Address.Address.FromHexToBytes(),
-                bobFlowAccount.Address.Address.FromHexToBytes()
+                aliceFlowAccount.Address.Address.HexToBytes(),
+                bobFlowAccount.Address.Address.HexToBytes()
             });
 
             var amountBytes = BitConverter.GetBytes(ulong.Parse(amount.Value));
@@ -76,8 +76,8 @@ namespace Flow.Net.Examples.UserSignaturesExamples
             var signatures = new CadenceArray(
                 new List<ICadence>
                 {
-                    new CadenceString(aliceSignature.FromByteArrayToHex()),
-                    new CadenceString(bobSignature.FromByteArrayToHex())
+                    new CadenceString(aliceSignature.BytesToHex()),
+                    new CadenceString(bobSignature.BytesToHex())
                 });
 
             var script =  Utilities.ReadCadenceScript("user-signature-example");

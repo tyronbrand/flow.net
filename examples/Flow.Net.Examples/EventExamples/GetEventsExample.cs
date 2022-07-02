@@ -1,4 +1,4 @@
-﻿using Flow.Net.Sdk.Client.Http.Templates;
+﻿using Flow.Net.Sdk.Core.Templates;
 using Flow.Net.Sdk.Core;
 using Flow.Net.Sdk.Core.Cadence;
 using Flow.Net.Sdk.Core.Models;

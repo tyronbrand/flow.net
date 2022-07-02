@@ -1,15 +1,14 @@
-﻿using Flow.Net.Sdk.Core;
-using Flow.Net.Sdk.Core.Cadence;
+﻿using Flow.Net.Sdk.Core.Cadence;
 using Flow.Net.Sdk.Core.Exceptions;
 using Flow.Net.Sdk.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Flow.Net.Sdk.Client.Http.Templates
+namespace Flow.Net.Sdk.Core.Templates
 {
     public static class AccountTemplates
-    {
-	    private const string CreateAccountTemplate = @"
+	{
+		private const string CreateAccountTemplate = @"
 transaction(publicKeys: [String], sigAlgos: [SignatureAlgorithm], hashAlgos: [HashAlgorithm], weights: [UFix64], contracts: {String: String}) {
 	prepare(signer: AuthAccount) {
 		let acct = AuthAccount(payer: signer)
@@ -39,13 +38,13 @@ transaction(publicKeys: [String], sigAlgos: [SignatureAlgorithm], hashAlgos: [Ha
 
 
 		public static FlowTransaction CreateAccount(IEnumerable<FlowAccountKey> flowAccountKeys, FlowAddress authorizerAddress, IEnumerable<FlowContract> flowContracts = null)
-        {
+		{
 			if (flowAccountKeys == null)
 				throw new FlowException("Flow account key required.");
 
 			flowAccountKeys = flowAccountKeys.ToList();
-			
-			if(!flowAccountKeys.Any())
+
+			if (!flowAccountKeys.Any())
 				throw new FlowException("Flow account key required.");
 
 			var publicKeys = new List<ICadence>();
@@ -53,8 +52,8 @@ transaction(publicKeys: [String], sigAlgos: [SignatureAlgorithm], hashAlgos: [Ha
 			var hashAlgos = new List<ICadence>();
 			var weights = new List<ICadence>();
 
-			foreach(var key in flowAccountKeys)
-            {
+			foreach (var key in flowAccountKeys)
+			{
 				publicKeys.Add(new CadenceString(key.PublicKey));
 
 				sigAlgos.Add(
@@ -90,7 +89,7 @@ transaction(publicKeys: [String], sigAlgos: [SignatureAlgorithm], hashAlgos: [Ha
 								}
 							}
 						}
-					)					
+					)
 				);
 
 				weights.Add(new CadenceNumber(CadenceNumberType.UFix64, $"{key.Weight}.0"));
@@ -110,7 +109,7 @@ transaction(publicKeys: [String], sigAlgos: [SignatureAlgorithm], hashAlgos: [Ha
 							new CadenceDictionaryKeyValue
 							{
 								Key = new CadenceString(contract.Name),
-								Value = new CadenceString(contract.Source.FromStringToHex())
+								Value = new CadenceString(contract.Source.StringToHex())
 							});
 					}
 				}
@@ -133,17 +132,17 @@ transaction(publicKeys: [String], sigAlgos: [SignatureAlgorithm], hashAlgos: [Ha
 			tx.Authorizers.Add(authorizerAddress);
 
 			return tx;
-        }
+		}
 
 		private static FlowTransaction AccountContractBase(string script, FlowContract flowContract, FlowAddress authorizerAddress)
-        {
+		{
 			var tx = new FlowTransaction
 			{
 				Script = script,
 				Arguments = new List<ICadence>
 				{
 					new CadenceString(flowContract.Name),
-					new CadenceString(flowContract.Source.FromStringToHex())
+					new CadenceString(flowContract.Source.StringToHex())
 				}
 			};
 
@@ -188,7 +187,7 @@ transaction(name: String)
 }";
 
 		public static FlowTransaction DeleteAccountContract(string contractName, FlowAddress authorizerAddress)
-        {
+		{
 			var tx = new FlowTransaction
 			{
 				Script = DeleteAccountContractTemplate

@@ -38,8 +38,8 @@ namespace Flow.Net.Examples.UserSignaturesExamples
 
             var signatures = new CadenceArray(
                 new List<ICadence>
-                {new CadenceString(bobSignature.FromByteArrayToHex()),
-                    new CadenceString(aliceSignature.FromByteArrayToHex())                    
+                {new CadenceString(bobSignature.BytesToHex()),
+                    new CadenceString(aliceSignature.BytesToHex())                    
                 });
 
             // the signature indexes correspond to the key indexes on the address
