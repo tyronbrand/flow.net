@@ -2,15 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Globalization;
+using System.Net.Http;
 using System.Net.Http.Headers;
-using Newtonsoft.Json.Linq;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Flow.Net.Sdk.Client.Http.Generated
+namespace Flow.Net.Sdk.Client.Http.ApiV1
 {
     public partial class FlowApiV1Generated
     {
@@ -147,7 +146,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
 
-                        return default(ICollection<Block>);
+                        return default;
                     }
                     finally
                     {
@@ -253,7 +252,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
 
-                        return default(ICollection<Block>);
+                        return default;
                     }
                     finally
                     {
@@ -359,7 +358,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
 
-                        return default(Transaction);
+                        return default;
                     }
                     finally
                     {
@@ -445,7 +444,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
 
-                        return default(Transaction);
+                        return default;
                     }
                     finally
                     {
@@ -538,7 +537,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
 
-                        return default(Collection);
+                        return default;
                     }
                     finally
                     {
@@ -642,7 +641,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
 
-                        return default(Account);
+                        return default;
                     }
                     finally
                     {
@@ -741,7 +740,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
 
-                        return default(Response);
+                        return default;
                     }
                     finally
                     {
@@ -877,8 +876,8 @@ namespace Flow.Net.Sdk.Client.Http.Generated
         {
             public ObjectResponseResult(T responseObject, string responseText)
             {
-                this.Object = responseObject;
-                this.Text = responseText;
+                Object = responseObject;
+                Text = responseText;
             }
 
             public T Object { get; }
@@ -892,7 +891,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
         {
             if (response == null || response.Content == null)
             {
-                return new ObjectResponseResult<T>(default(T), string.Empty);
+                return new ObjectResponseResult<T>(default, string.Empty);
             }
 
             if (ReadResponseAsString)
@@ -1022,7 +1021,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
 
-                        return default(TransactionResult);
+                        return default;
                     }
                     finally
                     {
@@ -1152,7 +1151,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
 
-                        return default(ICollection<ExecutionResult>);
+                        return default;
                     }
                     finally
                     {
@@ -1245,7 +1244,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
 
-                        return default(ExecutionResult);
+                        return default;
                     }
                     finally
                     {
@@ -1970,50 +1969,50 @@ namespace Flow.Net.Sdk.Client.Http.Generated
     public partial class TransactionBody
     {
         /// <summary>Base64 encoded content of the Cadence script.</summary>
-        [Newtonsoft.Json.JsonProperty("script", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [JsonProperty("script", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
         public byte[] Script { get; set; }
 
         /// <summary>A list of arguments each encoded as Base64 passed in the [JSON-Cadence interchange format](https://docs.onflow.org/cadence/json-cadence-spec/).</summary>
-        [Newtonsoft.Json.JsonProperty("arguments", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.ICollection<byte[]> Arguments { get; set; } = new System.Collections.ObjectModel.Collection<byte[]>();
+        [JsonProperty("arguments", Required = Required.Always)]
+        [Required]
+        public ICollection<byte[]> Arguments { get; set; } = new System.Collections.ObjectModel.Collection<byte[]>();
 
-        [Newtonsoft.Json.JsonProperty("reference_block_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [JsonProperty("reference_block_id", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
         public string Reference_block_id { get; set; }
 
         /// <summary>The limit on the amount of computation a transaction is allowed to preform.</summary>
-        [Newtonsoft.Json.JsonProperty("gas_limit", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [JsonProperty("gas_limit", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
         public string Gas_limit { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("payer", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [JsonProperty("payer", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
         public string Payer { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("proposal_key", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [JsonProperty("proposal_key", Required = Required.Always)]
+        [Required]
         public ProposalKey Proposal_key { get; set; } = new ProposalKey();
 
-        [Newtonsoft.Json.JsonProperty("authorizers", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.ICollection<string> Authorizers { get; set; } = new System.Collections.ObjectModel.Collection<string>();
+        [JsonProperty("authorizers", Required = Required.Always)]
+        [Required]
+        public ICollection<string> Authorizers { get; set; } = new System.Collections.ObjectModel.Collection<string>();
 
         /// <summary>A list of Base64 encoded signatures.</summary>
-        [Newtonsoft.Json.JsonProperty("payload_signatures", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.ICollection<TransactionSignature> Payload_signatures { get; set; } = new System.Collections.ObjectModel.Collection<TransactionSignature>();
+        [JsonProperty("payload_signatures", Required = Required.Always)]
+        [Required]
+        public ICollection<TransactionSignature> Payload_signatures { get; set; } = new System.Collections.ObjectModel.Collection<TransactionSignature>();
 
         /// <summary>A list of Base64 encoded signatures.</summary>
-        [Newtonsoft.Json.JsonProperty("envelope_signatures", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.ICollection<TransactionSignature> Envelope_signatures { get; set; } = new System.Collections.ObjectModel.Collection<TransactionSignature>();
+        [JsonProperty("envelope_signatures", Required = Required.Always)]
+        [Required]
+        public ICollection<TransactionSignature> Envelope_signatures { get; set; } = new System.Collections.ObjectModel.Collection<TransactionSignature>();
 
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+        private IDictionary<string, object> _additionalProperties = new Dictionary<string, object>();
 
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
         {
             get { return _additionalProperties; }
             set { _additionalProperties = value; }
@@ -2177,7 +2176,7 @@ namespace Flow.Net.Sdk.Client.Http.Generated
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if(reader.Value != null)
+            if (reader.Value != null)
             {
                 var bytes = Convert.FromBase64String(reader.Value.ToString());
                 var value = Encoding.UTF8.GetString(bytes, 0, bytes.Length);

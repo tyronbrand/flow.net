@@ -1,6 +1,5 @@
 ﻿using Flow.Net.Sdk.Core.Crypto;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Flow.Net.Sdk.Core.Models
 {

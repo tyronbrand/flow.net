@@ -9,7 +9,7 @@ namespace Flow.Net.Sdk.Core
         /// </summary>
         /// <param name="message"></param>
         /// <param name="signer"></param>
-        /// <returns>Signed message as <see cref="byte[]" />.</returns>
+        /// <returns>Signed message as <see cref="byte" />[].</returns>
         public static byte[] Sign(byte[] message, ISigner signer)
         {
             message = DomainTag.AddUserDomainTag(message);

@@ -12,11 +12,11 @@ namespace Flow.Net.Sdk.Core
 {
     public static class Converter
     {
-        public static string BytesToHex(byte[] data, bool include0x = false)
+        public static string BytesToHex(byte[] data, bool include0X = false)
         {
             try
             {
-                return (include0x ? "0x" : string.Empty) + BitConverter.ToString(data).Replace("-", "").ToLower();
+                return (include0X ? "0x" : string.Empty) + BitConverter.ToString(data).Replace("-", "").ToLower();
             }
             catch (Exception exception)
             {

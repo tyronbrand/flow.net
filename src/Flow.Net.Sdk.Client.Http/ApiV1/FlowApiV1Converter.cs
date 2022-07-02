@@ -1,5 +1,4 @@
-﻿using Flow.Net.Sdk.Client.Http.Generated;
-using Flow.Net.Sdk.Core;
+﻿using Flow.Net.Sdk.Core;
 using Flow.Net.Sdk.Core.Cadence;
 using Flow.Net.Sdk.Core.Models;
 using System;
@@ -7,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Flow.Net.Sdk.Client.Http
+namespace Flow.Net.Sdk.Client.Http.ApiV1
 {
     public static class FlowApiV1Converter
     {
@@ -40,7 +39,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             var flowBlock = new List<FlowBlock>();
 
-            foreach(var block in blocks)
+            foreach (var block in blocks)
             {
                 flowBlock.Add(new FlowBlock
                 {
@@ -64,7 +63,7 @@ namespace Flow.Net.Sdk.Client.Http
         public static IList<FlowBlockSeal> FromBlockSeals(this ICollection<BlockSeal> blockSeals)
         {
             var flowBlockSeal = new List<FlowBlockSeal>();
-            foreach(var seal in blockSeals)
+            foreach (var seal in blockSeals)
             {
                 flowBlockSeal.Add(new FlowBlockSeal
                 {
@@ -78,7 +77,7 @@ namespace Flow.Net.Sdk.Client.Http
         public static IList<FlowCollectionGuarantee> FromCollectionGuarantees(this ICollection<CollectionGuarantee> collectionGuarantees)
         {
             var flowCollectionGuarantees = new List<FlowCollectionGuarantee>();
-            foreach(var seal in collectionGuarantees)
+            foreach (var seal in collectionGuarantees)
             {
                 flowCollectionGuarantees.Add(new FlowCollectionGuarantee
                 {
@@ -91,7 +90,7 @@ namespace Flow.Net.Sdk.Client.Http
         public static IList<FlowContract> ToFlowContract(this IDictionary<string, byte[]> contracts)
         {
             var flowContracts = new List<FlowContract>();
-            foreach(var contract in contracts)
+            foreach (var contract in contracts)
             {
                 flowContracts.Add(new FlowContract
                 {
@@ -105,7 +104,7 @@ namespace Flow.Net.Sdk.Client.Http
         public static IList<FlowAccountKey> ToFlowAccountKey(this ICollection<AccountPublicKey> accountPublicKey)
         {
             var flowAccountKeys = new List<FlowAccountKey>();
-            foreach(var key in accountPublicKey)
+            foreach (var key in accountPublicKey)
             {
                 flowAccountKeys.Add(new FlowAccountKey
                 {
@@ -216,7 +215,7 @@ namespace Flow.Net.Sdk.Client.Http
                 Proposal_key = flowTransaction.ProposalKey.FromFlowProposalKey()
             };
 
-            foreach(var argumnet in flowTransaction.Arguments.FromArguments())
+            foreach (var argumnet in flowTransaction.Arguments.FromArguments())
                 tx.Arguments.Add(argumnet);
 
             foreach (var authorizer in flowTransaction.Authorizers)
@@ -255,7 +254,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             var flowExecutionResults = new List<FlowExecutionResult>();
 
-            foreach(var result in executionResults)
+            foreach (var result in executionResults)
             {
                 flowExecutionResults.Add(new FlowExecutionResult
                 {
@@ -278,7 +277,7 @@ namespace Flow.Net.Sdk.Client.Http
                             Payload = @event.Payload,
                             Type = @event.Type
                         }).ToList()
-            });
+                });
             }
             return flowExecutionResults;
         }
@@ -290,7 +289,7 @@ namespace Flow.Net.Sdk.Client.Http
             foreach (var block in blockEvents)
             {
                 flowBlockEvents.Add(new FlowBlockEvent
-                {                    
+                {
                     BlockId = block.Block_id,
                     BlockHeight = ulong.Parse(block.Block_height),
                     BlockTimestamp = block.Block_timestamp,
@@ -305,7 +304,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             var flowEvents = new List<FlowEvent>();
 
-            foreach(var @event in events)
+            foreach (var @event in events)
             {
                 flowEvents.Add(new FlowEvent
                 {
