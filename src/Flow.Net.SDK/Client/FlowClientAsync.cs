@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Grpc.Net.Client;
 using static Flow.Net.Sdk.Protos.access.AccessAPI;
 using static Flow.Net.Sdk.Constants.Defaults;
 
@@ -24,24 +25,19 @@ namespace Flow.Net.Sdk.Client
         /// A gRPC client for the Flow Access API.
         /// </summary>
         /// <param name="flowNetworkUrl"></param>
-        /// <param name="channelCredentialsSecureSsl"></param>
         /// <param name="options"></param>
         /// <param name="addressMap">global address map</param>
         /// <returns><see cref="FlowClientAsync"/>.</returns>
         public FlowClientAsync(string flowNetworkUrl, 
-            bool channelCredentialsSecureSsl = false, 
-            IEnumerable<ChannelOption> options = null,
+            GrpcChannelOptions options = null,
             Dictionary<string, string> addressMap = null)
         {
+            options = options ?? new GrpcChannelOptions { Credentials = ChannelCredentials.Insecure };
+            var networkUrlWithScheme = $"dns:{flowNetworkUrl}";
+
             try
             {
-                _client = new AccessAPIClient(
-                    new Channel(
-                        flowNetworkUrl,
-                        channelCredentialsSecureSsl ? ChannelCredentials.SecureSsl : ChannelCredentials.Insecure,
-                        options
-                ));
-
+                _client = new AccessAPIClient(GrpcChannel.ForAddress(networkUrlWithScheme, options));
                 _cadenceConverter = new CadenceConverter();
                 AddressMap = addressMap ?? AddressMap;
             }
