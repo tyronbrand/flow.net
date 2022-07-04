@@ -16,7 +16,7 @@ namespace Flow.Net.Sdk.Core.Models
         public byte[] EndState { get; set; }
         public byte[] EventCollection { get; set; }
         public ulong Index { get; set; }
-        public uint NumberOfTransactions { get; set; }
+        public ulong NumberOfTransactions { get; set; }
         public ulong TotalComputationUsed { get; set; }
         public byte[] StartState { get; set; }
     }

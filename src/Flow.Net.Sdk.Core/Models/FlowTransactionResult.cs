@@ -15,6 +15,6 @@ namespace Flow.Net.Sdk.Core.Models
         public string ErrorMessage { get; set; }        
 
         public IList<FlowEvent> Events { get; set; }
-        public int StatusCode { get; set; }
+        public uint StatusCode { get; set; }
     }
 }

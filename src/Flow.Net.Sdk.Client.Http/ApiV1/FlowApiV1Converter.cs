@@ -146,7 +146,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                 BlockId = transaction.Reference_block_id,
                 ErrorMessage = transaction.Result.Error_message,
                 Status = (Core.TransactionStatus)Enum.Parse(typeof(Core.TransactionStatus), transaction.Result.Status.ToString()),
-                StatusCode = transaction.Result.Status_code,
+                StatusCode = uint.Parse(transaction.Result.Status_code.ToString()),
                 Events = events
             };
         }
@@ -267,7 +267,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                             EndState = chunk.End_state,
                             EventCollection = chunk.Event_collection,
                             Index = ulong.Parse(chunk.Index),
-                            NumberOfTransactions = uint.Parse(chunk.Number_of_transactions),
+                            NumberOfTransactions = ulong.Parse(chunk.Number_of_transactions),
                             StartState = chunk.Start_state,
                             TotalComputationUsed = ulong.Parse(chunk.Total_computation_used)
                         }).ToList(),
