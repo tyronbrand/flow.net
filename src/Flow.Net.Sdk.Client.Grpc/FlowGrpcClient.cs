@@ -22,13 +22,13 @@ namespace Flow.Net.Sdk.Client.Grpc
         /// <summary>
         /// A gRPC client for the Flow Access API.
         /// </summary>
-        /// <param name="flowNetworkUrl"></param>
+        /// <param name="serverUrl"></param>
         /// <param name="options"></param>
         /// <returns><see cref="FlowGrpcClient"/>.</returns>
-        public FlowGrpcClient(string flowNetworkUrl, GrpcChannelOptions options = null)
+        public FlowGrpcClient(string serverUrl, GrpcChannelOptions options = null)
         {
             options = options ?? new GrpcChannelOptions { Credentials = ChannelCredentials.Insecure };
-            var networkUrlWithScheme = $"dns:{flowNetworkUrl}";
+            var networkUrlWithScheme = $"dns:{serverUrl}";
 
             try
             {
@@ -37,7 +37,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             }
             catch (Exception exception)
             {
-                throw new FlowException($"Failed to connect to {flowNetworkUrl}", exception);
+                throw new FlowException($"Failed to connect to {serverUrl}", exception);
             }
         }
 

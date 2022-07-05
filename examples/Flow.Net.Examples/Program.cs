@@ -11,13 +11,14 @@ namespace Flow.Net.Examples
     {
         private static async Task Main()
         {
-            var flowClients = new List<IFlowClient>();
+            var flowClients = new List<IFlowClient>
+            {
+                // emulator addresses
+                new FlowHttpClient(new HttpClient(), Sdk.Client.Http.ServerUrl.EmulatorHost),
+                new FlowGrpcClient(Sdk.Client.Grpc.ServerUrl.EmulatorHost)
+            };
 
-            // emulator addresses
-            flowClients.Add(new FlowHttpClient(new HttpClient(), Sdk.Client.Http.ServerUrl.EmulatorHost));
-            flowClients.Add(new FlowGrpcClient(Sdk.Client.Grpc.ServerUrl.EmulatorHost));
-
-            foreach(var client in flowClients)
+            foreach (var client in flowClients)
             {
                 // Block example
                 await BlockExamples.BlockExample.RunAsync(client);

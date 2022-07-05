@@ -15,11 +15,16 @@ namespace Flow.Net.Sdk.Client.Http
     {
         private readonly FlowApiV1 _flowApiV1;
 
-        public FlowHttpClient(HttpClient httpClient, string baseUrl)
+        /// <summary>
+        /// A HTTP client for the Flow v1 API.
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <param name="serverUrl"></param>
+        public FlowHttpClient(HttpClient httpClient, string serverUrl)
         {
             _flowApiV1 = new FlowApiV1(httpClient)
             {
-                BaseUrl = baseUrl
+                BaseUrl = serverUrl
             };
         }
         
