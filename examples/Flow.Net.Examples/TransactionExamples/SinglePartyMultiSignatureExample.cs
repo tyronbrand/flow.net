@@ -1,5 +1,6 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Client;
+using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,10 +9,10 @@ namespace Flow.Net.Examples.TransactionExamples
 {
     public class SinglePartyMultiSignatureExample : ExampleBase
     {
-        public static async Task RunAsync()
+        public static async Task RunAsync(IFlowClient flowClient)
         {
             Console.WriteLine("\nRunning SinglePartyMultiSignatureExample\n");
-            await CreateFlowClientAsync();
+            FlowClient = flowClient;
             await Demo();
             Console.WriteLine("\nSinglePartyMultiSignatureExample Complete\n");
         }
@@ -44,7 +45,7 @@ namespace Flow.Net.Examples.TransactionExamples
                     KeyId = account1Key1.Index,
                     SequenceNumber = account1Key1.SequenceNumber
                 },
-                ReferenceBlockId = latestBlock.Id
+                ReferenceBlockId = latestBlock.Header.Id
             };
 
             // authorizers
@@ -60,7 +61,7 @@ namespace Flow.Net.Examples.TransactionExamples
             var txResponse = await FlowClient.SendTransactionAsync(tx);
 
             // wait for seal
-            await FlowClient.WaitForSealAsync(txResponse);
+            await FlowClient.WaitForSealAsync(txResponse.Id);
         }
     }
 }

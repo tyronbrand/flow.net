@@ -1,10 +1,8 @@
-﻿using Flow.Net.Examples.AccountExamples;
-using Flow.Net.Examples.BlockExamples;
-using Flow.Net.Examples.CollectionExamples;
-using Flow.Net.Examples.EventExamples;
-using Flow.Net.Examples.ScriptExamples;
-using Flow.Net.Examples.TransactionExamples;
-using Flow.Net.Examples.UserSignaturesExamples;
+﻿using Flow.Net.Sdk.Client.Grpc;
+using Flow.Net.Sdk.Client.Http;
+using Flow.Net.Sdk.Core.Client;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Flow.Net.Examples
@@ -13,41 +11,51 @@ namespace Flow.Net.Examples
     {
         private static async Task Main()
         {
-            // Block example
-            await BlockExample.RunAsync();
-            await BlockHeaderExample.RunAsync();
+            var flowClients = new List<IFlowClient>
+            {
+                // emulator addresses
+                new FlowHttpClient(new HttpClient(), Sdk.Client.Http.ServerUrl.EmulatorHost),
+                new FlowGrpcClient(Sdk.Client.Grpc.ServerUrl.EmulatorHost)
+            };
 
-            // Event example
-            await GetEventsExample.RunAsync();
+            foreach (var client in flowClients)
+            {
+                // Block example
+                await BlockExamples.BlockExample.RunAsync(client);
+                await BlockExamples.BlockHeaderExample.RunAsync(client);
 
-            // Script example
-            await ScriptExample.RunAsync();
-            await ExecuteScriptAtLatestBlockWithParametersExample.RunAsync();
-            await ExecuteScriptAtLatestBlockExample.RunAsync();
-            await ExecuteScriptAtBlockHeightExample.RunAsync();
-            await ExecuteScriptAtBlockIdExample.RunAsync();
+                // Event example
+                await EventExamples.GetEventsExample.RunAsync(client);
 
-            // Collection example
-            await GetCollectionExample.RunAsync();
+                // Script example
+                await ScriptExamples.ScriptExample.RunAsync(client);
+                await ScriptExamples.ExecuteScriptAtLatestBlockWithParametersExample.RunAsync(client);
+                await ScriptExamples.ExecuteScriptAtLatestBlockExample.RunAsync(client);
+                await ScriptExamples.ExecuteScriptAtBlockHeightExample.RunAsync(client);
+                await ScriptExamples.ExecuteScriptAtBlockIdExample.RunAsync(client);
 
-            // Transaction examples
-            await GetTransactionExample.RunAsync();
-            await SinglePartySingleSignatureExample.RunAsync();
-            await SinglePartyMultiSignatureExample.RunAsync();
-            await MultiPartySingleSignatureExample.RunAsync();
-            await MultiPartyTwoAuthorizersExample.RunAsync();
-            await MultiPartyMultiSignatureExample.RunAsync();
+                // Collection example
+                await CollectionExamples.GetCollectionExample.RunAsync(client);
 
-            // Account example            
-            await CreateAccountExample.RunAsync();
-            await CreateAccountWithContractExample.RunAsync();
-            await DeployUpdateDeleteContractExample.RunAsync();
-            await GetAccountExample.RunAsync();
+                // Transaction examples
+                await TransactionExamples.GetTransactionExample.RunAsync(client);
+                await TransactionExamples.SinglePartySingleSignatureExample.RunAsync(client);
+                await TransactionExamples.SinglePartyMultiSignatureExample.RunAsync(client);
+                await TransactionExamples.MultiPartySingleSignatureExample.RunAsync(client);
+                await TransactionExamples.MultiPartyTwoAuthorizersExample.RunAsync(client);
+                await TransactionExamples.MultiPartyMultiSignatureExample.RunAsync(client);
 
-            // User signature examples
-            await UserSignatureExample.RunAsync();
-            await UserSignatureValidateAnyExample.RunAsync();
-            await UserSignatureValidateAllExample.RunAsync();
+                // Account example            
+                await AccountExamples.CreateAccountExample.RunAsync(client);
+                await AccountExamples.CreateAccountWithContractExample.RunAsync(client);
+                await AccountExamples.DeployUpdateDeleteContractExample.RunAsync(client);
+                await AccountExamples.GetAccountExample.RunAsync(client);
+
+                // User signature examples
+                await UserSignaturesExamples.UserSignatureExample.RunAsync(client);
+                await UserSignaturesExamples.UserSignatureValidateAnyExample.RunAsync(client);
+                await UserSignaturesExamples.UserSignatureValidateAllExample.RunAsync(client);
+            }
         }
     }
 }

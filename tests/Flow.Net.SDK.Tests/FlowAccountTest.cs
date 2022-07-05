@@ -1,4 +1,5 @@
-﻿using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Models;
 using Xunit;
 
 namespace Flow.Net.Sdk.Tests

@@ -1,6 +1,6 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Client;
+using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,10 +9,10 @@ namespace Flow.Net.Examples.ScriptExamples
 {
     public class ScriptExample : ExampleBase
     {
-        public static async Task RunAsync()
+        public static async Task RunAsync(IFlowClient flowClient)
         {
             Console.WriteLine("\nRunning ScriptExample\n");
-            await CreateFlowClientAsync();
+            FlowClient = flowClient;
             await Demo();
             Console.WriteLine("\nScriptExample Complete\n");
         }
@@ -85,7 +85,7 @@ pub fun main(name: String): User {
             var user = new User
             {
                 Name = cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceString>("name").Value,
-                Address = cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceAddress>("address").Value.RemoveHexPrefix(),
+                Address = cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceAddress>("address").Value,
                 Balance = decimal.Parse(cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceNumber>("balance").Value)
             };
 

@@ -1,5 +1,5 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core.Client;
+using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -7,10 +7,10 @@ namespace Flow.Net.Examples.BlockExamples
 {
     public class BlockExample : ExampleBase
     {
-        public static async Task RunAsync()
+        public static async Task RunAsync(IFlowClient flowClient)
         {
             Console.WriteLine("\nRunning BlockExample\n");
-            await CreateFlowClientAsync();
+            FlowClient = flowClient;
             await Demo();
             Console.WriteLine("\nBlockExample Complete\n");
         }
@@ -22,19 +22,19 @@ namespace Flow.Net.Examples.BlockExamples
             PrintResult(latestBlock);
 
             // get the block by ID
-            var blockByIdResult = await FlowClient.GetBlockByIdAsync(latestBlock.Id);
+            var blockByIdResult = await FlowClient.GetBlockByIdAsync(latestBlock.Header.Id);
             PrintResult(blockByIdResult);
 
             // get block by height
-            var blockByHeightResult = await FlowClient.GetBlockByHeightAsync(latestBlock.Height);
+            var blockByHeightResult = await FlowClient.GetBlockByHeightAsync(latestBlock.Header.Height);
             PrintResult(blockByHeightResult);
         }
 
         private static void PrintResult(FlowBlock flowBlock)
         {
-            Console.WriteLine($"ID: {flowBlock.Id.FromByteStringToHex()}");
-            Console.WriteLine($"height: {flowBlock.Height}");
-            Console.WriteLine($"timestamp: {flowBlock.Timestamp}\n");            
+            Console.WriteLine($"ID: {flowBlock.Header.Id}");
+            Console.WriteLine($"height: {flowBlock.Header.Height}");
+            Console.WriteLine($"timestamp: {flowBlock.Header.Timestamp}\n");            
         }
     }
 }

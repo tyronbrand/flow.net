@@ -1,6 +1,7 @@
-﻿using Flow.Net.Sdk;
-using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Client;
+using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,10 @@ namespace Flow.Net.Examples.UserSignaturesExamples
 {
     public class UserSignatureExample : ExampleBase
     {
-        public static async Task RunAsync()
+        public static async Task RunAsync(IFlowClient flowClient)
         {
             Console.WriteLine("\nRunning UserSignatureExample\n");
-            await CreateFlowClientAsync();
+            FlowClient = flowClient;
             await Demo();
             Console.WriteLine("\nUserSignatureExample Complete\n");
         }
@@ -28,14 +29,14 @@ namespace Flow.Net.Examples.UserSignaturesExamples
             var aliceFlowAccount = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKeyAlice });
             var bobFlowAccount = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKeyBob });
 
-            var toAddress = new CadenceAddress(aliceFlowAccount.Address.HexValue);
-            var fromAddress = new CadenceAddress(bobFlowAccount.Address.HexValue);
+            var toAddress = new CadenceAddress(aliceFlowAccount.Address.Address);
+            var fromAddress = new CadenceAddress(bobFlowAccount.Address.Address);
             var amount = new CadenceNumber(CadenceNumberType.UInt64, "100");
 
             var message = Utilities.CombineByteArrays(new[]
             {
-                aliceFlowAccount.Address.HexValue.FromHexToBytes(),
-                bobFlowAccount.Address.HexValue.FromHexToBytes()
+                aliceFlowAccount.Address.Address.HexToBytes(),
+                bobFlowAccount.Address.Address.HexToBytes()
             });
 
             var amountBytes = BitConverter.GetBytes(ulong.Parse(amount.Value));
@@ -48,8 +49,8 @@ namespace Flow.Net.Examples.UserSignaturesExamples
             });
 
             // sign the message with Alice and Bob
-            var aliceSigner = new Sdk.Crypto.Ecdsa.Signer(flowAccountKeyAlice.PrivateKey, flowAccountKeyAlice.HashAlgorithm, flowAccountKeyAlice.SignatureAlgorithm);
-            var bobSigner = new Sdk.Crypto.Ecdsa.Signer(flowAccountKeyBob.PrivateKey, flowAccountKeyBob.HashAlgorithm, flowAccountKeyBob.SignatureAlgorithm);
+            var aliceSigner = new Sdk.Core.Crypto.Ecdsa.Signer(flowAccountKeyAlice.PrivateKey, flowAccountKeyAlice.HashAlgorithm, flowAccountKeyAlice.SignatureAlgorithm);
+            var bobSigner = new Sdk.Core.Crypto.Ecdsa.Signer(flowAccountKeyBob.PrivateKey, flowAccountKeyBob.HashAlgorithm, flowAccountKeyBob.SignatureAlgorithm);
 
             var aliceSignature = UserMessage.Sign(message, aliceSigner);
             var bobSignature = UserMessage.Sign(message, bobSigner);
@@ -75,8 +76,8 @@ namespace Flow.Net.Examples.UserSignaturesExamples
             var signatures = new CadenceArray(
                 new List<ICadence>
                 {
-                    new CadenceString(aliceSignature.FromByteArrayToHex()),
-                    new CadenceString(bobSignature.FromByteArrayToHex())
+                    new CadenceString(aliceSignature.BytesToHex()),
+                    new CadenceString(bobSignature.BytesToHex())
                 });
 
             var script =  Utilities.ReadCadenceScript("user-signature-example");
@@ -94,8 +95,7 @@ namespace Flow.Net.Examples.UserSignaturesExamples
                         fromAddress,
                         amount,
                     }
-                }
-                );
+                });
 
             Console.WriteLine(response.As<CadenceBool>().Value
                 ? "Signature verification succeeded"

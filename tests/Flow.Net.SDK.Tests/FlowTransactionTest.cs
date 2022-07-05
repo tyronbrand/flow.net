@@ -1,4 +1,5 @@
-﻿using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Models;
 using Xunit;
 
 namespace Flow.Net.Sdk.Tests
@@ -17,7 +18,7 @@ namespace Flow.Net.Sdk.Tests
                 },
                 GasLimit = 42,
                 Payer = new FlowAddress("01"),
-                ReferenceBlockId = "f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b".FromHexToByteString(),
+                ReferenceBlockId = "f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b",
                 Script = "transaction { execute { log(\"Hello, World!\") } }"
             };
 
@@ -26,9 +27,9 @@ namespace Flow.Net.Sdk.Tests
             transaction.PayloadSignatures.Add(
                 new FlowSignature
                 {
-                    Address = "01".FromHexToByteString(),
+                    Address = new FlowAddress("01"),
                     KeyId = 4,
-                    Signature = "f7225388c1d69d57e6251c9fda50cbbf9e05131e5adb81e5aa0422402f048162".FromHexToBytes()
+                    Signature = "f7225388c1d69d57e6251c9fda50cbbf9e05131e5adb81e5aa0422402f048162".HexToBytes()
                 });
 
             return transaction;
@@ -43,10 +44,10 @@ namespace Flow.Net.Sdk.Tests
             var transaction = Transaction();
 
             var payloadTest = Rlp.EncodedCanonicalPayload(transaction);
-            Assert.Equal(payload, payloadTest.FromByteArrayToHex());
+            Assert.Equal(payload, payloadTest.BytesToHex());
 
             var envelopeTest = Rlp.EncodedCanonicalAuthorizationEnvelope(transaction);
-            Assert.Equal(envelope, envelopeTest.FromByteArrayToHex());
+            Assert.Equal(envelope, envelopeTest.BytesToHex());
         }
 
         [Fact]
@@ -59,16 +60,16 @@ namespace Flow.Net.Sdk.Tests
             transaction.EnvelopeSignatures.Add(
                 new FlowSignature
                 {
-                    Address = "01".FromHexToByteString(),
+                    Address = new FlowAddress("01"),
                     KeyId = 4,
-                    Signature = "f7225388c1d69d57e6251c9fda50cbbf9e05131e5adb81e5aa0422402f048162".FromHexToBytes()
+                    Signature = "f7225388c1d69d57e6251c9fda50cbbf9e05131e5adb81e5aa0422402f048162".HexToBytes()
                 });
 
             var payloadTest = Rlp.EncodedCanonicalPayload(transaction);
-            Assert.Equal(payload, payloadTest.FromByteArrayToHex());
+            Assert.Equal(payload, payloadTest.BytesToHex());
 
             var envelopeTest = Rlp.EncodedCanonicalAuthorizationEnvelope(transaction);
-            Assert.Equal(envelope, envelopeTest.FromByteArrayToHex());
+            Assert.Equal(envelope, envelopeTest.BytesToHex());
         }
 
         [Fact]
@@ -81,10 +82,10 @@ namespace Flow.Net.Sdk.Tests
             transaction.Authorizers.Add(new FlowAddress("02"));
 
             var payloadTest = Rlp.EncodedCanonicalPayload(transaction);
-            Assert.Equal(payload, payloadTest.FromByteArrayToHex());
+            Assert.Equal(payload, payloadTest.BytesToHex());
 
             var envelopeTest = Rlp.EncodedCanonicalAuthorizationEnvelope(transaction);
-            Assert.Equal(envelope, envelopeTest.FromByteArrayToHex());
+            Assert.Equal(envelope, envelopeTest.BytesToHex());
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Flow.Net.Sdk.Client.Grpc;
+using Flow.Net.Sdk.Core.Models;
+using Flow.Net.Sdk.Core;
+using System;
 using System.Collections.Generic;
-using Flow.Net.Sdk.Client;
-using Flow.Net.Sdk.Converters;
-using Flow.Net.Sdk.Models;
-using Google.Protobuf;
 using Xunit;
 
 namespace Flow.Net.Sdk.Tests
@@ -15,8 +14,8 @@ namespace Flow.Net.Sdk.Tests
         {
             var bytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
 
-            var without0x = bytes.FromByteArrayToHex();
-            var with0x = bytes.FromByteArrayToHex(true);
+            var without0x = bytes.BytesToHex();
+            var with0x = bytes.BytesToHex(true);
 
             Assert.Equal("0102030405060708", without0x);
             Assert.Equal("0x0102030405060708", with0x);
@@ -28,13 +27,13 @@ namespace Flow.Net.Sdk.Tests
             const string expectedResult = "0102030405060708";
 
             const string hexWith0x = "0x0102030405060708";
-            var removed0xResult = ByteStringConverter.FromHexToByteString(hexWith0x);
+            var removed0xResult = hexWith0x.HexToByteString();
 
             const string hexWithout0x = "0102030405060708";
-            var result = ByteStringConverter.FromHexToByteString(hexWithout0x);
+            var result = hexWithout0x.HexToByteString();
 
-            Assert.Equal(expectedResult, removed0xResult.FromByteStringToHex());
-            Assert.Equal(expectedResult, result.FromByteStringToHex());
+            Assert.Equal(expectedResult, removed0xResult.ByteStringToHex());
+            Assert.Equal(expectedResult, result.ByteStringToHex());
         }
 
         [Fact]
@@ -43,8 +42,8 @@ namespace Flow.Net.Sdk.Tests
             const string expectedResult = "0102030405060708";
             const string hexWith0x = "0x0102030405060708";
 
-            var removed0xResult = HexConverter.RemoveHexPrefix(hexWith0x);
-            var result = HexConverter.RemoveHexPrefix(expectedResult);
+            var removed0xResult = hexWith0x.RemoveHexPrefix();
+            var result = expectedResult.RemoveHexPrefix();
 
             Assert.Equal(expectedResult, removed0xResult);
             Assert.Equal(expectedResult, result);
@@ -56,7 +55,7 @@ namespace Flow.Net.Sdk.Tests
             const string expectedResult = "0102030405060708";
             const string str = "\u0001\u0002\u0003\u0004\u0005\u0006\a\b";
 
-            var result = HexConverter.FromStringToHex(str);
+            var result = str.StringToHex();
 
             Assert.Equal(expectedResult, result);
         }
@@ -67,7 +66,7 @@ namespace Flow.Net.Sdk.Tests
             var expectedResult = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
             const string hex = "0102030405060708";
 
-            var result = HexConverter.FromHexToBytes(hex);
+            var result = hex.HexToBytes();
 
             Assert.Equal(expectedResult, result);
         }
@@ -106,7 +105,7 @@ namespace Flow.Net.Sdk.Tests
                 Script = script,
                 Payer = address,
                 GasLimit = 100,
-                ReferenceBlockId = ByteString.Empty,
+                ReferenceBlockId = "",
                 ProposalKey = new FlowProposalKey()
                 {
                     Address = address
@@ -115,7 +114,7 @@ namespace Flow.Net.Sdk.Tests
 
             var result = tx.FromFlowTransaction();
 
-            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(result.Script.FromByteStringToString()));
+            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(result.Script.ByteStringToString()));
         }
 
         [Fact]
@@ -151,7 +150,7 @@ namespace Flow.Net.Sdk.Tests
                 Script = script,
                 Payer = address,
                 GasLimit = 100,
-                ReferenceBlockId = ByteString.Empty,
+                ReferenceBlockId = "",
                 ProposalKey = new FlowProposalKey()
                 {
                     Address = address
@@ -202,7 +201,7 @@ namespace Flow.Net.Sdk.Tests
                 Script = script,
                 Payer = address,
                 GasLimit = 100,
-                ReferenceBlockId = ByteString.Empty,
+                ReferenceBlockId = "",
                 ProposalKey = new FlowProposalKey()
                 {
                     Address = address
@@ -211,61 +210,6 @@ namespace Flow.Net.Sdk.Tests
 
             Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(tx.Script));
         }
-
-        [Fact]
-        public void MergeImportsFromAddressMapAndFLowClientAddressMap()
-        {
-            var clientAddressMap = new Dictionary<string, string>()
-            {
-                { "FUSD", "0x6789" },
-                { "FlowToken", "0x3333" },
-            };
-            var flowClient = new FlowClientAsync("", addressMap: clientAddressMap);
-
-            var expected = @"
-            import FungibleToken from 0x1111
-            import FUSD from 0x2222
-            import FlowToken from 0x3333
-            
-            transaction(arg1: String) {
-                prepare(acct: AuthAccount) {
-                    log(""Hello World"")
-                }
-            }
-            ";
-            var script = @"
-            import FungibleToken from 0xFungibleToken
-            import FUSD from FUSD
-            import FlowToken from FlowToken
-            
-            transaction(arg1: String) {
-                prepare(acct: AuthAccount) {
-                    log(""Hello World"")
-                }
-            }
-            ";
-            var address = new FlowAddress("0x123456");
-            
-            var addressMap = new Dictionary<string, string>()
-            {
-                { "FungibleToken", "1111" },
-                { "FUSD", "0x2222" }
-            };
-            var tx = new FlowTransaction(flowClient.AddressMap.Merge(addressMap))
-            {
-                Script = script,
-                Payer = address,
-                GasLimit = 100,
-                ReferenceBlockId = ByteString.Empty,
-                ProposalKey = new FlowProposalKey()
-                {
-                    Address = address
-                }
-            };
-
-            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(tx.Script));
-        }
-
         private static string NormalizeNewLines(string value)
         {
             return value
