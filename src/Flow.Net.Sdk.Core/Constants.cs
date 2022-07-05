@@ -1,4 +1,4 @@
-﻿namespace Flow.Net.Sdk.Core.Constants
+﻿namespace Flow.Net.Sdk.Core
 {
     public static class Event
     {
