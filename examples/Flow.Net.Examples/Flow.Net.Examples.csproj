@@ -6,8 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Flow.Net.Sdk.Client.Grpc\Flow.Net.Sdk.Client.Grpc.csproj" />
-    <ProjectReference Include="..\..\src\Flow.Net.Sdk.Client.Http\Flow.Net.Sdk.Client.Http.csproj" />
     <ProjectReference Include="..\..\src\Flow.Net.SDK\Flow.Net.Sdk.csproj" />
   </ItemGroup>
 
