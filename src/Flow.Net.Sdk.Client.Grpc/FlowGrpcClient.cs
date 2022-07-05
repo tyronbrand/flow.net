@@ -56,7 +56,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             try
             {
                 var request = flowScript.FromFlowScript(blockHeight);
-                var response = await _client.ExecuteScriptAtBlockHeightAsync(request, options);
+                var response = await _client.ExecuteScriptAtBlockHeightAsync(request, options).ConfigureAwait(false);
                 return response.Value.ByteStringToString().Decode(_cadenceConverter);
             }
             catch (Exception exception)
@@ -80,7 +80,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             try
             {
                 var request = flowScript.FromFlowScript(blockId);
-                var response = await _client.ExecuteScriptAtBlockIDAsync(request, options);
+                var response = await _client.ExecuteScriptAtBlockIDAsync(request, options).ConfigureAwait(false);
                 return response.Value.ByteStringToString().Decode(_cadenceConverter);
             }
             catch (Exception exception)
@@ -103,7 +103,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             try
             {
                 var request = flowScript.FromFlowScript();
-                var response = await _client.ExecuteScriptAtLatestBlockAsync(request, options);
+                var response = await _client.ExecuteScriptAtLatestBlockAsync(request, options).ConfigureAwait(false);
                 return response.Value.ByteStringToString().Decode(_cadenceConverter);
             }
             catch (Exception exception)
@@ -131,7 +131,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 {
                     Address = address.HexToByteString(),
                     BlockHeight = blockHeight
-                }, options);
+                }, options).ConfigureAwait(false);
 
                 return response.ToFlowAccount();
             }
@@ -158,7 +158,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 new GetAccountAtLatestBlockRequest
                 {
                     Address = address.HexToByteString(),
-                }, options);
+                }, options).ConfigureAwait(false);
 
                 return response.ToFlowAccount();
             }
@@ -185,7 +185,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                     new GetBlockByHeightRequest
                     {
                         Height = height
-                    }, options);
+                    }, options).ConfigureAwait(false);
 
                 return response.ToFlowBlock();
             }
@@ -212,7 +212,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                     new GetBlockByIDRequest
                     {
                         Id = blockId.HexToByteString(),
-                    }, options);
+                    }, options).ConfigureAwait(false);
 
                 return response.ToFlowBlock();
             }
@@ -239,7 +239,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                     new GetBlockHeaderByHeightRequest
                     {
                         Height = height
-                    }, options);
+                    }, options).ConfigureAwait(false);
 
                 return response.ToFlowBlockHeader();
             }
@@ -266,7 +266,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 new GetBlockHeaderByIDRequest
                 {
                     Id = blockId.HexToByteString()
-                }, options);
+                }, options).ConfigureAwait(false);
 
                 return response.ToFlowBlockHeader();
             }
@@ -293,7 +293,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 new GetCollectionByIDRequest
                 {
                     Id = collectionId.HexToByteString()
-                }, options);
+                }, options).ConfigureAwait(false);
 
                 return response.ToFlowCollection();
             }
@@ -328,7 +328,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                         request.BlockIds.Add(block.HexToByteString());
                 }
 
-                var response = await _client.GetEventsForBlockIDsAsync(request, options);
+                var response = await _client.GetEventsForBlockIDsAsync(request, options).ConfigureAwait(false);
                 return response.ToFlowBlockEvents();
             }
             catch (Exception exception)
@@ -360,7 +360,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                         Type = eventType,
                         StartHeight = startHeight,
                         EndHeight = endHeight
-                    }, options);
+                    }, options).ConfigureAwait(false);
 
                 return response.ToFlowBlockEvents();
             }
@@ -387,7 +387,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                     new GetExecutionResultForBlockIDRequest
                     {
                         BlockId = blockId.HexToByteString()
-                    }, options);
+                    }, options).ConfigureAwait(false);
 
                 return response.ToFlowExecutionResult();
             }
@@ -414,7 +414,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                     new GetLatestBlockRequest
                     {
                         IsSealed = isSealed
-                    }, options);
+                    }, options).ConfigureAwait(false);
 
                 return response.ToFlowBlock();
             }
@@ -441,7 +441,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                new GetLatestBlockHeaderRequest
                {
                    IsSealed = isSealed
-               }, options);
+               }, options).ConfigureAwait(false);
 
                 return response.ToFlowBlockHeader();
             }
@@ -464,7 +464,7 @@ namespace Flow.Net.Sdk.Client.Grpc
         {
             try
             {
-                var response = await _client.GetLatestProtocolStateSnapshotAsync(new GetLatestProtocolStateSnapshotRequest(), options);
+                var response = await _client.GetLatestProtocolStateSnapshotAsync(new GetLatestProtocolStateSnapshotRequest(), options).ConfigureAwait(false);
                 return response.ToFlowProtocolStateSnapshotResponse();
             }
             catch (Exception exception)
@@ -490,7 +490,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                     new GetTransactionRequest
                     {
                         Id = transactionId.HexToByteString()
-                    }, options);
+                    }, options).ConfigureAwait(false);
 
                 return response.ToFlowTransactionResponse();
             }
@@ -517,7 +517,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 new GetTransactionRequest
                 {
                     Id = transactionId.HexToByteString(),
-                }, options);
+                }, options).ConfigureAwait(false);
 
                 return response.ToFlowTransactionResult();
             }
@@ -538,7 +538,7 @@ namespace Flow.Net.Sdk.Client.Grpc
         {
             try
             {
-                await _client.PingAsync(new PingRequest(), options);
+                await _client.PingAsync(new PingRequest(), options).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -558,7 +558,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                     new SendTransactionRequest
                     {
                         Transaction = tx
-                    }, options);
+                    }, options).ConfigureAwait(false);
 
                 return response.ToFlowTransactionId();
             }
@@ -585,7 +585,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             var startTime = DateTime.UtcNow;
             while (true)
             {
-                var result = await GetTransactionResultAsync(transactionId, options);
+                var result = await GetTransactionResultAsync(transactionId, options).ConfigureAwait(false);
 
                 if (result != null && result.Status == Core.TransactionStatus.Sealed)
                     return result;
@@ -593,7 +593,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 if (DateTime.UtcNow.Subtract(startTime).TotalMilliseconds > timeoutMs)
                     throw new FlowException("Timed out waiting for seal.");
 
-                await Task.Delay(delayMs, cancellationToken);
+                await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -607,7 +607,7 @@ namespace Flow.Net.Sdk.Client.Grpc
         {
             try
             {
-                var response = await _client.GetNetworkParametersAsync(new GetNetworkParametersRequest(), options);
+                var response = await _client.GetNetworkParametersAsync(new GetNetworkParametersRequest(), options).ConfigureAwait(false);
 
                 return response.ToFlowGetNetworkParametersResponse();
             }
