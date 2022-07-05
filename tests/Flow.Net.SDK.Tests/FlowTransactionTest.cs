@@ -1,6 +1,5 @@
 ﻿using Flow.Net.Sdk.Core;
 using Flow.Net.Sdk.Core.Models;
-using Flow.Net.Sdk.Client.Grpc;
 using Xunit;
 
 namespace Flow.Net.Sdk.Tests

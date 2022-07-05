@@ -8,7 +8,7 @@ namespace Flow.Net.Sdk.Core.Cadence.Types
 {
     public class CadenceRepeatedTypeConverter : JsonConverter
     {
-        private Dictionary<string, ICadenceType> _repeatedIds = new Dictionary<string, ICadenceType>();        
+        private readonly Dictionary<string, ICadenceType> _repeatedIds = new Dictionary<string, ICadenceType>();        
 
         public override bool CanConvert(Type objectType)
         {

@@ -147,18 +147,6 @@ namespace Flow.Net.Sdk.Client.Http
             };
         }
 
-        public static FlowEvent ToFlowEvent(this Event @event)
-        {
-            return new FlowEvent
-            {
-                EventIndex = uint.Parse(@event.Event_index),
-                TransactionId = @event.Transaction_id,
-                TransactionIndex = uint.Parse(@event.Transaction_index),
-                Type = @event.Type,
-                Payload = Encoding.UTF8.GetString(@event.Payload).Decode(),
-            };
-        }
-
         public static FlowTransactionResponse ToFlowTransactionResponse(this Transaction transaction)
         {
             var payloadSignatures = transaction.Payload_signatures.Select(payloadSignature =>
@@ -296,6 +284,18 @@ namespace Flow.Net.Sdk.Client.Http
             return flowBlockEvents;
         }
 
+        public static FlowEvent ToFlowEvent(this Event @event)
+        {
+            return new FlowEvent
+            {
+                EventIndex = uint.Parse(@event.Event_index),
+                TransactionId = @event.Transaction_id,
+                TransactionIndex = uint.Parse(@event.Transaction_index),
+                Type = @event.Type,
+                Payload = Encoding.UTF8.GetString(@event.Payload).Decode(),
+            };
+        }
+        
         public static IEnumerable<FlowEvent> ToFlowEvent(this ICollection<Event> events)
         {
             var flowEvents = new List<FlowEvent>();

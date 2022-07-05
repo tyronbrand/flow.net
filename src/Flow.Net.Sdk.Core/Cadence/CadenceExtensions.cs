@@ -11,6 +11,12 @@ namespace Flow.Net.Sdk.Core.Cadence
         {
             return cadence.Encode(cadence);
         }
+        
+        ///<inheritdoc cref="CadenceType.Encode"/>
+        public static string Encode(this ICadenceType cadenceType)
+        {
+            return cadenceType.Encode(cadenceType);
+        }
 
         /// <summary>
         /// Decodes a <see cref="ICadence"/> JSON string.
@@ -22,12 +28,6 @@ namespace Flow.Net.Sdk.Core.Cadence
         {
             JsonConverter[] jsonConverters = { cadenceConverter ?? new CadenceConverter(), new CadenceTypeConverter() };
             return JsonConvert.DeserializeObject<ICadence>(cadenceJson, jsonConverters);
-        }
-
-        ///<inheritdoc cref="CadenceType.Encode"/>
-        public static string Encode(this ICadenceType cadenceType)
-        {
-            return cadenceType.Encode(cadenceType);
         }
 
         /// <summary>
