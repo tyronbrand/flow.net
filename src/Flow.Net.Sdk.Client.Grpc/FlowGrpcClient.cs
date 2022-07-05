@@ -129,7 +129,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 var response = await _client.GetAccountAtBlockHeightAsync(
                 new GetAccountAtBlockHeightRequest
                 {
-                    Address = address.StringToByteString(),
+                    Address = address.HexToByteString(),
                     BlockHeight = blockHeight
                 }, options);
 
@@ -157,7 +157,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 var response = await _client.GetAccountAtLatestBlockAsync(
                 new GetAccountAtLatestBlockRequest
                 {
-                    Address = address.StringToByteString()
+                    Address = address.HexToByteString(),
                 }, options);
 
                 return response.ToFlowAccount();
@@ -211,7 +211,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 var response = await _client.GetBlockByIDAsync(
                     new GetBlockByIDRequest
                     {
-                        Id = blockId.StringToByteString(),
+                        Id = blockId.HexToByteString(),
                     }, options);
 
                 return response.ToFlowBlock();
@@ -265,7 +265,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 var response = await _client.GetBlockHeaderByIDAsync(
                 new GetBlockHeaderByIDRequest
                 {
-                    Id = blockId.StringToByteString()
+                    Id = blockId.HexToByteString()
                 }, options);
 
                 return response.ToFlowBlockHeader();
@@ -292,7 +292,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 var response = await _client.GetCollectionByIDAsync(
                 new GetCollectionByIDRequest
                 {
-                    Id = collectionId.StringToByteString()
+                    Id = collectionId.HexToByteString()
                 }, options);
 
                 return response.ToFlowCollection();
@@ -325,7 +325,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 if (blockIds != null)
                 {
                     foreach (var block in blockIds)
-                        request.BlockIds.Add(block.StringToByteString());
+                        request.BlockIds.Add(block.HexToByteString());
                 }
 
                 var response = await _client.GetEventsForBlockIDsAsync(request, options);
@@ -386,7 +386,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 var response = await _client.GetExecutionResultForBlockIDAsync(
                     new GetExecutionResultForBlockIDRequest
                     {
-                        BlockId = blockId.StringToByteString()
+                        BlockId = blockId.HexToByteString()
                     }, options);
 
                 return response.ToFlowExecutionResult();
@@ -489,7 +489,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 var response = await _client.GetTransactionAsync(
                     new GetTransactionRequest
                     {
-                        Id = transactionId.StringToByteString()
+                        Id = transactionId.HexToByteString()
                     }, options);
 
                 return response.ToFlowTransactionResponse();
@@ -516,7 +516,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 var response = await _client.GetTransactionResultAsync(
                 new GetTransactionRequest
                 {
-                    Id = transactionId.StringToByteString(),
+                    Id = transactionId.HexToByteString(),
                 }, options);
 
                 return response.ToFlowTransactionResult();

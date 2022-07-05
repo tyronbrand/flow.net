@@ -1,4 +1,5 @@
 ﻿using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Client;
 using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Threading.Tasks;
@@ -7,10 +8,10 @@ namespace Flow.Net.Examples.ScriptExamples
 {
     public class ExecuteScriptAtLatestBlockExample : ExampleBase
     {
-        public static async Task RunAsync()
+        public static async Task RunAsync(IFlowClient flowClient)
         {
             Console.WriteLine("\nRunning ExecuteScriptAtLatestBlockExample\n");
-            await CreateFlowClientAsync();
+            FlowClient = flowClient;
             await Demo();
             Console.WriteLine("\nExecuteScriptAtLatestBlockExample Complete\n");
         }

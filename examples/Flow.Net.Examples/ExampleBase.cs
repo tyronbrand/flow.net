@@ -1,28 +1,16 @@
-﻿using Flow.Net.Sdk.Client.Http;
-using Flow.Net.Sdk.Core.Templates;
-using Flow.Net.Sdk.Core;
+﻿using Flow.Net.Sdk.Core;
 using Flow.Net.Sdk.Core.Client;
 using Flow.Net.Sdk.Core.Models;
+using Flow.Net.Sdk.Core.Templates;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Flow.Net.Examples
 {
     public abstract class ExampleBase
     {
-        protected static IFlowClient FlowClient { get; private set; }
-
-        protected static async Task CreateFlowClientAsync()
-        {
-            if (FlowClient != null)
-                return;
-
-            const string networkUrl = "http://127.0.0.1:8888/v1"; // emulator
-            FlowClient = new FlowHttpClient(new HttpClient(), networkUrl);
-            await FlowClient.PingAsync();
-        }
+        protected static IFlowClient FlowClient { get; set; }
 
         protected static async Task<FlowAccount> CreateAccountAsync(IList<FlowAccountKey> newFlowAccountKeys)
         {
@@ -87,7 +75,7 @@ namespace Flow.Net.Examples
             }
             else
             {
-                await CreateFlowClientAsync();
+                var delete = "this";
             }
 
             // read flow.json

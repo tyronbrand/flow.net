@@ -6,15 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Flow.Net.Sdk.Core.Client;
 
 namespace Flow.Net.Examples.EventExamples
 {
     public class GetEventsExample : ExampleBase
     {
-        public static async Task RunAsync()
+        public static async Task RunAsync(IFlowClient flowClient)
         {
             Console.WriteLine("\nRunning GetEventsExample\n");
-            await CreateFlowClientAsync();
+            FlowClient = flowClient;
             var flowAccount = await PrepFlowAccountWithContract();
             if(flowAccount != null)
             {
@@ -28,22 +29,39 @@ namespace Flow.Net.Examples.EventExamples
         {
             // Query for account creation events by type
             var eventsForHeightRange = await FlowClient.GetEventsForHeightRangeAsync("flow.AccountCreated", 0, 100);
+            Console.Write("\n---------- Query for account creation events by type ----------\n");
             PrintEvents(eventsForHeightRange);
 
             // Query for our custom event by type
             var customType = $"A.{flowAccount.Address.Address}.EventDemo.Add";
             var customEventsForHeightRange = await FlowClient.GetEventsForHeightRangeAsync(customType, 0, 100);
+            Console.Write($"\n---------- Query for our custom event by type ({customType}) ----------\n");
             PrintEvents(customEventsForHeightRange);
 
             // Get events directly from transaction result
             var txResult = await FlowClient.GetTransactionResultAsync(flowTransactionId);
+            Console.Write("\n---------- Get events directly from transaction result ----------\n");
             PrintEvent(txResult.Events);
         }
 
         private static void PrintEvents(IEnumerable<FlowBlockEvent> flowBlockEvents)
         {
-            foreach(var blockEvent in flowBlockEvents)
-                PrintEvent(blockEvent.Events);
+            foreach (var block in flowBlockEvents)
+            {
+                Console.WriteLine("\n------------------------------------------------------------------------------------------------------------");
+                if (block.Events.Any())
+                {
+                    Console.WriteLine($"{block.Events.Count()} event(s) at block height: {block.BlockHeight}\n");
+                    Console.WriteLine($"Block Id: {block.BlockId}\n");
+                    Console.WriteLine($"Block Timestamp: {block.BlockTimestamp}\n");
+                    PrintEvent(block.Events);
+                }
+                else
+                {
+                    Console.WriteLine($"No events at block height: {block.BlockHeight}");
+                }
+                Console.WriteLine("------------------------------------------------------------------------------------------------------------\n");
+            }
         }
 
         private static void PrintEvent(IEnumerable<FlowEvent> flowEvents)

@@ -3,21 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Flow.Net.Sdk.Client.Http.ApiV1
+namespace Flow.Net.Sdk.Client.Http
 {
-    public partial class FlowApiV1Generated
+    public partial class FlowApiV1
     {
         private string _baseUrl = "";
         private HttpClient _httpClient;
         private Lazy<JsonSerializerSettings> _settings;
 
-        public FlowApiV1Generated(HttpClient httpClient)
+        public FlowApiV1(HttpClient httpClient)
         {
             _httpClient = httpClient;
             _settings = new Lazy<JsonSerializerSettings>(() =>
@@ -70,7 +71,13 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/blocks?");
             if (height != null)
             {
-                foreach (var item_ in height) { urlBuilder_.Append(Uri.EscapeDataString("height") + "=").Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append("&"); }
+                urlBuilder_.Append(Uri.EscapeDataString("height") + "=");
+                foreach (var item_ in height)
+                {
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append(",");
+                }
+                urlBuilder_.Length--;
+                urlBuilder_.Append("&");
             }
             if (start_height != null)
             {
@@ -82,11 +89,23 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
             }
             if (expand != null)
             {
-                foreach (var item_ in expand) { urlBuilder_.Append(Uri.EscapeDataString("expand") + "=").Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append("&"); }
+                urlBuilder_.Append(Uri.EscapeDataString("expand") + "=");
+                foreach (var item_ in expand)
+                {
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append(",");
+                }
+                urlBuilder_.Length--;
+                urlBuilder_.Append("&");
             }
             if (select != null)
             {
-                foreach (var item_ in select) { urlBuilder_.Append(Uri.EscapeDataString("select") + "=").Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append("&"); }
+                urlBuilder_.Append(Uri.EscapeDataString("select") + "=");
+                foreach (var item_ in select)
+                {
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append(",");
+                }
+                urlBuilder_.Length--;
+                urlBuilder_.Append("&");
             }
             urlBuilder_.Length--;
 
@@ -106,7 +125,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                     var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        var headers_ = response_.Headers.ToDictionary(h_ => h_.Key, h_ => h_.Value);
                         if (response_.Content != null && response_.Content.Headers != null)
                         {
                             foreach (var item_ in response_.Content.Headers)
@@ -185,14 +204,26 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
 
             var urlBuilder_ = new StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/blocks/{id}?");
-            urlBuilder_.Replace("{id}", Uri.EscapeDataString(string.Join(",", System.Linq.Enumerable.Select(id, s_ => ConvertToString(s_, CultureInfo.InvariantCulture)))));
+            urlBuilder_.Replace("{id}", Uri.EscapeDataString(string.Join(",", id.Select(s_ => ConvertToString(s_, CultureInfo.InvariantCulture)))));
             if (expand != null)
             {
-                foreach (var item_ in expand) { urlBuilder_.Append(Uri.EscapeDataString("expand") + "=").Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append("&"); }
+                urlBuilder_.Append(Uri.EscapeDataString("expand") + "=");
+                foreach (var item_ in expand)
+                {
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append(",");
+                }
+                urlBuilder_.Length--;
+                urlBuilder_.Append("&");
             }
             if (select != null)
             {
-                foreach (var item_ in select) { urlBuilder_.Append(Uri.EscapeDataString("select") + "=").Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append("&"); }
+                urlBuilder_.Append(Uri.EscapeDataString("select") + "=");
+                foreach (var item_ in select)
+                {
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append(",");
+                }
+                urlBuilder_.Length--;
+                urlBuilder_.Append("&");
             }
             urlBuilder_.Length--;
 
@@ -212,7 +243,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                     var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        var headers_ = response_.Headers.ToDictionary(h_ => h_.Key, h_ => h_.Value);
                         if (response_.Content != null && response_.Content.Headers != null)
                         {
                             foreach (var item_ in response_.Content.Headers)
@@ -294,11 +325,23 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
             urlBuilder_.Replace("{id}", Uri.EscapeDataString(ConvertToString(id, CultureInfo.InvariantCulture)));
             if (expand != null)
             {
-                foreach (var item_ in expand) { urlBuilder_.Append(Uri.EscapeDataString("expand") + "=").Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append("&"); }
+                urlBuilder_.Append(Uri.EscapeDataString("expand") + "=");
+                foreach (var item_ in expand)
+                {
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append(",");
+                }
+                urlBuilder_.Length--;
+                urlBuilder_.Append("&");
             }
             if (select != null)
             {
-                foreach (var item_ in select) { urlBuilder_.Append(Uri.EscapeDataString("select") + "=").Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append("&"); }
+                urlBuilder_.Append(Uri.EscapeDataString("select") + "=");
+                foreach (var item_ in select)
+                {
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append(",");
+                }
+                urlBuilder_.Length--;
+                urlBuilder_.Append("&");
             }
             urlBuilder_.Length--;
 
@@ -318,7 +361,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                     var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        var headers_ = response_.Headers.ToDictionary(h_ => h_.Key, h_ => h_.Value);
                         if (response_.Content != null && response_.Content.Headers != null)
                         {
                             foreach (var item_ in response_.Content.Headers)
@@ -410,7 +453,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                     var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        var headers_ = response_.Headers.ToDictionary(h_ => h_.Key, h_ => h_.Value);
                         if (response_.Content != null && response_.Content.Headers != null)
                         {
                             foreach (var item_ in response_.Content.Headers)
@@ -462,9 +505,9 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
         /// <param name="id">The collection ID.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public Task<Collection> CollectionsAsync(string id)
+        public Task<Collection> CollectionsAsync(string id, IEnumerable<string> expand)
         {
-            return CollectionsAsync(id, System.Threading.CancellationToken.None);
+            return CollectionsAsync(id, expand, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -472,14 +515,26 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
         /// <param name="id">The collection ID.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async Task<Collection> CollectionsAsync(string id, System.Threading.CancellationToken cancellationToken)
+        public async Task<Collection> CollectionsAsync(string id, IEnumerable<string> expand, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new ArgumentNullException("id");
 
             var urlBuilder_ = new StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/collections/{id}");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/collections/{id}?");
             urlBuilder_.Replace("{id}", Uri.EscapeDataString(ConvertToString(id, CultureInfo.InvariantCulture)));
+
+            if (expand != null)
+            {
+                urlBuilder_.Append(Uri.EscapeDataString("expand") + "=");
+                foreach (var item_ in expand)
+                {
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append(",");
+                }
+                urlBuilder_.Length--;
+                urlBuilder_.Append("&");
+            }
+            urlBuilder_.Length--;
 
             var client_ = _httpClient;
             try
@@ -497,7 +552,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                     var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        var headers_ = response_.Headers.ToDictionary(h_ => h_.Key, h_ => h_.Value);
                         if (response_.Content != null && response_.Content.Headers != null)
                         {
                             foreach (var item_ in response_.Content.Headers)
@@ -581,7 +636,13 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
             }
             if (expand != null)
             {
-                foreach (var item_ in expand) { urlBuilder_.Append(Uri.EscapeDataString("expand") + "=").Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append("&"); }
+                urlBuilder_.Append(Uri.EscapeDataString("expand") + "=");
+                foreach (var item_ in expand)
+                {
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append(",");
+                }
+                urlBuilder_.Length--;
+                urlBuilder_.Append("&");
             }
             urlBuilder_.Length--;
 
@@ -601,7 +662,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                     var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        var headers_ = response_.Headers.ToDictionary(h_ => h_.Key, h_ => h_.Value);
                         if (response_.Content != null && response_.Content.Headers != null)
                         {
                             foreach (var item_ in response_.Content.Headers)
@@ -706,7 +767,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                     var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        var headers_ = response_.Headers.ToDictionary(h_ => h_.Key, h_ => h_.Value);
                         if (response_.Content != null && response_.Content.Headers != null)
                         {
                             foreach (var item_ in response_.Content.Headers)
@@ -798,7 +859,13 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
             }
             if (select != null)
             {
-                foreach (var item_ in select) { urlBuilder_.Append(Uri.EscapeDataString("select") + "=").Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append("&"); }
+                urlBuilder_.Append(Uri.EscapeDataString("select") + "=");
+                foreach (var item_ in select)
+                {
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append(",");
+                }
+                urlBuilder_.Length--;
+                urlBuilder_.Append("&");
             }
             urlBuilder_.Length--;
 
@@ -818,7 +885,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                     var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        var headers_ = response_.Headers.ToDictionary(h_ => h_.Key, h_ => h_.Value);
                         if (response_.Content != null && response_.Content.Headers != null)
                         {
                             foreach (var item_ in response_.Content.Headers)
@@ -957,11 +1024,23 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
             urlBuilder_.Replace("{transaction_id}", Uri.EscapeDataString(ConvertToString(transaction_id, CultureInfo.InvariantCulture)));
             if (expand != null)
             {
-                foreach (var item_ in expand) { urlBuilder_.Append(Uri.EscapeDataString("expand") + "=").Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append("&"); }
+                urlBuilder_.Append(Uri.EscapeDataString("expand") + "=");
+                foreach (var item_ in expand)
+                {
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append(",");
+                }
+                urlBuilder_.Length--;
+                urlBuilder_.Append("&");
             }
             if (select != null)
             {
-                foreach (var item_ in select) { urlBuilder_.Append(Uri.EscapeDataString("select") + "=").Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append("&"); }
+                urlBuilder_.Append(Uri.EscapeDataString("select") + "=");
+                foreach (var item_ in select)
+                {
+                    urlBuilder_.Append(Uri.EscapeDataString(ConvertToString(item_, CultureInfo.InvariantCulture))).Append(",");
+                }
+                urlBuilder_.Length--;
+                urlBuilder_.Append("&");
             }
             urlBuilder_.Length--;
 
@@ -981,7 +1060,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                     var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        var headers_ = response_.Headers.ToDictionary(h_ => h_.Key, h_ => h_.Value);
                         if (response_.Content != null && response_.Content.Headers != null)
                         {
                             foreach (var item_ in response_.Content.Headers)
@@ -1063,8 +1142,8 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
             }
             else if (value != null && value.GetType().IsArray)
             {
-                var array = System.Linq.Enumerable.OfType<object>((Array)value);
-                return string.Join(",", System.Linq.Enumerable.Select(array, o => ConvertToString(o, cultureInfo)));
+                var array = ((Array)value).OfType<object>();
+                return string.Join(",", array.Select(o => ConvertToString(o, cultureInfo)));
             }
 
             return Convert.ToString(value, cultureInfo);
@@ -1111,7 +1190,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                     var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        var headers_ = response_.Headers.ToDictionary(h_ => h_.Key, h_ => h_.Value);
                         if (response_.Content != null && response_.Content.Headers != null)
                         {
                             foreach (var item_ in response_.Content.Headers)
@@ -1204,7 +1283,7 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                     var response_ = await client_.SendAsync(request_, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        var headers_ = response_.Headers.ToDictionary(h_ => h_.Key, h_ => h_.Value);
                         if (response_.Content != null && response_.Content.Headers != null)
                         {
                             foreach (var item_ in response_.Content.Headers)

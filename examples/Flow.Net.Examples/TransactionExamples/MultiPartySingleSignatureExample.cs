@@ -1,4 +1,5 @@
 ﻿using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Client;
 using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,10 @@ namespace Flow.Net.Examples.TransactionExamples
 {
     public class MultiPartySingleSignatureExample : ExampleBase
     {
-        public static async Task RunAsync()
+        public static async Task RunAsync(IFlowClient flowClient)
         {
             Console.WriteLine("\nRunning MultiPartySingleSignatureExample\n");
-            await CreateFlowClientAsync();
+            FlowClient = flowClient;
             await Demo();
             Console.WriteLine("\nMultiPartySingleSignatureExample Complete\n");
         }

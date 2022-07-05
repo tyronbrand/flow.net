@@ -1,4 +1,5 @@
-﻿using Flow.Net.Sdk.Core.Models;
+﻿using Flow.Net.Sdk.Core.Client;
+using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -6,10 +7,10 @@ namespace Flow.Net.Examples.BlockExamples
 {
     public class BlockHeaderExample : ExampleBase
     {
-        public static async Task RunAsync()
+        public static async Task RunAsync(IFlowClient flowClient)
         {
             Console.WriteLine("\nRunning BlockHeaderExample\n");
-            await CreateFlowClientAsync();
+            FlowClient = flowClient;
             await Demo();
             Console.WriteLine("\nBlockHeaderExample Complete\n");
         }

@@ -6,20 +6,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Flow.Net.Sdk.Client.Http.ApiV1
+namespace Flow.Net.Sdk.Client.Http
 {
-    public static class FlowApiV1Converter
+    public static class FlowApiConverter
     {
         public static FlowAccount ToFlowAccount(this Account account)
         {
-            return new FlowAccount
+            var flowAccount = new FlowAccount
             {
                 Address = new FlowAddress(account.Address),
                 Balance = decimal.Parse(account.Balance),
-                Code = null,
-                Contracts = account.Contracts?.ToFlowContract(),
-                Keys = account.Keys?.ToFlowAccountKey()
+                Code = null
             };
+
+            if (account.Contracts != null)
+            {
+                foreach (var contract in account.Contracts)
+                {
+                    flowAccount.Contracts.Add(new FlowContract
+                    {
+                        Name = contract.Key,
+                        Source = Encoding.UTF8.GetString(contract.Value)
+                    });
+                }
+            }
+
+            if (account.Keys != null)
+            {
+                foreach (var key in account.Keys)
+                {
+                    flowAccount.Keys.Add(new FlowAccountKey
+                    {
+                        Index = uint.Parse(key.Index),
+                        PublicKey = key.Public_key.RemoveHexPrefix(),
+                        SequenceNumber = ulong.Parse(key.Sequence_number),
+                        Revoked = key.Revoked,
+                        Weight = uint.Parse(key.Weight),
+                        HashAlgorithm = (HashAlgo)Enum.Parse(typeof(HashAlgo), key.Hashing_algorithm.ToString()),
+                        SignatureAlgorithm = (SignatureAlgo)Enum.Parse(typeof(SignatureAlgo), key.Signing_algorithm.ToString()),
+                    });
+                }
+            }
+
+            return flowAccount;
         }
 
         public static FlowCollection ToFlowCollection(this Collection collection)
@@ -85,39 +114,6 @@ namespace Flow.Net.Sdk.Client.Http.ApiV1
                 });
             }
             return flowCollectionGuarantees;
-        }
-
-        public static IList<FlowContract> ToFlowContract(this IDictionary<string, byte[]> contracts)
-        {
-            var flowContracts = new List<FlowContract>();
-            foreach (var contract in contracts)
-            {
-                flowContracts.Add(new FlowContract
-                {
-                    Name = contract.Key,
-                    Source = Encoding.UTF8.GetString(contract.Value)
-                });
-            }
-            return flowContracts;
-        }
-
-        public static IList<FlowAccountKey> ToFlowAccountKey(this ICollection<AccountPublicKey> accountPublicKey)
-        {
-            var flowAccountKeys = new List<FlowAccountKey>();
-            foreach (var key in accountPublicKey)
-            {
-                flowAccountKeys.Add(new FlowAccountKey
-                {
-                    Index = uint.Parse(key.Index),
-                    PublicKey = key.Public_key.RemoveHexPrefix(),
-                    SequenceNumber = ulong.Parse(key.Sequence_number),
-                    Revoked = key.Revoked,
-                    Weight = uint.Parse(key.Weight),
-                    HashAlgorithm = (HashAlgo)Enum.Parse(typeof(HashAlgo), key.Hashing_algorithm.ToString()),
-                    SignatureAlgorithm = (SignatureAlgo)Enum.Parse(typeof(SignatureAlgo), key.Signing_algorithm.ToString()),
-                });
-            }
-            return flowAccountKeys;
         }
 
         public static ScriptBody FromFlowScript(this FlowScript flowScript)

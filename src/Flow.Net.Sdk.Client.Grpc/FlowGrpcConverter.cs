@@ -35,7 +35,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             var flowChunks = executionResultForBlockIdResponse.ExecutionResult.Chunks.Select(chunk =>
                 new FlowChunk
                 {
-                    BlockId = chunk.BlockId.ByteStringToString(),
+                    BlockId = chunk.BlockId.ByteStringToHex(),
                     EndState = chunk.EndState.ToByteArray(),
                     EventCollection = chunk.EventCollection.ToByteArray(),
                     Index = chunk.Index,
@@ -53,8 +53,8 @@ namespace Flow.Net.Sdk.Client.Grpc
 
             return new FlowExecutionResult
             {
-                BlockId = executionResultForBlockIdResponse.ExecutionResult.BlockId.ByteStringToString(),
-                PreviousResultId = executionResultForBlockIdResponse.ExecutionResult.PreviousResultId.ByteStringToString(),
+                BlockId = executionResultForBlockIdResponse.ExecutionResult.BlockId.ByteStringToHex(),
+                PreviousResultId = executionResultForBlockIdResponse.ExecutionResult.PreviousResultId.ByteStringToHex(),
                 Chunks = flowChunks,
                 ServiceEvents = serviceEvents
             };
@@ -64,11 +64,11 @@ namespace Flow.Net.Sdk.Client.Grpc
         {
             return new FlowCollection
             {
-                Id = collectionResponse.Collection.Id.ByteStringToString(),
+                Id = collectionResponse.Collection.Id.ByteStringToHex(),
                 TransactionIds = collectionResponse.Collection.TransactionIds.Select(s =>
                     new FlowTransactionId
                     {
-                        Id = s.ByteStringToString()
+                        Id = s.ByteStringToHex()
                     }).ToList()
             };
         }
@@ -79,7 +79,7 @@ namespace Flow.Net.Sdk.Client.Grpc
 
             return new FlowTransactionResult
             {
-                BlockId = transactionResultResponse.BlockId.ByteStringToString(),
+                BlockId = transactionResultResponse.BlockId.ByteStringToHex(),
                 ErrorMessage = transactionResultResponse.ErrorMessage,
                 Status = (TransactionStatus)Enum.Parse(typeof(TransactionStatus), transactionResultResponse.Status.ToString()),
                 StatusCode = transactionResultResponse.StatusCode,
@@ -216,7 +216,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 Type = @event.Type,
                 EventIndex = @event.EventIndex,
                 Payload = @event.Payload.ByteStringToString().Decode(_cadenceConverter),
-                TransactionId = @event.TransactionId.ByteStringToString(),
+                TransactionId = @event.TransactionId.ByteStringToHex(),
                 TransactionIndex = @event.TransactionIndex
             };
         }
@@ -281,7 +281,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             var request = new ExecuteScriptAtBlockIDRequest
             {
                 Script = script.Script.StringToByteString(),
-                BlockId = blockId.StringToByteString()
+                BlockId = blockId.HexToByteString()
             };
 
             request.Arguments.AddRange(script.Arguments.FromArguments());

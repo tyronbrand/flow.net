@@ -1,4 +1,5 @@
 ﻿using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Client;
 using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,10 @@ namespace Flow.Net.Examples.CollectionExamples
 {
     public class GetCollectionExample : ExampleBase
     {
-        public static async Task RunAsync()
+        public static async Task RunAsync(IFlowClient flowClient)
         {
             Console.WriteLine("\nRunning GetCollectionExample\n");
-            await CreateFlowClientAsync();
+            FlowClient = flowClient;
             var collectionGuarantee = await PrepCollectionId();
             await Demo(collectionGuarantee);
             Console.WriteLine("\nGetCollectionExample Complete\n");

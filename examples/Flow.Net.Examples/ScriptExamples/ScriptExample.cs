@@ -1,4 +1,5 @@
 ﻿using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Client;
 using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,10 @@ namespace Flow.Net.Examples.ScriptExamples
 {
     public class ScriptExample : ExampleBase
     {
-        public static async Task RunAsync()
+        public static async Task RunAsync(IFlowClient flowClient)
         {
             Console.WriteLine("\nRunning ScriptExample\n");
-            await CreateFlowClientAsync();
+            FlowClient = flowClient;
             await Demo();
             Console.WriteLine("\nScriptExample Complete\n");
         }

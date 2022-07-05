@@ -5,15 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Flow.Net.Sdk.Core.Client;
 
 namespace Flow.Net.Examples.AccountExamples
 {
     public class DeployUpdateDeleteContractExample :ExampleBase
     {
-        public static async Task RunAsync()
+        public static async Task RunAsync(IFlowClient flowClient)
         {
             Console.WriteLine("\nRunning DeployUpdateDeleteContractExample\n");
-            await CreateFlowClientAsync();
+            FlowClient = flowClient;
             await Demo();
             Console.WriteLine("\nDeployUpdateDeleteContractExample Complete\n");
         }

@@ -1,5 +1,4 @@
-﻿using Flow.Net.Sdk.Client.Http.ApiV1;
-using Flow.Net.Sdk.Core.Cadence;
+﻿using Flow.Net.Sdk.Core.Cadence;
 using Flow.Net.Sdk.Core.Client;
 using Flow.Net.Sdk.Core.Exceptions;
 using Flow.Net.Sdk.Core.Models;
@@ -14,11 +13,11 @@ namespace Flow.Net.Sdk.Client.Http
 {
     public class FlowHttpClient : IFlowClient
     {
-        private readonly FlowApiV1Generated _flowApiV1;
+        private readonly FlowApiV1 _flowApiV1;
 
         public FlowHttpClient(HttpClient httpClient, string baseUrl)
         {
-            _flowApiV1 = new FlowApiV1Generated(httpClient)
+            _flowApiV1 = new FlowApiV1(httpClient)
             {
                 BaseUrl = baseUrl
             };
@@ -131,7 +130,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.AccountsAsync(address, "sealed", new List<string> { "keys", "contracts" }, cancellationToken).ConfigureAwait(false);
+                var response = await _flowApiV1.AccountsAsync(address, "sealed", new List<string> { "contracts", "keys" }, cancellationToken).ConfigureAwait(false);
                 return response.ToFlowAccount();
             }
             catch (Exception ex)
@@ -353,7 +352,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.CollectionsAsync(collectionId, cancellationToken).ConfigureAwait(false);
+                var response = await _flowApiV1.CollectionsAsync(collectionId, new List<string> { "transactions" }, cancellationToken).ConfigureAwait(false);
                 return response.ToFlowCollection();
             }
             catch (Exception ex)

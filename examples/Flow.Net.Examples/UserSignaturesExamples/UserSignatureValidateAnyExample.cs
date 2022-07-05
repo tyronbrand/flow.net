@@ -1,5 +1,6 @@
 ﻿using Flow.Net.Sdk.Core;
 using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Client;
 using Flow.Net.Sdk.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace Flow.Net.Examples.UserSignaturesExamples
 {
     public class UserSignatureValidateAnyExample : ExampleBase
     {
-        public static async Task RunAsync()
+        public static async Task RunAsync(IFlowClient flowClient)
         {
             Console.WriteLine("\nRunning UserSignatureExample\n");
-            await CreateFlowClientAsync();
+            FlowClient = flowClient;
             await Demo();
             Console.WriteLine("\nUserSignatureExample Complete\n");
         }
