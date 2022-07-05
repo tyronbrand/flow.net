@@ -1,7 +1,12 @@
 ﻿using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Constants;
+using Flow.Net.Sdk.Core.Exceptions;
 using Flow.Net.Sdk.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Flow.Net.Sdk.Core
 {
@@ -9,32 +14,93 @@ namespace Flow.Net.Sdk.Core
     {        
         public static string BytesToHex(this byte[] data, bool include0X = false)
         {
-            return Converter.BytesToHex(data, include0X);
+            try
+            {
+                return (include0X ? "0x" : string.Empty) + BitConverter.ToString(data).Replace("-", "").ToLower();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("Failed to convert byte[] to hex.", exception);
+            }
         }        
 
         public static string StringToHex(this string str)
         {
-            return Converter.StringToHex(str);
+            try
+            {
+                return BytesToHex(Encoding.UTF8.GetBytes(str));
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("Failed to convert string to hex.", exception);
+            }
         }
 
         public static byte[] HexToBytes(this string hex)
         {
-            return Converter.HexToBytes(hex);
+            try
+            {
+                hex = RemoveHexPrefix(hex);
+
+                if (IsHexString(hex))
+                {
+                    return Enumerable.Range(0, hex.Length)
+                        .Where(x => x % 2 == 0)
+                        .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+                        .ToArray();
+                }
+
+                throw new FlowException("Invalid hex string.");
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("Failed to convert hex to byte[].", exception);
+            }
         }
 
         public static bool IsHexString(this string str)
         {
-            return Converter.IsHexString(str);
+            try
+            {
+                if (str.Length == 0)
+                    return false;
+
+                str = RemoveHexPrefix(str);
+
+                var regex = new Regex(@"^[0-9a-f]+$");
+                return regex.IsMatch(str) && str.Length % 2 == 0;
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("Failed to determine if string is hex.", exception);
+            }
         }
 
         public static string RemoveHexPrefix(this string hex)
         {
-            return Converter.RemoveHexPrefix(hex);
+            try
+            {
+                return hex.Substring(hex.StartsWith("0x") ? 2 : 0);
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("Failed to remove hex prefix", exception);
+            }
         }
 
         public static string AddHexPrefix(this string hex)
         {
-            return Converter.AddHexPrefix(hex);
+            try
+            {
+                if (!hex.StartsWith("0x"))
+                    hex = $"0x{hex}";
+
+                return hex;
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("Failed to remove hex prefix", exception);
+            }
         }
 
         public static CadenceHashAlgorithm FromHashAlgoToCadenceHashAlgorithm(this HashAlgo hashAlgo)
@@ -47,10 +113,32 @@ namespace Flow.Net.Sdk.Core
             return CadenceExtensions.FromSignatureAlgoToCadenceSignatureAlgorithm(signatureAlgo);
         }
 
-        ///<inheritdoc cref="Converter.AccountCreatedAddress"/>
+        /// <summary>
+        /// Filters a <see cref="IEnumerable{T}" /> of type <see cref="FlowEvent"/> where <see cref="Type"/> is equal to "flow.AccountCreated" and returns a <see cref="FlowAddress"/>.
+        /// </summary>
+        /// <param name="flowEvents"></param>
+        /// <returns>A <see cref="FlowAddress"/> that satisfies the condition.</returns>
         public static FlowAddress AccountCreatedAddress(this IEnumerable<FlowEvent> flowEvents)
         {
-            return Converter.AccountCreatedAddress(flowEvents);
+            var accountCreatedEvent = flowEvents.FirstOrDefault(w => w.Type == Event.AccountCreated);
+
+            if (accountCreatedEvent == null)
+                return null;
+
+            if (accountCreatedEvent.Payload == null)
+                return null;
+
+            var compositeItemFields = accountCreatedEvent.Payload.As<CadenceComposite>().Value.Fields.ToList();
+
+            if (!compositeItemFields.Any())
+                return null;
+
+            var addressValue = compositeItemFields.FirstOrDefault();
+
+            if (addressValue == null)
+                return null;
+
+            return new FlowAddress(addressValue.Value.As<CadenceAddress>().Value);
         }
 
         /// <summary>

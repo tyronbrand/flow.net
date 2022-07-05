@@ -1,4 +1,5 @@
-﻿using Flow.Net.Sdk.Core.Exceptions;
+﻿using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Exceptions;
 using Google.Protobuf;
 using System;
 using System.Text;
@@ -29,7 +30,7 @@ namespace Flow.Net.Sdk.Client.Grpc
         {
             try
             {
-                hex = Core.Converter.RemoveHexPrefix(hex);
+                hex = hex.RemoveHexPrefix();
 
                 var numberChars = hex.Length;
                 var bytes = new byte[numberChars / 2];

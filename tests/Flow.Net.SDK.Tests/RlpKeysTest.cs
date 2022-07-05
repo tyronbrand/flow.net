@@ -1,4 +1,5 @@
-﻿using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core;
+using Flow.Net.Sdk.Core.Models;
 using System.Collections.Generic;
 using Xunit;
 
@@ -55,7 +56,7 @@ namespace Flow.Net.Sdk.Tests
                     Weight = item.Weight
                 };
 
-                var encoded = Rlp.EncodedAccountKey(key).FromByteArrayToHex();
+                var encoded = Rlp.EncodedAccountKey(key).BytesToHex();
 
                 Assert.Equal(item.ExpectedResult, encoded);
             }

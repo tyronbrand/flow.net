@@ -1,4 +1,5 @@
-﻿using Flow.Net.Sdk.Models;
+﻿using Flow.Net.Sdk.Core.Models;
+using Flow.Net.Sdk.Client.Grpc;
 using Xunit;
 
 namespace Flow.Net.Sdk.Tests
@@ -13,8 +14,7 @@ namespace Flow.Net.Sdk.Tests
 
             var flowAddress = new FlowAddress(input);
 
-            Assert.Equal(expectedOutput, flowAddress.HexValue);
-            Assert.Equal(expectedOutput.FromHexToByteString(), flowAddress.Value);
+            Assert.Equal(expectedOutput, flowAddress.Address);
         }
 
         [Fact]
@@ -25,32 +25,29 @@ namespace Flow.Net.Sdk.Tests
 
             var flowAddress = new FlowAddress(input);
 
-            Assert.Equal(expectedOutput, flowAddress.HexValue);
-            Assert.Equal(expectedOutput.FromHexToByteString(), flowAddress.Value);
+            Assert.Equal(expectedOutput, flowAddress.Address);
         }
 
         [Fact]
         public void TestFlowAddressByteStringInputWith0x()
         {
-            var input = "0x11111111".FromHexToByteString();
-            var expectedOutput = "11111111".FromHexToByteString();
+            var input = "0x11111111".HexToByteString();
+            var expectedOutput = "11111111".HexToByteString();
 
-            var flowAddress = new FlowAddress(input);
+            var flowAddress = new FlowAddress(input.ByteStringToHex());
 
-            Assert.Equal(expectedOutput, flowAddress.HexValue.FromHexToByteString());
-            Assert.Equal(expectedOutput, flowAddress.Value);
+            Assert.Equal(expectedOutput, flowAddress.Address.HexToByteString());
         }
 
         [Fact]
         public void TestFlowAddressByteStringInputWithout0x()
         {
-            var input = "11111111".FromHexToByteString();
-            var expectedOutput = "11111111".FromHexToByteString();
+            var input = "11111111".HexToByteString();
+            var expectedOutput = "11111111".HexToByteString();
 
-            var flowAddress = new FlowAddress(input);
+            var flowAddress = new FlowAddress(input.ByteStringToHex());
 
-            Assert.Equal(expectedOutput, flowAddress.HexValue.FromHexToByteString());
-            Assert.Equal(expectedOutput, flowAddress.Value);
+            Assert.Equal(expectedOutput, flowAddress.Address.HexToByteString());
         }
     }
 }

@@ -70,13 +70,7 @@ namespace Flow.Net.Examples
         private static async Task<FlowTransactionResult> CreateAddressTransaction(IFlowClient flowClient, IEnumerable<FlowAccountKey> newFlowAccountKeys)
         {
             if (flowClient != null)
-            {
-                FlowClient = flowClient;
-            }
-            else
-            {
-                var delete = "this";
-            }
+                FlowClient = flowClient;            
 
             // read flow.json
             var config = Utilities.ReadConfig();
