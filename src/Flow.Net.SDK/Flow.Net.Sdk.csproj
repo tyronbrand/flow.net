@@ -5,7 +5,7 @@
 		<Authors>Tyron Brand</Authors>
 		<Version>0.0.1</Version>
 		<Company>Tyron Brand</Company>
-		<Description>.Net SDK for Flow</Description>
+		<Description>gRPC and HTTP SDK for flow.net</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/tyronbrand/flow.net</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/tyronbrand/flow.net</PackageProjectUrl>
