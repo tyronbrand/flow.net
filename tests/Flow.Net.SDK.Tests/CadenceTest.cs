@@ -1208,6 +1208,102 @@ namespace Flow.Net.Sdk.Tests
             TestEncodeAndDecode(testItems);
         }
 
+        [Fact]
+        public void TestCadenceTypeValueEmpty()
+        {
+            var testItems = new List<CadenceTestItem>
+            {
+                new ()
+                {
+                    Name = "Simple",
+                    Cadence =  new CadenceTypeValue
+                    {
+                        Value = new CadenceTypeValueValue
+                        {
+                            StaticType = new CadenceTypeValueAsString 
+                            {
+                                Value = ""
+                            }
+                        }
+                    },
+                    ExpectedJson = "{\"type\":\"Type\",\"value\":{\"staticType\":\"\"}}"
+                }
+            };
+
+            TestEncodeAndDecode(testItems);
+        }
+
+        [Fact]
+        public void TestCadenceTypeValueComplex()
+        {
+            var testItems = new List<CadenceTestItem>
+            {
+                new ()
+                {
+                    Name = "Simple",
+                    Cadence =  new CadenceTypeValue
+                    {
+                        Value = new CadenceTypeValueValue
+                        {
+                            StaticType = new Core.Cadence.Types.CadenceCompositeType(CadenceCompositeTypeKind.Resource)
+                            {
+                                TypeId = "A.321d8fcde05f6e8c.Seussibles.NFT",
+                                Fields = new List<CadenceFieldType>
+                                {
+                                    new CadenceFieldType
+                                    {
+                                        Id = "uuid",
+                                        Type = new CadenceType
+                                        {
+                                            Kind = "UInt64"
+                                        }
+                                    },
+                                    new CadenceFieldType
+                                    {
+                                        Id = "id",
+                                        Type = new CadenceType
+                                        {
+                                            Kind = "UInt64"
+                                        }
+                                    },
+                                    new CadenceFieldType
+                                    {
+                                        Id = "mintNumber",
+                                        Type = new CadenceType
+                                        {
+                                            Kind = "UInt32"
+                                        }
+                                    },
+                                    new CadenceFieldType
+                                    {
+                                        Id = "contentCapability",
+                                        Type = new CadenceCapabilityType
+                                        {
+                                            Type = new CadenceTypeValueAsString
+                                            {
+                                                Value = ""
+                                            }
+                                        }
+                                    },
+                                    new CadenceFieldType
+                                    {
+                                        Id = "contentId",
+                                        Type = new CadenceType
+                                        {
+                                            Kind = "String"
+                                        }
+                                    },
+                                }
+                            }
+                        }
+                    },
+                    ExpectedJson = "{\"type\":\"Type\",\"value\":{\"staticType\":{\"kind\":\"Resource\",\"type\":\"\",\"typeID\":\"A.321d8fcde05f6e8c.Seussibles.NFT\",\"initializers\":[],\"fields\":[{\"id\":\"uuid\",\"type\":{\"kind\":\"UInt64\"}},{\"id\":\"id\",\"type\":{\"kind\":\"UInt64\"}},{\"id\":\"mintNumber\",\"type\":{\"kind\":\"UInt32\"}},{\"id\":\"contentCapability\",\"type\":{\"kind\":\"Capability\",\"type\":\"\"}},{\"id\":\"contentId\",\"type\":{\"kind\":\"String\"}}]}}}"
+                }
+            };
+
+            TestEncodeAndDecode(testItems);
+        }
+
         private void TestEncodeAndDecode(IEnumerable<CadenceTestItem> testItems)
         {
             foreach (var testItem in testItems)
@@ -1242,15 +1338,13 @@ namespace Flow.Net.Sdk.Tests
 
         private void TestDecode(string actualJson, ICadence cadence)
         {
-            JsonConverter[] jsonConverters = { _cadenceConverter, _cadenceTypeConverter };
-            var decoded = JsonConvert.DeserializeObject<ICadence>(actualJson, jsonConverters);
+            var decoded = CadenceExtensions.Decode(actualJson);
             cadence.ToExpectedObject().ShouldEqual(decoded);
         }
 
         private void TestDecode(string actualJson, ICadenceType cadenceType)
         {
-            JsonConverter[] jsonConverters = { _cadenceConverter, _cadenceTypeConverter };
-            var decoded = JsonConvert.DeserializeObject<ICadenceType>(actualJson, jsonConverters);
+            var decoded = CadenceExtensions.DecodeType(actualJson);
             cadenceType.ToExpectedObject().ShouldEqual(decoded);
         }
 

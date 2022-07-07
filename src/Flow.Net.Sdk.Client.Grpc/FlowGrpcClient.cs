@@ -17,7 +17,6 @@ namespace Flow.Net.Sdk.Client.Grpc
     public class FlowGrpcClient : IFlowClient
     {
         private readonly AccessAPIClient _client;
-        private readonly CadenceConverter _cadenceConverter;
 
         /// <summary>
         /// A gRPC client for the Flow Access API.
@@ -33,7 +32,6 @@ namespace Flow.Net.Sdk.Client.Grpc
             try
             {
                 _client = new AccessAPIClient(GrpcChannel.ForAddress(networkUrlWithScheme, options));
-                _cadenceConverter = new CadenceConverter();
             }
             catch (Exception exception)
             {
@@ -57,7 +55,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             {
                 var request = flowScript.FromFlowScript(blockHeight);
                 var response = await _client.ExecuteScriptAtBlockHeightAsync(request, options).ConfigureAwait(false);
-                return response.Value.ByteStringToString().Decode(_cadenceConverter);
+                return response.Value.ByteStringToString().Decode();
             }
             catch (Exception exception)
             {
@@ -81,7 +79,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             {
                 var request = flowScript.FromFlowScript(blockId);
                 var response = await _client.ExecuteScriptAtBlockIDAsync(request, options).ConfigureAwait(false);
-                return response.Value.ByteStringToString().Decode(_cadenceConverter);
+                return response.Value.ByteStringToString().Decode();
             }
             catch (Exception exception)
             {
@@ -104,7 +102,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             {
                 var request = flowScript.FromFlowScript();
                 var response = await _client.ExecuteScriptAtLatestBlockAsync(request, options).ConfigureAwait(false);
-                return response.Value.ByteStringToString().Decode(_cadenceConverter);
+                return response.Value.ByteStringToString().Decode();
             }
             catch (Exception exception)
             {
