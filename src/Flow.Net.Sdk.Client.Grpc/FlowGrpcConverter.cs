@@ -12,8 +12,6 @@ namespace Flow.Net.Sdk.Client.Grpc
 {
     public static class FlowGrpcConverter
     {
-        private static readonly CadenceConverter _cadenceConverter = new CadenceConverter();
-
         public static FlowNetworkParameters ToFlowGetNetworkParametersResponse(this GetNetworkParametersResponse getNetworkParametersResponse)
         {
             return new FlowNetworkParameters
@@ -215,7 +213,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             {
                 Type = @event.Type,
                 EventIndex = @event.EventIndex,
-                Payload = @event.Payload.ByteStringToString().Decode(_cadenceConverter),
+                Payload = @event.Payload.ByteStringToString().Decode(),
                 TransactionId = @event.TransactionId.ByteStringToHex(),
                 TransactionIndex = @event.TransactionIndex
             };
