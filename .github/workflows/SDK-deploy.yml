@@ -7,7 +7,10 @@ on:
     - 'v*'
 
 env:
-  PROJECT_PATH: 'src/Flow.Net.SDK/Flow.Net.Sdk.csproj'
+  CORE_SDK_PROJECT_PATH: 'src/Flow.Net.Sdk.Core/Flow.Net.Sdk.Core.csproj'
+  HTTP_SDK_PROJECT_PATH: 'src/Flow.Net.Sdk.Client.Http/Flow.Net.Sdk.Client.Http.csproj'
+  GRPC_SDK_PROJECT_PATH: 'src/Flow.Net.Sdk.Client.Grpc/Flow.Net.Sdk.Client.Grpc.csproj'
+  SDK_PROJECT_PATH: 'src/Flow.Net.SDK/Flow.Net.Sdk.csproj'
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
 
@@ -30,8 +33,17 @@ jobs:
     - name: Test
       run: dotnet test
 
-    - name: 'Pack project'
-      run: dotnet pack ${{ env.PROJECT_PATH }} --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+    - name: 'Pack Core project'
+      run: dotnet pack ${{ env.CORE_SDK_PROJECT_PATH }} --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
-    - name: 'Push package'
+    - name: 'Pack HTTP SDK project'
+      run: dotnet pack ${{ env.HTTP_SDK_PROJECT_PATH }} --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+
+      - name: 'Pack gRPC project'
+      run: dotnet pack ${{ env.GRPC_SDK_PROJECT_PATH }} --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+
+      - name: 'Pack combined SDK project'
+      run: dotnet pack ${{ env.SDK_PROJECT_PATH }} --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+
+    - name: 'Push packages'
       run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
