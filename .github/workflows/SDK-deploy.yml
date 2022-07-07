@@ -39,10 +39,10 @@ jobs:
     - name: 'Pack HTTP SDK project'
       run: dotnet pack ${{ env.HTTP_SDK_PROJECT_PATH }} --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
-      - name: 'Pack gRPC project'
+    - name: 'Pack gRPC project'
       run: dotnet pack ${{ env.GRPC_SDK_PROJECT_PATH }} --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
-      - name: 'Pack combined SDK project'
+    - name: 'Pack combined SDK project'
       run: dotnet pack ${{ env.SDK_PROJECT_PATH }} --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
     - name: 'Push packages'
