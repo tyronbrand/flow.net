@@ -17,7 +17,7 @@ This reference documents all the methods available in the Flow.Net SDK, and expl
 
 The library client specifications can be found here:
 
-https://tyronbrand.github.io/flow.net/api
+[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/index.html)
 
 ## Getting Started
 
@@ -36,39 +36,26 @@ dotnet add package Flow.Net.Sdk
 ```
 ***
 
-### Importing the Library
-```
-using Flow.Net.Sdk;
-using Flow.Net.Sdk.Cadence;
-using Flow.Net.Sdk.Client;
-using Flow.Net.Sdk.Models;
-using Flow.Net.Sdk.Templates;
-using Flow.Net.Sdk.Constants;
-using Flow.Net.Sdk.Converters;
-```
-
 ## Connect
-[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Client.FlowClientAsync.html#Flow_Net_Sdk_Client_FlowClientAsync_Create_System_String_System_Boolean_System_Collections_Generic_List_Grpc_Core_ChannelOption__)
+The library uses HTTP or gRPC APIs to communicate with the access nodes and it must be configured with correct access node API URL. 
 
-The library uses gRPC to communicate with the access nodes and it must be configured with correct access node API URL. 
+You can check more examples for creating clients in the examples:
+**[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130" />](https://github.com/tyronbrand/flow.net/blob/b91a5648ea404701ba591c87b1a4aaacdf260d58/examples/Flow.Net.Examples/Program.cs#L14)**
 
-📖 **Access API URLs** can be found [here](https://docs.onflow.org/access-api/#flow-access-node-endpoints). An error will be returned if the host is unreachable.
-The Access Nodes APIs hosted by DapperLabs are accessible at:
-- Testnet `access.devnet.nodes.onflow.org:9000`
-- Mainnet `access.mainnet.nodes.onflow.org:9000`
-- Local Emulator `127.0.0.1:3569`
-
+### Basic Example:
 ```csharp
-var testnet = "access.devnet.nodes.onflow.org:9000";
+// HTTP client
+var flowHttpClient = new FlowHttpClient(new HttpClient(), Sdk.Client.Http.ServerUrl.EmulatorHost);
 
-var _flowClient = new FlowClientAsync(testnet);
+// gRPC client
+var flowGrpcClient = new FlowGrpcClient(Sdk.Client.Grpc.ServerUrl.EmulatorHost)
 ```
 
 ## Querying the Flow Network
 After you have established a connection with an access node, you can query the Flow network to retrieve data about blocks, accounts, events and transactions. We will explore how to retrieve each of these entities in the sections below.
 
 ### Get Blocks
-[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Client.FlowClientAsync.html#Flow_Net_Sdk_Client_FlowClientAsync_GetLatestBlockAsync_System_Boolean_Grpc_Core_CallOptions_)
+[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Core.Client.IFlowClient.html#Flow_Net_Sdk_Core_Client_IFlowClient_GetLatestBlockAsync_System_Boolean_)
 
 Query the network for block by id, height or get the latest block.
 
@@ -82,26 +69,26 @@ This example depicts ways to get the latest block as well as any other block by 
 
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/BlockExamples/BlockExample.cs)**
 ```csharp
-private static async Task Demo()
+private async Task Demo()
 {
     // get the latest sealed block
-    var latestBlock = await _flowClient.GetLatestBlockAsync();
+    var latestBlock = await FlowClient.GetLatestBlockAsync();
     PrintResult(latestBlock);
 
     // get the block by ID
-    var blockByIdResult = await _flowClient.GetBlockByIdAsync(latestBlock.Id);
+    var blockByIdResult = await FlowClient.GetBlockByIdAsync(latestBlock.Header.Id);
     PrintResult(blockByIdResult);
 
     // get block by height
-    var blockByHeightResult = await _flowClient.GetBlockByHeightAsync(latestBlock.Height);
+    var blockByHeightResult = await FlowClient.GetBlockByHeightAsync(latestBlock.Header.Height);
     PrintResult(blockByHeightResult);
 }
 
-private static void PrintResult(FlowBlock flowBlock)
+private void PrintResult(FlowBlock flowBlock)
 {
-    Console.WriteLine($"ID: {flowBlock.Id.FromByteStringToHex()}");
-    Console.WriteLine($"height: {flowBlock.Height}");
-    Console.WriteLine($"timestamp: {flowBlock.Timestamp}\n");            
+    Console.WriteLine($"ID: {flowBlock.Header.Id}");
+    Console.WriteLine($"height: {flowBlock.Header.Height}");
+    Console.WriteLine($"timestamp: {flowBlock.Header.Timestamp}\n");            
 }
 ```
 
@@ -121,7 +108,7 @@ timestamp: 19/12/2018 22:32:30 +00:00
 ```
 
 ### Get Account
-[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Client.FlowClientAsync.html#Flow_Net_Sdk_Client_FlowClientAsync_GetAccountAtLatestBlockAsync_Google_Protobuf_ByteString_Grpc_Core_CallOptions_)
+[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Core.Client.IFlowClient.html#Flow_Net_Sdk_Core_Client_IFlowClient_GetAccountAtLatestBlockAsync_System_String_)
 
 Retrieve any account from Flow network's latest block or from a specified block height.
 
@@ -138,21 +125,21 @@ Example depicts ways to get an account at the latest block and at a specific blo
 
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/AccountExamples/GetAccountExample.cs)**
 ```csharp
-private static async Task Demo()
+private async Task Demo()
 {
     // get account from the latest block
     var address = new FlowAddress("f8d6e0586b0a20c7");
-    var account = await _flowClient.GetAccountAtLatestBlockAsync(address);
+    var account = await FlowClient.GetAccountAtLatestBlockAsync(address.Address);
     PrintResult(account);
 
     // get account from the block by height 0
-    account = await _flowClient.GetAccountAtBlockHeightAsync(address, 0);
+    account = await FlowClient.GetAccountAtBlockHeightAsync(address.Address, 0);
     PrintResult(account);
 }
 
-private static void PrintResult(FlowAccount flowAccount)
+private void PrintResult(FlowAccount flowAccount)
 {
-    Console.WriteLine($"Address: {flowAccount.Address.HexValue}");
+    Console.WriteLine($"Address: {flowAccount.Address.Address}");
     Console.WriteLine($"Balance: {flowAccount.Balance}");
     Console.WriteLine($"Contracts: {flowAccount.Contracts.Count}");
     Console.WriteLine($"Keys: {flowAccount.Keys.Count}\n");
@@ -173,7 +160,7 @@ Keys: 1
 ```
 
 ### Get Transactions
-[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Client.FlowClientAsync.html#Flow_Net_Sdk_Client_FlowClientAsync_GetTransactionAsync_Google_Protobuf_ByteString_Grpc_Core_CallOptions_)
+[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Core.Client.IFlowClient.html#Flow_Net_Sdk_Core_Client_IFlowClient_GetTransactionAsync_System_String_)
 
 Retrieve transactions from the network by providing a transaction ID. After a transaction has been submitted, you can also get the transaction result to check the status.
 
@@ -195,27 +182,27 @@ Retrieve transactions from the network by providing a transaction ID. After a tr
 
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/TransactionExamples/GetTransactionExample.cs)**
 ```csharp
-private static async Task Demo(ByteString transactionId)
+private async Task Demo(string transactionId)
 {
-    var tx = await _flowClient.GetTransactionAsync(transactionId);
+    var tx = await FlowClient.GetTransactionAsync(transactionId);
     PrintTransaction(tx);
 
-    var txr = await _flowClient.GetTransactionResultAsync(transactionId);
+    var txr = await FlowClient.GetTransactionResultAsync(transactionId);
     PrintTransactionResult(txr);
 }
 
-private static void PrintTransaction(FlowTransactionResponse tx)
+private void PrintTransaction(FlowTransactionBase tx)
 {
-    Console.WriteLine($"ReferenceBlockId: {tx.ReferenceBlockId.FromByteStringToHex()}");
-    Console.WriteLine($"Payer: {tx.Payer.Value.FromByteStringToHex()}");
-    Console.WriteLine("Authorizers: [{0}]", string.Join(", ", tx.Authorizers.Select(s => s.HexValue).ToArray()));
-    Console.WriteLine($"Proposer: {tx.ProposalKey.Address.HexValue}");
+    Console.WriteLine($"ReferenceBlockId: {tx.ReferenceBlockId}");
+    Console.WriteLine($"Payer: {tx.Payer.Address}");
+    Console.WriteLine("Authorizers: [{0}]", string.Join(", ", tx.Authorizers.Select(s => s.Address).ToArray()));
+    Console.WriteLine($"Proposer: {tx.ProposalKey.Address.Address}");
 }
 
-private static void PrintTransactionResult(FlowTransactionResult txr)
+private void PrintTransactionResult(FlowTransactionResult txr)
 {
     Console.WriteLine($"Status: {txr.Status}");
-    Console.WriteLine($"Error: {txr.ErrorMessage}\n");            
+    Console.WriteLine($"Error: {txr.ErrorMessage}\n");
 }
 ```
 
@@ -230,7 +217,7 @@ Error:
 ```
 
 ### Get Events
-[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Client.FlowClientAsync.html#Flow_Net_Sdk_Client_FlowClientAsync_GetEventsForBlockIdsAsync_System_String_System_Collections_Generic_IEnumerable_Google_Protobuf_ByteString__Grpc_Core_CallOptions_)
+[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Core.Client.IFlowClient.html#Flow_Net_Sdk_Core_Client_IFlowClient_GetEventsForBlockIdsAsync_System_String_System_Collections_Generic_IEnumerable_System_String__)
 
 Retrieve events by a given type in a specified block height range or through a list of block IDs.
 
@@ -249,29 +236,29 @@ Example depicts ways to get events within block range or by block IDs:
 
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/EventExamples/GetEventsExample.cs)**
 ```csharp
-private static async Task Demo(FlowAccount flowAccount, ByteString flowTransactionId)
+private async Task Demo(FlowAccount flowAccount, ByteString flowTransactionId)
 {
     // Query for account creation events by type
-    var eventsForHeightRange = await _flowClient.GetEventsForHeightRangeAsync("flow.AccountCreated", 0, 100);
+    var eventsForHeightRange = await FlowClient.GetEventsForHeightRangeAsync("flow.AccountCreated", 0, 100);
     PrintEvents(eventsForHeightRange);
 
     // Query for our custom event by type
     var customType = $"A.{flowAccount.Address.HexValue}.EventDemo.Add";
-    var customEventsForHeightRange = await _flowClient.GetEventsForHeightRangeAsync(customType, 0, 100);
+    var customEventsForHeightRange = await FlowClient.GetEventsForHeightRangeAsync(customType, 0, 100);
     PrintEvents(customEventsForHeightRange);
 
     // Get events directly from transaction result
-    var txResult = await _flowClient.GetTransactionResultAsync(flowTransactionId);
+    var txResult = await FlowClient.GetTransactionResultAsync(flowTransactionId);
     PrintEvent(txResult.Events);
 }
 
-private static void PrintEvents(IEnumerable<FlowBlockEvent> flowBlockEvents)
+private void PrintEvents(IEnumerable<FlowBlockEvent> flowBlockEvents)
 {
     foreach(var blockEvent in flowBlockEvents)
         PrintEvent(blockEvent.Events);
 }
 
-private static void PrintEvent(IEnumerable<FlowEvent> flowEvents)
+private void PrintEvent(IEnumerable<FlowEvent> flowEvents)
 {
     foreach(var @event in flowEvents)
     {
@@ -298,7 +285,7 @@ Transaction ID: 72ae51dbfcda12fdda9b97cf3e8df54980111c4b4bb7f0f86f9113420f21bece
 ```
 
 ### Get Collections
-[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Client.FlowClientAsync.html#Flow_Net_Sdk_Client_FlowClientAsync_GetCollectionByIdAsync_Google_Protobuf_ByteString_Grpc_Core_CallOptions_)
+[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Core.Client.IFlowClient.html#Flow_Net_Sdk_Core_Client_IFlowClient_GetCollectionAsync_System_String_)
 
 Retrieve a batch of transactions that have been included in the same block, known as ***collections***. 
 Collections are used to improve consensus throughput by increasing the number of transactions per block and they act as a link between a block and a transaction.
@@ -307,14 +294,14 @@ Collections are used to improve consensus throughput by increasing the number of
 
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/CollectionExamples/GetCollectionExample.cs)**
 ```csharp
-private static async Task Demo(FlowCollectionGuarantee flowCollectionGuarantee)
+private async Task Demo(FlowCollectionGuarantee flowCollectionGuarantee)
 {
     // get collection by ID
-    var collection = await _flowClient.GetCollectionByIdAsync(flowCollectionGuarantee.CollectionId);
+    var collection = await FlowClient.GetCollectionByIdAsync(flowCollectionGuarantee.CollectionId);
     PrintCollection(collection);
 }
 
-private static void PrintCollection(FlowCollectionResponse flowCollection)
+private void PrintCollection(FlowCollectionResponse flowCollection)
 {
     Console.WriteLine($"ID: {flowCollection.Id.FromByteStringToHex()}");
     Console.WriteLine("Transactions: [{0}]", string.Join(", ", flowCollection.TransactionIds.Select(s => s.FromByteStringToHex()).ToArray()));
@@ -328,7 +315,7 @@ Transactions: [6edf928c88717fdaefe0849e014d7d4f7931471cdb6ae9329f992d4751844099]
 ```
 
 ### Execute Scripts
-[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Client.FlowClientAsync.html#Flow_Net_Sdk_Client_FlowClientAsync_ExecuteScriptAtLatestBlockAsync_Google_Protobuf_ByteString_System_Collections_Generic_IEnumerable_Flow_Net_Sdk_Cadence_ICadence__Grpc_Core_CallOptions_)
+[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Core.Client.IFlowClient.html#Flow_Net_Sdk_Core_Client_IFlowClient_ExecuteScriptAtLatestBlockAsync_Flow_Net_Sdk_Core_Models_FlowScript_)
 
 Scripts allow you to write arbitrary non-mutating Cadence code on the Flow blockchain and return data. You can learn more about [Cadence and scripts here](https://docs.onflow.org/cadence/language/), but we are now only interested in executing the script code and getting back the data.
 
@@ -340,7 +327,7 @@ We can execute a script using the latest state of the Flow blockchain or we can 
 
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/ScriptExamples/ScriptExample.cs)**
 ```csharp
-private static async Task Demo()
+private async Task Demo()
 {
     // simple script
     var script = @"
@@ -353,11 +340,13 @@ pub fun main(a: Int): Int {
         new CadenceNumber(CadenceNumberType.Int, "5")
     };
 
-    var response = await _flowClient.ExecuteScriptAtLatestBlockAsync(new FlowScript
-    {
-        Script = script, 
-        Arguments = arguments
-    });
+    var response = await FlowClient.ExecuteScriptAtLatestBlockAsync(
+        new FlowScript
+        {
+            Script = script,
+            Arguments = arguments
+        });
+    Console.WriteLine($"Value: {response.As<CadenceNumber>().Value}");
 
     // complex script
     var complexScript = @"
@@ -372,8 +361,7 @@ pub struct User {
         self.balance = balance
     }
 }
-
-pub fun main(name: String): User {
+    pub fun main(name: String): User {
     return User(
         name: name,
         address: 0x1,
@@ -385,11 +373,12 @@ pub fun main(name: String): User {
     {
         new CadenceString("Dete")
     };
-    var complexResponse = await _flowClient.ExecuteScriptAtLatestBlockAsync(new FlowScript
-    {
-        Script = complexScript, 
-        Arguments = complexArguments
-    });
+    var complexResponse = await FlowClient.ExecuteScriptAtLatestBlockAsync(
+        new FlowScript
+        {
+            Script = complexScript,
+            Arguments = complexArguments
+        });
     PrintComplexScript(complexResponse);
 }
 
@@ -400,12 +389,12 @@ public class User
     public string Name { get; set; }
 }
 
-private static void PrintComplexScript(ICadence cadenceResponse)
+private void PrintComplexScript(ICadence cadenceResponse)
 {
     var user = new User
     {
         Name = cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceString>("name").Value,
-        Address = cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceAddress>("address").Value.RemoveHexPrefix(),
+        Address = cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceAddress>("address").Value,
         Balance = decimal.Parse(cadenceResponse.As<CadenceComposite>().CompositeFieldAs<CadenceNumber>("balance").Value)
     };
 
@@ -481,7 +470,7 @@ A transaction will be rejected if it is submitted past its expiry block. Flow ca
 A transaction expires after `600` blocks are committed on top of the reference block, which takes about 10 minutes at average Mainnet block rates.
 
 ### Build Transactions
-[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Models.FlowTransaction.html)
+[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Core.Models.FlowTransaction.html)
 
 Building a transaction involves setting the required properties explained above and producing a transaction object. 
 
@@ -504,7 +493,7 @@ transaction(greeting: String) {
 
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/TransactionExamples/CreateTransactionExample.cs)**
 ```csharp
-private static async Task Demo()
+private async Task Demo()
 {
     // reading script from folder
     var script = Utilities.ReadCadenceScript("greeting");
@@ -517,13 +506,13 @@ private static async Task Demo()
 
     // Establish a connection with an access node
     var accessAPIHost = "";
-    var FlowClient = new FlowClientAsync(accessAPIHost);
+    var flowClient = new FlowHttpClient(new HttpClient(), accessAPIHost);
 
     // Get the latest sealed block to use as a reference block
-    var latestBlock = await _flowClient.GetLatestBlockHeaderAsync();
+    var latestBlock = await flowClient.GetLatestBlockHeaderAsync();
 
     // Get the latest account info for this address
-    var proposerAccount = await _flowClient.GetAccountAtLatestBlockAsync(proposerAddress);
+    var proposerAccount = await flowClient.GetAccountAtLatestBlockAsync(proposerAddress.Address);
 
     // Get the latest sequence number for this key
     var proposerKey = proposerAccount.Keys.FirstOrDefault(w => w.Index == proposerKeyIndex);
@@ -564,10 +553,7 @@ After you have successfully [built a transaction](#build-transactions) the next 
 Quick example of building a transaction:
 ```csharp
 var proposerAccount = new FlowAccount();
-var proposerKey = proposerAccount.Keys.Where(w => w.Index == 1).FirstOrDefault();
-
-// Get the latest sealed block to use as a reference block
-var latestBlock = await _flowClient.GetLatestBlockHeaderAsync();
+var proposerKey = proposerAccount.Keys.FirstOrDefault(w => w.Index == 1);
 
 var tx = new FlowTransaction
 {
@@ -579,8 +565,7 @@ var tx = new FlowTransaction
         KeyId = proposerKey.Index,
         SequenceNumber = proposerKey.SequenceNumber
     },
-    Payer = proposerAccount.Address,
-    ReferenceBlockId = latestBlock.Id
+    Payer = proposerAccount.Address
 };
 ```
 
@@ -589,7 +574,7 @@ Signatures can be generated more securely using keys stored in a hardware device
 Simple signature example:
 ```csharp
 // construct a signer from your private key and configured signature/hash algorithms
-var signer = Sdk.Crypto.Ecdsa.Utilities.CreateSigner("privateKey", SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
+var signer = Sdk.Core.Crypto.Ecdsa.Utilities.CreateSigner("privateKey", SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256);
 
 FlowTransaction.AddEnvelopeSignature(tx, proposerAccount.Address, proposerKey.Index, signer);
 ```
@@ -616,7 +601,7 @@ var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKe
 var account1Key = account1.Keys.FirstOrDefault();
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await _flowClient.GetLatestBlockAsync();
+var latestBlock = await FlowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
@@ -629,7 +614,7 @@ var tx = new FlowTransaction
         KeyId = account1Key.Index,
         SequenceNumber = account1Key.SequenceNumber
     },
-    ReferenceBlockId = lastestBlock.Id
+    ReferenceBlockId = latestBlock.Header.Id,
 };
 
 // authorizers
@@ -639,7 +624,7 @@ tx.Authorizers.Add(account1.Address);
 tx = FlowTransaction.AddEnvelopeSignature(tx, account1.Address, account1Key.Index, account1Key.Signer);
 
 // send transaction
-var txResponse = await _flowClient.SendTransactionAsync(tx);
+var txResponse = await FlowClient.SendTransactionAsync(tx);
 ```
 
 ### [Single party, multiple signatures](https://docs.onflow.org/concepts/transaction-signing/#single-party-multiple-signatures)
@@ -668,7 +653,7 @@ var account1Key1 = account1.Keys[0];
 var account1Key2 = account1.Keys[1];
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await _flowClient.GetLatestBlockAsync();
+var latestBlock = await FlowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
@@ -681,7 +666,7 @@ var tx = new FlowTransaction
         KeyId = account1Key1.Index,
         SequenceNumber = account1Key1.SequenceNumber
     },
-    ReferenceBlockId = lastestBlock.Id
+    ReferenceBlockId = latestBlock.Header.Id
 };
 
 // authorizers
@@ -694,7 +679,7 @@ tx = FlowTransaction.AddEnvelopeSignature(tx, account1.Address, account1Key1.Ind
 tx = FlowTransaction.AddEnvelopeSignature(tx, account1.Address, account1Key2.Index, account1Key2.Signer);
 
 // send transaction
-var txResponse = await _flowClient.SendTransactionAsync(tx);
+var txResponse = await FlowClient.SendTransactionAsync(tx);
 ```
 
 ### [Multiple parties](https://docs.onflow.org/concepts/transaction-signing/#multiple-parties)
@@ -727,7 +712,7 @@ var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKe
 var account2Key = account2.Keys.FirstOrDefault();
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await _flowClient.GetLatestBlockAsync();
+var latestBlock = await FlowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
@@ -740,7 +725,7 @@ var tx = new FlowTransaction
         KeyId = account1Key.Index,
         SequenceNumber = account1Key.SequenceNumber
     },
-    ReferenceBlockId = lastestBlock.Id
+    ReferenceBlockId = latestBlock.Header.Id,
 };
 
 // authorizers
@@ -753,7 +738,7 @@ tx = FlowTransaction.AddPayloadSignature(tx, account1.Address, account1Key.Index
 tx = FlowTransaction.AddEnvelopeSignature(tx, account2.Address, account2Key.Index, account2Key.Signer);
 
 // send transaction
-var txResponse = await _flowClient.SendTransactionAsync(tx);
+var txResponse = await FlowClient.SendTransactionAsync(tx);
 ```
 
 ### [Multiple parties, two authorizers](https://docs.onflow.org/concepts/transaction-signing/#multiple-parties)
@@ -787,16 +772,16 @@ var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKe
 var account2Key = account2.Keys.FirstOrDefault();
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await _flowClient.GetLatestBlockAsync();
+var latestBlock = await FlowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
     Script = @"
 transaction { 
-	prepare(signer1: AuthAccount, signer2: AuthAccount) { 
-		log(signer1.address) 
-		log(signer2.address)
-	}
+    prepare(signer1: AuthAccount, signer2: AuthAccount) { 
+        log(signer1.address) 
+        log(signer2.address)
+    }
 }",
     GasLimit = 9999,
     Payer = account2.Address,
@@ -806,11 +791,11 @@ transaction {
         KeyId = account1Key.Index,
         SequenceNumber = account1Key.SequenceNumber
     },
-    ReferenceBlockId = lastestBlock.Id
+    ReferenceBlockId = latestBlock.Header.Id
 };
 
 // authorizers
-tx.Authorizers.Add(account1.Address;
+tx.Authorizers.Add(account1.Address);
 tx.Authorizers.Add(account2.Address);
 
 // account 1 signs the payload with key 1
@@ -820,7 +805,7 @@ tx = FlowTransaction.AddPayloadSignature(tx, account1.Address, account1Key.Index
 tx = FlowTransaction.AddEnvelopeSignature(tx, account2.Address, account2Key.Index, account2Key.Signer);
 
 // send transaction
-var txResponse = await _flowClient.SendTransactionAsync(tx);
+var txResponse = await FlowClient.SendTransactionAsync(tx);
 ```
 
 ### [Multiple parties, multiple signatures](https://docs.onflow.org/concepts/transaction-signing/#multiple-parties)
@@ -842,32 +827,34 @@ var txResponse = await _flowClient.SendTransactionAsync(tx);
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/TransactionExamples/MultiPartyMultiSignatureExample.cs)**
 ```csharp
 // generate key 1 for account1
-var flowAccountKey1 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
+var flowAccount1Key1 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA2_256, 500);
 // generate key 2 for account1
-var flowAccountKey2 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
+var flowAccount1Key2 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA2_256, 500);
+// create account1
+var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccount1Key1, flowAccount1Key2 });
 
-// create account with keys
-var account1 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccountKey1, flowAccountKey2 });
-
-// select keys
-var account1Key1 = account1.Keys[0];
-var account1Key2 = account1.Keys[1];
+// generate key 1 for account2
+var flowAccount2Key3 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
+// generate key 2 for account2
+var flowAccount2Key4 = FlowAccountKey.GenerateRandomEcdsaKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 500);
+// create account2
+var account2 = await CreateAccountAsync(new List<FlowAccountKey> { flowAccount2Key3, flowAccount2Key4 });
 
 // get the latest sealed block to use as a reference block
-var lastestBlock = await _flowClient.GetLatestBlockAsync();
+var latestBlock = await FlowClient.GetLatestBlockAsync();
 
 var tx = new FlowTransaction
 {
     Script = "transaction {prepare(signer: AuthAccount) { log(signer.address) }}",
     GasLimit = 9999,
-    Payer = account1.Address,
+    Payer = account2.Address,
     ProposalKey = new FlowProposalKey
     {
         Address = account1.Address,
-        KeyId = account1Key1.Index,
-        SequenceNumber = account1Key1.SequenceNumber
+        KeyId = account1.Keys[0].Index,
+        SequenceNumber = account1.Keys[0].SequenceNumber
     },
-    ReferenceBlockId = lastestBlock.Id
+    ReferenceBlockId = latestBlock.Header.Id
 };
 
 // authorizers
@@ -886,22 +873,22 @@ tx = FlowTransaction.AddEnvelopeSignature(tx, account2.Address, account2.Keys[0]
 tx = FlowTransaction.AddEnvelopeSignature(tx, account2.Address, account2.Keys[1].Index, account2.Keys[1].Signer);
 
 // send transaction
-var txResponse = await _flowClient.SendTransactionAsync(tx);
+var txResponse = await FlowClient.SendTransactionAsync(tx);
 ```
 
 ### Send Transactions
-[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Client.FlowClientAsync.html#Flow_Net_Sdk_Client_FlowClientAsync_SendTransactionAsync_Flow_Net_Sdk_Models_FlowTransaction_Grpc_Core_CallOptions_)
+[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Core.Client.IFlowClient.html#Flow_Net_Sdk_Core_Client_IFlowClient_SendTransactionAsync_Flow_Net_Sdk_Core_Models_FlowTransaction_)
 
 After a transaction has been [built](#build-transactions) and [signed](#sign-transactions), it can be sent to the Flow blockchain where it will be executed. If sending was successful you can then [retrieve the transaction result](#get-transactions).
 
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/TransactionExamples/MultiPartyMultiSignatureExample.cs)**
 ```csharp
 // send transaction
-var txResponse = await _flowClient.SendTransactionAsync(tx);
+var txResponse = await FlowClient.SendTransactionAsync(tx);
 ```
 
 ### Create Accounts
-[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Templates.Account.html#Flow_Net_Sdk_Templates_Account_CreateAccount_System_Collections_Generic_IEnumerable_Flow_Net_Sdk_Models_FlowAccountKey__Google_Protobuf_ByteString_System_Collections_Generic_IEnumerable_Flow_Net_Sdk_Models_FlowContract__)
+[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Core.Templates.AccountTemplates.html#Flow_Net_Sdk_Core_Templates_AccountTemplates_CreateAccount_System_Collections_Generic_IEnumerable_Flow_Net_Sdk_Core_Models_FlowAccountKey__Flow_Net_Sdk_Core_Models_FlowAddress_System_Collections_Generic_IEnumerable_Flow_Net_Sdk_Core_Models_FlowContract__)
 
 On Flow, account creation happens inside a transaction. Because the network allows for a many-to-many relationship between public keys and accounts, it's not possible to derive a new account address from a public key offline. 
 
@@ -926,35 +913,38 @@ Account creation happens inside a transaction, which means that somebody must pa
 
 **[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/try.svg" width="130">](https://github.com/tyronbrand/flow.net/tree/main/examples/Flow.Net.Examples/ExampleBase.cs)**
 ```csharp
-// keys
-var flowAccountKey = FlowAccountKey.NewEcdsaAccountKey(SignatureAlgo.ECDSA_P256, HashAlgo.SHA3_256, 1000);
-var newFlowAccountKeys = new List<FlowAccountKey> { flowAccountKey };
+// read flow.json
+var config = Utilities.ReadConfig();
+// get account from config
+var accountConfig = config.Accounts["emulator-account"];
+// get service account at latest block
+var serviceAccount = await FlowClient.GetAccountAtLatestBlockAsync(accountConfig.Address);
+// add a Signer with the serviceAccount and the accountConfig
+serviceAccount = Utilities.AddSignerFromConfigAccount(accountConfig, serviceAccount);
 
-// creator key
-var creatorAccount = new FlowAccount();
 // creator key to use
-var creatorAccountKey = creatorAccount.Keys.FirstOrDefault();
+var serviceAccountKey = serviceAccount.Keys.FirstOrDefault();
 
 // use template to create a transaction
-var tx = Account.CreateAccount(newFlowAccountKeys, creatorAccount.Address);
+var tx = AccountTemplates.CreateAccount(newFlowAccountKeys, serviceAccount.Address);
 
 // set the transaction payer and proposal key
-tx.Payer = creatorAccount.Address;
+tx.Payer = serviceAccount.Address;
 tx.ProposalKey = new FlowProposalKey
 {
-    Address = creatorAccount.Address,
-    KeyId = creatorAccountKey.Index,
-    SequenceNumber = creatorAccountKey.SequenceNumber
+    Address = serviceAccount.Address,
+    KeyId = serviceAccountKey.Index,
+    SequenceNumber = serviceAccountKey.SequenceNumber
 };
 
 // get the latest sealed block to use as a reference block
-var latestBlock = await _flowClient.GetLatestBlockAsync();
-tx.ReferenceBlockId = latestBlock.Id;
+var latestBlock = await FlowClient.GetLatestBlockAsync();
+tx.ReferenceBlockId = latestBlock.Header.Id;
 
 // sign and submit the transaction
-tx = FlowTransaction.AddEnvelopeSignature(tx, creatorAccount.Address, creatorAccountKey.Index, creatorAccountKey.Signer);
+tx = FlowTransaction.AddEnvelopeSignature(tx, serviceAccount.Address, serviceAccountKey.Index, serviceAccountKey.Signer);
 
-await _flowClient.SendTransactionAsync(tx);
+var response = await FlowClient.SendTransactionAsync(tx);
 ```
 
 After the account creation transaction has been submitted you can retrieve the new account address by [getting the transaction result](#get-transactions). 
@@ -964,28 +954,28 @@ The new account address will be emitted in a system-level `flow.AccountCreated` 
 ```csharp
  var result = await GetTransactionResultAsync(transactionResponse.Id);
 
-if (result.Status == Sdk.Protos.entities.TransactionStatus.Sealed)
+if (result.Status == TransactionStatus.Sealed)
 {
     var newAccountAddress = sealedResponse.Events.AccountCreatedAddress();
 
     // get new account details
-    var newAccount = await _flowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
+    var newAccount = await FlowClient.GetAccountAtLatestBlockAsync(newAccountAddress);
     newAccount.Keys = FlowAccountKey.UpdateFlowAccountKeys(newFlowAccountKeys, newAccount.Keys);
     return newAccount;
 }
 ```
 
 ### Generate Keys
-[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Crypto.Ecdsa.Utilities.html#Flow_Net_Sdk_Crypto_Ecdsa_Utilities_GenerateKeyPair_Flow_Net_Sdk_SignatureAlgo_)
+[<img src="https://raw.githubusercontent.com/onflow/sdks/main/templates/documentation/ref.svg" width="130">](https://tyronbrand.github.io/flow.net/api/Flow.Net.Sdk.Core.Crypto.Ecdsa.Utilities.html)
 
 Flow uses [ECDSA](https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm) signatures to control access to user accounts. Each key pair can be used in combination with the `SHA2-256` or `SHA3-256` hashing algorithms.
 
 Here's how to generate an ECDSA private key for the P-256 (secp256r1) curve.
 
 ```csharp
-var newKeys = Crypto.Ecdsa.Utilities.GenerateKeyPair(SignatureAlgo.ECDSA_P256);
-var publicKey = Crypto.Ecdsa.Utilities.DecodePublicKeyToHex(newKeys);
-var privateKey = Crypto.Ecdsa.Utilities.DecodePrivateKeyToHex(newKeys);
+var newKeys = Sdk.Core.Crypto.Ecdsa.Utilities.GenerateKeyPair(SignatureAlgo.ECDSA_P256);
+var publicKey = Sdk.Core.Crypto.Ecdsa.Utilities.DecodePublicKeyToHex(newKeys);
+var privateKey = Sdk.Core.Crypto.Ecdsa.Utilities.DecodePrivateKeyToHex(newKeys);
 ```
 
 The example above uses an ECDSA key pair on the P-256 (secp256r1) elliptic curve. Flow also supports the secp256k1 curve used by Bitcoin and Ethereum. Read more about [supported algorithms here](https://docs.onflow.org/concepts/accounts-and-keys/#supported-signature--hash-algorithms).
