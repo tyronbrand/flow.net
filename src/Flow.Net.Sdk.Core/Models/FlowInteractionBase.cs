@@ -1,4 +1,5 @@
 ﻿using Flow.Net.Sdk.Core.Cadence;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace Flow.Net.Sdk.Core.Models
         {
             const string pattern = @"^(\s*import\s+\w+\s+from\s+)(?:0x)?(.+)\s*$";
             return string.Join("\n",
-                txText.Split('\n')
+                txText.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)
                 .Select(line =>
                 {
                     var match = Regex.Match(line, pattern);
