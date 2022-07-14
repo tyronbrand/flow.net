@@ -210,6 +210,53 @@ namespace Flow.Net.Sdk.Tests
 
             Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(tx.Script));
         }
+        
+        [Fact]
+        public void ReplaceImportsFromAddressMapRelativePath()
+        {
+            var expected = @"
+            import FungibleToken from 0x1111
+            import FUSD from 0x2222
+            
+            transaction(arg1: String) {
+                prepare(acct: AuthAccount) {
+                    log(""Hello World"")
+                }
+            }
+            ";
+            var script = @"
+            import FungibleToken from ""./contract/FungibleToken.cdc""
+            import FUSD from ""./FUSD.cdc""
+            
+            transaction(arg1: String) {
+                prepare(acct: AuthAccount) {
+                    log(""Hello World"")
+                }
+            }
+            ";
+            var address = new FlowAddress("0x123456");
+            var addressMap = new Dictionary<string, string>()
+            {
+                { "./contract/FungibleToken.cdc", "0x1111" },
+                { "FUSD", "0x2222" }
+            };
+            var tx = new FlowTransaction(addressMap)
+            {
+                Script = script,
+                Payer = address,
+                GasLimit = 100,
+                ReferenceBlockId = "",
+                ProposalKey = new FlowProposalKey()
+                {
+                    Address = address
+                }
+            };
+
+            var result = tx.FromFlowTransaction();
+
+            Assert.Equal(NormalizeNewLines(expected), NormalizeNewLines(result.Script.ByteStringToString()));
+        }
+        
         private static string NormalizeNewLines(string value)
         {
             return value
