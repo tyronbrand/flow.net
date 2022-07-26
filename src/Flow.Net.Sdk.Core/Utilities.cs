@@ -38,7 +38,7 @@ namespace Flow.Net.Sdk.Core
                     if (flowAccountKey == null)
                         continue;
 
-                    flowAccountKey.PrivateKey = key.PrivateKey;
+                    flowAccountKey.PrivateKey = flowConfigAccount.Key;
 
                     var privateKey = keyPair.Private as ECPrivateKeyParameters;
                     flowAccountKey.Signer = new Crypto.Ecdsa.Signer(privateKey, flowAccountKey.HashAlgorithm, flowAccountKey.SignatureAlgorithm);
