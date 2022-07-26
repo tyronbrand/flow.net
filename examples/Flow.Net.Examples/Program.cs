@@ -55,6 +55,9 @@ namespace Flow.Net.Examples
                 await UserSignaturesExamples.UserSignatureExample.RunAsync(client);
                 await UserSignaturesExamples.UserSignatureValidateAnyExample.RunAsync(client);
                 await UserSignaturesExamples.UserSignatureValidateAllExample.RunAsync(client);
+
+                // Storage examples
+                await StorageExamples.StorageUsageExample.RunAsync(client);
             }
         }
     }
