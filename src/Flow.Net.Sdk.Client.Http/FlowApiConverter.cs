@@ -77,7 +77,8 @@ namespace Flow.Net.Sdk.Client.Http
                         Height = ulong.Parse(block.Header.Height),
                         Id = block.Header.Id,
                         ParentId = block.Header.Parent_id,
-                        Timestamp = block.Header.Timestamp
+                        Timestamp = block.Header.Timestamp,
+                        ParentVoterSignature = block.Header.Parent_voter_signature
                     },
                     Payload = new FlowBlockPayload
                     {
@@ -111,6 +112,8 @@ namespace Flow.Net.Sdk.Client.Http
                 flowCollectionGuarantees.Add(new FlowCollectionGuarantee
                 {
                     CollectionId = seal.Collection_id,
+                    Signature = seal.Signature,
+                    SignerIds = seal.Signer_ids
                 });
             }
             return flowCollectionGuarantees;
