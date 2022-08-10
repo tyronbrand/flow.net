@@ -45,10 +45,10 @@ You can check more examples for creating clients in the examples:
 ### Basic Example:
 ```csharp
 // HTTP client
-var flowHttpClient = new FlowHttpClient(new HttpClient(), Sdk.Client.Http.ServerUrl.EmulatorHost);
+var flowHttpClient = new FlowHttpClient(new HttpClient(), new FlowClientOptions { ServerUrl = Sdk.Client.Http.ServerUrl.EmulatorHost });
 
 // gRPC client
-var flowGrpcClient = new FlowGrpcClient(Sdk.Client.Grpc.ServerUrl.EmulatorHost)
+var flowGrpcClient = new FlowGrpcClient(new FlowGrpcClientOptions { ServerUrl = Sdk.Client.Grpc.ServerUrl.EmulatorHost })
 ```
 
 ## Querying the Flow Network
