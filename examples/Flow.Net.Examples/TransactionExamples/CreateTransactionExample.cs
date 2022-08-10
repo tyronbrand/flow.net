@@ -1,6 +1,7 @@
 ﻿using Flow.Net.Sdk.Client.Http;
 using Flow.Net.Sdk.Core;
 using Flow.Net.Sdk.Core.Cadence;
+using Flow.Net.Sdk.Core.Client;
 using Flow.Net.Sdk.Core.Models;
 using System.Linq;
 using System.Net.Http;
@@ -22,8 +23,7 @@ namespace Flow.Net.Examples.TransactionExamples
             var authorizerAddress = new FlowAddress("7aad92e5a0715d21");
 
             // Establish a connection with an access node
-            var accessAPIHost = "";
-            var flowClient = new FlowHttpClient(new HttpClient(), accessAPIHost);
+            var flowClient = new FlowHttpClient(new HttpClient(), new FlowClientOptions { ServerUrl = "" });
 
             // Get the latest sealed block to use as a reference block
             var latestBlock = await flowClient.GetLatestBlockHeaderAsync();

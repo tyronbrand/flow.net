@@ -21,21 +21,20 @@ namespace Flow.Net.Sdk.Client.Grpc
         /// <summary>
         /// A gRPC client for the Flow Access API.
         /// </summary>
-        /// <param name="serverUrl"></param>
-        /// <param name="options"></param>
-        /// <returns><see cref="FlowGrpcClient"/>.</returns>
-        public FlowGrpcClient(string serverUrl, GrpcChannelOptions options = null)
+        /// <param name="clientOptions"></param>
+        /// <exception cref="FlowException"></exception>
+        public FlowGrpcClient(FlowGrpcClientOptions clientOptions)
         {
-            options = options ?? new GrpcChannelOptions { Credentials = ChannelCredentials.Insecure };
-            var networkUrlWithScheme = $"dns:{serverUrl}";
+            clientOptions.GrpcChannelOptions = clientOptions.GrpcChannelOptions ?? new GrpcChannelOptions { Credentials = ChannelCredentials.Insecure };
+            var networkUrlWithScheme = $"dns:{clientOptions.ServerUrl}";
 
             try
             {
-                _client = new AccessAPIClient(GrpcChannel.ForAddress(networkUrlWithScheme, options));
+                _client = new AccessAPIClient(GrpcChannel.ForAddress(networkUrlWithScheme, clientOptions.GrpcChannelOptions));
             }
             catch (Exception exception)
             {
-                throw new FlowException($"Failed to connect to {serverUrl}", exception);
+                throw new FlowException($"Failed to connect to {clientOptions.ServerUrl}", exception);
             }
         }
 

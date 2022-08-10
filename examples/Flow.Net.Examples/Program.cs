@@ -14,8 +14,8 @@ namespace Flow.Net.Examples
             var flowClients = new List<IFlowClient>
             {
                 // emulator addresses
-                new FlowHttpClient(new HttpClient(), Sdk.Client.Http.ServerUrl.EmulatorHost),
-                new FlowGrpcClient(Sdk.Client.Grpc.ServerUrl.EmulatorHost)
+                new FlowHttpClient(new HttpClient(), new FlowClientOptions { ServerUrl = Sdk.Client.Http.ServerUrl.EmulatorHost }),
+                new FlowGrpcClient(new FlowGrpcClientOptions { ServerUrl = Sdk.Client.Grpc.ServerUrl.EmulatorHost })
             };
 
             foreach (var client in flowClients)

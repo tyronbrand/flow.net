@@ -19,12 +19,12 @@ namespace Flow.Net.Sdk.Client.Http
         /// A HTTP client for the Flow v1 API.
         /// </summary>
         /// <param name="httpClient"></param>
-        /// <param name="serverUrl"></param>
-        public FlowHttpClient(HttpClient httpClient, string serverUrl)
+        /// <param name="clientOptions"></param>
+        public FlowHttpClient(HttpClient httpClient, FlowClientOptions clientOptions)
         {
             _flowApiV1 = new FlowApiV1(httpClient)
             {
-                BaseUrl = serverUrl
+                BaseUrl = clientOptions.ServerUrl
             };
         }
         
