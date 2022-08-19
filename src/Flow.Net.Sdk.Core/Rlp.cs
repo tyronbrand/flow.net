@@ -40,23 +40,40 @@ namespace Flow.Net.Sdk.Core
             return RLP.EncodeList(payloadElements.ToArray());
         }
 
-        private static byte[] EncodedSignatures(IReadOnlyList<FlowSignature> signatures, FlowTransaction flowTransaction)
+        private static byte[] EncodedSignatures(IReadOnlyList<FlowSignature> payloadSigners, FlowTransaction flowTransaction)
         {
-            var signatureElements = new List<byte[]>();
-            for (var i = 0; i < signatures.Count; i++)
-            {
-                var index = i;
-                if (flowTransaction.SignerList.ContainsKey(signatures[i].Address.Address))
-                {
-                    index = flowTransaction.SignerList[signatures[i].Address.Address];
-                }
-                else
-                {
-                    flowTransaction.SignerList.Add(signatures[i].Address.Address, i);
-                }
+            var signers = new Dictionary<string, int>();
+            var singerIndex = 0;
 
-                var signatureEncoded = EncodedSignature(signatures[i], index);
-                signatureElements.Add(signatureEncoded);
+            signers.Add(flowTransaction.ProposalKey.Address.Address, singerIndex);
+            singerIndex++;
+
+            if (!signers.ContainsKey(flowTransaction.Payer.Address))
+            {
+                signers.Add(flowTransaction.Payer.Address, singerIndex);
+                singerIndex++;
+            }
+
+            foreach (var authorizer in flowTransaction.Authorizers)
+            {
+                if (!signers.ContainsKey(authorizer.Address))
+                {
+                    signers.Add(authorizer.Address, singerIndex);
+                    singerIndex++;
+                }
+            }
+
+            var signatureElements = new List<byte[]>();
+            foreach (var payloadSigner in payloadSigners)
+            {
+                if (signers.ContainsKey(payloadSigner.Address.Address))
+                {
+                    if (!flowTransaction.SignerList.ContainsKey(payloadSigner.Address.Address))
+                        flowTransaction.SignerList.Add(payloadSigner.Address.Address, signers[payloadSigner.Address.Address]);
+
+                    var signatureEncoded = EncodedSignature(payloadSigner, signers[payloadSigner.Address.Address]);
+                    signatureElements.Add(signatureEncoded);
+                }
             }
 
             return RLP.EncodeList(signatureElements.ToArray());
