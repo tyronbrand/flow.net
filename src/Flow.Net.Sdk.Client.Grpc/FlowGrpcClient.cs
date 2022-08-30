@@ -566,7 +566,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             }
         }
 
-        public Task<FlowTransactionResult> WaitForSealAsync(string transactionId, int delayMs = 1000, int timeoutMs = 30000) => WaitForSealAsync(transactionId, delayMs, timeoutMs, new CallOptions(), CancellationToken.None);
+        public Task<FlowTransactionResult> WaitForSealAsync(string transactionId, int delayMs = 1000, int timeoutMs = 30000) => WaitForSealAsync(transactionId, delayMs, timeoutMs, new CallOptions());
 
         /// <summary>
         /// Waits for transaction result status to be sealed.
@@ -575,10 +575,9 @@ namespace Flow.Net.Sdk.Client.Grpc
         /// <param name="delayMs"></param>
         /// <param name="timeoutMs"></param>
         /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns><see cref="FlowTransactionResult"/></returns>
         /// <exception cref="FlowException"></exception>
-        public async Task<FlowTransactionResult> WaitForSealAsync(string transactionId, int delayMs, int timeoutMs, CallOptions options, CancellationToken cancellationToken)
+        public async Task<FlowTransactionResult> WaitForSealAsync(string transactionId, int delayMs, int timeoutMs, CallOptions options)
         {
             var startTime = DateTime.UtcNow;
             while (true)
@@ -591,7 +590,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 if (DateTime.UtcNow.Subtract(startTime).TotalMilliseconds > timeoutMs)
                     throw new FlowException("Timed out waiting for seal.");
 
-                await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+                await Task.Delay(delayMs).ConfigureAwait(false);
             }
         }
 
