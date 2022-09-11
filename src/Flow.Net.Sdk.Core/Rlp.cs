@@ -125,7 +125,7 @@ namespace Flow.Net.Sdk.Core
             return EncodeList(authEnvelopeElements.ToArray());
         }
 
-        private static byte[] EncodeElement(byte[] srcData)
+        public static byte[] EncodeElement(byte[] srcData)
         {
             if (IsNullOrZeroArray(srcData))
             {
@@ -172,7 +172,7 @@ namespace Flow.Net.Sdk.Core
             return array3;
         }
 
-        private static byte[] EncodeList(params byte[][] items)
+        public static byte[] EncodeList(params byte[][] items)
         {
             if (items == null || (items.Length == 1 && items[0] == null))
             {
@@ -225,7 +225,7 @@ namespace Flow.Net.Sdk.Core
             return array;
         }
 
-        private static bool IsNullOrZeroArray(byte[] array)
+        public static bool IsNullOrZeroArray(byte[] array)
         {
             if (array != null)
             {
@@ -235,7 +235,7 @@ namespace Flow.Net.Sdk.Core
             return true;
         }
 
-        private static bool IsSingleZero(byte[] array)
+        public static bool IsSingleZero(byte[] array)
         {
             if (array.Length == 1)
             {
@@ -245,7 +245,7 @@ namespace Flow.Net.Sdk.Core
             return false;
         }
 
-        private static byte[] ToBytesFromNumber(byte[] bytes)
+        public static byte[] ToBytesFromNumber(byte[] bytes)
         {
             if (BitConverter.IsLittleEndian)
                 bytes = bytes.Reverse().ToArray();
@@ -253,7 +253,7 @@ namespace Flow.Net.Sdk.Core
             return TrimZeroBytes(bytes);
         }
 
-        private static byte[] TrimZeroBytes(byte[] bytes)
+        public static byte[] TrimZeroBytes(byte[] bytes)
         {
             var trimmed = new List<byte>();
             var previousByteWasZero = true;
