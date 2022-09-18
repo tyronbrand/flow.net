@@ -582,7 +582,12 @@ namespace Flow.Net.Sdk.Client.Grpc
             var startTime = DateTime.UtcNow;
             while (true)
             {
-                var result = await GetTransactionResultAsync(transactionId, options).ConfigureAwait(false);
+                FlowTransactionResult result = null;
+                try
+                {
+                    result = await GetTransactionResultAsync(transactionId, options).ConfigureAwait(false);
+                }
+                catch (Exception) { }
 
                 if (result != null && result.Status == Core.TransactionStatus.Sealed)
                     return result;

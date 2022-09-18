@@ -583,7 +583,12 @@ namespace Flow.Net.Sdk.Client.Http
             var startTime = DateTime.UtcNow;
             while (true)
             {
-                var result = await GetTransactionResultAsync(transactionId, cancellationToken);
+                FlowTransactionResult result = null;
+                try
+                {
+                    result = await GetTransactionResultAsync(transactionId, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception) { }
 
                 if (result != null && result.Status == Core.TransactionStatus.Sealed)
                     return result;
