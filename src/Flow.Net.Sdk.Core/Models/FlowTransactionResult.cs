@@ -12,9 +12,11 @@ namespace Flow.Net.Sdk.Core.Models
         public string BlockId { get; set; }
         public TransactionStatus Status { get; set; }
         /// <summary>Provided transaction error in case the transaction wasn't successful.</summary>
-        public string ErrorMessage { get; set; }        
-
+        public string ErrorMessage { get; set; }
         public IList<FlowEvent> Events { get; set; }
         public uint StatusCode { get; set; }
+        public string TransactionId { get; set; }
+        public string CollectionId { get; set; }
+        public ulong BlockHeight { get; set; }
     }
 }

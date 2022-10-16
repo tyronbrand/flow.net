@@ -71,6 +71,16 @@ namespace Flow.Net.Sdk.Client.Grpc
             };
         }
 
+        public static IEnumerable<FlowTransactionResult> ToFlowTransactionsResult(this TransactionResultsResponse transactionResultsResponse)
+        {
+            var result = new List<FlowTransactionResult>();
+
+            foreach(var item in transactionResultsResponse.TransactionResults)
+                result.Add(item.ToFlowTransactionResult());            
+
+            return result;
+        }
+
         public static FlowTransactionResult ToFlowTransactionResult(this TransactionResultResponse transactionResultResponse)
         {
             var events = transactionResultResponse.Events.Select(@event => @event.ToFlowEvent()).ToList();
@@ -81,7 +91,10 @@ namespace Flow.Net.Sdk.Client.Grpc
                 ErrorMessage = transactionResultResponse.ErrorMessage,
                 Status = (TransactionStatus)Enum.Parse(typeof(TransactionStatus), transactionResultResponse.Status.ToString()),
                 StatusCode = transactionResultResponse.StatusCode,
-                Events = events
+                Events = events,
+                BlockHeight = transactionResultResponse.BlockHeight,
+                CollectionId = transactionResultResponse.CollectionId.ByteStringToHex(),
+                TransactionId = transactionResultResponse.TransactionId.ByteStringToHex(),
             };
         }
 
@@ -141,7 +154,8 @@ namespace Flow.Net.Sdk.Client.Grpc
                 Height = blockHeaderResponse.Block.Height,
                 Id = blockHeaderResponse.Block.Id.ByteStringToHex(),
                 ParentId = blockHeaderResponse.Block.ParentId.ByteStringToHex(),
-                Timestamp = blockHeaderResponse.Block.Timestamp.ToDateTimeOffset()
+                Timestamp = blockHeaderResponse.Block.Timestamp.ToDateTimeOffset(),
+                ParentVoterSignature = blockHeaderResponse.Block.ParentVoterIndices.ToArray()
             };
         }
 
@@ -164,7 +178,9 @@ namespace Flow.Net.Sdk.Client.Grpc
                 blockCollectionGuarantees.Add(
                     new FlowCollectionGuarantee
                     {
-                        CollectionId = collectionGuarantee.CollectionId.ByteStringToHex()
+                        CollectionId = collectionGuarantee.CollectionId.ByteStringToHex(),
+                        Signature = collectionGuarantee.Signature.ToByteArray(),
+                        SignerIds = collectionGuarantee.SignerIds.Select(s => s.ByteStringToString())
                     });
             }
 
@@ -175,7 +191,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                     Height = blockResponse.Block.Height,
                     Id = blockResponse.Block.Id.ByteStringToHex(),
                     ParentId = blockResponse.Block.ParentId.ByteStringToHex(),
-                    Timestamp = blockResponse.Block.Timestamp.ToDateTimeOffset(),
+                    Timestamp = blockResponse.Block.Timestamp.ToDateTimeOffset()
                 },
                 Payload = new FlowBlockPayload
                 {
@@ -317,6 +333,52 @@ namespace Flow.Net.Sdk.Client.Grpc
             return tx;
         }
 
+        public static IEnumerable<FlowTransaction> ToFlowTransactions(this TransactionsResponse transactions)
+        {
+            var result = new List<FlowTransaction>();
+
+            foreach(var transaction in transactions.Transactions)
+                result.Add(transaction.ToFlowTransaction());            
+
+            return result;
+        }
+
+        public static FlowTransaction ToFlowTransaction(this Protos.entities.Transaction transaction)
+        {
+            var tx = new FlowTransaction
+            {
+                Script = transaction.Script.ByteStringToString(),
+                Payer = new FlowAddress(transaction.Payer.ByteStringToHex()),
+                GasLimit = transaction.GasLimit,
+                ReferenceBlockId = transaction.ReferenceBlockId.ByteStringToHex(),
+                ProposalKey = transaction.ProposalKey.ToFlowProposalKey()
+            };
+
+            foreach(var arg in transaction.Arguments)
+                tx.Arguments.Add(CadenceExtensions.Decode(arg.ByteStringToString()));
+            
+            foreach (var authorizer in transaction.Authorizers)
+                tx.Authorizers.Add(new FlowAddress(authorizer.ByteStringToHex()));
+                       
+            foreach(var payloadSignature in transaction.PayloadSignatures)
+                tx.PayloadSignatures.Add(payloadSignature.ToFlowSignature());            
+
+            foreach(var envelopeSignature in transaction.EnvelopeSignatures)
+                tx.EnvelopeSignatures.Add(envelopeSignature.ToFlowSignature());
+
+            return tx;
+        }
+
+        private static FlowProposalKey ToFlowProposalKey(this Protos.entities.Transaction.Types.ProposalKey proposalKey)
+        {
+            return new FlowProposalKey
+            {
+                Address = new FlowAddress(proposalKey.Address.ByteStringToHex()),
+                KeyId = proposalKey.KeyId,
+                SequenceNumber = proposalKey.SequenceNumber
+            };
+        }
+
         private static Protos.entities.Transaction.Types.ProposalKey FromFlowProposalKey(this FlowProposalKey flowProposalKey)
         {
             return new Protos.entities.Transaction.Types.ProposalKey
@@ -334,6 +396,16 @@ namespace Flow.Net.Sdk.Client.Grpc
                 Address = flowSignature.Address.Address.HexToByteString(),
                 KeyId = flowSignature.KeyId,
                 Signature_ = flowSignature.Signature.BytesToByteString()
+            };
+        }
+
+        private static FlowSignature ToFlowSignature(this Protos.entities.Transaction.Types.Signature signature)
+        {
+            return new FlowSignature
+            {
+                Address = new FlowAddress(signature.Address.ByteStringToHex()),
+                KeyId = signature.KeyId,
+                Signature = signature.ToByteArray()
             };
         }
     }

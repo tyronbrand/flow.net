@@ -4,6 +4,8 @@ package flow.entities;
 
 option csharp_namespace = "Flow.Net.Sdk.Protos.entities";
 
+import "Protos/entities/event.proto";
+
 enum TransactionStatus {
   UNKNOWN = 0;
   PENDING = 1;

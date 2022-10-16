@@ -565,7 +565,7 @@ namespace Flow.Net.Sdk.Client.Grpc
             }
         }
 
-        public Task<FlowTransactionResult> WaitForSealAsync(string transactionId, int delayMs = 1000, int timeoutMs = 30000) => WaitForSealAsync(transactionId, delayMs, timeoutMs, new CallOptions(), CancellationToken.None);
+        public Task<FlowTransactionResult> WaitForSealAsync(string transactionId, int delayMs = 1000, int timeoutMs = 30000) => WaitForSealAsync(transactionId, delayMs, timeoutMs, new CallOptions());
 
         /// <summary>
         /// Waits for transaction result status to be sealed.
@@ -574,10 +574,9 @@ namespace Flow.Net.Sdk.Client.Grpc
         /// <param name="delayMs"></param>
         /// <param name="timeoutMs"></param>
         /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns><see cref="FlowTransactionResult"/></returns>
         /// <exception cref="FlowException"></exception>
-        public async Task<FlowTransactionResult> WaitForSealAsync(string transactionId, int delayMs, int timeoutMs, CallOptions options, CancellationToken cancellationToken)
+        public async Task<FlowTransactionResult> WaitForSealAsync(string transactionId, int delayMs, int timeoutMs, CallOptions options)
         {
             var startTime = DateTime.UtcNow;
             while (true)
@@ -595,7 +594,7 @@ namespace Flow.Net.Sdk.Client.Grpc
                 if (DateTime.UtcNow.Subtract(startTime).TotalMilliseconds > timeoutMs)
                     throw new FlowException("Timed out waiting for seal.");
 
-                await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+                await Task.Delay(delayMs).ConfigureAwait(false);
             }
         }
 
@@ -616,6 +615,83 @@ namespace Flow.Net.Sdk.Client.Grpc
             catch (Exception exception)
             {
                 throw new FlowException("GetLatestProtocolStateSnapshot request failed.", exception);
+            }
+        }
+
+        /// <summary>
+        /// Gets the result of a transaction at a specified block and index
+        /// </summary>
+        /// <param name="blockId"></param>
+        /// <param name="index"></param>
+        /// <param name="options"></param>
+        /// <returns><see cref="FlowTransactionResult"/></returns>
+        /// <exception cref="FlowException"></exception>
+        public async Task<FlowTransactionResult> GetTransactionResultByIndexAsync(string blockId, uint index, CallOptions options = new CallOptions())
+        {
+            try
+            {
+                var response = await _client.GetTransactionResultByIndexAsync(
+                    new GetTransactionByIndexRequest
+                    {
+                        BlockId = blockId.HexToByteString(),
+                        Index = index
+                    }, options).ConfigureAwait(false);
+
+                return response.ToFlowTransactionResult();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetTransactionResultByIndex request failed.", exception);
+            }
+        }
+
+        /// <summary>
+        /// Gets all the transaction results for a specified block
+        /// </summary>
+        /// <param name="blockId"></param>
+        /// <param name="options"></param>
+        /// <returns><see cref="IEnumerable{T}" /> of <see cref="FlowTransactionResult"/></returns>
+        /// <exception cref="FlowException"></exception>
+        public async Task<IEnumerable<FlowTransactionResult>> GetTransactionResultsByBlockIdAsync(string blockId, CallOptions options = new CallOptions())
+        {
+            try
+            {
+                var response = await _client.GetTransactionResultsByBlockIDAsync(
+                    new GetTransactionsByBlockIDRequest
+                    {
+                        BlockId = blockId.HexToByteString()
+                    }, options).ConfigureAwait(false);
+
+                return response.ToFlowTransactionsResult();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetTransactionResultsByBlockId request failed.", exception);
+            }
+        }
+
+        /// <summary>
+        /// Gets all the transactions for a specified block
+        /// </summary>
+        /// <param name="blockId"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        /// <exception cref="FlowException"></exception>
+        public async Task<IEnumerable<FlowTransaction>> GetTransactionsByBlockIdAsync(string blockId, CallOptions options = new CallOptions())
+        {
+            try
+            {
+                var response = await _client.GetTransactionsByBlockIDAsync(
+                    new GetTransactionsByBlockIDRequest
+                    {
+                        BlockId = blockId.HexToByteString(),
+                    }, options).ConfigureAwait(false);
+
+                return response.ToFlowTransactions();
+            }
+            catch (Exception exception)
+            {
+                throw new FlowException("GetTransactionsByBlockId request failed.", exception);
             }
         }
     }

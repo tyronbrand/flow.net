@@ -24,6 +24,8 @@ namespace Flow.Net.Sdk.Core.Models
     public class FlowCollectionGuarantee
     {
         public string CollectionId { get; set; }
+        public byte[] Signature { get; set; }
+        public IEnumerable<string> SignerIds { get; set; }
     }
 
     public class FlowBlockHeader
@@ -32,5 +34,6 @@ namespace Flow.Net.Sdk.Core.Models
         public string ParentId { get; set; }        
         public ulong Height { get; set; }       
         public DateTimeOffset Timestamp { get; set; }
+        public byte[] ParentVoterSignature { get; set; }
     }
 }
