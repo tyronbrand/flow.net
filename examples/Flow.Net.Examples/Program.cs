@@ -44,7 +44,6 @@ namespace Flow.Net.Examples
                 await TransactionExamples.MultiPartySingleSignatureExample.RunAsync(client);
                 await TransactionExamples.MultiPartyTwoAuthorizersExample.RunAsync(client);
                 await TransactionExamples.MultiPartyMultiSignatureExample.RunAsync(client);
-                await TransactionExamples.GetTransactionResultsByBlockIdExample.RunAsync(client);
 
                 // Account example            
                 await AccountExamples.CreateAccountExample.RunAsync(client);
