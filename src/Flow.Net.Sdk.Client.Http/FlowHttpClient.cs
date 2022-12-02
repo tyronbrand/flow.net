@@ -494,7 +494,7 @@ namespace Flow.Net.Sdk.Client.Http
         {
             try
             {
-                var response = await _flowApiV1.TransactionsAsync(transactionId, null, null, cancellationToken).ConfigureAwait(false);
+                var response = await _flowApiV1.TransactionsAsync(transactionId, new List<string> { "result" }, null, cancellationToken).ConfigureAwait(false);
                 return response.ToFlowTransactionResponse();
             }
             catch (Exception ex)
