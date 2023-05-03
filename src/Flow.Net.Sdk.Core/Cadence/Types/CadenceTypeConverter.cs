@@ -12,27 +12,19 @@ namespace Flow.Net.Sdk.Core.Cadence.Types
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            try
+            if ((reader.Path.Contains("type") || reader.Path == "value.staticType" || reader.Path == "value") && reader.TokenType == JsonToken.String)
             {
-                if ((reader.Path.Contains("type") || reader.Path == "value.staticType") && reader.TokenType == JsonToken.String)
-                {
-                    if (_compositeDictionary.TryGetValue((string)reader.Value, out var composite))
-                        return composite;
+                if (_compositeDictionary.TryGetValue((string)reader.Value, out var composite))
+                    return composite;
 
-                    return new CadenceTypeValueAsString(reader.Value.ToString());
-                }                    
+                return new CadenceTypeValueAsString(reader.Value.ToString());
+            }                    
 
-                var jObject = JObject.Load(reader);
-                var target = Create(jObject);
-                HandleCadenceCompositeType(jObject, target);
-                serializer.Populate(jObject.CreateReader(), target);
-                return target;
-            }
-            catch(Exception ex)
-            {
-                var t = ex;
-                throw new Exception("", ex);
-            }                       
+            var jObject = JObject.Load(reader);
+            var target = Create(jObject);
+            HandleCadenceCompositeType(jObject, target);
+            serializer.Populate(jObject.CreateReader(), target);
+            return target;
         }
 
         private static ICadenceType Create(JObject jObject)
