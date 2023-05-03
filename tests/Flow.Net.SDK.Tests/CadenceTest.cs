@@ -4,6 +4,7 @@ using Flow.Net.Sdk.Core.Cadence.Types;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Text.Encodings.Web;
 using Xunit;
 
 namespace Flow.Net.Sdk.Tests
@@ -1303,6 +1304,39 @@ namespace Flow.Net.Sdk.Tests
 
             TestEncodeAndDecode(testItems);
         }
+
+        [Fact]
+        public void TestCadenceTypeValueAsString()
+        {
+            var barType = new Core.Cadence.Types.CadenceCompositeType(CadenceCompositeTypeKind.Resource)
+            {
+                TypeId = "A.2d4c3caffbeab845.FLOAT.FLOATEvent",
+                Fields = new List<CadenceFieldType>
+                {
+                    new CadenceFieldType
+                    {
+                        Id = "currentHolders",
+                        Type = new CadenceDictionaryType
+                        {
+                            Key = new CadenceType
+                            {
+                                Kind = "Int"
+                            },
+                            Value = new CadenceTypeValueAsString
+                            {
+                                Value = "A.2d4c3caffbeab845.FLOAT.TokenIdentifier"
+                            }
+                        }
+                    }
+                }
+            };
+
+            var expectedJson = "{\"kind\":\"Resource\",\"type\":\"\",\"typeID\":\"A.2d4c3caffbeab845.FLOAT.FLOATEvent\",\"initializers\":[],\"fields\":[{\"id\":\"currentHolders\",\"type\":{\"kind\":\"Dictionary\",\"key\":{\"kind\":\"Int\"},\"value\":\"A.2d4c3caffbeab845.FLOAT.TokenIdentifier\"}}]}";
+
+            TestEncode(barType, expectedJson);
+            TestDecode(expectedJson, barType);
+        }
+
 
         private void TestEncodeAndDecode(IEnumerable<CadenceTestItem> testItems)
         {
