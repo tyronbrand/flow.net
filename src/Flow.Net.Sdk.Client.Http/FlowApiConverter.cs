@@ -62,7 +62,7 @@ namespace Flow.Net.Sdk.Client.Http
             {
                 flowCollection.TransactionIds = collection.Transactions?.Select(s => s.ToFlowTransactionId()).ToList();
                 flowCollection.Transactions = collection.Transactions?.Select(x => x.ToFlowTransactionResponse()).ToList();
-            }   
+            }
 
             return flowCollection;
         }
@@ -70,6 +70,9 @@ namespace Flow.Net.Sdk.Client.Http
         public static IList<FlowBlock> ToFlowBlock(this ICollection<Block> blocks)
         {
             var flowBlock = new List<FlowBlock>();
+
+            if (blocks == null)
+                return flowBlock;
 
             foreach (var block in blocks)
             {
@@ -96,6 +99,10 @@ namespace Flow.Net.Sdk.Client.Http
         public static IList<FlowBlockSeal> FromBlockSeals(this ICollection<BlockSeal> blockSeals)
         {
             var flowBlockSeal = new List<FlowBlockSeal>();
+
+            if (blockSeals == null)
+                return flowBlockSeal;
+
             foreach (var seal in blockSeals)
             {
                 flowBlockSeal.Add(new FlowBlockSeal
@@ -110,6 +117,10 @@ namespace Flow.Net.Sdk.Client.Http
         public static IList<FlowCollectionGuarantee> FromCollectionGuarantees(this ICollection<CollectionGuarantee> collectionGuarantees)
         {
             var flowCollectionGuarantees = new List<FlowCollectionGuarantee>();
+
+            if (collectionGuarantees == null)
+                return flowCollectionGuarantees;
+
             foreach (var seal in collectionGuarantees)
             {
                 flowCollectionGuarantees.Add(new FlowCollectionGuarantee
@@ -244,6 +255,9 @@ namespace Flow.Net.Sdk.Client.Http
         {
             var flowExecutionResults = new List<FlowExecutionResult>();
 
+            if (executionResults == null)
+                return flowExecutionResults;
+
             foreach (var result in executionResults)
             {
                 flowExecutionResults.Add(new FlowExecutionResult
@@ -276,6 +290,9 @@ namespace Flow.Net.Sdk.Client.Http
         {
             var flowBlockEvents = new List<FlowBlockEvent>();
 
+            if (blockEvents == null)
+                return flowBlockEvents;
+
             foreach (var block in blockEvents)
             {
                 flowBlockEvents.Add(new FlowBlockEvent
@@ -301,10 +318,13 @@ namespace Flow.Net.Sdk.Client.Http
                 Payload = Encoding.UTF8.GetString(@event.Payload).Decode(),
             };
         }
-        
+
         public static IEnumerable<FlowEvent> ToFlowEvent(this ICollection<Event> events)
         {
             var flowEvents = new List<FlowEvent>();
+
+            if (events == null)
+                return flowEvents;
 
             foreach (var @event in events)
             {
