@@ -1,0 +1,3120 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class FlowHttpClient
+   | Flow.Net SDK Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class FlowHttpClient
+   | Flow.Net SDK Documentation ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../flowdotnetfav.png">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../flowdotnetsmall.png" alt="Flow.Net">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient">
+  
+  
+  <h1 id="Flow_Net_Sdk_Client_Http_FlowHttpClient" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient" class="text-break">Class FlowHttpClient
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">FlowHttpClient</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Flow.Net.Sdk.Core.Client.IFlowClient.html">IFlowClient</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Flow.Net.Sdk.Client.Http.html">Flow.Net.Sdk.Client.Http</a></h6>
+  <h6><strong>Assembly</strong>: Flow.Net.Sdk.Client.Http.dll</h6>
+  <h5 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class FlowHttpClient : IFlowClient</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient__ctor_System_Net_Http_HttpClient_Flow_Net_Sdk_Core_Client_FlowClientOptions_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.%23ctor(System.Net.Http.HttpClient%2CFlow.Net.Sdk.Core.Client.FlowClientOptions)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L23">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient__ctor_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.#ctor*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient__ctor_System_Net_Http_HttpClient_Flow_Net_Sdk_Core_Client_FlowClientOptions_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.#ctor(System.Net.Http.HttpClient,Flow.Net.Sdk.Core.Client.FlowClientOptions)">FlowHttpClient(HttpClient, FlowClientOptions)</h4>
+  <div class="markdown level1 summary"><p>A HTTP client for the Flow v1 API.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FlowHttpClient(HttpClient httpClient, FlowClientOptions clientOptions)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.net.http.httpclient">HttpClient</a></td>
+        <td><span class="parametername">httpClient</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Client.FlowClientOptions.html">FlowClientOptions</a></td>
+        <td><span class="parametername">clientOptions</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtBlockHeightAsync_Flow_Net_Sdk_Core_Models_FlowScript_System_UInt64_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtBlockHeightAsync(Flow.Net.Sdk.Core.Models.FlowScript%2CSystem.UInt64)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L31">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtBlockHeightAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtBlockHeightAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtBlockHeightAsync_Flow_Net_Sdk_Core_Models_FlowScript_System_UInt64_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtBlockHeightAsync(Flow.Net.Sdk.Core.Models.FlowScript,System.UInt64)">ExecuteScriptAtBlockHeightAsync(FlowScript, UInt64)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;ICadence&gt; ExecuteScriptAtBlockHeightAsync(FlowScript flowScript, ulong blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowScript.html">FlowScript</a></td>
+        <td><span class="parametername">flowScript</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Cadence.ICadence.html">ICadence</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtBlockHeightAsync_Flow_Net_Sdk_Core_Models_FlowScript_System_UInt64_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtBlockHeightAsync(Flow.Net.Sdk.Core.Models.FlowScript%2CSystem.UInt64%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L41">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtBlockHeightAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtBlockHeightAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtBlockHeightAsync_Flow_Net_Sdk_Core_Models_FlowScript_System_UInt64_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtBlockHeightAsync(Flow.Net.Sdk.Core.Models.FlowScript,System.UInt64,System.Threading.CancellationToken)">ExecuteScriptAtBlockHeightAsync(FlowScript, UInt64, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Executes a ready-only Cadence script against the execution state at the given block height.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;ICadence&gt; ExecuteScriptAtBlockHeightAsync(FlowScript flowScript, ulong blockHeight, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowScript.html">FlowScript</a></td>
+        <td><span class="parametername">flowScript</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Cadence.ICadence.html">ICadence</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Cadence.ICadence.html">ICadence</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtBlockIdAsync_Flow_Net_Sdk_Core_Models_FlowScript_System_String_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtBlockIdAsync(Flow.Net.Sdk.Core.Models.FlowScript%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L55">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtBlockIdAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtBlockIdAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtBlockIdAsync_Flow_Net_Sdk_Core_Models_FlowScript_System_String_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtBlockIdAsync(Flow.Net.Sdk.Core.Models.FlowScript,System.String)">ExecuteScriptAtBlockIdAsync(FlowScript, String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;ICadence&gt; ExecuteScriptAtBlockIdAsync(FlowScript flowScript, string blockId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowScript.html">FlowScript</a></td>
+        <td><span class="parametername">flowScript</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">blockId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Cadence.ICadence.html">ICadence</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtBlockIdAsync_Flow_Net_Sdk_Core_Models_FlowScript_System_String_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtBlockIdAsync(Flow.Net.Sdk.Core.Models.FlowScript%2CSystem.String%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L65">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtBlockIdAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtBlockIdAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtBlockIdAsync_Flow_Net_Sdk_Core_Models_FlowScript_System_String_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtBlockIdAsync(Flow.Net.Sdk.Core.Models.FlowScript,System.String,System.Threading.CancellationToken)">ExecuteScriptAtBlockIdAsync(FlowScript, String, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Executes a ready-only Cadence script against the execution state at the block with the given Id.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;ICadence&gt; ExecuteScriptAtBlockIdAsync(FlowScript flowScript, string blockId, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowScript.html">FlowScript</a></td>
+        <td><span class="parametername">flowScript</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">blockId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Cadence.ICadence.html">ICadence</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Cadence.ICadence.html">ICadence</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtLatestBlockAsync_Flow_Net_Sdk_Core_Models_FlowScript_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtLatestBlockAsync(Flow.Net.Sdk.Core.Models.FlowScript)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L79">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtLatestBlockAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtLatestBlockAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtLatestBlockAsync_Flow_Net_Sdk_Core_Models_FlowScript_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtLatestBlockAsync(Flow.Net.Sdk.Core.Models.FlowScript)">ExecuteScriptAtLatestBlockAsync(FlowScript)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;ICadence&gt; ExecuteScriptAtLatestBlockAsync(FlowScript flowScript)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowScript.html">FlowScript</a></td>
+        <td><span class="parametername">flowScript</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Cadence.ICadence.html">ICadence</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtLatestBlockAsync_Flow_Net_Sdk_Core_Models_FlowScript_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtLatestBlockAsync(Flow.Net.Sdk.Core.Models.FlowScript%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L88">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtLatestBlockAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtLatestBlockAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_ExecuteScriptAtLatestBlockAsync_Flow_Net_Sdk_Core_Models_FlowScript_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.ExecuteScriptAtLatestBlockAsync(Flow.Net.Sdk.Core.Models.FlowScript,System.Threading.CancellationToken)">ExecuteScriptAtLatestBlockAsync(FlowScript, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Executes a read-only Cadence script against the latest sealed execution state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;ICadence&gt; ExecuteScriptAtLatestBlockAsync(FlowScript flowScript, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowScript.html">FlowScript</a></td>
+        <td><span class="parametername">flowScript</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Cadence.ICadence.html">ICadence</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Cadence.ICadence.html">ICadence</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetAccountAtBlockHeightAsync_System_String_System_UInt64_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetAccountAtBlockHeightAsync(System.String%2CSystem.UInt64)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L102">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetAccountAtBlockHeightAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetAccountAtBlockHeightAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetAccountAtBlockHeightAsync_System_String_System_UInt64_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetAccountAtBlockHeightAsync(System.String,System.UInt64)">GetAccountAtBlockHeightAsync(String, UInt64)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowAccount&gt; GetAccountAtBlockHeightAsync(string address, ulong blockHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">address</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowAccount.html">FlowAccount</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetAccountAtBlockHeightAsync_System_String_System_UInt64_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetAccountAtBlockHeightAsync(System.String%2CSystem.UInt64%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L112">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetAccountAtBlockHeightAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetAccountAtBlockHeightAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetAccountAtBlockHeightAsync_System_String_System_UInt64_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetAccountAtBlockHeightAsync(System.String,System.UInt64,System.Threading.CancellationToken)">GetAccountAtBlockHeightAsync(String, UInt64, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets an account by address at the given block height.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowAccount&gt; GetAccountAtBlockHeightAsync(string address, ulong blockHeight, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">address</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">blockHeight</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowAccount.html">FlowAccount</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowAccount.html">FlowAccount</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetAccountAtLatestBlockAsync_System_String_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetAccountAtLatestBlockAsync(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L125">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetAccountAtLatestBlockAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetAccountAtLatestBlockAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetAccountAtLatestBlockAsync_System_String_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetAccountAtLatestBlockAsync(System.String)">GetAccountAtLatestBlockAsync(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowAccount&gt; GetAccountAtLatestBlockAsync(string address)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">address</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowAccount.html">FlowAccount</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetAccountAtLatestBlockAsync_System_String_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetAccountAtLatestBlockAsync(System.String%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L134">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetAccountAtLatestBlockAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetAccountAtLatestBlockAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetAccountAtLatestBlockAsync_System_String_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetAccountAtLatestBlockAsync(System.String,System.Threading.CancellationToken)">GetAccountAtLatestBlockAsync(String, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets an account by address at the latest sealed block.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowAccount&gt; GetAccountAtLatestBlockAsync(string address, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">address</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowAccount.html">FlowAccount</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowAccount.html">FlowAccount</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockByHeightAsync_System_UInt64_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockByHeightAsync(System.UInt64)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L147">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockByHeightAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockByHeightAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockByHeightAsync_System_UInt64_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockByHeightAsync(System.UInt64)">GetBlockByHeightAsync(UInt64)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowBlock&gt; GetBlockByHeightAsync(ulong height)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">height</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockByHeightAsync_System_UInt64_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockByHeightAsync(System.UInt64%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L156">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockByHeightAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockByHeightAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockByHeightAsync_System_UInt64_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockByHeightAsync(System.UInt64,System.Threading.CancellationToken)">GetBlockByHeightAsync(UInt64, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets a full block by height.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowBlock&gt; GetBlockByHeightAsync(ulong height, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">height</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockByIdAsync_System_String_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockByIdAsync(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L197">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockByIdAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockByIdAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockByIdAsync_System_String_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockByIdAsync(System.String)">GetBlockByIdAsync(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowBlock&gt; GetBlockByIdAsync(string blockId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">blockId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockByIdAsync_System_String_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockByIdAsync(System.String%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L206">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockByIdAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockByIdAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockByIdAsync_System_String_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockByIdAsync(System.String,System.Threading.CancellationToken)">GetBlockByIdAsync(String, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets a full block by Id.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowBlock&gt; GetBlockByIdAsync(string blockId, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">blockId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeaderByHeightAsync_System_UInt64_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeaderByHeightAsync(System.UInt64)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L247">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeaderByHeightAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeaderByHeightAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeaderByHeightAsync_System_UInt64_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeaderByHeightAsync(System.UInt64)">GetBlockHeaderByHeightAsync(UInt64)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowBlockHeader&gt; GetBlockHeaderByHeightAsync(ulong height)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">height</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeaderByHeightAsync_System_UInt64_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeaderByHeightAsync(System.UInt64%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L256">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeaderByHeightAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeaderByHeightAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeaderByHeightAsync_System_UInt64_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeaderByHeightAsync(System.UInt64,System.Threading.CancellationToken)">GetBlockHeaderByHeightAsync(UInt64, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets a block header by height.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowBlockHeader&gt; GetBlockHeaderByHeightAsync(ulong height, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">height</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeaderByIdAsync_System_String_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeaderByIdAsync(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L297">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeaderByIdAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeaderByIdAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeaderByIdAsync_System_String_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeaderByIdAsync(System.String)">GetBlockHeaderByIdAsync(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowBlockHeader&gt; GetBlockHeaderByIdAsync(string blockId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">blockId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeaderByIdAsync_System_String_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeaderByIdAsync(System.String%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L306">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeaderByIdAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeaderByIdAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeaderByIdAsync_System_String_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeaderByIdAsync(System.String,System.Threading.CancellationToken)">GetBlockHeaderByIdAsync(String, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets a block header by Id.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowBlockHeader&gt; GetBlockHeaderByIdAsync(string blockId, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">blockId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeadersByHeightAsync_System_Collections_Generic_IEnumerable_System_UInt64__.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeadersByHeightAsync(System.Collections.Generic.IEnumerable%7BSystem.UInt64%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L275">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeadersByHeightAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeadersByHeightAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeadersByHeightAsync_System_Collections_Generic_IEnumerable_System_UInt64__" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeadersByHeightAsync(System.Collections.Generic.IEnumerable{System.UInt64})">GetBlockHeadersByHeightAsync(IEnumerable&lt;UInt64&gt;)</h4>
+  <div class="markdown level1 summary"><p>Gets a block headers by heights.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;IEnumerable&lt;FlowBlockHeader&gt;&gt; GetBlockHeadersByHeightAsync(IEnumerable&lt;ulong&gt; heights)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a>&gt;</td>
+        <td><span class="parametername">heights</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a>&gt;&gt;</td>
+        <td><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a> of <a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeadersByHeightAsync_System_Collections_Generic_IEnumerable_System_UInt64__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeadersByHeightAsync(System.Collections.Generic.IEnumerable%7BSystem.UInt64%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L284">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeadersByHeightAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeadersByHeightAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeadersByHeightAsync_System_Collections_Generic_IEnumerable_System_UInt64__System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeadersByHeightAsync(System.Collections.Generic.IEnumerable{System.UInt64},System.Threading.CancellationToken)">GetBlockHeadersByHeightAsync(IEnumerable&lt;UInt64&gt;, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets a block headers by heights.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;IEnumerable&lt;FlowBlockHeader&gt;&gt; GetBlockHeadersByHeightAsync(IEnumerable&lt;ulong&gt; heights, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a>&gt;</td>
+        <td><span class="parametername">heights</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a>&gt;&gt;</td>
+        <td><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a> of <a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeadersByIdAsync_System_Collections_Generic_IEnumerable_System_String__.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeadersByIdAsync(System.Collections.Generic.IEnumerable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L325">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeadersByIdAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeadersByIdAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeadersByIdAsync_System_Collections_Generic_IEnumerable_System_String__" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeadersByIdAsync(System.Collections.Generic.IEnumerable{System.String})">GetBlockHeadersByIdAsync(IEnumerable&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>Gets block headers by Ids.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;IEnumerable&lt;FlowBlockHeader&gt;&gt; GetBlockHeadersByIdAsync(IEnumerable&lt;string&gt; blockIds)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">blockIds</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a>&gt;&gt;</td>
+        <td><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a> of <a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeadersByIdAsync_System_Collections_Generic_IEnumerable_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeadersByIdAsync(System.Collections.Generic.IEnumerable%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L334">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeadersByIdAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeadersByIdAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlockHeadersByIdAsync_System_Collections_Generic_IEnumerable_System_String__System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlockHeadersByIdAsync(System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">GetBlockHeadersByIdAsync(IEnumerable&lt;String&gt;, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets block headers by Ids.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;IEnumerable&lt;FlowBlockHeader&gt;&gt; GetBlockHeadersByIdAsync(IEnumerable&lt;string&gt; blockIds, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">blockIds</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a>&gt;&gt;</td>
+        <td><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a> of <a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlocksByHeightAsync_System_Collections_Generic_IEnumerable_System_UInt64__.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlocksByHeightAsync(System.Collections.Generic.IEnumerable%7BSystem.UInt64%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L175">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlocksByHeightAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlocksByHeightAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlocksByHeightAsync_System_Collections_Generic_IEnumerable_System_UInt64__" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlocksByHeightAsync(System.Collections.Generic.IEnumerable{System.UInt64})">GetBlocksByHeightAsync(IEnumerable&lt;UInt64&gt;)</h4>
+  <div class="markdown level1 summary"><p>Gets full blocks by heights.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;IEnumerable&lt;FlowBlock&gt;&gt; GetBlocksByHeightAsync(IEnumerable&lt;ulong&gt; heights)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a>&gt;</td>
+        <td><span class="parametername">heights</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a>&gt;&gt;</td>
+        <td><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a> of <a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlocksByHeightAsync_System_Collections_Generic_IEnumerable_System_UInt64__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlocksByHeightAsync(System.Collections.Generic.IEnumerable%7BSystem.UInt64%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L184">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlocksByHeightAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlocksByHeightAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlocksByHeightAsync_System_Collections_Generic_IEnumerable_System_UInt64__System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlocksByHeightAsync(System.Collections.Generic.IEnumerable{System.UInt64},System.Threading.CancellationToken)">GetBlocksByHeightAsync(IEnumerable&lt;UInt64&gt;, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets full blocks by heights.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;IEnumerable&lt;FlowBlock&gt;&gt; GetBlocksByHeightAsync(IEnumerable&lt;ulong&gt; heights, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a>&gt;</td>
+        <td><span class="parametername">heights</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a>&gt;&gt;</td>
+        <td><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a> of <a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlocksByIdAsync_System_Collections_Generic_IEnumerable_System_String__.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlocksByIdAsync(System.Collections.Generic.IEnumerable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L225">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlocksByIdAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlocksByIdAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlocksByIdAsync_System_Collections_Generic_IEnumerable_System_String__" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlocksByIdAsync(System.Collections.Generic.IEnumerable{System.String})">GetBlocksByIdAsync(IEnumerable&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>Gets full blocks by Ids.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;IEnumerable&lt;FlowBlock&gt;&gt; GetBlocksByIdAsync(IEnumerable&lt;string&gt; blockIds)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">blockIds</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a>&gt;&gt;</td>
+        <td><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a> of <a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlocksByIdAsync_System_Collections_Generic_IEnumerable_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlocksByIdAsync(System.Collections.Generic.IEnumerable%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L234">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlocksByIdAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlocksByIdAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetBlocksByIdAsync_System_Collections_Generic_IEnumerable_System_String__System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetBlocksByIdAsync(System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">GetBlocksByIdAsync(IEnumerable&lt;String&gt;, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets full blocks by Ids.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;IEnumerable&lt;FlowBlock&gt;&gt; GetBlocksByIdAsync(IEnumerable&lt;string&gt; blockIds, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">blockIds</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a>&gt;&gt;</td>
+        <td><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a> of <a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetCollectionAsync_System_String_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetCollectionAsync(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L347">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetCollectionAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetCollectionAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetCollectionAsync_System_String_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetCollectionAsync(System.String)">GetCollectionAsync(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowCollection&gt; GetCollectionAsync(string collectionId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">collectionId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowCollection.html">FlowCollection</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetCollectionAsync_System_String_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetCollectionAsync(System.String%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L356">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetCollectionAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetCollectionAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetCollectionAsync_System_String_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetCollectionAsync(System.String,System.Threading.CancellationToken)">GetCollectionAsync(String, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets a collection by Id.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowCollection&gt; GetCollectionAsync(string collectionId, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">collectionId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowCollection.html">FlowCollection</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowCollection.html">FlowCollection</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetEventsForBlockIdsAsync_System_String_System_Collections_Generic_IEnumerable_System_String__.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetEventsForBlockIdsAsync(System.String%2CSystem.Collections.Generic.IEnumerable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L369">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetEventsForBlockIdsAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetEventsForBlockIdsAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetEventsForBlockIdsAsync_System_String_System_Collections_Generic_IEnumerable_System_String__" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetEventsForBlockIdsAsync(System.String,System.Collections.Generic.IEnumerable{System.String})">GetEventsForBlockIdsAsync(String, IEnumerable&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;IEnumerable&lt;FlowBlockEvent&gt;&gt; GetEventsForBlockIdsAsync(string eventType, IEnumerable&lt;string&gt; blockIds)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">eventType</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">blockIds</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockEvent.html">FlowBlockEvent</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetEventsForBlockIdsAsync_System_String_System_Collections_Generic_IEnumerable_System_String__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetEventsForBlockIdsAsync(System.String%2CSystem.Collections.Generic.IEnumerable%7BSystem.String%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L379">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetEventsForBlockIdsAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetEventsForBlockIdsAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetEventsForBlockIdsAsync_System_String_System_Collections_Generic_IEnumerable_System_String__System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetEventsForBlockIdsAsync(System.String,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">GetEventsForBlockIdsAsync(String, IEnumerable&lt;String&gt;, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Retrieves events with the given type from the specified block Ids.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;IEnumerable&lt;FlowBlockEvent&gt;&gt; GetEventsForBlockIdsAsync(string eventType, IEnumerable&lt;string&gt; blockIds, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">eventType</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">blockIds</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockEvent.html">FlowBlockEvent</a>&gt;&gt;</td>
+        <td><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a> of <a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockEvent.html">FlowBlockEvent</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetEventsForHeightRangeAsync_System_String_System_UInt64_System_UInt64_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetEventsForHeightRangeAsync(System.String%2CSystem.UInt64%2CSystem.UInt64)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L392">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetEventsForHeightRangeAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetEventsForHeightRangeAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetEventsForHeightRangeAsync_System_String_System_UInt64_System_UInt64_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetEventsForHeightRangeAsync(System.String,System.UInt64,System.UInt64)">GetEventsForHeightRangeAsync(String, UInt64, UInt64)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;IEnumerable&lt;FlowBlockEvent&gt;&gt; GetEventsForHeightRangeAsync(string eventType, ulong startHeight, ulong endHeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">eventType</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">startHeight</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">endHeight</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockEvent.html">FlowBlockEvent</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetEventsForHeightRangeAsync_System_String_System_UInt64_System_UInt64_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetEventsForHeightRangeAsync(System.String%2CSystem.UInt64%2CSystem.UInt64%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L403">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetEventsForHeightRangeAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetEventsForHeightRangeAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetEventsForHeightRangeAsync_System_String_System_UInt64_System_UInt64_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetEventsForHeightRangeAsync(System.String,System.UInt64,System.UInt64,System.Threading.CancellationToken)">GetEventsForHeightRangeAsync(String, UInt64, UInt64, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Retrieves events for all sealed blocks between the start and end block heights (inclusive) with the given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;IEnumerable&lt;FlowBlockEvent&gt;&gt; GetEventsForHeightRangeAsync(string eventType, ulong startHeight, ulong endHeight, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">eventType</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">startHeight</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">endHeight</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockEvent.html">FlowBlockEvent</a>&gt;&gt;</td>
+        <td><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a> of <a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockEvent.html">FlowBlockEvent</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetExecutionResultForBlockIdAsync_System_String_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetExecutionResultForBlockIdAsync(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L416">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetExecutionResultForBlockIdAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetExecutionResultForBlockIdAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetExecutionResultForBlockIdAsync_System_String_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetExecutionResultForBlockIdAsync(System.String)">GetExecutionResultForBlockIdAsync(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowExecutionResult&gt; GetExecutionResultForBlockIdAsync(string blockId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">blockId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowExecutionResult.html">FlowExecutionResult</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetExecutionResultForBlockIdAsync_System_String_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetExecutionResultForBlockIdAsync(System.String%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L425">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetExecutionResultForBlockIdAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetExecutionResultForBlockIdAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetExecutionResultForBlockIdAsync_System_String_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetExecutionResultForBlockIdAsync(System.String,System.Threading.CancellationToken)">GetExecutionResultForBlockIdAsync(String, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Retrieves execution result for the specified block Id.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowExecutionResult&gt; GetExecutionResultForBlockIdAsync(string blockId, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">blockId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowExecutionResult.html">FlowExecutionResult</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowExecutionResult.html">FlowExecutionResult</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestBlockAsync_System_Boolean_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestBlockAsync(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L438">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestBlockAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestBlockAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestBlockAsync_System_Boolean_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestBlockAsync(System.Boolean)">GetLatestBlockAsync(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowBlock&gt; GetLatestBlockAsync(bool isSealed = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isSealed</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestBlockAsync_System_Threading_CancellationToken_System_Boolean_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestBlockAsync(System.Threading.CancellationToken%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L447">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestBlockAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestBlockAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestBlockAsync_System_Threading_CancellationToken_System_Boolean_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestBlockAsync(System.Threading.CancellationToken,System.Boolean)">GetLatestBlockAsync(CancellationToken, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Gets the full payload of the latest sealed or unsealed block.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowBlock&gt; GetLatestBlockAsync(CancellationToken cancellationToken, bool isSealed = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isSealed</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlock.html">FlowBlock</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestBlockHeaderAsync_System_Boolean_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestBlockHeaderAsync(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L460">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestBlockHeaderAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestBlockHeaderAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestBlockHeaderAsync_System_Boolean_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestBlockHeaderAsync(System.Boolean)">GetLatestBlockHeaderAsync(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowBlockHeader&gt; GetLatestBlockHeaderAsync(bool isSealed = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isSealed</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestBlockHeaderAsync_System_Threading_CancellationToken_System_Boolean_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestBlockHeaderAsync(System.Threading.CancellationToken%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L469">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestBlockHeaderAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestBlockHeaderAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestBlockHeaderAsync_System_Threading_CancellationToken_System_Boolean_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestBlockHeaderAsync(System.Threading.CancellationToken,System.Boolean)">GetLatestBlockHeaderAsync(CancellationToken, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Gets the latest sealed or unsealed block header.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowBlockHeader&gt; GetLatestBlockHeaderAsync(CancellationToken cancellationToken, bool isSealed = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isSealed</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowBlockHeader.html">FlowBlockHeader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestProtocolStateSnapshotAsync.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestProtocolStateSnapshotAsync%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L482">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestProtocolStateSnapshotAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestProtocolStateSnapshotAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetLatestProtocolStateSnapshotAsync" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetLatestProtocolStateSnapshotAsync">GetLatestProtocolStateSnapshotAsync()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowProtocolStateSnapshot&gt; GetLatestProtocolStateSnapshotAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowProtocolStateSnapshot.html">FlowProtocolStateSnapshot</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetTransactionAsync_System_String_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetTransactionAsync(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L484">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetTransactionAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetTransactionAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetTransactionAsync_System_String_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetTransactionAsync(System.String)">GetTransactionAsync(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowTransactionResponse&gt; GetTransactionAsync(string transactionId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">transactionId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransactionResponse.html">FlowTransactionResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetTransactionAsync_System_String_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetTransactionAsync(System.String%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L493">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetTransactionAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetTransactionAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetTransactionAsync_System_String_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetTransactionAsync(System.String,System.Threading.CancellationToken)">GetTransactionAsync(String, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets a transaction by Id.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowTransactionResponse&gt; GetTransactionAsync(string transactionId, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">transactionId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransactionResponse.html">FlowTransactionResponse</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransactionResponse.html">FlowTransactionResponse</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetTransactionResultAsync_System_String_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetTransactionResultAsync(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L506">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetTransactionResultAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetTransactionResultAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetTransactionResultAsync_System_String_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetTransactionResultAsync(System.String)">GetTransactionResultAsync(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowTransactionResult&gt; GetTransactionResultAsync(string transactionId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">transactionId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransactionResult.html">FlowTransactionResult</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_GetTransactionResultAsync_System_String_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.GetTransactionResultAsync(System.String%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L515">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetTransactionResultAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetTransactionResultAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_GetTransactionResultAsync_System_String_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.GetTransactionResultAsync(System.String,System.Threading.CancellationToken)">GetTransactionResultAsync(String, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets the result of a transaction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowTransactionResult&gt; GetTransactionResultAsync(string transactionId, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">transactionId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransactionResult.html">FlowTransactionResult</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransactionResult.html">FlowTransactionResult</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_PingAsync.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.PingAsync%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L528">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_PingAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.PingAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_PingAsync" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.PingAsync">PingAsync()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task PingAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_PingAsync_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.PingAsync(System.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L535">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_PingAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.PingAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_PingAsync_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.PingAsync(System.Threading.CancellationToken)">PingAsync(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Check if the access node is alive and healthy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task PingAsync(CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_SendTransactionAsync_Flow_Net_Sdk_Core_Models_FlowTransaction_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.SendTransactionAsync(Flow.Net.Sdk.Core.Models.FlowTransaction)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L547">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_SendTransactionAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.SendTransactionAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_SendTransactionAsync_Flow_Net_Sdk_Core_Models_FlowTransaction_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.SendTransactionAsync(Flow.Net.Sdk.Core.Models.FlowTransaction)">SendTransactionAsync(FlowTransaction)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowTransactionId&gt; SendTransactionAsync(FlowTransaction flowTransaction)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransaction.html">FlowTransaction</a></td>
+        <td><span class="parametername">flowTransaction</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransactionId.html">FlowTransactionId</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_SendTransactionAsync_Flow_Net_Sdk_Core_Models_FlowTransaction_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.SendTransactionAsync(Flow.Net.Sdk.Core.Models.FlowTransaction%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L556">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_SendTransactionAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.SendTransactionAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_SendTransactionAsync_Flow_Net_Sdk_Core_Models_FlowTransaction_System_Threading_CancellationToken_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.SendTransactionAsync(Flow.Net.Sdk.Core.Models.FlowTransaction,System.Threading.CancellationToken)">SendTransactionAsync(FlowTransaction, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Submits a transaction to the network.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowTransactionId&gt; SendTransactionAsync(FlowTransaction flowTransaction, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransaction.html">FlowTransaction</a></td>
+        <td><span class="parametername">flowTransaction</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransactionId.html">FlowTransactionId</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransactionId.html">FlowTransactionId</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_WaitForSealAsync_System_String_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.WaitForSealAsync(System.String%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L570">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_WaitForSealAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.WaitForSealAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_WaitForSealAsync_System_String_System_Int32_System_Int32_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.WaitForSealAsync(System.String,System.Int32,System.Int32)">WaitForSealAsync(String, Int32, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;FlowTransactionResult&gt; WaitForSealAsync(string transactionId, int delayMs = 1000, int timeoutMs = 30000)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">transactionId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">delayMs</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">timeoutMs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransactionResult.html">FlowTransactionResult</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient_WaitForSealAsync_System_String_System_Threading_CancellationToken_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient.WaitForSealAsync(System.String%2CSystem.Threading.CancellationToken%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L581">View Source</a>
+  </span>
+  <a id="Flow_Net_Sdk_Client_Http_FlowHttpClient_WaitForSealAsync_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.WaitForSealAsync*"></a>
+  <h4 id="Flow_Net_Sdk_Client_Http_FlowHttpClient_WaitForSealAsync_System_String_System_Threading_CancellationToken_System_Int32_System_Int32_" data-uid="Flow.Net.Sdk.Client.Http.FlowHttpClient.WaitForSealAsync(System.String,System.Threading.CancellationToken,System.Int32,System.Int32)">WaitForSealAsync(String, CancellationToken, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Waits for transaction result status to be sealed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;FlowTransactionResult&gt; WaitForSealAsync(string transactionId, CancellationToken cancellationToken, int delayMs = 1000, int timeoutMs = 30000)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">transactionId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">delayMs</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">timeoutMs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransactionResult.html">FlowTransactionResult</a>&gt;</td>
+        <td><p><a class="xref" href="Flow.Net.Sdk.Core.Models.FlowTransactionResult.html">FlowTransactionResult</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Flow.Net.Sdk.Core.Exceptions.FlowException.html">FlowException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Flow.Net.Sdk.Core.Client.IFlowClient.html">IFlowClient</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/tyronbrand/flow.net/new/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/apiSpec/new?filename=Flow_Net_Sdk_Client_Http_FlowHttpClient.md&amp;value=---%0Auid%3A%20Flow.Net.Sdk.Client.Http.FlowHttpClient%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/tyronbrand/flow.net/blob/2a695c604a2540de66b05fcfbc4ca93584e8ab0e/src/Flow.Net.Sdk.Client.Http/FlowHttpClient.cs/#L14" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
